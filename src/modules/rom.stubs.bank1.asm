@@ -475,7 +475,7 @@ dialog.run.vector:
 * Stub for dialog "Main Menu"
 * bank3 vec.30
 ********|*****|*********************|**************************
-dialog.menu:
+dialog.main:
         ;------------------------------------------------------
         ; Check if block mode is active
         ;------------------------------------------------------
@@ -491,9 +491,9 @@ dialog.menu:
         ;------------------------------------------------------
         ; Show dialog
         ;------------------------------------------------------
-!       mov   @dialog.menu.vector,@trmpvector
+!       mov   @dialog.main.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
-dialog.menu.vector:
+dialog.main.vector:
         data  vec.30
 
 

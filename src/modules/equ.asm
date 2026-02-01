@@ -60,7 +60,7 @@ id.dialog.cart.fg99       equ  90      ; "FinalGROM 99 Cartridge"
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
 ;-------------------------------------------------------------------------------
-id.dialog.menu            equ  100     ; "Main Menu"
+id.dialog.main            equ  100     ; "Main Menu"
 id.dialog.unsaved         equ  101     ; "Unsaved changes"
 id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
 id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."

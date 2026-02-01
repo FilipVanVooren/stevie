@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260125-2113130
+0002               * BUILD: 260201-1606010
 0003               ***************************************************************
                    < stevie_b8.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -245,7 +245,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0060               ;   Dialog ID's >= 100 indicate that command prompt should be
 0061               ;   hidden and no characters added to CMDB keyboard buffer.
 0062               ;-------------------------------------------------------------------------------
-0063      0064     id.dialog.menu            equ  100     ; "Main Menu"
+0063      0064     id.dialog.main            equ  100     ; "Main Menu"
 0064      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
 0065      0066     id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
 0066      0067     id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
@@ -10448,7 +10448,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.GOTO...... >0046 :     
     ID.DIALOG.HELP...... >0068 :     
     ID.DIALOG.INSERT.... >000B :     
-    ID.DIALOG.MENU...... >0064 :     
+    ID.DIALOG.MAIN...... >0064 :     
     ID.DIALOG.OPEN...... >000A :     
     ID.DIALOG.OPT....... >006C :     
     ID.DIALOG.OPT.CLIP.. >0014 :     

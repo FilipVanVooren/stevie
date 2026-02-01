@@ -5,6 +5,9 @@
 * Editor - Process action keys
 ****************************************************************
 edkey.key.process:
+        bl    @rsslot               ; \ Reset loop counter slot 1
+              data 1                ; / Prevent reading clock
+
         mov   @keycode1,tmp1        ; Get key pressed
         sla   tmp1,8                ; Move to MSB
         seto  tmp3                  ; EOL marker

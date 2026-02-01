@@ -184,11 +184,6 @@ pane.botline.show_keys.default:
         ; Show text editing mode
         ;------------------------------------------------------
 pane.botline.show_mode:
-        bl    @cpym2v                     ; \ Copy time to VDP memory
-              data pane.botrow * 80 + 18  ; | i  p1 = Destination VDP address
-              data fh.clock.datetime + 50 ; | i  p2 = Source RAM address
-              data 8                      ; / i  p3 = Number of bytes to copy 
-
         mov   @edb.insmode,tmp0
         jne   pane.botline.show_mode.insert
         ;------------------------------------------------------

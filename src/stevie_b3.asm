@@ -68,7 +68,7 @@ main:
         ; Dialogs (1)
         ;-----------------------------------------------------------------------
         copy  "dialog.asm"              ; Dialog initialisation code
-        copy  "dialog.menu.asm"         ; Dialog "Stevie Menu"
+        copy  "dialog.main.asm"         ; Dialog "Stevie Menu"
         copy  "dialog.file.asm"         ; Dialog "File"
         copy  "dialog.cart.type.asm"    ; Dialog "Cartridge Type"
         copy  "dialog.cart.fg99.asm"    ; Dialog "FinalGROM 99 Cartridge"

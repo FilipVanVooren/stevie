@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260125-2113130
+0002               * BUILD: 260201-1606010
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -245,7 +245,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0060               ;   Dialog ID's >= 100 indicate that command prompt should be
 0061               ;   hidden and no characters added to CMDB keyboard buffer.
 0062               ;-------------------------------------------------------------------------------
-0063      0064     id.dialog.menu            equ  100     ; "Main Menu"
+0063      0064     id.dialog.main            equ  100     ; "Main Menu"
 0064      0065     id.dialog.unsaved         equ  101     ; "Unsaved changes"
 0065      0066     id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
 0066      0067     id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
@@ -9657,16 +9657,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042 606A C2F9  30         mov   *stack+,r11           ; Pop R11
 0043 606C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
-0071                       copy  "dialog.menu.asm"         ; Dialog "Stevie Menu"
-     **** ****     > dialog.menu.asm
-0001               * FILE......: dialog.menu.asm
+0071                       copy  "dialog.main.asm"         ; Dialog "Stevie Menu"
+     **** ****     > dialog.main.asm
+0001               * FILE......: dialog.main.asm
 0002               * Purpose...: Dialog "Main Menu"
 0003               
 0004               ***************************************************************
-0005               * dialog.menu
+0005               * dialog.main
 0006               * Open Dialog "Main Menu"
 0007               ***************************************************************
-0008               * bl @dialog.menu
+0008               * bl @dialog.main
 0009               *--------------------------------------------------------------
 0010               * INPUT
 0011               * none
@@ -9679,7 +9679,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Notes
 0020               ********|*****|*********************|**************************
-0021               dialog.menu:
+0021               dialog.main:
 0022 606E 0649  14         dect  stack
 0023 6070 C64B  30         mov   r11,*stack            ; Save return address
 0024 6072 0649  14         dect  stack
@@ -9695,7 +9695,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034                       ;-------------------------------------------------------
 0035                       ; Setup dialog
 0036                       ;-------------------------------------------------------
-0037 6086 0204  20         li    tmp0,id.dialog.menu
+0037 6086 0204  20         li    tmp0,id.dialog.main
      6088 0064     
 0038 608A C804  38         mov   tmp0,@cmdb.dialog     ; Set dialog ID
      608C A720     
@@ -9720,7 +9720,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      60A6 78AE     
 0052 60A8 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      60AA A72C     
-0053 60AC 1008  14         jmp   dialog.menu.statlines
+0053 60AC 1008  14         jmp   dialog.main.statlines
 0054                       ;-------------------------------------------------------
 0055                       ; Menu without "Unlock" option
 0056                       ;-------------------------------------------------------
@@ -9736,7 +9736,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0062                       ;-------------------------------------------------------
 0063                       ; Show Status lines
 0064                       ;-------------------------------------------------------
-0065               dialog.menu.statlines:
+0065               dialog.main.statlines:
 0066 60BE 06A0  32         bl    @pane.cmdb.statlines  ; Show status lines
      60C0 6CF8     
 0067                                                   ; i \   @tv.devpath = Pointer to device path
@@ -9758,7 +9758,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0082                       ;-------------------------------------------------------
 0083                       ; Exit
 0084                       ;-------------------------------------------------------
-0085               dialog.menu.exit:
+0085               dialog.main.exit:
 0086 60C6 C239  30         mov   *stack+,tmp4          ; Pop tmp4
 0087 60C8 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
 0088 60CA C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
@@ -15184,13 +15184,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      77CE 20       
 0190                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 77CF   32                        text '260125-2113130'
+0001 77CF   32                        text '260201-1606010'
      77D0 3630     
-     77D2 3132     
-     77D4 352D     
-     77D6 3231     
-     77D8 3133     
-     77DA 3133     
+     77D2 3230     
+     77D4 312D     
+     77D6 3136     
+     77D8 3036     
+     77DA 3031     
      77DC 30       
                    < data.dialogs.asm
 0191 77DD   20                        text ' - Stevie 1.9.8 - (c)2018-2026 Filip Van Vooren'
@@ -16200,7 +16200,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0040 7FA4 6EE0     vec.27  data  cmdb.cmd.preset       ;
 0041 7FA6 6E92     vec.28  data  cmdb.cmd.set          ;
 0042 7FA8 6E6E     vec.29  data  cmdb.cmd.cursor_eol   ; Position cursor at end of command line
-0043 7FAA 606E     vec.30  data  dialog.menu           ; Dialog "Main Menu"
+0043 7FAA 606E     vec.30  data  dialog.main           ; Dialog "Main Menu"
 0044 7FAC 70EC     vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 0045 7FAE 6F96     vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load
 0046               *--------------------------------------------------------------
@@ -16560,9 +16560,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.INSERT.EXIT.. >644C :     
     DIALOG.INSERT.KEYLIST >6430 :     
     DIALOG.INSERT.SETUP. >63B4 :     
-    DIALOG.MENU......... >606E :     
-    DIALOG.MENU.EXIT.... >60C6 :     
-    DIALOG.MENU.STATLINES >60BE :     
+    DIALOG.MAIN......... >606E :     
+    DIALOG.MAIN.EXIT.... >60C6 :     
+    DIALOG.MAIN.STATLINES >60BE :     
     DIALOG.OPEN......... >620C :     
     DIALOG.OPEN.CLEARCMD >6286 :     
     DIALOG.OPEN.CURSOR.. >6294 :     
@@ -16873,7 +16873,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.GOTO...... >0046 :     
     ID.DIALOG.HELP...... >0068 :     
     ID.DIALOG.INSERT.... >000B :     
-    ID.DIALOG.MENU...... >0064 :     
+    ID.DIALOG.MAIN...... >0064 :     
     ID.DIALOG.OPEN...... >000A :     
     ID.DIALOG.OPT....... >006C :     
     ID.DIALOG.OPT.CLIP.. >0014 :     

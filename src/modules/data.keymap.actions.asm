@@ -190,7 +190,7 @@ keymap_actions.editor:
         ; reset block, otherwise show dialog "Main Menu".
         ;
         byte  key.fctn.9, pane.focus.fb
-        data  dialog.menu
+        data  dialog.main
         ;-------------------------------------------------------
         ; End of list
         ;-------------------------------------------------------
@@ -204,34 +204,34 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Main Menu
         ;-------------------------------------------------------
-        byte  key.uc.f, id.dialog.menu
+        byte  key.uc.f, id.dialog.main
         data  dialog.file
 
-        byte  key.uc.b, id.dialog.menu
+        byte  key.uc.b, id.dialog.main
         data  dialog.basic
 
-        byte  key.uc.c, id.dialog.menu
+        byte  key.uc.c, id.dialog.main
         data  dialog.cartridge
 
-        byte  key.uc.o, id.dialog.menu
+        byte  key.uc.o, id.dialog.main
         data  dialog.config
 
-        byte  key.uc.s, id.dialog.menu
+        byte  key.uc.s, id.dialog.main
         data  dialog.shortcuts
 
-        byte  key.uc.h, id.dialog.menu
+        byte  key.uc.h, id.dialog.main
         data  dialog.help
 
-        byte  key.uc.q, id.dialog.menu
+        byte  key.uc.q, id.dialog.main
         data  edkey.action.quit
 
-        byte  key.uc.l, id.dialog.menu
+        byte  key.uc.l, id.dialog.main
         data  edkey.action.cmdb.lock
 
-        byte  key.uc.u, id.dialog.menu
+        byte  key.uc.u, id.dialog.main
         data  edkey.action.cmdb.unlock
 
-        byte  key.fctn.9, id.dialog.menu
+        byte  key.fctn.9, id.dialog.main
         data  edkey.action.cmdb.close.dialog
         ;-------------------------------------------------------
         ; Dialog: File
@@ -546,7 +546,7 @@ keymap_actions.cmdb:
         ; Other action keys
         ;-------------------------------------------------------
         byte  key.fctn.9, pane.focus.cmdb
-        data  dialog.menu
+        data  dialog.main
 
         byte  key.fctn.plus, pane.focus.cmdb
         data  edkey.action.quit
