@@ -41,6 +41,11 @@ pane.clock.time:
         jeq  pane.clock.time.exit    ; No, exit early
 
         bl    @cpym2v                     ; \ Copy time to VDP memory
+              data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
+              data txt.vtline             ; | i  p2 = Source RAM address
+              data 2                      ; / i  p3 = Number of bytes to copy
+
+        bl    @cpym2v                     ; \ Copy time to VDP memory
               data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
               data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
               data 5                      ; / i  p3 = Number of bytes to copy
@@ -53,3 +58,8 @@ pane.clock.time.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+
+txt.vtline:
+        byte  0,6                   ; Vertical line character
+        even

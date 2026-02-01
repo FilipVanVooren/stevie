@@ -6,20 +6,6 @@
 ***************************************************************
 txt.slash          stri '/'
                    even
-txt.colon          stri ':'                   
-                   even
-txt.bottom         stri '  BOT'
-                   even
-txt.ovrwrite       stri 'OVR '
-                   even
-txt.insert         stri 'INS '
-                   even
-txt.autoinsert     stri 'INS+'
-                   even
-txt.star           stri '*'
-                   even
-txt.lockicon       byte 1,29
-                   even
 txt.loading        stri 'Loading...'
                    even
 txt.saving         stri 'Saving....'

@@ -88,7 +88,7 @@ pane.botline.shortcuts:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.blocklock ; Show reduced shortcuts
-        jmp   pane.botline.show_mode
+        jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Show all block shortcuts
         ;------------------------------------------------------
@@ -96,7 +96,7 @@ pane.botline.shortcuts.all:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.block     ; Show block shortcuts
-        jmp   pane.botline.show_mode
+        jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Active TI Basic session?
         ;------------------------------------------------------
@@ -151,7 +151,7 @@ pane.botline.show_keys.setbasic:
               byte pane.botrow,27   ; | Display session-ID string
               data rambuf           ; / Y=bottom row, X=27
 
-        jmp   pane.botline.show_mode
+        jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Show default keys?
         ;------------------------------------------------------
@@ -169,7 +169,7 @@ pane.botline.show_keys.default:
         bl    @hchar
               byte pane.botrow,43,32,21
               data EOL              ; Remove any leftover junk after key markers        
-        jmp   pane.botline.show_mode
+        jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Default keys only
         ;------------------------------------------------------
@@ -178,8 +178,16 @@ pane.botline.show_keys.default:
               data txt.keys.default ; Show default keys only
 
         bl    @hchar
-              byte pane.botrow,18,32,32
-              data EOL              ; Remove any leftover junk after key markers             
+              byte pane.botrow,18,32,30
+              data EOL              ; Remove any leftover junk after key markers
+        ;------------------------------------------------------
+        ; Show vertical lines
+        ;------------------------------------------------------
+pane.botline.vertlines:             
+        bl    @hchar
+              byte pane.botrow,56,6,1
+              byte pane.botrow,65,7,1
+              data EOL              
         ;------------------------------------------------------
         ; Show text editing mode
         ;------------------------------------------------------
@@ -190,7 +198,7 @@ pane.botline.show_mode:
         ; Overwrite mode
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,61
+              byte  pane.botrow,59
               data  txt.ovrwrite
         jmp   pane.botline.show_dirty
         ;------------------------------------------------------
@@ -203,7 +211,7 @@ pane.botline.show_mode.insert:
         ; Auto-Insert
         ;------------------------------------------------------
         bl    @putat
-              byte  pane.botrow,61
+              byte  pane.botrow,59
               data  txt.autoinsert
         jmp   pane.botline.show_dirty
         ;------------------------------------------------------
@@ -211,7 +219,7 @@ pane.botline.show_mode.insert:
         ;------------------------------------------------------
 pane.botline.show_mode.insert.noauto:
         bl    @putat
-              byte  pane.botrow,61
+              byte  pane.botrow,59
               data  txt.insert
         ;------------------------------------------------------
         ; Show if text was changed in editor buffer
@@ -223,9 +231,8 @@ pane.botline.show_dirty:
         ; Show "*" 
         ;------------------------------------------------------        
         bl    @putat
-              byte pane.botrow,65
+              byte pane.botrow,64
               data txt.star
-        jmp   pane.botline.show_linecol
         ;------------------------------------------------------
         ; Show locked icon 
         ;------------------------------------------------------
@@ -233,15 +240,15 @@ pane.botline.locked:
         mov    @edb.locked,tmp0
         jeq    pane.botline.nochange
         bl     @putat
-               byte pane.botrow,65
+               byte pane.botrow,57
                data txt.lockicon    ; Show locked icon
         jmp    pane.botline.show_linecol
         ;------------------------------------------------------
-        ; Show " " 
+        ; Hide locked icon
         ;------------------------------------------------------        
 pane.botline.nochange:        
         bl    @putat
-              byte pane.botrow,65
+              byte pane.botrow,57
               data txt.ws1          ; Single white space
         ;------------------------------------------------------
         ; Show "line,column"
@@ -376,3 +383,23 @@ pane.botline.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
+
+
+
+***************************************************************
+*                       Strings
+***************************************************************
+txt.colon          stri ':'                   
+                   even
+txt.bottom         stri '  BOT'
+                   even
+txt.ovrwrite       stri 'OVR '
+                   even
+txt.insert         stri 'INS '
+                   even
+txt.autoinsert     stri 'INS+'
+                   even
+txt.star           stri '*'
+                   even
+txt.lockicon       byte 1,29
+                   even

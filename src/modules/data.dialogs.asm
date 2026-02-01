@@ -262,11 +262,11 @@ txt.keys.basic3    stri 'F9-Back'
 ;--------------------------------------------------------------
 txt.head.config    byte 11,4,1
                    text ' Options '
-txt.info.config    stri 'Auto-Insert   Clipboard   Font   Line-Length'
-pos.info.config    byte 0,14,26,33,>ff
+txt.info.config    stri 'Auto-Insert   Clipboard   Clock   Font   Line-Length'
+pos.info.config    byte 0,14,28,34,41,>ff
                    even
-txt.info.conflock  stri 'Clipboard   Font   Line-Length'
-pos.info.conflock  byte 0,12,19,>ff
+txt.info.conflock  stri 'Clipboard   Clock   Font   Line-Length'
+pos.info.conflock  byte 0,14,20,27,>ff
                    even
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
                    even
