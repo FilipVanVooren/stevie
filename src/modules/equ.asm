@@ -68,11 +68,9 @@ id.dialog.help            equ  104     ; "About"
 id.dialog.file            equ  105     ; "File"
 id.dialog.cart.type       equ  106     ; "Cartridge Type"
 id.dialog.basic           equ  107     ; "TI Basic"
-id.dialog.opt             equ  108     ; "Configure"
-id.dialog.editor          equ  109     ; "Configure editor"
-id.dialog.font            equ  110     ; "Configure font"
-id.dialog.shortcuts       equ  111     ; "Shortcuts"
-id.dialog.find.browse     equ  120     ; "Find - Search results"
+id.dialog.opt             equ  108     ; "Options"
+id.dialog.font            equ  109     ; "Configure font"
+id.dialog.shortcuts       equ  110     ; "Shortcuts"
 ;-------------------------------------------------------------------------------
 ; Suffix characters for clipboards
 ;-------------------------------------------------------------------------------
@@ -209,9 +207,10 @@ tv.fg99.img.ptr   equ  tv.struct + 56  ; Pointer to Final GROM cartridge to load
 tv.specmsg.ptr    equ  tv.struct + 58  ; Pointer to special message above botrow
 tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
 tv.show.linelen   equ  tv.struct + 62  ; Show line length in status line
-tv.error.msg      equ  tv.struct + 64  ; Error message (max 80 bytes)
-tv.devpath        equ  tv.struct + 144 ; Device path (max 80 bytes)
-tv.free           equ  tv.struct + 224 ; End of structure
+tv.show.clock     equ  tv.struct + 64  ; Show clock in status line
+tv.error.msg      equ  tv.struct + 66  ; Error message (max 80 bytes)
+tv.devpath        equ  tv.struct + 146 ; Device path (max 80 bytes)
+tv.free           equ  tv.struct + 226 ; End of structure
 ;-------------------------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff                   (256 bytes)
 ;-------------------------------------------------------------------------------

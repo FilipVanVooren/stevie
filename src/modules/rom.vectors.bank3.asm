@@ -48,9 +48,9 @@ vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load
 *--------------------------------------------------------------
 vec.33  data  cmdb.cfg.fname        ; Configure filename
 vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print
-vec.35  data  cpu.crash             ;
-vec.36  data  cpu.crash             ;
-vec.37  data  cpu.crash             ;
+vec.35  data  tv.autoinsert.toggle  ; Toggle auto insert mode for editor buffer
+vec.36  data  tv.clock.toggle       ; Toggle clock display on/off
+vec.37  data  tv.linelen.toggle     ; Toggle line length display on/off
 vec.38  data  cpu.crash             ;
 vec.39  data  cpu.crash             ;
 vec.40  data  cpu.crash             ;

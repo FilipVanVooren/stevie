@@ -187,17 +187,16 @@ edb.find.scan.compare.nextchar:
         ; Prepare for processing Next line
         ;------------------------------------------------------
 edb.find.scan.nextline:        
-        inc   @fh.records             ; Increase line counter
-        abs   @fh.records             ; \  Display line counter
-        jop   edb.find.scan.showline  ; /  update sporadically
-
+        inc   @fh.records           ; Increase line counter
+        abs   @fh.records           ; \  Display line counter
+        jop   edb.find.scan.show    ; /  update sporadically
         jmp   edb.find.scan.checkcomplete        
         ;------------------------------------------------------
         ; Show line counter
         ;------------------------------------------------------
-edb.find.scan.showline:
+edb.find.scan.show:
         bl    @putnum
-              byte pane.botrow,74   ; Show lines processed
+              byte pane.botrow,72   ; Show lines processed
               data fh.records,rambuf,>3020
         ;------------------------------------------------------
         ; Check for keyboard interrupt <FCTN-4>

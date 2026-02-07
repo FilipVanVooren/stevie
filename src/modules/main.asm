@@ -127,11 +127,17 @@ main.continue:
               data eol                     ; /
 
         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
-        mov   tmp0,@btihi           ; / Tell Task Scheduler   
+        mov   tmp0,@btihi           ; / Tell Task Scheduler 
+
+        mov   @tv.show.clock,tmp0   ; Show clock?
+        jne   !                     ; Yes
+
+        bl    @clslot
+              data 1                ; Disable clock task slot
         ;-------------------------------------------------------
         ; Setup keyboard scanning and start kernel/timers
         ;-------------------------------------------------------
-        bl    @mkhook
+!       bl    @mkhook
               data edkey.keyscan.hook
                                     ; Setup keyboard scanning hook
         ;-------------------------------------------------------

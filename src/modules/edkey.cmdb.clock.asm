@@ -1,29 +1,23 @@
-* FILE......: edkey.cmdb.autoinsert.asm
-* Purpose...: Toggle auto insert mode
+* FILE......: edkey.cmdb.clock.asm
+* Purpose...: Toggle clock display in editor
 
 *---------------------------------------------------------------
-* Toggle editor auto insert mode
+* Toggle clock display in editor
 *---------------------------------------------------------------
-edkey.action.cmdb.autoinsert:
+edkey.action.cmdb.clock:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
-        ; Exit early if editor buffer is locked
+        ; Toggle clock display
         ;-------------------------------------------------------
-        mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.cmdb.autoinsert.exit
-                                    ; Yes, exit
-        ;-------------------------------------------------------
-        ; Toggle auto insert mode
-        ;-------------------------------------------------------
-        bl    @tv.autoinsert.toggle ; Toggle Auto-Insert mode
-        bl    @cmdb.dialog.close    ; Close dialog
+        bl    @tv.clock.toggle      ; Toggle clock display mode
+        bl    @cmdb.dialog.close    ; Close dialog    
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.autoinsert.exit:
+edkey.action.cmdb.clock.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     @edkey.keyscan.hook.debounce

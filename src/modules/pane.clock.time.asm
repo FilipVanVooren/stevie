@@ -32,15 +32,18 @@ pane.clock.time:
         ;------------------------------------------------------
         ; Display time?
         ;------------------------------------------------------
-        mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
-        jne   pane.clock.time.exit  ; Yes, skip time display update
-        ;------------------------------------------------------
-        ; Display time at bottom row
-        ;------------------------------------------------------
         mov  @fh.clock.datetime,tmp0 ; Clock initialized?
         jeq  pane.clock.time.exit    ; No, exit early
 
-        bl    @cpym2v                     ; \ Copy time to VDP memory
+        mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
+        jeq   !                     ; No, good to show clock
+        mov   @cmdb.dialog,tmp0     ; Get active CMDB dialog ID
+        ci    tmp0,id.dialog.main   ; \
+        jlt   pane.clock.time.exit  ; / Skip clock if input dialog active
+        ;------------------------------------------------------
+        ; Display time at bottom row
+        ;------------------------------------------------------
+!       bl    @cpym2v                     ; \ Copy time to VDP memory
               data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
               data txt.vtline             ; | i  p2 = Source RAM address
               data 2                      ; / i  p3 = Number of bytes to copy
@@ -49,6 +52,45 @@ pane.clock.time:
               data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
               data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
               data 5                      ; / i  p3 = Number of bytes to copy
+        ;------------------------------------------------------
+        ; Display day of week and date
+        ;------------------------------------------------------              
+        mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
+        jeq   pane.clock.time.exit  ; No, only show time
+        ;------------------------------------------------------
+        ; Display time including seconds
+        ;------------------------------------------------------    
+        bl    @cpym2v                     ; \ Copy time to VDP memory
+              data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
+              data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
+              data 8                      ; / i  p3 = Number of bytes to copy
+
+        bl    @cpym2v                     ; \ Copy time to VDP memory
+              data pane.botrow * 80 + 58  ; | i  p1 = Destination VDP address
+              data txt.vtline             ; | i  p2 = Source RAM address
+              data 2                      ; / i  p3 = Number of bytes to copy              
+        ;------------------------------------------------------
+        ; Display day of week
+        ;------------------------------------------------------   
+        mov   @fh.clock.datetime + 2,tmp0 ; Get day of week (0-6)
+        srl   tmp0,8                      ; MSB to LSB
+        ai    tmp0,-48                    ; Remove ascii offset
+        mpy   @const.3,tmp0               ; \ Multiply DOW by 3, result in tmp1
+        ai    tmp1,txt.dow                ; / Add base address of DOW string
+
+        li    tmp0,pane.botrow * 80 + 61  ; Destination VDP address
+        li    tmp2,3                      ; Number of bytes to copy
+        bl    @xpym2v                     ; \ Copy day of week to VDP memory
+                                          ; | i  tmp0 = Destination VDP address
+                                          ; | i  tmp1 = Source RAM address
+                                          ; / i  tmp2 = Number of bytes to copy
+        ;------------------------------------------------------
+        ; Display date
+        ;------------------------------------------------------ 
+        bl    @cpym2v                     ; \ Copy date to VDP memory
+              data pane.botrow * 80 + 65  ; | i  p1 = Destination VDP address
+              data fh.clock.datetime + 4  ; | i  p2 = Source RAM address
+              data 8                      ; / i  p3 = Number of bytes to copy
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -59,7 +101,10 @@ pane.clock.time.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return
 
-
 txt.vtline:
         byte  0,6                   ; Vertical line character
+        even
+
+txt.dow:
+        text 'SUNMONTUEWEDTHUFRISAT'
         even

@@ -701,6 +701,35 @@ fm.lineterm:
 fm.lineterm.vector:
         data  vec.34
 
+***************************************************************
+* Stub for "tv.autoinsert.toggle"
+* bank3 vec.35
+********|*****|*********************|**************************
+tv.autoinsert.toggle:
+        mov   @tv.autoinsert.toggle.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+tv.autoinsert.toggle.vector:
+        data  vec.35
+
+***************************************************************
+* Stub for "tv.clock.toggle"
+* bank3 vec.36
+********|*****|*********************|**************************
+tv.clock.toggle:
+        mov   @tv.clock.toggle.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+tv.clock.toggle.vector:
+        data  vec.36
+
+***************************************************************
+* Stub for "tv.linelen.toggle"
+* bank3 vec.37
+********|*****|*********************|**************************
+tv.linelen.toggle:
+        mov   @tv.linelen.toggle.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+tv.linelen.toggle.vector:
+        data  vec.37
 
 ***************************************************************
 * Stub for "dialog"

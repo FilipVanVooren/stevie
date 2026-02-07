@@ -125,6 +125,7 @@ main:
         copy  "edkey.cmdb.linelen.asm"      ; Line length display toggle
         copy  "edkey.cmdb.goto.asm"         ; Goto line
         copy  "edkey.cmdb.font.asm"         ; Set font
+        copy  "edkey.cmdb.clock.asm"        ; Show clock
         copy  "edkey.cmdb.filebrowser.prevcol.asm"
                                             ; Previous column in filebrowser
         copy  "edkey.cmdb.filebrowser.nextcol.asm"
@@ -142,11 +143,6 @@ main:
         ;-----------------------------------------------------------------------
         copy  "edb.line.pack.fb.asm"        ; Pack line into editor buffer
         copy  "edb.line.unpack.fb.asm"      ; Unpack line from editor buffer
-        copy  "edb.autoinsert.toggle.asm"   ; Toggle auto insert mode for buffer
-        ;-----------------------------------------------------------------------
-        ; Logic for Editor settings
-        ;-----------------------------------------------------------------------
-        copy  "tv.linelen.toggle.asm"       ; Toggle line length display
         ;-----------------------------------------------------------------------
         ; Background tasks
         ;-----------------------------------------------------------------------

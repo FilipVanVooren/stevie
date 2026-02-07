@@ -375,7 +375,10 @@ keymap_actions.cmdb:
 
         byte  key.uc.c, id.dialog.opt
         data  dialog.clipdev
-        
+
+        byte  key.uc.o, id.dialog.opt
+        data  edkey.action.cmdb.clock
+
         byte  key.uc.f, id.dialog.opt
         data  dialog.font
 
