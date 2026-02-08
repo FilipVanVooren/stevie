@@ -121,7 +121,6 @@ main.continue:
 
         bl    @mkslot                      ; Setup Task Scheduler slots         
               data >0002,task.vdp.panes    ; \ Task 0 - Draw VDP editor panes
-              data >0150,task.clock        ; | Task 1 - Read clock device
               data >020f,task.vdp.cursor   ; | Task 2 - Toggle VDP cursor shape
               data >0360,task.oneshot      ; | Task 3 - One shot task
               data eol                     ; /

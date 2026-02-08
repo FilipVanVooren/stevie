@@ -27,10 +27,12 @@ tv.clock.start:
         ;------------------------------------------------------
         bl    @film                 ; Clear clock structure
               data  fh.clock.datetime,>00,19
-
-        bl    @mkslot                      ; Setup Task Scheduler slots         
-              data >0150,task.clock        ; \ Task 1 - Read clock device
-              data eol                     ; /
+        ;------------------------------------------------------
+        ; Fast clock reading task
+        ;------------------------------------------------------
+        bl    @mkslot               ; Setup Task Scheduler slots         
+              data >0132,task.clock ; \ Task 1 - Read clock device
+              data eol              ; / approx. every 1 second
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

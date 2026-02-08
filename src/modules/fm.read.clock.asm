@@ -57,7 +57,7 @@ fm.read.clock:
         li    tmp0,fh.clock.datetime
         mov   tmp0,@parm7           ; Destination RAM memory address
 
-        li    tmp0,fh.file.pab.header
+        li    tmp0,fh.file.pab.clock
         mov   tmp0,@parm8           ; PAB Header template for reading clock
 
         ;li    tmp0,io.seq.inp.dis.var

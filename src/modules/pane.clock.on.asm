@@ -34,7 +34,7 @@ pane.clock.on:
 
         bl    @putat
               byte 0,52
-              data txt.clockon      ; Display clock off message
+              data txt.clockon      ; Display clock on message
 
         mov   *stack+,@wyx          ; Restore cursor position              
         ;-------------------------------------------------------

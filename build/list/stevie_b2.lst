@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260207-2111500
+0002               * BUILD: 260208-1916480
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11253,7 +11253,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6776 A454     
 0075               
 0076 6778 0204  20         li    tmp0,fh.file.pab.header.binimage
-     677A 7CEA     
+     677A 7CF4     
 0077 677C C804  38         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
      677E A466     
 0078               
@@ -11862,7 +11862,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6A6A A454     
 0065               
 0066 6A6C 0204  20         li    tmp0,fh.file.pab.header.binimage
-     6A6E 7CEA     
+     6A6E 7CF4     
 0067 6A70 C804  38         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
      6A72 A466     
 0068               
@@ -12838,7 +12838,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Read clock data into memory
 0045                       ;-------------------------------------------------------
 0046 6EA6 0204  20         li    tmp0,def.clock        ; \ Pointer to clock device string
-     6EA8 7D54     
+     6EA8 7D5E     
 0047 6EAA C804  38         mov   tmp0,@parm1           ; /
      6EAC A006     
 0048 6EAE 04E0  34         clr   @parm2                ; Callback function "Before open file"
@@ -12861,8 +12861,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0058 6ECA C804  38         mov   tmp0,@parm7           ; Destination RAM memory address
      6ECC A012     
 0059               
-0060 6ECE 0204  20         li    tmp0,fh.file.pab.header
-     6ED0 7CE0     
+0060 6ECE 0204  20         li    tmp0,fh.file.pab.clock
+     6ED0 7CEA     
 0061 6ED2 C804  38         mov   tmp0,@parm8           ; PAB Header template for reading clock
      6ED4 A014     
 0062               
@@ -15317,7 +15317,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      789E A008     
 0090 78A0 0A14  18         sla   tmp0,1                ; Word align
 0091 78A2 C824  54         mov   @device.list(tmp0),@parm1
-     78A4 7D5E     
+     78A4 7D68     
      78A6 A006     
 0092                                                   ; Set device string
 0093                       ;-------------------------------------------------------
@@ -16454,24 +16454,45 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0042                                                   ;         (Device + '.' + File name)
 0043               
-0044               
-0045               ***************************************************************
-0046               * PAB for loading binary image
-0047               ********|*****|*********************|**************************
-0048                       even                        ; Must always start on even address!!
-0049               fh.file.pab.header.binimage:
-0050 7CEA 05               byte  io.op.load            ;  0    - LOAD BINARY
-0051 7CEB   00             byte  00                    ;  1    - Not used
-0052 7CEC 2000             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
-0053 7CEE 0000             data  >0000                 ;  4-5  - Not used in load operation
-0054 7CF0 2006             data  8198                  ;  6-7  - Maximum number of bytes to load
-0055 7CF2 00               byte  00                    ;  8    - Not used
+0044               ***************************************************************
+0045               * PAB for accessing clock file
+0046               ********|*****|*********************|**************************
+0047                       even                        ; Must always start on even address!!
+0048               fh.file.pab.clock:
+0049 7CEA 00               byte  io.op.open            ;  0    - OPEN
+0050 7CEB   14             byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
+0051 7CEC 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+0052 7CEE 00               byte  0                     ;  4    - Record length (let it figure out)
+0053 7CEF   00             byte  00                    ;  5    - Character count
+0054 7CF0 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
+0055 7CF2 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
 0056                       ;------------------------------------------------------
 0057                       ; File descriptor part (variable length)
 0058                       ;------------------------------------------------------
 0059                       ; byte  64                  ;  9    - File descriptor length
 0060                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0061                                                   ;         (Device + '.' + File name)
+0062               
+0063               
+0064               
+0065               
+0066               ***************************************************************
+0067               * PAB for loading binary image
+0068               ********|*****|*********************|**************************
+0069                       even                        ; Must always start on even address!!
+0070               fh.file.pab.header.binimage:
+0071 7CF4 05               byte  io.op.load            ;  0    - LOAD BINARY
+0072 7CF5   00             byte  00                    ;  1    - Not used
+0073 7CF6 2000             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
+0074 7CF8 0000             data  >0000                 ;  4-5  - Not used in load operation
+0075 7CFA 2006             data  8198                  ;  6-7  - Maximum number of bytes to load
+0076 7CFC 00               byte  00                    ;  8    - Not used
+0077                       ;------------------------------------------------------
+0078                       ; File descriptor part (variable length)
+0079                       ;------------------------------------------------------
+0080                       ; byte  64                  ;  9    - File descriptor length
+0081                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
+0082                                                   ;         (Device + '.' + File name)
                    < stevie_b2.asm
 0102                       copy  "data.devices.asm"    ; Device names
      **** ****     > data.devices.asm
@@ -16482,59 +16503,59 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0005               *                     Device names
 0006               ********|*****|*********************|**************************
 0007                             even
-0008 7CF4 0544     def.dsk1      stri 'DSK1.'
-     7CF6 534B     
-     7CF8 312E     
-0009 7CFA 0544     def.dsk2      stri 'DSK2.'
-     7CFC 534B     
-     7CFE 322E     
-0010 7D00 0544     def.dsk3      stri 'DSK3.'
-     7D02 534B     
-     7D04 332E     
-0011 7D06 0544     def.dsk4      stri 'DSK4.'
-     7D08 534B     
-     7D0A 342E     
-0012 7D0C 0544     def.dsk5      stri 'DSK5.'
-     7D0E 534B     
-     7D10 352E     
-0013 7D12 0544     def.dsk6      stri 'DSK6.'
-     7D14 534B     
-     7D16 362E     
-0014 7D18 0544     def.dsk7      stri 'DSK7.'
-     7D1A 534B     
-     7D1C 372E     
-0015 7D1E 0544     def.dsk8      stri 'DSK8.'
-     7D20 534B     
-     7D22 382E     
-0016 7D24 0544     def.dsk9      stri 'DSK9.'
-     7D26 534B     
-     7D28 392E     
-0017 7D2A 0554     def.tipi      stri 'TIPI.'
-     7D2C 4950     
-     7D2E 492E     
-0018 7D30 0553     def.scs1      stri 'SCS1.'
-     7D32 4353     
-     7D34 312E     
-0019 7D36 0553     def.scs2      stri 'SCS2.'
-     7D38 4353     
-     7D3A 322E     
-0020 7D3C 0553     def.scs3      stri 'SCS3.'
-     7D3E 4353     
-     7D40 332E     
-0021 7D42 0549     def.ide1      stri 'IDE1.'
-     7D44 4445     
-     7D46 312E     
-0022 7D48 0549     def.ide2      stri 'IDE2.'
-     7D4A 4445     
-     7D4C 322E     
-0023 7D4E 0549     def.ide3      stri 'IDE3.'
-     7D50 4445     
-     7D52 332E     
-0024 7D54 0850     def.clock     stri 'PI.CLOCK'
-     7D56 492E     
-     7D58 434C     
-     7D5A 4F43     
-     7D5C 4B       
+0008 7CFE 0544     def.dsk1      stri 'DSK1.'
+     7D00 534B     
+     7D02 312E     
+0009 7D04 0544     def.dsk2      stri 'DSK2.'
+     7D06 534B     
+     7D08 322E     
+0010 7D0A 0544     def.dsk3      stri 'DSK3.'
+     7D0C 534B     
+     7D0E 332E     
+0011 7D10 0544     def.dsk4      stri 'DSK4.'
+     7D12 534B     
+     7D14 342E     
+0012 7D16 0544     def.dsk5      stri 'DSK5.'
+     7D18 534B     
+     7D1A 352E     
+0013 7D1C 0544     def.dsk6      stri 'DSK6.'
+     7D1E 534B     
+     7D20 362E     
+0014 7D22 0544     def.dsk7      stri 'DSK7.'
+     7D24 534B     
+     7D26 372E     
+0015 7D28 0544     def.dsk8      stri 'DSK8.'
+     7D2A 534B     
+     7D2C 382E     
+0016 7D2E 0544     def.dsk9      stri 'DSK9.'
+     7D30 534B     
+     7D32 392E     
+0017 7D34 0554     def.tipi      stri 'TIPI.'
+     7D36 4950     
+     7D38 492E     
+0018 7D3A 0553     def.scs1      stri 'SCS1.'
+     7D3C 4353     
+     7D3E 312E     
+0019 7D40 0553     def.scs2      stri 'SCS2.'
+     7D42 4353     
+     7D44 322E     
+0020 7D46 0553     def.scs3      stri 'SCS3.'
+     7D48 4353     
+     7D4A 332E     
+0021 7D4C 0549     def.ide1      stri 'IDE1.'
+     7D4E 4445     
+     7D50 312E     
+0022 7D52 0549     def.ide2      stri 'IDE2.'
+     7D54 4445     
+     7D56 322E     
+0023 7D58 0549     def.ide3      stri 'IDE3.'
+     7D5A 4445     
+     7D5C 332E     
+0024 7D5E 0850     def.clock     stri 'PI.CLOCK'
+     7D60 492E     
+     7D62 434C     
+     7D64 4F43     
+     7D66 4B       
 0025               
 0026               *---------------------------------------------------------------
 0027               * List with device names
@@ -16544,26 +16565,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031                       ;-------------------------------------------------------
 0032                       ; Pointers to device strings
 0033                       ;-------------------------------------------------------
-0034 7D5E 7CF4             data  def.dsk1, def.dsk2, def.dsk3, def.dsk4, def.dsk5
-     7D60 7CFA     
-     7D62 7D00     
-     7D64 7D06     
-     7D66 7D0C     
-0035 7D68 7D12             data  def.dsk6, def.dsk7, def.dsk8, def.dsk9, def.tipi
-     7D6A 7D18     
-     7D6C 7D1E     
-     7D6E 7D24     
-     7D70 7D2A     
-0036 7D72 7D30             data  def.scs1, def.scs2, def.scs3, def.ide1, def.ide2
-     7D74 7D36     
-     7D76 7D3C     
-     7D78 7D42     
-     7D7A 7D48     
-0037 7D7C 7D4E             data  def.ide3
+0034 7D68 7CFE             data  def.dsk1, def.dsk2, def.dsk3, def.dsk4, def.dsk5
+     7D6A 7D04     
+     7D6C 7D0A     
+     7D6E 7D10     
+     7D70 7D16     
+0035 7D72 7D1C             data  def.dsk6, def.dsk7, def.dsk8, def.dsk9, def.tipi
+     7D74 7D22     
+     7D76 7D28     
+     7D78 7D2E     
+     7D7A 7D34     
+0036 7D7C 7D3A             data  def.scs1, def.scs2, def.scs3, def.ide1, def.ide2
+     7D7E 7D40     
+     7D80 7D46     
+     7D82 7D4C     
+     7D84 7D52     
+0037 7D86 7D58             data  def.ide3
 0038                       ;-------------------------------------------------------
 0039                       ; End of list
 0040                       ;-------------------------------------------------------
-0041 7D7E FFFF             data  EOL             ; EOL
+0041 7D88 FFFF             data  EOL             ; EOL
                    < stevie_b2.asm
 0103                       ;-----------------------------------------------------------------------
 0104                       ; Bank full check
@@ -17027,30 +17048,30 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DEBUG............... >0000 :     
     DEF.CLIP.FNAME.A.... >3D1B :     
     DEF.CLIP.FNAME.B.... >3D26 :     
-    DEF.CLOCK........... >7D54 :     
+    DEF.CLOCK........... >7D5E :     
     DEF.DEVICE.......... >3D60 :     
     DEF.DEVICES......... >3D30 :     
-    DEF.DSK1............ >7CF4 :     
-    DEF.DSK2............ >7CFA :     
-    DEF.DSK3............ >7D00 :     
-    DEF.DSK4............ >7D06 :     
-    DEF.DSK5............ >7D0C :     
-    DEF.DSK6............ >7D12 :     
-    DEF.DSK7............ >7D18 :     
-    DEF.DSK8............ >7D1E :     
-    DEF.DSK9............ >7D24 :     
+    DEF.DSK1............ >7CFE :     
+    DEF.DSK2............ >7D04 :     
+    DEF.DSK3............ >7D0A :     
+    DEF.DSK4............ >7D10 :     
+    DEF.DSK5............ >7D16 :     
+    DEF.DSK6............ >7D1C :     
+    DEF.DSK7............ >7D22 :     
+    DEF.DSK8............ >7D28 :     
+    DEF.DSK9............ >7D2E :     
     DEF.FG99.FNAME...... >3D66 :     
-    DEF.IDE1............ >7D42 :     
-    DEF.IDE2............ >7D48 :     
-    DEF.IDE3............ >7D4E :     
+    DEF.IDE1............ >7D4C :     
+    DEF.IDE2............ >7D52 :     
+    DEF.IDE3............ >7D58 :     
     DEF.PRINTER.FNAME... >3D14 :     
-    DEF.SCS1............ >7D30 :     
-    DEF.SCS2............ >7D36 :     
-    DEF.SCS3............ >7D3C :     
-    DEF.TIPI............ >7D2A :     
+    DEF.SCS1............ >7D3A :     
+    DEF.SCS2............ >7D40 :     
+    DEF.SCS3............ >7D46 :     
+    DEF.TIPI............ >7D34 :     
     DEVICE.F18A......... >0001 :     
     DEVICE.FG99.MODE.ADV >0000 :     
-    DEVICE.LIST......... >7D5E :     
+    DEVICE.LIST......... >7D68 :     
     DOFILL.............. >2280 :     
     DOWN................ >272C :     
     DSRLNK.............. >2C4A :     
@@ -17244,8 +17265,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     FH.FILE.LOAD.EA5.LOAD >6932 :     
     FH.FILE.LOAD.EA5.NEXT >69A6 :     
     FH.FILE.LOAD.EA5.PARM >6906 :     
+    FH.FILE.PAB.CLOCK... >7CEA :     
     FH.FILE.PAB.HEADER.. >7CE0 :     
-    FH.FILE.PAB.HEADER.BINIMAGE >7CEA :     
+    FH.FILE.PAB.HEADER.BINIMAGE >7CF4 :     
     FH.FILE.PAB.HEADER.CAT >7CD6 :     
     FH.FILE.READ.CRASH.. >6336 :     
     FH.FILE.READ.EDB.... >6236 :     

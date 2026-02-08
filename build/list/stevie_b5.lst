@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260207-2111500
+0002               * BUILD: 260208-1916480
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -11820,7 +11820,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0035 68F8 06A0  32         bl    @putat
      68FA 2442     
 0036 68FC 0034                   byte 0,52
-0037 68FE 691C                   data txt.clockon      ; Display clock off message
+0037 68FE 691C                   data txt.clockon      ; Display clock on message
 0038               
 0039 6900 C839  42         mov   *stack+,@wyx          ; Restore cursor position
      6902 832A     
