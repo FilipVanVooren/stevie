@@ -78,7 +78,7 @@ pane.clock.time:
         mpy   @const.3,tmp0               ; \ Multiply DOW by 3, result in tmp1
         ai    tmp1,txt.dow                ; / Add base address of DOW string
 
-        li    tmp0,pane.botrow * 80 + 61  ; Destination VDP address
+        li    tmp0,pane.botrow * 80 + 63  ; Destination VDP address
         li    tmp2,3                      ; Number of bytes to copy
         bl    @xpym2v                     ; \ Copy day of week to VDP memory
                                           ; | i  tmp0 = Destination VDP address
@@ -88,7 +88,7 @@ pane.clock.time:
         ; Display date
         ;------------------------------------------------------ 
         bl    @cpym2v                     ; \ Copy date to VDP memory
-              data pane.botrow * 80 + 65  ; | i  p1 = Destination VDP address
+              data pane.botrow * 80 + 67  ; | i  p1 = Destination VDP address
               data fh.clock.datetime + 4  ; | i  p2 = Source RAM address
               data 8                      ; / i  p3 = Number of bytes to copy
         ;------------------------------------------------------
