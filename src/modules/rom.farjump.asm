@@ -11,7 +11,7 @@
 *  p1 = Vector address with target address to jump to
 *  p2 = Write address of source ROM bank
 *--------------------------------------------------------------
-*  bl @xrom.farjump
+*  bl   @xrom.farjump
 *
 *  tmp0 = Write address of target ROM bank
 *  tmp1 = Vector address with target address to jump to

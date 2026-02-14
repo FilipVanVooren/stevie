@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260208-2008530
+0002               * BUILD: 260214-1656110
 0003               ***************************************************************
                    < stevie_bb.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -392,7 +392,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0207      A23A     tv.specmsg.ptr    equ  tv.struct + 58  ; Pointer to special message above botrow
 0208      A23C     tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
 0209      A23E     tv.show.linelen   equ  tv.struct + 62  ; Show line length in status line
-0210      A240     tv.show.clock     equ  tv.struct + 64  ; Show clock in status line
+0210      A240     tv.show.clock     equ  tv.struct + 64  ; Show clock in status line (tri-state)
 0211      A242     tv.error.msg      equ  tv.struct + 66  ; Error message (max 80 bytes)
 0212      A292     tv.devpath        equ  tv.struct + 146 ; Device path (max 80 bytes)
 0213      A2E2     tv.free           equ  tv.struct + 226 ; End of structure
@@ -6397,7 +6397,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011               *  p1 = Vector address with target address to jump to
 0012               *  p2 = Write address of source ROM bank
 0013               *--------------------------------------------------------------
-0014               *  bl @xrom.farjump
+0014               *  bl   @xrom.farjump
 0015               *
 0016               *  tmp0 = Write address of target ROM bank
 0017               *  tmp1 = Vector address with target address to jump to

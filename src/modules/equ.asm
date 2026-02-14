@@ -207,7 +207,7 @@ tv.fg99.img.ptr   equ  tv.struct + 56  ; Pointer to Final GROM cartridge to load
 tv.specmsg.ptr    equ  tv.struct + 58  ; Pointer to special message above botrow
 tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
 tv.show.linelen   equ  tv.struct + 62  ; Show line length in status line
-tv.show.clock     equ  tv.struct + 64  ; Show clock in status line
+tv.show.clock     equ  tv.struct + 64  ; Show clock in status line (tri-state)
 tv.error.msg      equ  tv.struct + 66  ; Error message (max 80 bytes)
 tv.devpath        equ  tv.struct + 146 ; Device path (max 80 bytes)
 tv.free           equ  tv.struct + 226 ; End of structure

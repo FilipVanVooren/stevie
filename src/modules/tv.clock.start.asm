@@ -31,7 +31,7 @@ tv.clock.start:
         ; Fast clock reading task
         ;------------------------------------------------------
         bl    @mkslot               ; Setup Task Scheduler slots         
-              data >0132,task.clock ; \ Task 1 - Read clock device
+              data >017f,task.clock ; \ Task 1 - Read clock device
               data eol              ; / approx. every 1 second
         ;------------------------------------------------------
         ; Exit

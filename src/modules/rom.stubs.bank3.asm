@@ -364,6 +364,26 @@ dialog.help.content:
         b     *r11                  ; Return to caller
 
 ***************************************************************
+* Stub for "pane.clock.time"
+* bank5 vec.25
+********|*****|*********************|**************************
+pane.clock.time:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 5
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank5.rom        ; | i  p0 = bank address
+              data vec.25           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+***************************************************************
 * Stub for "vdp.cursor.tat.fb"
 * bank6 vec.4
 ********|*****|*********************|**************************
