@@ -88,8 +88,10 @@ fm.clock.read:
         ;-------------------------------------------------------
         mov   @fh.clock.datetime,tmp0  ; Data read from clock device?
         jne   fm.readclock.exit        ; yes, exit
-        bl    @fm.clock.off            ; No, turn clock off (reset clock data)
 
+        li    tmp0,>dead            ; No clock device found
+        mov   tmp0,@tv.clock.state  ; Set clock state to "No clock found"
+        bl    @fm.clock.off         ; Turn clock off (reset clock data)
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

@@ -8,10 +8,11 @@
 * bl  @pane.clock.time
 *--------------------------------------------------------------
 * INPUT
-* @tv.show.clock = tri-state flag
+* @tv.clock.state = Clock status fla
 *    >0000 Clock is off. Do not display time/date
-*    >994A Clock is on. Only display clock timee/date
+*    >994a Clock is on. Only display clock time/date
 *    >ffff Clock is on. Read and display clock time/date
+*    >dead No clock device found. Do not display time/date
 *
 * OUTPUT
 * none
@@ -31,7 +32,7 @@ pane.clock.time:
         ;------------------------------------------------------
         ; Is clock on?
         ;------------------------------------------------------
-        mov   @tv.show.clock,tmp0   ; Is clock on?
+        mov   @tv.clock.state,tmp0   ; Is clock on?
         jeq   pane.clock.time.exit  ; No, exit early
         ;------------------------------------------------------
         ; Read date/time from clock device
@@ -46,7 +47,7 @@ pane.clock.time:
         ;------------------------------------------------------
         ; Display time?
         ;------------------------------------------------------
-!       seto  @tv.show.clock          ; Set flag to ON state again
+!       seto  @tv.clock.state          ; Set flag to ON state again
         mov  @fh.clock.datetime,tmp0  ; Clock initialized?
         jeq  pane.clock.time.exit     ; No, exit early
 

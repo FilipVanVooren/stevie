@@ -204,32 +204,8 @@ edkey.key.process.enter:
         ; Flash screen if editor is locked
         ;-------------------------------------------------------        
 edkey.key.process.flash:
-        clr   @parm1                  ; Screen off
-        clr   @parm2                  ; Marked lines colored
-        clr   @parm3                  ; Color everything
-
-        dect  stack
-        mov   @tv.colorscheme,*stack  ; Backup color theme 
-        mov   @const.13,@tv.colorscheme   
-                                      ; Set color scheme
-
-        bl    @pane.colorscheme.load  ; Load colorschene
-                                      ; \ i  parm1 = Screen on/off
-                                      ; | i  parm2 = Marked lines colored
-                                      ; / i  parm3 = Color everything
-
-        mov   *stack+,@tv.colorscheme ; Restore color theme
-
-        seto  @parm1                  ; Screen on
-        clr   @parm2                  ; Marked lines colored
-        clr   @parm3                  ; Color everything
-
-        bl    @pane.colorscheme.load  ; Load colorschene
-                                      ; \ i  parm1 = Screen on/off
-                                      ; | i  parm2 = Marked lines colored
-                                      ; / i  parm3 = Color everything
-
-        bl    @edb.lock               ; Call lock function to show message again
+        bl    @tv.flash.screen      ; Flash screen for a moment
+        bl    @edb.lock             ; Call lock function to show message again
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

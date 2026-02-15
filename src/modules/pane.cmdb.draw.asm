@@ -243,14 +243,14 @@ pane.cmdb.draw.keys:
         ; Display time & date
         ;------------------------------------------------------
 pane.cmdb.draw.timedate:
-        mov   @tv.show.clock,tmp0   ; \ Is clock on?
+        mov   @tv.clock.state,tmp0   ; \ Is clock on?
         jeq   pane.cmdb.draw.alpha  ; / No, skip clock display
 
         li    tmp0,>994a            ; \ Set tri-state to "skip reading clock"
-        mov   tmp0,@tv.show.clock   ; / Only display
+        mov   tmp0,@tv.clock.state   ; / Only display
 
         bl    @pane.clock.time      ; Display clock time & date
-                                    ; \ i  tv.show.clock = Clock on/off flag
+                                    ; \ i  tv.clock.state = Clock on/off flag
                                     ; /
         ;------------------------------------------------------
         ; ALPHA-Lock key down?

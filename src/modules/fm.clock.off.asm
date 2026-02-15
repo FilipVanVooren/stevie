@@ -3,9 +3,13 @@
 
 ***************************************************************
 * fm.clock.off
-* Turn clock functionaltiy off
+* Turn clock functionality off
 ***************************************************************
 * bl  @fm.clock.off
+*--------------------------------------------------------------
+* INPUT
+* @parm1 = >0000 clock off message,
+*          >ffff clock not found message
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -30,25 +34,41 @@ fm.clock.off:
 
         bl    @film                 ; Clear clock structure
               data  fh.clock.datetime,>00,19
-        ;-------------------------------------------------------
-        ; Show message 'Clock: OFF'
-        ;-------------------------------------------------------
+        ;------------------------------------------------------
+        ; Determine message
+        ;------------------------------------------------------
+        mov   @tv.clock.state,tmp0  ; Is clock on?
+        jeq   fm.clock.off.exit     ; No, exit early
+
         dect  stack
         mov   @wyx,*stack           ; Save cursor position
-
+        ci    tmp0,>dead            ; No clock device found?
+        jeq   !                     ; Yes, show clock not found     
+        ;-------------------------------------------------------
+        ; Clock: OFF
+        ;-------------------------------------------------------
         bl    @putat
               byte 0,52
               data txt.clockoff     ; Display clock off message
+        mov   *stack+,@wyx          ; Restore cursor position
+        jmp   fm.clock.off.oneshot
+        ;-------------------------------------------------------
+        ; Clock: Not found
+        ;-------------------------------------------------------
+!       bl    @tv.flash.screen      ; Flash screen to draw attention to message
 
+        bl    @putat
+              byte 0,52
+              data txt.noclock      ; Display No clock found message
         mov   *stack+,@wyx          ; Restore cursor position              
         ;-------------------------------------------------------
         ; Setup one shot task for removing overlay message
         ;-------------------------------------------------------
+fm.clock.off.oneshot:
         li    tmp0,pane.topline.oneshot.clearmsg
         mov   tmp0,@tv.task.oneshot
 
-        bl    @rsslot               ; \ Reset loop counter slot 3
-              data 3                ; / for getting consistent delay        
+        clr   @tv.clock.state        ; Clear clock display flag
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -60,7 +80,10 @@ fm.clock.off.exit:
         b     *r11                  ; Return
 
 
-
 txt.clockoff:
         stri "Clock: OFF"           ; Text for clock off message
+        even
+
+txt.noclock:
+        stri "Clock: not found!"    ; Text for clock device not found message
         even

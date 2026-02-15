@@ -89,6 +89,10 @@ main:
         copy  "fm.clock.on.asm"     ; Turn clock reading/display on
         copy  "fm.clock.off.asm"    ; Turn clock reading/display off
         ;-----------------------------------------------------------------------
+        ; Miscelaneous functions
+        ;-----------------------------------------------------------------------         
+        copy  "tv.flash.screen.asm" ; Flash screen for visual feedback
+        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.bank5.asm" ; Bank specific stubs

@@ -128,7 +128,7 @@ main.continue:
         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
         mov   tmp0,@btihi           ; / Tell Task Scheduler 
 
-        mov   @tv.show.clock,tmp0   ; Show clock?
+        mov   @tv.clock.state,tmp0   ; Show clock?
         jne   !                     ; Yes
 
         bl    @clslot

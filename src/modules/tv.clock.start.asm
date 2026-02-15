@@ -27,6 +27,8 @@ tv.clock.start:
         ;------------------------------------------------------
         bl    @film                 ; Clear clock structure
               data  fh.clock.datetime,>00,19
+
+        seto  @tv.clock.state        ; Set clock display flag              
         ;------------------------------------------------------
         ; Fast clock reading task
         ;------------------------------------------------------

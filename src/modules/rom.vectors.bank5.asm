@@ -38,7 +38,7 @@ vec.24  data  cpu.crash             ;
 vec.25  data  pane.clock.time       ; 
 vec.26  data  fm.clock.on           ;
 vec.27  data  fm.clock.off          ;
-vec.28  data  cpu.crash             ;
+vec.28  data  tv.flash.screen       ;
 vec.29  data  cpu.crash             ;
 vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;

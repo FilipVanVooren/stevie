@@ -1249,6 +1249,17 @@ edb.unlock.vector:
 
 
 ***************************************************************
+* Stub for "tv.flash.screen"
+* bank5 vec.28
+********|*****|*********************|**************************
+tv.flash.screen:
+        mov   @tv.flash.screen.vector,@trmpvector
+        jmp   _trampoline.bank5.ret ; Longjump
+tv.flash.screen.vector:
+        data  vec.28
+
+
+***************************************************************
 * Trampoline bank 5 with return
 ********|*****|*********************|**************************
 _trampoline.bank5.ret:
