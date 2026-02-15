@@ -319,9 +319,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Run program image (EA5)
         ;-------------------------------------------------------
-        byte  key.fctn.5, id.dialog.run
-        data  edkey.action.cmdb.fastmode.toggle
-
         byte  key.enter, id.dialog.run
         data  edkey.action.cmdb.file.run
 
