@@ -19,25 +19,25 @@ setbin() {
     case "$vdpmode" in
         # F18a/PICO9918 24x80
         2480)
-          binary="stevie24.bin"
+          binary="stevie24_8.bin"
           return
           ;;
 
         # F18a/PICO9918 30x80
         3080)
-          binary="stevie30.bin"
+          binary="stevie30_8.bin"
           return          
           ;;
 
         # PICO9918 48x80
         4880)
-          binary="stevie48.bin"
+          binary="stevie48_8.bin"
           return          
           ;;
 
         # F18a 60x80
         6080)
-          binary="stevie60.bin"
+          binary="stevie60_8.bin"
           return          
           ;;
 
