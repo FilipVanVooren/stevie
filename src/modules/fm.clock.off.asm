@@ -68,7 +68,7 @@ fm.clock.off.oneshot:
         li    tmp0,pane.topline.oneshot.clearmsg
         mov   tmp0,@tv.task.oneshot
 
-        clr   @tv.clock.state        ; Clear clock display flag
+        clr   @tv.clock.state       ; Clear clock display flag (>00 = clock off)
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
