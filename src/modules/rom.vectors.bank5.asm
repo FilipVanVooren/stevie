@@ -25,9 +25,9 @@ vec.11  data  edb.line.copy         ;
 vec.12  data  edb.block.match       ;
 vec.13  data  edb.lock              ;
 vec.14  data  edb.unlock            ;
-vec.15  data  cpu.crash             ;
-vec.16  data  cpu.crash             ;
-vec.17  data  cpu.crash             ;
+vec.15  data  edb.find.init         ;
+vec.16  data  edb.find.search       ;
+vec.17  data  edb.find.scan         ;
 vec.18  data  cpu.crash             ;
 vec.19  data  cpu.crash             ;
 vec.20  data  cpu.crash             ;
@@ -35,16 +35,16 @@ vec.21  data  cpu.crash             ;
 vec.22  data  cpu.crash             ;
 vec.23  data  cpu.crash             ;
 vec.24  data  cpu.crash             ;
-vec.25  data  cpu.crash             ;
-vec.26  data  cpu.crash             ;
-vec.27  data  cpu.crash             ;
-vec.28  data  cpu.crash             ;
+vec.25  data  pane.clock.time       ; 
+vec.26  data  fm.clock.on           ;
+vec.27  data  fm.clock.off          ;
+vec.28  data  tv.flash.screen       ;
 vec.29  data  cpu.crash             ;
 vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 5: Vectors 33-64
+* ROM 5: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

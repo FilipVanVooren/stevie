@@ -42,11 +42,11 @@ vec.28  data  cpu.crash                ;
 vec.29  data  cpu.crash                ;
 vec.30  data  cpu.crash                ;
 vec.31  data  cpu.crash                ;
-vec.32  data  cpu.crash                ;
+vec.32  data  tv.set.font              ; Set font
 *--------------------------------------------------------------
-* ROM 6: Vectors 33-64
+* ROM 6: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
-vec.33  data  tv.set.font           ; Set current font
+vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;
 vec.35  data  cpu.crash             ;
 vec.36  data  cpu.crash             ;

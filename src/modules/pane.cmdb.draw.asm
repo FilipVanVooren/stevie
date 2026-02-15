@@ -240,8 +240,22 @@ pane.cmdb.draw.keys:
                                     ; | i  parm2 = Pointer to string with hint
                                     ; / i  parm3 = Pad length
         ;------------------------------------------------------
+        ; Display time & date
+        ;------------------------------------------------------
+pane.cmdb.draw.timedate:
+        mov   @tv.clock.state,tmp0   ; \ Is clock on?
+        jeq   pane.cmdb.draw.alpha  ; / No, skip clock display
+
+        li    tmp0,>994a            ; \ Set tri-state to "skip reading clock"
+        mov   tmp0,@tv.clock.state   ; / Only display
+
+        bl    @pane.clock.time      ; Display clock time & date
+                                    ; \ i  tv.clock.state = Clock on/off flag
+                                    ; /
+        ;------------------------------------------------------
         ; ALPHA-Lock key down?
         ;------------------------------------------------------
+pane.cmdb.draw.alpha:
         coc   @wbit10,config
         jeq   pane.cmdb.draw.alpha.down
         ;------------------------------------------------------

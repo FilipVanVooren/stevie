@@ -1,9 +1,9 @@
 * FILE......: edk.fb.char
-* Purpose...: Add character (frame buffer version)
+* Purpose...: Add character 
 
 ***************************************************************
 * edk.fb.char
-* Add character (frame buffer version)
+* Add character
 ***************************************************************
 * bl  @ed.fb.char
 *--------------------------------------------------------------

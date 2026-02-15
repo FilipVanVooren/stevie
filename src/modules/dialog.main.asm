@@ -1,11 +1,11 @@
-* FILE......: dialog.menu.asm
+* FILE......: dialog.main.asm
 * Purpose...: Dialog "Main Menu"
 
 ***************************************************************
-* dialog.menu
+* dialog.main
 * Open Dialog "Main Menu"
 ***************************************************************
-* bl @dialog.menu
+* bl @dialog.main
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-dialog.menu:
+dialog.main:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -34,7 +34,7 @@ dialog.menu:
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-        li    tmp0,id.dialog.menu
+        li    tmp0,id.dialog.main
         mov   tmp0,@cmdb.dialog     ; Set dialog ID
 
         li    tmp0,txt.head.menu
@@ -50,7 +50,7 @@ dialog.menu:
 
         li    tmp0,pos.info.menulock
         mov   tmp0,@cmdb.panmarkers ; Show letter markers
-        jmp   dialog.menu.statlines 
+        jmp   dialog.main.statlines 
         ;-------------------------------------------------------
         ; Menu without "Unlock" option
         ;-------------------------------------------------------
@@ -62,7 +62,7 @@ dialog.menu:
         ;-------------------------------------------------------
         ; Show Status lines
         ;-------------------------------------------------------
-dialog.menu.statlines:
+dialog.main.statlines:
         bl    @pane.cmdb.statlines  ; Show status lines
                                     ; i \   @tv.devpath = Pointer to device path 
                                     ; i |   @tv.sams.maxpage = SAMS pages in system
@@ -75,11 +75,14 @@ dialog.menu.statlines:
         bl    @pane.filebrowser.colbar.remove
                                     ; Remove filepicker color bar
                                     ; i \  @cat.barpos = YX position color bar
-                                    ;   /                                                             
+                                    ;   / 
+
+  
+
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-dialog.menu.exit:
+dialog.main.exit:
         mov   *stack+,tmp4          ; Pop tmp4
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2

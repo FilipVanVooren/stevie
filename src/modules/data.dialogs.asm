@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 2480         ; F18a/PICO9918 24x80
-            text '  Stevie 1.9.8   '
+            text '  Stevie 1.9.9   '
             even
         .endif
 
         .ifeq vdpmode, 3080         ; F18a/PICO9918 30x80
-            text '  Stevie 1.9.8   '
+            text '  Stevie 1.9.9   '
             even
         .endif
 
         .ifeq vdpmode, 4880         ; PICO9918 48x80
-            text '  Stevie 1.9.8   '  
+            text '  Stevie 1.9.9   '  
             even
         .endif
 
         .ifeq vdpmode, 6080         ; PICO9918 60x80
-            text '  Stevie 1.9.8   '  
+            text '  Stevie 1.9.9   '  
             even
         .endif
 
@@ -97,7 +97,6 @@ txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
                    even
 
-
 ;--------------------------------------------------------------
 ; Dialog "Delete file"
 ;--------------------------------------------------------------
@@ -154,8 +153,6 @@ txt.hint.clipboard  stri 'Press 1 to 3 to copy clipboard file, F7 to configure.'
 txt.keys.clipboard  stri 'F9-Back  F7-Configure'
                     even
 
-
-
 ;--------------------------------------------------------------
 ; Dialog "Goto line"
 ;--------------------------------------------------------------
@@ -188,7 +185,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 68
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.9.8 - (c)2018-2026 Filip Van Vooren'
+                   text ' - Stevie 1.9.9 - (c)2018-2026 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------
@@ -262,11 +259,11 @@ txt.keys.basic3    stri 'F9-Back'
 ;--------------------------------------------------------------
 txt.head.config    byte 11,4,1
                    text ' Options '
-txt.info.config    stri 'Auto-Insert   Clipboard   Font   Line-Length'
-pos.info.config    byte 0,14,26,33,>ff
+txt.info.config    stri 'Auto-Insert   Clipboard   Clock   Font   Line-Length'
+pos.info.config    byte 0,14,28,34,41,>ff
                    even
-txt.info.conflock  stri 'Clipboard   Font   Line-Length'
-pos.info.conflock  byte 0,12,19,>ff
+txt.info.conflock  stri 'Clipboard   Clock   Font   Line-Length'
+pos.info.conflock  byte 0,14,20,27,>ff
                    even
 txt.keys.config    stri 'F9-Back  SPACE-Close menu'
                    even

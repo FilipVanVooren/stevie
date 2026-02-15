@@ -60,7 +60,7 @@ id.dialog.cart.fg99       equ  90      ; "FinalGROM 99 Cartridge"
 ;   Dialog ID's >= 100 indicate that command prompt should be
 ;   hidden and no characters added to CMDB keyboard buffer.
 ;-------------------------------------------------------------------------------
-id.dialog.menu            equ  100     ; "Main Menu"
+id.dialog.main            equ  100     ; "Main Menu"
 id.dialog.unsaved         equ  101     ; "Unsaved changes"
 id.dialog.block           equ  102     ; "Block move/copy/delete/print/..."
 id.dialog.clipboard       equ  103     ; "Copy clipboard to line ..."
@@ -68,11 +68,9 @@ id.dialog.help            equ  104     ; "About"
 id.dialog.file            equ  105     ; "File"
 id.dialog.cart.type       equ  106     ; "Cartridge Type"
 id.dialog.basic           equ  107     ; "TI Basic"
-id.dialog.opt             equ  108     ; "Configure"
-id.dialog.editor          equ  109     ; "Configure editor"
+id.dialog.opt             equ  108     ; "Options"
 id.dialog.font            equ  110     ; "Configure font"
 id.dialog.shortcuts       equ  111     ; "Shortcuts"
-id.dialog.find.browse     equ  120     ; "Find - Search results"
 ;-------------------------------------------------------------------------------
 ; Suffix characters for clipboards
 ;-------------------------------------------------------------------------------
@@ -209,9 +207,11 @@ tv.fg99.img.ptr   equ  tv.struct + 56  ; Pointer to Final GROM cartridge to load
 tv.specmsg.ptr    equ  tv.struct + 58  ; Pointer to special message above botrow
 tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
 tv.show.linelen   equ  tv.struct + 62  ; Show line length in status line
-tv.error.msg      equ  tv.struct + 64  ; Error message (max 80 bytes)
-tv.devpath        equ  tv.struct + 144 ; Device path (max 80 bytes)
-tv.free           equ  tv.struct + 224 ; End of structure
+tv.clock.state    equ  tv.struct + 64  ; Clock state
+                                       ; >0000 Off, >ffff On, >dead No clock
+tv.error.msg      equ  tv.struct + 66  ; Error message (max 80 bytes)
+tv.devpath        equ  tv.struct + 146 ; Device path (max 80 bytes)
+tv.free           equ  tv.struct + 226 ; End of structure
 ;-------------------------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff                   (256 bytes)
 ;-------------------------------------------------------------------------------
@@ -237,7 +237,7 @@ fb.scrrows        equ  fb.struct + 30  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 32  ; Max # of rows on physical screen for fb
 fb.ruler.sit      equ  fb.struct + 34  ; 80 char ruler  (no length-prefix!)
 fb.ruler.tat      equ  fb.struct + 114 ; 80 char colors (no length-prefix!)
-fb.free           equ  fb.struct + 194 ; End of structure
+fb.free           equ  fb.struct + 194 ; **free** up to 256
 ;-------------------------------------------------------------------------------
 ; File handle structure                @>a400-a4ff                   (256 bytes)
 ;-------------------------------------------------------------------------------
@@ -288,7 +288,8 @@ fh.ea5.ramtgt     equ  fh.struct + 112 ; RAM target address for EA5 image chunk
 fh.ea5.size       equ  fh.struct + 114 ; Size of EA5 image chunk
 fh.ea5.startaddr  equ  fh.struct + 116 ; EA5 program start address
 fh.membuffer      equ  fh.struct + 118 ; 80 bytes file memory buffer
-fh.free           equ  fh.struct + 198 ; **free** up to 256
+fh.clock.datetime equ  fh.struct + 198 ; Date/time structure (19 bytes) 
+fh.free           equ  fh.struct + 218 ; **free** up to 256
 ;-------------------------------------------------------------------------------
 ; File handle structure for generic    @>a400-a4ff                   (256 bytes)
 ; Overloads file handle structure!

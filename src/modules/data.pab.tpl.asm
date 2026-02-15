@@ -41,6 +41,27 @@ fh.file.pab.header:
         ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
                                     ;         (Device + '.' + File name)          
 
+***************************************************************
+* PAB for accessing clock file
+********|*****|*********************|**************************
+        even                        ; Must always start on even address!!
+fh.file.pab.clock:
+        byte  io.op.open            ;  0    - OPEN
+        byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
+        data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+        byte  0                     ;  4    - Record length (let it figure out)
+        byte  00                    ;  5    - Character count
+        data  >0000                 ;  6-7  - Seek record (only for fixed recs)
+        byte  >00                   ;  8    - Screen offset (cassette DSR only)
+        ;------------------------------------------------------
+        ; File descriptor part (variable length)
+        ;------------------------------------------------------        
+        ; byte  64                  ;  9    - File descriptor length
+        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
+                                    ;         (Device + '.' + File name)          
+
+
+
 
 ***************************************************************
 * PAB for loading binary image

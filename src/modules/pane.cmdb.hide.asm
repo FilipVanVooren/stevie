@@ -29,6 +29,8 @@ pane.cmdb.hide:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
         mov   @parm2,*stack         ; Push @parm2
@@ -40,7 +42,7 @@ pane.cmdb.hide:
         bl    @hchar                ; Destroys tmp0, tmp1,tmp2, tmp3
               byte pane.botrow-6,0,32,80*3
               byte pane.botrow-3,0,32,80*3
-              byte pane.botrow-1,0,32,80*2
+              byte pane.botrow-1,0,32,158  ; Do not overwrite AL-symbol
               data EOL              
         ;------------------------------------------------------
         ; Hide command buffer pane (rest)
@@ -74,6 +76,7 @@ pane.cmdb.hide.exit:
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
+        mov   *stack+,tmp3          ; Pop tmp3        
         mov   *stack+,tmp2          ; Pop tmp2        
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0

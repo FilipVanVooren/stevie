@@ -43,7 +43,7 @@ vec.30  equ   bankx.vectab + 58     ;
 vec.31  equ   bankx.vectab + 60     ;
 vec.32  equ   bankx.vectab + 62     ;
 *--------------------------------------------------------------
-* ROM 0: Vectors 33-64
+* ROM 0: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
 vec.33  equ   bankx.vectab + 64     ;
 vec.34  equ   bankx.vectab + 66     ;

@@ -5,6 +5,20 @@
 * Editor - Process action keys
 ****************************************************************
 edkey.key.process:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+
+        bl    @rsslot               ; \ Reset loop counter slot 1
+              data 1                ; / Prevent reading clock
+
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11
+        
         mov   @keycode1,tmp1        ; Get key pressed
         sla   tmp1,8                ; Move to MSB
         seto  tmp3                  ; EOL marker
@@ -190,32 +204,8 @@ edkey.key.process.enter:
         ; Flash screen if editor is locked
         ;-------------------------------------------------------        
 edkey.key.process.flash:
-        clr   @parm1                  ; Screen off
-        clr   @parm2                  ; Marked lines colored
-        clr   @parm3                  ; Color everything
-
-        dect  stack
-        mov   @tv.colorscheme,*stack  ; Backup color theme 
-        mov   @const.13,@tv.colorscheme   
-                                      ; Set color scheme
-
-        bl    @pane.colorscheme.load  ; Load colorschene
-                                      ; \ i  parm1 = Screen on/off
-                                      ; | i  parm2 = Marked lines colored
-                                      ; / i  parm3 = Color everything
-
-        mov   *stack+,@tv.colorscheme ; Restore color theme
-
-        seto  @parm1                  ; Screen on
-        clr   @parm2                  ; Marked lines colored
-        clr   @parm3                  ; Color everything
-
-        bl    @pane.colorscheme.load  ; Load colorschene
-                                      ; \ i  parm1 = Screen on/off
-                                      ; | i  parm2 = Marked lines colored
-                                      ; / i  parm3 = Color everything
-
-        bl    @edb.lock               ; Call lock function to show message again
+        bl    @tv.flash.screen      ; Flash screen for a moment
+        bl    @edb.lock             ; Call lock function to show message again
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -29,7 +29,7 @@
         copy  "equ.c99.asm"         ; Classic99 emulator configuration
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
 
-****************************************************s***********
+***************************************************************
 * BANK 3
 ********|*****|*********************|**************************
 bankid  equ   bank3.rom             ; Set bank identifier to current bank
@@ -68,7 +68,7 @@ main:
         ; Dialogs (1)
         ;-----------------------------------------------------------------------
         copy  "dialog.asm"              ; Dialog initialisation code
-        copy  "dialog.menu.asm"         ; Dialog "Stevie Menu"
+        copy  "dialog.main.asm"         ; Dialog "Stevie Menu"
         copy  "dialog.file.asm"         ; Dialog "File"
         copy  "dialog.cart.type.asm"    ; Dialog "Cartridge Type"
         copy  "dialog.cart.fg99.asm"    ; Dialog "FinalGROM 99 Cartridge"
@@ -81,8 +81,8 @@ main:
         copy  "dialog.file.print.asm"   ; Dialog "Print file"        
         copy  "dialog.file.run.asm"     ; Dialog "Run program image (EA5)"
         copy  "dialog.file.catalog.asm" ; Dialog "Catalog"
-        copy  "dialog.cfg.asm"          ; Dialog "Configure"
-        copy  "dialog.cfg.clip.asm"     ; Dialog "Configure clipboard"
+        copy  "dialog.opt.asm"          ; Dialog "Options"
+        copy  "dialog.opt.clip.asm"     ; Dialog "Configure clipboard"
         copy  "dialog.font.asm"         ; Dialog "Configure font"
         copy  "dialog.clipboard.asm"    ; Dialog "Copy from clipboard"
         copy  "dialog.unsaved.asm"      ; Dialog "Unsaved changes"
@@ -107,9 +107,12 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialog toggles
         ;-----------------------------------------------------------------------
-        copy  "fm.fastmode.asm"         ; Toggle Fastmode IO for file operation
-        copy  "fm.lineterm.asm"         ; Toggle line termination mode
-        copy  "tib.dialog.helper.asm"   ; Helper functions for TI Basic dialog
+        copy  "fm.fastmode.asm"           ; Toggle Fastmode IO for file operation
+        copy  "fm.lineterm.asm"           ; Toggle line termination mode
+        copy  "tv.clock.toggle.asm"       ; Toggle clock display        
+        copy  "tv.autoinsert.toggle.asm"  ; Toggle auto insert mode for buffer
+        copy  "tv.linelen.toggle.asm"     ; Toggle line length display                
+        copy  "tib.dialog.helper.asm"     ; Helper functions for TI Basic dialog
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

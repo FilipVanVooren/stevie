@@ -19,8 +19,8 @@ vec.5   data  dialog.print          ; Dialog "Print file"
 vec.6   data  dialog.file           ; Dialog "File"
 vec.7   data  dialog.unsaved        ; Dialog "Unsaved changes"
 vec.8   data  dialog.clipboard      ; Dialog "Copy clipboard to line ..."
-vec.9   data  dialog.cfg.clip       ; Dialog "Configure clipboard"
-vec.10  data  dialog.cfg            ; Dialog "Configure"
+vec.9   data  dialog.opt.clip       ; Dialog "Configure clipboard"
+vec.10  data  dialog.opt            ; Dialog "Configure"
 vec.11  data  dialog.append         ; Dialog "Append file"
 vec.12  data  dialog.cart.type      ; Dialog "Cartridge Type"
 vec.13  data  dialog.basic          ; Dialog "TI Basic"
@@ -28,7 +28,7 @@ vec.14  data  dialog.shortcuts      ; Dialog "Shortcuts"
 vec.15  data  dialog.cat            ; Dialog "Catalog"
 vec.16  data  dialog.goto           ; Dialog "Go to line"
 vec.17  data  dialog.font           ; Dialog "Configure font"
-vec.18  data  dialog.run            ; Dialog "Run file"
+vec.18  data  dialog.run            ; Dialog "Run program image (EA5)"
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.21  data  pane.cmdb.hide        ; Hide command buffer pane
@@ -40,17 +40,17 @@ vec.26  data  cmdb.cmd.getlength    ; Get length of command line
 vec.27  data  cmdb.cmd.preset       ;
 vec.28  data  cmdb.cmd.set          ;
 vec.29  data  cmdb.cmd.cursor_eol   ; Position cursor at end of command line
-vec.30  data  dialog.menu           ; Dialog "Main Menu"
+vec.30  data  dialog.main           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load
 *--------------------------------------------------------------
-* ROM 3: Vectors 33-64
+* ROM 3: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
 vec.33  data  cmdb.cfg.fname        ; Configure filename
 vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print
-vec.35  data  cpu.crash             ;
-vec.36  data  cpu.crash             ;
-vec.37  data  cpu.crash             ;
+vec.35  data  tv.autoinsert.toggle  ; Toggle auto insert mode for editor buffer
+vec.36  data  tv.clock.toggle       ; Toggle clock display on/off
+vec.37  data  tv.linelen.toggle     ; Toggle line length display on/off
 vec.38  data  cpu.crash             ;
 vec.39  data  cpu.crash             ;
 vec.40  data  cpu.crash             ;

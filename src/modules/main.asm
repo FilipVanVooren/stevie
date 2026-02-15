@@ -119,18 +119,24 @@ main.continue:
         li    tmp0,timers           ; \ Set pointer to timers table
         mov   tmp0,@wtitab          ; /
 
-        bl    @mkslot
-              data >0002,task.vdp.panes    ; Task 0 - Draw VDP editor panes
-              data >020f,task.vdp.cursor   ; Task 2 - Toggle VDP cursor shape
-              data >0360,task.oneshot      ; Task 3 - One shot task
-              data eol
+        bl    @mkslot                      ; Setup Task Scheduler slots         
+              data >0002,task.vdp.panes    ; \ Task 0 - Draw VDP editor panes
+              data >020f,task.vdp.cursor   ; | Task 2 - Toggle VDP cursor shape
+              data >0360,task.oneshot      ; | Task 3 - One shot task
+              data eol                     ; /
 
         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
-        mov   tmp0,@btihi           ; / Tell Task Scheduler
+        mov   tmp0,@btihi           ; / Tell Task Scheduler 
+
+        mov   @tv.clock.state,tmp0   ; Show clock?
+        jne   !                     ; Yes
+
+        bl    @clslot
+              data 1                ; Disable clock task slot
         ;-------------------------------------------------------
         ; Setup keyboard scanning and start kernel/timers
         ;-------------------------------------------------------
-        bl    @mkhook
+!       bl    @mkhook
               data edkey.keyscan.hook
                                     ; Setup keyboard scanning hook
         ;-------------------------------------------------------
