@@ -265,9 +265,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Open file
         ;-------------------------------------------------------
-        byte  key.fctn.5, id.dialog.open
-        data  edkey.action.cmdb.fastmode.toggle
-
         byte  key.enter, id.dialog.open
         data  edkey.action.cmdb.load
 
@@ -285,9 +282,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Insert file at line ...
         ;-------------------------------------------------------
-        byte  key.fctn.5, id.dialog.insert
-        data  edkey.action.cmdb.fastmode.toggle
-
         byte  key.enter, id.dialog.insert
         data  edkey.action.cmdb.insert
 
@@ -302,9 +296,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Append file
         ;-------------------------------------------------------
-        byte  key.fctn.5, id.dialog.append
-        data  edkey.action.cmdb.fastmode.toggle
-
         byte  key.enter, id.dialog.append
         data  edkey.action.cmdb.append
 

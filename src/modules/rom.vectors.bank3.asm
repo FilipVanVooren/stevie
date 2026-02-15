@@ -42,7 +42,7 @@ vec.28  data  cmdb.cmd.set          ;
 vec.29  data  cmdb.cmd.cursor_eol   ; Position cursor at end of command line
 vec.30  data  dialog.main           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
-vec.32  data  fm.fastmode           ; Toggle FastMode on/off in Load
+vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
 * ROM 3: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------

@@ -197,20 +197,7 @@ fm.loadsave.cb.indicator2.refresh:
         mov   @fb.scrrows,@parm1
         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT                                    
                                     ; \ i  @parm1 = number of lines to dump
-                                    ; /
-        ;------------------------------------------------------
-        ; Display fast mode
-        ;------------------------------------------------------
-        abs   @fh.offsetopcode
-        jeq   fm.loadsave.cb.indicator2.kb
-
-        bl    @hchar
-              byte 0,50,32,20       
-              data EOL              ; Erase any previous message
-              
-        bl    @putat
-              byte 0,52             ; Position cursor
-              data txt.fastmode     ; Display "FastMode"      
+                                    ; /  
         ;------------------------------------------------------
         ; Check if updated counters should be displayed
         ;------------------------------------------------------

@@ -48,8 +48,6 @@ txt.done.clipboard stri 'Clipboard saved'
                    even
 txt.done.clipdev   stri 'Clipboard set'
                    even
-txt.fastmode       stri 'Fastmode IO'
-                   even
 txt.nodisk         stri 'No Device/Disk/Path'
                    even
 txt.uncrunching    stri 'Uncrunching TI Basic line....'

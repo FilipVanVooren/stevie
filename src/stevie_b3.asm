@@ -107,7 +107,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialog toggles
         ;-----------------------------------------------------------------------
-        copy  "fm.fastmode.asm"           ; Toggle Fastmode IO for file operation
         copy  "fm.lineterm.asm"           ; Toggle line termination mode
         copy  "tv.clock.toggle.asm"       ; Toggle clock display        
         copy  "tv.autoinsert.toggle.asm"  ; Toggle auto insert mode for buffer

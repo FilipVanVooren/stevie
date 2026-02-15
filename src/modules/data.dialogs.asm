@@ -31,9 +31,7 @@ txt.stevie:
 ;--------------------------------------------------------------
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
-txt.keys.default1  stri 'F9-Back  F3-Clear  F5-FM  ^0=TIPI  ^1-9=DSK1-9  ^A-C=SCS1-3  ^I-G=IDE1-3  '
-                   even
-txt.keys.default2  stri 'F9-Back  F3-Clear *F5-FM  ^0=TIPI  ^1-9=DSK1-9  ^A-C=SCS1-3  ^I-G=IDE1-3  '
+txt.keys.default1  stri 'F9-Back  F3-Clear  ^0=TIPI  ^1-9=DSK1-9  ^A-C=SCS1-3  ^I-G=IDE1-3  '
                    even
 
 ;--------------------------------------------------------------
@@ -60,7 +58,6 @@ txt.head.open      byte 13,4,1
 txt.hint.open      equ  txt.hint.filepicker
 txt.hint.open2     stri 'Enter filename or pick file from catalog.'
 txt.keys.open      equ txt.keys.default1
-txt.keys.open2     equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -83,7 +80,6 @@ txt.head.append    byte 15,4,1
 txt.hint.append    equ txt.hint.filepicker                   
 txt.hint.append2   equ txt.hint.open2
 txt.keys.append    equ txt.keys.default1
-txt.keys.append2   equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -94,7 +90,6 @@ txt.head.insert    byte 23,4,1
 txt.hint.insert    equ txt.hint.filepicker
 txt.hint.insert2   equ txt.hint.open2
 txt.keys.insert    equ txt.keys.default1
-txt.keys.insert2   equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -105,7 +100,6 @@ txt.head.delete    byte 15,4,1
 txt.hint.delete    equ txt.hint.filepicker
 txt.hint.delete2   equ txt.hint.open2
 txt.keys.delete    equ txt.keys.default1
-txt.keys.delete2   equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -129,7 +123,6 @@ txt.info.run       stri 'Feature not yet available.'
 txt.hint.run       equ  txt.hint.filepicker
 txt.hint.run2      stri 'Enter filename or pick file from catalog.'
 txt.keys.run       equ txt.keys.default1
-txt.keys.run2      equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------
@@ -140,7 +133,6 @@ txt.head.dir       byte 11,4,1
 txt.hint.dir       equ  txt.hint.filepicker
 txt.hint.dir2      stri 'Enter device name and path. Last character must be "."'
 txt.keys.dir       equ txt.keys.default1
-txt.keys.dir2      equ txt.keys.default2
                    even
 
 ;--------------------------------------------------------------

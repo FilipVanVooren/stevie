@@ -77,18 +77,7 @@ dialog.clipboard.setup:
         mov   tmp0,@cmdb.panhint2   ; / 
 
         bl    @cmdb.cmd.clear       ; Clear current command
-
-        abs   @fh.offsetopcode      ; FastMode is off ?
-        jeq   !
-        ;-------------------------------------------------------
-        ; Show that FastMode is on
-        ;-------------------------------------------------------
-        li    tmp0,txt.keys.clipboard ; Highlight FastMode
-        jmp   dialog.clipboard.keylist
-        ;-------------------------------------------------------
-        ; Show that FastMode is off
-        ;-------------------------------------------------------
-!       li    tmp0,txt.keys.clipboard
+        li    tmp0,txt.keys.clipboard
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------

@@ -46,27 +46,6 @@ edkey.action.cmdb.proceed.exit:
                                     ; Back to editor main
 
 
-
-
-***************************************************************
-* edkey.action.cmdb.fastmode.toggle
-* Toggle fastmode on/off
-***************************************************************
-* b   @edkey.action.cmdb.fastmode.toggle
-*--------------------------------------------------------------
-* INPUT
-* none
-*--------------------------------------------------------------
-* Register usage
-* none
-********|*****|*********************|**************************
-edkey.action.cmdb.fastmode.toggle:
-       bl    @fm.fastmode           ; Toggle fast mode.
-       seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
-       b     @edkey.keyscan.hook.debounce
-                                    ; Back to editor main
-
-
 ***************************************************************
 * edkey.action.cmdb.lineterm.toggle
 * Toggle line termination on/off

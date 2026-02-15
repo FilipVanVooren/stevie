@@ -53,18 +53,7 @@ dialog.run.setup:
 
         li    tmp0,txt.hint.run2
         mov   tmp0,@cmdb.panhint2   ; Show extra hint
-
-        abs   @fh.offsetopcode      ; FastMode is off ?
-        jeq   !
-        ;-------------------------------------------------------
-        ; Show that FastMode is on
-        ;-------------------------------------------------------
-        li    tmp0,txt.keys.run2    ; Highlight FastMode
-        jmp   dialog.run.keylist
-        ;-------------------------------------------------------
-        ; Show that FastMode is off
-        ;-------------------------------------------------------
-!       li    tmp0,txt.keys.run
+        li    tmp0,txt.keys.run
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------

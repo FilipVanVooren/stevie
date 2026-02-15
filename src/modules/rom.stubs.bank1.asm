@@ -671,17 +671,6 @@ tibasic.am.toggle.vector:
 
 
 ***************************************************************
-* Stub for "fm.fastmode"
-* bank3 vec.32
-********|*****|*********************|**************************
-fm.fastmode:
-        mov   @fm.fastmode.vector,@trmpvector
-        jmp   _trampoline.bank3.ret ; Longjump
-fm.fastmode.vector:
-        data  vec.32
-
-
-***************************************************************
 * Stub for "cmdb.cfg.fname"
 * bank3 vec.33
 ********|*****|*********************|**************************

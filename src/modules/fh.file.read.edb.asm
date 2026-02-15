@@ -39,11 +39,7 @@ fh.file.read.edb:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
         dect  stack
-        mov   tmp3,*stack           ; Push tmp3
-
-        dect  stack
-        mov   @fh.offsetopcode,*stack
-                                    ; Push FastMode IO status          
+        mov   tmp3,*stack           ; Push tmp3      
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
@@ -197,17 +193,7 @@ fh.file.read.edb.open:
         jne   fh.file.read.edb.check_setpage
                                     ; No error, continue processing file (1a)
         ;------------------------------------------------------
-        ; File error. Check FastMode IO on unsupported device
-        ;------------------------------------------------------
-        abs   @fh.offsetopcode      ; FastMode IO on ?
-        jeq   fh.file.read.edb.err  ; Is off, do not retry open
-        clr   @fh.offsetopcode      ; Turn FastMode IO off
-        ;------------------------------------------------------
-        ; File error while FastMode IO is on, retry
-        ;------------------------------------------------------
-        jmp   fh.file.read.edb.open ; Retry
-        ;------------------------------------------------------
-        ; Need to error out, no retry possible.
+        ; File error
         ;------------------------------------------------------
 fh.file.read.edb.err:
         b     @fh.file.read.edb.error  
@@ -521,10 +507,7 @@ fh.file.read.edb.exit:
 
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
-
-
-        mov   *stack+,@fh.offsetopcode
-                                    ; Pop @fh.offsetopcode                                
+                       
         mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1

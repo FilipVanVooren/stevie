@@ -50,18 +50,7 @@ dialog.append.setup:
         
         li    tmp0,txt.hint.append2
         mov   tmp0,@cmdb.panhint2   ; Show extra hint
-
-        abs   @fh.offsetopcode      ; FastMode is off ?
-        jeq   !
-        ;-------------------------------------------------------
-        ; Show that FastMode is on
-        ;-------------------------------------------------------
-        li    tmp0,txt.keys.insert  ; Highlight FastMode
-        jmp   dialog.append.keylist
-        ;-------------------------------------------------------
-        ; Show that FastMode is off
-        ;-------------------------------------------------------
-!       li    tmp0,txt.keys.insert
+        li    tmp0,txt.keys.insert
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
