@@ -10,7 +10,7 @@
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback1
 *---------------------------------------------------------------
-fm.read.clock.cb.stopflag:
+fm.clock.read.cb.stopflag:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -20,6 +20,6 @@ fm.read.clock.cb.stopflag:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-fm.read.clock.cb.stopflag.exit:
+fm.clock.read.cb.stopflag.exit:
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller

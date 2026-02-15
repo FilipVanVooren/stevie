@@ -204,10 +204,10 @@ fm.browse.fname.set:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "fm.read.clock"
+* Stub for "fm.clock.read"
 * bank2 vec.14
 ********|*****|*********************|**************************
-fm.read.clock:
+fm.clock.read:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

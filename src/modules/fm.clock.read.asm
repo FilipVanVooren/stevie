@@ -3,10 +3,10 @@
 
 
 ***************************************************************
-* fm.read.clock
+* fm.clock.read
 * Read date & time from clock device
 ***************************************************************
-* bl  @fm.read.clock
+* bl  @fm.clock.read
 *--------------------------------------------------------------
 * INPUT
 * NONE
@@ -17,7 +17,7 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-fm.read.clock:
+fm.clock.read:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -47,11 +47,11 @@ fm.read.clock:
         mov   tmp0,@parm1           ; / 
         clr   @parm2                ; Callback function "Before open file"
 
-        li    tmp0,fm.read.clock.cb.stopflag
+        li    tmp0,fm.clock.read.cb.stopflag
         mov   tmp0,@parm3           ; Callback function "Read line from file"
         
         clr   @parm4                ; Callback function "Close file"
-        clr   @parm5                ; Callback function "File I/O error"
+        clr   @parm5                ; Callback function "Memory full error"
         clr   @parm6                ; Callback function "Memory full"
         
         li    tmp0,fh.clock.datetime
@@ -60,7 +60,6 @@ fm.read.clock:
         li    tmp0,fh.file.pab.clock
         mov   tmp0,@parm8           ; PAB Header template for reading clock
 
-        ;li    tmp0,io.seq.inp.dis.var
         li    tmp0,io.rel.inp.dis.var
         mov   tmp0,@parm9           ; File type/mode for reading catalog                
         ;-------------------------------------------------------
@@ -84,6 +83,13 @@ fm.read.clock:
                                     ; |             ROM/RAM 
                                     ; | i  @parm9 = File type/mode (in LSB), 
                                     ; /             becomes PAB byte 1
+        ;-------------------------------------------------------
+        ; Check if file was read successfully
+        ;-------------------------------------------------------
+        mov   @fh.clock.datetime,tmp0  ; Data read from clock device?
+        jne   fm.readclock.exit        ; yes, exit
+        bl    @fm.clock.off            ; No, turn clock off (reset clock data)
+
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

@@ -80,7 +80,7 @@ main:
         copy  "fm.savefile.asm"          ; Save DV80 file from editor buffer
         copy  "fm.newfile.asm"           ; New DV80 file in editor buffer
         copy  "fm.run.ea5.asm"           ; Run EA5 program image
-        copy  "fm.read.clock.asm"        ; Read Date/Time from clock device
+        copy  "fm.clock.read.asm"        ; Read Date/Time from clock device
         copy  "fm.callbacks.edb.asm"     ; Callbacks for editor buffer file IO
         copy  "fm.callbacks.dir.asm"     ; Callbacks for drive/directory file IO
         copy  "fm.callbacks.ea5.asm"     ; Callbacks for EA5 file IO

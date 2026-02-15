@@ -86,8 +86,8 @@ main:
         ; Clock device support
         ;-----------------------------------------------------------------------                    
         copy  "pane.clock.time.asm" ; Read date/time from clock and display
-        copy  "pane.clock.on.asm"   ; Turn clock reading/display on
-        copy  "pane.clock.off.asm"  ; Turn clock reading/display off
+        copy  "fm.clock.on.asm"     ; Turn clock reading/display on
+        copy  "fm.clock.off.asm"    ; Turn clock reading/display off
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

@@ -1,11 +1,11 @@
-* FILE......: pane.clock.on.asm
+* FILE......: fm.clock.on.asm
 * Purpose...: Turn clock functionality on
 
 ***************************************************************
-* pane.clock.on
+* fm.clock.on
 * Turn clock functionaltiy on
 ***************************************************************
-* bl  @pane.clock.on
+* bl  @fm.clock.on
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -13,7 +13,7 @@
 * Register usage
 * tmp0, tmp1, tmp2
 ********|*****|*********************|**************************
-pane.clock.on:
+fm.clock.on:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -48,7 +48,7 @@ pane.clock.on:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.clock.on.exit:
+fm.clock.on.exit:
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
