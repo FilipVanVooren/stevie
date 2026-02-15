@@ -97,7 +97,6 @@ txt.keys.insert    equ txt.keys.default1
 txt.keys.insert2   equ txt.keys.default2
                    even
 
-
 ;--------------------------------------------------------------
 ; Dialog "Delete file"
 ;--------------------------------------------------------------
@@ -153,8 +152,6 @@ txt.info.clipboard  stri 'Clipboard [1-3]?'
 txt.hint.clipboard  stri 'Press 1 to 3 to copy clipboard file, F7 to configure.'
 txt.keys.clipboard  stri 'F9-Back  F7-Configure'
                     even
-
-
 
 ;--------------------------------------------------------------
 ; Dialog "Goto line"

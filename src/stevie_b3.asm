@@ -81,7 +81,7 @@ main:
         copy  "dialog.file.print.asm"   ; Dialog "Print file"        
         copy  "dialog.file.run.asm"     ; Dialog "Run program image (EA5)"
         copy  "dialog.file.catalog.asm" ; Dialog "Catalog"
-        copy  "dialog.opt.asm"          ; Dialog "Configure"
+        copy  "dialog.opt.asm"          ; Dialog "Options"
         copy  "dialog.opt.clip.asm"     ; Dialog "Configure clipboard"
         copy  "dialog.font.asm"         ; Dialog "Configure font"
         copy  "dialog.clipboard.asm"    ; Dialog "Copy from clipboard"

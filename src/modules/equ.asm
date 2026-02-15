@@ -69,8 +69,8 @@ id.dialog.file            equ  105     ; "File"
 id.dialog.cart.type       equ  106     ; "Cartridge Type"
 id.dialog.basic           equ  107     ; "TI Basic"
 id.dialog.opt             equ  108     ; "Options"
-id.dialog.font            equ  109     ; "Configure font"
-id.dialog.shortcuts       equ  110     ; "Shortcuts"
+id.dialog.font            equ  110     ; "Configure font"
+id.dialog.shortcuts       equ  111     ; "Shortcuts"
 ;-------------------------------------------------------------------------------
 ; Suffix characters for clipboards
 ;-------------------------------------------------------------------------------
