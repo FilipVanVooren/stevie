@@ -388,6 +388,15 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Dialog: Save file
         ;-------------------------------------------------------
+        byte  key.fctn.e, id.dialog.save
+        data  edkey.action.cmdb.pick.prev
+
+        byte  key.fctn.x, id.dialog.save
+        data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.save
+        data  edkey.action.cmdb.updir 
+
         byte  key.enter, id.dialog.save
         data  edkey.action.cmdb.save
 
