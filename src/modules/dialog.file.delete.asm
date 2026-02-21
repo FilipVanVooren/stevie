@@ -57,6 +57,7 @@ dialog.delete.setup:
         ; Show dialog
         ;-------------------------------------------------------
 dialog.delete.keylist:
+        li    tmp0,txt.keys.default1
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set filename (1) 

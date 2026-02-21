@@ -88,6 +88,7 @@ dialog.insert.setup:
         ; Show dialog
         ;-------------------------------------------------------
 dialog.insert.keylist:
+        li    tmp0,txt.keys.default1
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
         ;-------------------------------------------------------
         ; Set command line
