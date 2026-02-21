@@ -28,9 +28,7 @@ pane.cmdb.draw:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3                
+        mov   tmp2,*stack           ; Push tmp2       
         ;------------------------------------------------------
         ; Command buffer header line
         ;------------------------------------------------------
@@ -55,7 +53,7 @@ pane.cmdb.draw:
               data 23               ; /
                                                                         
         mov   @cmdb.yxtop,@wyx      ; \
-        mov   @outparm1,tmp1        ; | Display pane header
+        mov   @outparm1,tmp1        ; | Display pane header (Stevie banner)
         bl    @xutst0               ; /
 
         bl    @vchar
@@ -81,9 +79,10 @@ pane.cmdb.draw:
               data EOL
 
         bl    @hchar
-              byte pane.botrow-1,0,8,1   ; Draw bottom left corner
-              byte pane.botrow-1,1,10,78 ; Draw horizontal line
-              byte pane.botrow-1,79,9,1  ; Draw bottom right corner
+              byte pane.botrow - cmdb.rows + 1,2,32,76 ; Clear header line
+              byte pane.botrow-1,0,8,1                 ; Draw bottom left corner
+              byte pane.botrow-1,1,10,78               ; Draw horizontal line
+              byte pane.botrow-1,79,9,1                ; Draw bottom right corner
               data EOL              
         ;------------------------------------------------------
         ; Skip input prompt on menu dialogs
@@ -115,7 +114,8 @@ pane.cmdb.draw:
                                     ; / o  @outparm1 = Pointer to padded string
 
         bl    @at
-              byte pane.botrow-5,2  ; Position cursor
+              byte pane.botrow-cmdb.rows+2,2  ; Position cursor
+                                    
         mov   @outparm1,tmp1        ; \ Display menu row
         bl    @xutst0               ; /                                                                               
         ;------------------------------------------------------
@@ -143,8 +143,6 @@ pane.cmdb.draw.markers:
 
         mov   @cmdb.panmarkers,tmp0 ; Get pointer to marker positions
         li    tmp2,>1c00            ; Set Marker char in MSB
-        mov   @tv.cmdb.hcolor,tmp3  ; Get color combination
-        swpb  tmp3                  ; Color in MSB
         ;------------------------------------------------------
         ; Loop over markers
         ;------------------------------------------------------
@@ -156,34 +154,50 @@ pane.cmdb.draw.marker.loop:
         inc  tmp1                   ; Base 1 because of length-byte prefix
                                    
         movb  tmp2,@rambuf(tmp1)    ; Set marker char
-        movb  tmp3,@rambuf+80(tmp1) ; Set color
         jmp   pane.cmdb.draw.marker.loop
                                     ; Next iteration
         ;------------------------------------------------------
-        ; Render markers
+        ; Render menu item markers
         ;------------------------------------------------------
 pane.cmdb.draw.render:
         li    tmp1,>4C00            ; \ Decimal 76 in MSB
         movb  tmp1,@rambuf          ; / Set length byte prefix for PNT string
 
         bl    @putat
-              byte pane.botrow-4,2  ; Render markers
-              data rambuf
+              byte pane.botrow-cmdb.rows+3,2   
+              data rambuf           ; Render markers
+                                    ; \ i  p0 = YX position
+                                    ; | i  p1 = Pointer to string with markers
+                                    ; /
 
-        bl    @cpym2v               ; Highlight Menu Marker keys              
-              data vdp.tat.base + vdp.tat.size - (6 * 80) + 2
-                                    ; \ i  p0 = Destination in VDP memory
-              data rambuf + 81      ; | i  p1 = Source in CPU memory
-              data 76               ; / i  p2 = Number of bytes to copy
-
+        .ifge cmdb.rows,9
+        bl    @hchar
+              byte pane.botrow-cmdb.rows+4,2,32,76
+              byte pane.botrow-cmdb.rows+5,2,32,76
+              byte pane.botrow-cmdb.rows+6,2,32,76
+              byte pane.botrow-cmdb.rows+7,2,32,76
+              byte pane.botrow-cmdb.rows+9,2,32,76
+              data EOL              ; Clear empty space
+        .endif
         jmp   pane.cmdb.draw.hint
         ;------------------------------------------------------
-        ; Remove markers
+        ; Remove menu item markers and clear empty space
         ;------------------------------------------------------
 pane.cmdb.draw.nomarkers:
+        .ifge cmdb.rows,9
         bl    @hchar
-              byte pane.botrow-4,2,32,76
-              data EOL              ; Remove markers
+              byte pane.botrow-cmdb.rows+3,2,32,76 
+              byte pane.botrow-cmdb.rows+4,2,32,76
+              byte pane.botrow-cmdb.rows+5,2,32,76
+              byte pane.botrow-cmdb.rows+6,2,32,76
+              byte pane.botrow-cmdb.rows+7,2,32,76
+              byte pane.botrow-cmdb.rows+9,2,32,76
+              data EOL              ; Remove menu item markers/clear empty space
+        .else 
+        bl    @hchar
+              byte pane.botrow-cmdb.rows+3,2,32,76 
+              data EOL              ; Remove menu item markers
+        .endif
         ;------------------------------------------------------
         ; Display pane hint in command buffer (botrow-2)
         ;------------------------------------------------------
@@ -204,14 +218,19 @@ pane.cmdb.draw.hint:
                                     ; | i  parm2 = Pointer to string with hint
                                     ; / i  parm3 = Pad length
         ;------------------------------------------------------
-        ; Display 2nd pane hint in command buffer (botrow-3)
+        ; Display 2nd pane hint in command buffer
         ;------------------------------------------------------
 pane.cmdb.draw.hint2:
         mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
         jeq   pane.cmdb.draw.keys   ; No extra pane hint to display
 
-        li    tmp0,pane.botrow - 3  ; \
-        sla   tmp0,8                ; | Y=bottom row - 3
+     .ifge cmdb.rows,9
+        li    tmp0,pane.botrow - 4
+     .else
+        li    tmp0,pane.botrow - 3
+     .endif   
+
+        sla   tmp0,8                ; \ Y=bottom row
         ori   tmp0,2                ; | X=2        
         mov   tmp0,@parm1           ; / Set parameter
         mov   @cmdb.panhint2,@parm2 ; Extra pane hint to display
@@ -243,11 +262,11 @@ pane.cmdb.draw.keys:
         ; Display time & date
         ;------------------------------------------------------
 pane.cmdb.draw.timedate:
-        mov   @tv.clock.state,tmp0   ; \ Is clock on?
+        mov   @tv.clock.state,tmp0  ; \ Is clock on?
         jeq   pane.cmdb.draw.alpha  ; / No, skip clock display
 
         li    tmp0,>994a            ; \ Set tri-state to "skip reading clock"
-        mov   tmp0,@tv.clock.state   ; / Only display
+        mov   tmp0,@tv.clock.state  ; / Only display
 
         bl    @pane.clock.time      ; Display clock time & date
                                     ; \ i  tv.clock.state = Clock on/off flag
@@ -284,7 +303,6 @@ pane.cmdb.draw.promptcmd:
         ; Exit
         ;------------------------------------------------------
 pane.cmdb.draw.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
         mov   *stack+,tmp2          ; Pop tmp2
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0

@@ -40,10 +40,18 @@ pane.cmdb.hide:
         ; Clear error/hint & status line
         ;------------------------------------------------------
         bl    @hchar                ; Destroys tmp0, tmp1,tmp2, tmp3
-              byte pane.botrow-6,0,32,80*3
-              byte pane.botrow-3,0,32,80*3
-              byte pane.botrow-1,0,32,158  ; Do not overwrite AL-symbol
-              data EOL              
+              byte pane.botrow-cmdb.rows,0,32,240
+              byte pane.botrow-cmdb.rows+3,0,32,240
+              byte pane.botrow-cmdb.rows+6,0,32,240
+        .ifge cmdb.rows,12
+              byte pane.botrow-cmdb.rows+9,0,32,240
+              byte pane.botrow-cmdb.rows+12,0,32,240
+        .else        
+           .ifge cmdb.rows,9
+              byte pane.botrow-cmdb.rows+15,0,32,240
+           .endif
+        .endif
+              data EOL
         ;------------------------------------------------------
         ; Hide command buffer pane (rest)
         ;------------------------------------------------------

@@ -26,7 +26,6 @@ fh.fopmode.none           equ  0        ; No file operation in progress
 fh.fopmode.readfile       equ  1        ; Read file from disk to memory
 fh.fopmode.writefile      equ  2        ; Save file from memory to disk
 fh.ea5.vdpbuf             equ  >0000    ; VRAM address for storing EA5 chunk
-cmdb.rows                 equ  6        ; Number of rows in CMDB pane
 tv.colorize.reset         equ  >9900    ; Colorization off
 tv.1timeonly              equ  254      ; One-time only flag indicator
 tv.sams.maxpage           equ  256      ; Max SAMS pages supported

@@ -32,7 +32,7 @@ cmdb.init:
         mov   tmp0,@cmdb.top.ptr    ; /
 
         clr   @cmdb.visible         ; Hide command buffer
-        li    tmp0,6
+        li    tmp0,cmdb.rows
         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
         mov   tmp0,@cmdb.default    ; Set default command buffer size
 

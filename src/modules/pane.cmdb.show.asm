@@ -41,9 +41,9 @@ pane.cmdb.show.rest:
         ;------------------------------------------------------
         ; Show command buffer pane
         ;------------------------------------------------------        
-        li    tmp0,pane.botrow
-        s     @cmdb.scrrows,tmp0
-        mov   tmp0,@fb.scrrows      ; Resize framebuffer
+        li    tmp0,pane.botrow      ; \
+        s     @cmdb.scrrows,tmp0    ; | Determine framebuffer rows
+        mov   tmp0,@fb.scrrows      ; / 
 
         sla   tmp0,8                ; LSB to MSB (Y), X=0
         mov   tmp0,@cmdb.yxtop      ; Set position of command buffer header line
@@ -57,9 +57,9 @@ pane.cmdb.show.rest:
         ;------------------------------------------------------
         ; Determine initial cursor position
         ;------------------------------------------------------
-!       ai    tmp0,>0102            ; \ Skip row
+!       ai    tmp0,>0202            ; \ 
         mov   tmp0,@cmdb.yxprompt   ; | Screen position of prompt in cmdb pane
-                                    ; / Y=@cmdb.yxtop, X=2
+                                    ; / Y=@cmdb.yxtop + 2, X=2
 
         mov   tmp0,@cmdb.cursor 
         mov   tmp0,@cmdb.prevcursor

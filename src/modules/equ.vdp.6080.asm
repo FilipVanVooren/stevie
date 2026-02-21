@@ -18,6 +18,7 @@ vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
 *--------------------------------------------------------------
 * Video mode configuration (stevie)
 *--------------------------------------------------------------
+cmdb.rows                 equ  12      ; Number of rows in command buffer
 pane.botrow               equ  59      ; Bottom row on screen
 colrow                    equ  80      ; Columns per row
 device.f18a               equ  1       ; F18a/PICO9918 on

@@ -104,7 +104,9 @@ pane.colorscheme.load:
         ;-------------------------------------------------------
         ; MNOP) Write sprite color of line and column indicators to SAT
         ;-------------------------------------------------------
-        ; Deprecated - not used anymore
+        ;
+        ; Deprecated - sprites no longer used
+        ;
         ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
@@ -203,10 +205,10 @@ pane.colorscheme.cmdbpane:
                                     ; i |  tmp1 = byte to fill
                                     ; i /  tmp2 = number of bytes to fill
         ;-------------------------------------------------------
-        ; Row 1-5: Dump colors for CMDB pane content (TAT)
+        ; Row 1-*: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
         mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: All rows
-        ai    tmp0,80               ; / VDP start address (CMDB top line + 1)
+        ai    tmp0,80               ; / VDP start address (CMDB top+2)
         mov   @tv.cmdb.hcolor,tmp1  ; Same color as header line
         li    tmp2,(cmdb.rows-1)*80 ; Number of bytes to fill 
         bl    @xfilv                ; Fill colors
@@ -216,8 +218,8 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Row 1: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
-        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 1
-        ai    tmp0,82               ; / VDP start address (CMDB top line + 1)
+        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 2
+        ai    tmp0,162              ; / VDP start address (CMDB top+2)
         mov   @tv.cmdb.color,tmp1   ; Get work copy fg/bg color
         li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
@@ -227,8 +229,8 @@ pane.colorscheme.cmdbpane:
         ;-------------------------------------------------------
         ; Row 4: Dump colors for CMDB pane content (TAT)
         ;-------------------------------------------------------
-        mov   @cmdb.vdptop,tmp0     ; \ CMDB PANE: Row 4
-        ai    tmp0,4 * 80 + 2       ; / VDP start address (CMDB top line + 4)
+        mov   @cmdb.vdptop,tmp0             ; \ CMDB PANE: Row 4
+        ai    tmp0,(cmdb.rows - 2)* 80 + 2  ; / VDP start address (CMDB top+4)
         mov   @tv.cmdb.color,tmp1   ; Get work copy fg/bg color
         li    tmp2,76               ; Number of bytes to fill
         bl    @xfilv                ; Fill colors
