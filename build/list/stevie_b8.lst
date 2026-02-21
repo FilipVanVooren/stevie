@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260221-2124170
+0002               * BUILD: 260221-2136590
 0003               ***************************************************************
                    < stevie_b8.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -227,20 +227,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041      000A     id.dialog.open            equ  10      ; "Open file"
 0042      000B     id.dialog.insert          equ  11      ; "Insert file"
 0043      000C     id.dialog.append          equ  12      ; "Append file"
-0044      000D     id.dialog.delete          equ  13      ; "Delete file"
-0045      0014     id.dialog.opt.clip        equ  20      ; "Configure clipboard"
-0046      0019     id.dialog.cat             equ  25      ; "Catalog"
-0047      001E     id.dialog.run             equ  30      ; "Run program file"
-0048               ;-------------------------------------------------------------------------------
-0049               ;   Dialog ID's > 30 means file catalog is unsupported
+0044      000D     id.dialog.save            equ  13      ; "Save file"
+0045      000E     id.dialog.saveblock       equ  14      ; "Save block to file"
+0046      000F     id.dialog.delete          equ  15      ; "Delete file"
+0047      0014     id.dialog.opt.clip        equ  20      ; "Configure clipboard"
+0048      0019     id.dialog.cat             equ  25      ; "Catalog"
+0049      001E     id.dialog.run             equ  30      ; "Run program file"
 0050               ;-------------------------------------------------------------------------------
-0051      0028     id.dialog.save            equ  40      ; "Save file"
-0052      0029     id.dialog.saveblock       equ  41      ; "Save block to file"
-0053      0032     id.dialog.print           equ  50      ; "Print file"
-0054      003C     id.dialog.printblock      equ  60      ; "Print block"
-0055      0046     id.dialog.goto            equ  70      ; "Goto"
-0056      0050     id.dialog.find            equ  80      ; "Find"
-0057      005A     id.dialog.cart.fg99       equ  90      ; "FinalGROM 99 Cartridge"
+0051               ;   Dialog ID's > 30 means file catalog is unsupported
+0052               ;-------------------------------------------------------------------------------
+0053      0028     id.dialog.print           equ  40      ; "Print file"
+0054      0032     id.dialog.printblock      equ  50      ; "Print block"
+0055      003C     id.dialog.goto            equ  60      ; "Goto"
+0056      0046     id.dialog.find            equ  70      ; "Find"
+0057      0050     id.dialog.cart.fg99       equ  80      ; "FinalGROM 99 Cartridge"
 0058               ;-------------------------------------------------------------------------------
 0059               ;   Dialog ID's >= 100 indicate that command prompt should be
 0060               ;   hidden and no characters added to CMDB keyboard buffer.
@@ -10406,26 +10406,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ID.DIALOG.APPEND.... >000C :     
     ID.DIALOG.BASIC..... >006B :     
     ID.DIALOG.BLOCK..... >0066 :     
-    ID.DIALOG.CART.FG99. >005A :     
+    ID.DIALOG.CART.FG99. >0050 :     
     ID.DIALOG.CART.TYPE. >006A :     
     ID.DIALOG.CAT....... >0019 :     
     ID.DIALOG.CLIPBOARD. >0067 :     
-    ID.DIALOG.DELETE.... >000D :     
+    ID.DIALOG.DELETE.... >000F :     
     ID.DIALOG.FILE...... >0069 :     
-    ID.DIALOG.FIND...... >0050 :     
+    ID.DIALOG.FIND...... >0046 :     
     ID.DIALOG.FONT...... >006E :     
-    ID.DIALOG.GOTO...... >0046 :     
+    ID.DIALOG.GOTO...... >003C :     
     ID.DIALOG.HELP...... >0068 :     
     ID.DIALOG.INSERT.... >000B :     
     ID.DIALOG.MAIN...... >0064 :     
     ID.DIALOG.OPEN...... >000A :     
     ID.DIALOG.OPT....... >006C :     
     ID.DIALOG.OPT.CLIP.. >0014 :     
-    ID.DIALOG.PRINT..... >0032 :     
-    ID.DIALOG.PRINTBLOCK >003C :     
+    ID.DIALOG.PRINT..... >0028 :     
+    ID.DIALOG.PRINTBLOCK >0032 :     
     ID.DIALOG.RUN....... >001E :     
-    ID.DIALOG.SAVE...... >0028 :     
-    ID.DIALOG.SAVEBLOCK. >0029 :     
+    ID.DIALOG.SAVE...... >000D :     
+    ID.DIALOG.SAVEBLOCK. >000E :     
     ID.DIALOG.SHORTCUTS. >006F :     
     ID.DIALOG.UNSAVED... >0065 :     
     ID.FILE.APPENDFILE.. >0003 :     
