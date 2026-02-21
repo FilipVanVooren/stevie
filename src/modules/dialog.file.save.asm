@@ -95,6 +95,10 @@ dialog.save.cursorshape:
         mov   tmp0,@cmdb.pankeys    ; Save keylist in status line
         bl    @pane.cursor.blink    ; Show cursor
         ;-------------------------------------------------------
+        ; Show file browser
+        ;-------------------------------------------------------
+        bl    @pane.filebrowser     ; Show file browser        
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.save.exit:

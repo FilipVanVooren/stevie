@@ -65,7 +65,7 @@ txt.keys.open      equ txt.keys.default1
 ;--------------------------------------------------------------
 txt.head.save      byte 13,4,1
                    text ' Save file '
-txt.head.save2     byte 21,4,1
+txt.head.save2     byte 22,4,1
                    text ' Save block to file '
 txt.hint.save      stri 'Enter filename.'
 txt.keys.save1     stri 'F9-Back  F3-Clear  F6-Line term=off  FH-Home  FL-EOL'
