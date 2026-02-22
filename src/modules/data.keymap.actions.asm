@@ -400,11 +400,22 @@ keymap_actions.cmdb:
         byte  key.enter, id.dialog.save
         data  edkey.action.cmdb.save
 
-        byte  key.enter, id.dialog.saveblock
-        data  edkey.action.cmdb.save
-
         byte  key.fctn.6, id.dialog.save
         data  edkey.action.cmdb.lineterm.toggle
+        ;-------------------------------------------------------
+        ; Dialog: Save block to file
+        ;-------------------------------------------------------
+        byte  key.fctn.e, id.dialog.saveblock
+        data  edkey.action.cmdb.pick.prev
+
+        byte  key.fctn.x, id.dialog.saveblock
+        data  edkey.action.cmdb.pick.next
+
+        byte  key.space, id.dialog.saveblock
+        data  edkey.action.cmdb.updir 
+
+        byte  key.enter, id.dialog.saveblock
+        data  edkey.action.cmdb.save
 
         byte  key.fctn.6, id.dialog.saveblock
         data  edkey.action.cmdb.lineterm.toggle        
