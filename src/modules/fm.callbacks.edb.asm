@@ -390,13 +390,14 @@ fm.loadsave.cb.fioerr:
         jeq   fm.loadsave.cb.fioerr.print
         ci    tmp0,id.file.printblock
         jeq   fm.loadsave.cb.fioerr.print
-
         ci    tmp0,id.file.savefile
         jeq   fm.loadsave.cb.fioerr.save
         ci    tmp0,id.file.saveblock
         jeq   fm.loadsave.cb.fioerr.save
         ci    tmp0,id.file.clipblock
         jeq   fm.loadsave.cb.fioerr.save
+        ci    tmp0,id.file.deletefile
+        jeq   fm.loadsave.cb.fioerr.delete
         ci    tmp0,id.file.interrupt
         jeq   fm.loadsave.cb.fioerr.interrupt
         ;------------------------------------------------------
@@ -428,6 +429,15 @@ fm.loadsave.cb.fioerr.print:
               data txt.ioerr.print
               data tv.error.msg
               data 30               ; Error message
+        jmp   fm.loadsave.cb.fioerr.addmsg
+        ;------------------------------------------------------        
+        ; Failed deleting file
+        ;------------------------------------------------------
+fm.loadsave.cb.fioerr.delete:
+        bl    @cpym2m               
+              data txt.ioerr.delete
+              data tv.error.msg
+              data 30               ; Error message
         ;------------------------------------------------------
         ; Add filename to error message
         ;------------------------------------------------------        
@@ -455,7 +465,7 @@ fm.loadsave.cb.fioerr.addmsg:
                                     ; | i  tmp1 = RAM destination
                                     ; / i  tmp2 = Bytes to copy        
         ;------------------------------------------------------
-        ; Reset filename to "new file" 
+        ; Reset filename to "new file" (only when loading file)
         ;------------------------------------------------------
         mov   @fh.workmode,tmp0     ; Get working mode
         ci    tmp0,id.file.loadfile

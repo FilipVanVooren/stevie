@@ -32,12 +32,15 @@ edkey.action.cmdb.updir:
         mov   tmp0,@parm1           ; / Set device name/path
         clr   @parm2
 
+        clr   @parm3                ; Show filebrowser after reading directory
         bl    @fm.directory         ; Read device directory
                                     ; \ @parm1 = Pointer to length-prefixed 
                                     ; |          string containing device
                                     ; |          or >0000 if using parm2
                                     ; | @parm2 = Index in device list
-                                    ; /          (ignored if parm1 set)
+                                    ; |          (ignored if parm1 set)
+                                    ; / @parm3 = Skip filebrowser flag
+
         ;-------------------------------------------------------
         ; Update command line with device path if catalog dialog
         ;-------------------------------------------------------

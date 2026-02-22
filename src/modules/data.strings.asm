@@ -42,7 +42,7 @@ txt.done.copy      stri 'Copy completed'
                    even
 txt.done.print     stri 'Print completed'
                    even
-txt.done.delete    stri 'Delete completed'
+txt.done.delete    stri 'File deleted'
                    even
 txt.done.clipboard stri 'Clipboard saved'
                    even
@@ -109,6 +109,9 @@ txt.ioerr.save     stri 'Failed saving file: '
                    even
 txt.ioerr.print    stri 'Failed printing to device: '
                    even
+txt.ioerr.delete   stri 'Failed deleting file: '
+                   even
+txt.ioerr.clipboard stri 'Failed copying to clipboard: '
 txt.io.nofile      stri 'No filename specified.'
                    even
 txt.memfull.load   stri 'Index full.'

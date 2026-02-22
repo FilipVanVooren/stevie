@@ -26,12 +26,15 @@ edkey.action.cmdb.append:
         li    tmp0,cmdb.cmdall      ; \ Pass filename as parm1
         mov   tmp0,@parm1           ; /
 
+        clr   @parm3                ; Show filebrowser after reading directory
+
         bl    @fm.directory         ; Read device directory
                                     ; \ @parm1 = Pointer to length-prefixed 
                                     ; |          string containing device
                                     ; |          or >0000 if using parm2
                                     ; | @parm2 = Index in device list
-                                    ; /          (ignored if parm1 set)
+                                    ; |          (ignored if parm1 set)
+                                    ; / @parm3 = Skip filebrowser flag
         jmp   edkey.action.cmdb.append.exit
         ;-------------------------------------------------------
         ; Check filename length

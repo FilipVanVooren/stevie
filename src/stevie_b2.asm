@@ -79,12 +79,14 @@ main:
         copy  "fm.insertfile.asm"        ; Insert DV80 file into editor buffer
         copy  "fm.savefile.asm"          ; Save DV80 file from editor buffer
         copy  "fm.newfile.asm"           ; New DV80 file in editor buffer
+        copy  "fm.delfile.asm"           ; Delete file from filesystem
         copy  "fm.run.ea5.asm"           ; Run EA5 program image
         copy  "fm.clock.read.asm"        ; Read Date/Time from clock device
         copy  "fm.callbacks.edb.asm"     ; Callbacks for editor buffer file IO
         copy  "fm.callbacks.dir.asm"     ; Callbacks for drive/directory file IO
         copy  "fm.callbacks.ea5.asm"     ; Callbacks for EA5 file IO
         copy  "fm.callbacks.clock.asm"   ; Callbacks for reading date/time
+        copy  "fm.callbacks.delfile.asm" ; Callbacks for delete file operations
         copy  "fm.browse.fname.set.asm"  ; Create string with device/filename
         copy  "fm.browse.fname.prev.asm" ; Pick prev filename in filename list
         copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list

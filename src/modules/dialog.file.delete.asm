@@ -26,14 +26,6 @@ dialog.delete:
         dect  stack
         mov   tmp1,*stack           ; Push tmp1
         ;-------------------------------------------------------
-        ; Show dialog "Unsaved changes" if editor buffer dirty
-        ;-------------------------------------------------------
-        mov   @edb.dirty,tmp0       ; Editor dirty?
-        jeq   dialog.delete.setup   ; No, skip "Unsaved changes"
-
-        bl    @dialog.unsaved       ; Show dialog
-        jmp   dialog.delete.exit    ; Exit early
-        ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
 dialog.delete.setup:

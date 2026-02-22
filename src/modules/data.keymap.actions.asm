@@ -107,9 +107,6 @@ keymap_actions.editor:
         byte  key.ctrl.c, pane.focus.fb
         data  edkey.action.copyblock_or_clipboard
 
-        byte  key.ctrl.d, pane.focus.fb
-        data  edkey.action.block.delete
-
         byte  key.ctrl.m, pane.focus.fb
         data  edkey.action.block.move
 
@@ -157,6 +154,9 @@ keymap_actions.editor:
         ;-------------------------------------------------------
         byte  key.ctrl.a, pane.focus.fb
         data  dialog.append
+
+        byte  key.ctrl.d, pane.focus.fb
+        data  dialog.delete    
 
         byte  key.ctrl.h, pane.focus.fb
         data  dialog.help
@@ -278,7 +278,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.updir
 
         byte  key.ctrl.r, id.dialog.open
-        data  dialog.run        
+        data  dialog.run                    
         ;-------------------------------------------------------
         ; Dialog: Insert file at line ...
         ;-------------------------------------------------------
@@ -437,7 +437,7 @@ keymap_actions.cmdb:
         ; Dialog: Delete file
         ;-------------------------------------------------------
         byte  key.enter, id.dialog.delete
-        data  edkey.action.cmdb.load
+        data  edkey.action.cmdb.file.delete
 
         byte  key.fctn.e, id.dialog.delete
         data  edkey.action.cmdb.pick.prev
@@ -446,7 +446,7 @@ keymap_actions.cmdb:
         data  edkey.action.cmdb.pick.next
 
         byte  key.space, id.dialog.delete
-        data  edkey.action.cmdb.updir
+        data  edkey.action.cmdb.updir     
         ;-------------------------------------------------------
         ; Dialog: Unsaved changes
         ;-------------------------------------------------------
@@ -463,9 +463,6 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         byte  key.uc.f, id.dialog.cart.type
         data  dialog.cart.fg99
-
-        ; byte  key.uc.s, id.dialog.cart.type
-        ; data  strg.module
         ;-------------------------------------------------------
         ; Dialog: FinalGROM 99
         ;-------------------------------------------------------

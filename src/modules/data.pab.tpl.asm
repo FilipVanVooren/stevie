@@ -21,9 +21,8 @@ fh.file.pab.header.cat:
         ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
                                     ;         (Device + '.' + File name)       
 
-
 ***************************************************************
-* PAB for accessing DV/80 file
+* PAB for accessing DV80 file
 ********|*****|*********************|**************************
         even                        ; Must always start on even address!!
 fh.file.pab.header:
@@ -60,9 +59,6 @@ fh.file.pab.clock:
         ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
                                     ;         (Device + '.' + File name)          
 
-
-
-
 ***************************************************************
 * PAB for loading binary image
 ********|*****|*********************|**************************
@@ -74,6 +70,24 @@ fh.file.pab.header.binimage:
         data  >0000                 ;  4-5  - Not used in load operation
         data  8198                  ;  6-7  - Maximum number of bytes to load
         byte  00                    ;  8    - Not used
+        ;------------------------------------------------------
+        ; File descriptor part (variable length)
+        ;------------------------------------------------------        
+        ; byte  64                  ;  9    - File descriptor length
+        ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor 
+                                    ;         (Device + '.' + File name)          
+
+***************************************************************
+* PAB for deleting file
+********|*****|*********************|**************************
+        even                        ; Must always start on even address!!
+fh.file.pab.header.delete:
+        byte  io.op.delete          ;  0    - DELETE
+        byte  00                    ;  1    - Not used
+        data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
+        data  >0000                 ;  4-5  - Not used
+        data  0                     ;  6-7  - Not used
+        byte  0                     ;  8    - Not used
         ;------------------------------------------------------
         ; File descriptor part (variable length)
         ;------------------------------------------------------        

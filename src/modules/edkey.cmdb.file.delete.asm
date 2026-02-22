@@ -1,10 +1,10 @@
-* FILE......: edkey.cmdb.file.run.asm
-* Purpose...: Run EA5 program image
+* FILE......: edkey.cmdb.file.delete.asm
+* Purpose...: Delete file from file system
 
 *---------------------------------------------------------------
-* Run EA5 program image
+* Delete file from file system
 ********|*****|*********************|**************************
-edkey.action.cmdb.file.run:
+edkey.action.cmdb.file.delete:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -18,7 +18,7 @@ edkey.action.cmdb.file.run:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jne   edkey.action.cmdb.file.run.checklen
+        jne   edkey.action.cmdb.file.delete.checklen
                                     ; No, check filename length
         ;-------------------------------------------------------
         ; Read directory and exit
@@ -27,7 +27,7 @@ edkey.action.cmdb.file.run:
         mov   tmp0,@parm1           ; /
 
         clr   @parm3                ; Show filebrowser after reading directory
-        
+
         bl    @fm.directory         ; Read device directory
                                     ; \ @parm1 = Pointer to length-prefixed 
                                     ; |          string containing device
@@ -36,14 +36,14 @@ edkey.action.cmdb.file.run:
                                     ; |          (ignored if parm1 set)
                                     ; / @parm3 = Skip filebrowser flag
 
-        jmp   edkey.action.cmdb.file.run.exit
+        jmp   edkey.action.cmdb.file.delete.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
-edkey.action.cmdb.file.run.checklen:        
+edkey.action.cmdb.file.delete.checklen:        
         bl    @cmdb.cmd.getlength             ; Get length of current command
         mov   @outparm1,tmp0                  ; Length == 0 ?
-        jeq   edkey.action.cmdb.file.run.exit ; Yes, exit early
+        jeq   edkey.action.cmdb.file.delete.exit ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -56,19 +56,19 @@ edkey.action.cmdb.file.run.checklen:
 
         bl    @pane.cmdb.hide       ; Hide CMDB pane
         ;-------------------------------------------------------
-        ; Load file
+        ; Delete file
         ;-------------------------------------------------------
-edkey.action.cmdb.file.run.ea5:       
+edkey.action.cmdb.file.delete.file:       
         li    tmp0,heap.top         ; Pass filename as parm1
         mov   tmp0,@parm1           ; (1st line in heap)
 
-        bl    @fm.run.ea5           ; Run EA5 program image
+        bl    @fm.delfile           ; Delete file from file system
                                     ; \ i  parm1 = Pointer to length-prefixed
                                     ; /            device/filename string
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.file.run.exit:
+edkey.action.cmdb.file.delete.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11    
         b     @edkey.keyscan.hook.debounce 

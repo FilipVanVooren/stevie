@@ -115,6 +115,7 @@ main:
         copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
         copy  "edkey.cmdb.file.save.asm"    ; Save file
         copy  "edkey.cmdb.file.print.asm"   ; Print file
+        copy  "edkey.cmdb.file.delete.asm"  ; Delete file
         copy  "edkey.cmdb.file.dir.asm"     ; Drive/Directory listing
         copy  "edkey.cmdb.file.run.asm"     ; Run program image (EA5)
         copy  "edkey.cmdb.pick.prev.asm"    ; Pick previous file in catalog

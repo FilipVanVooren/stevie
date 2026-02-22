@@ -12,6 +12,8 @@
 * parm1  = Pointer to length-prefixed string containing device
 *          or >0000 if using parm2.
 * parm2  = Index in device list (ignored if parm1 set)
+*          or >ffff to skip showing filebrowser after reading directory.
+* parm3  = >ffff to skip showing filebrowser after reading directory.
 *--------------------------------------------------------------- 
 * OUTPUT
 * NONE
@@ -83,9 +85,12 @@ fm.directory:
         ;-------------------------------------------------------
         ; Process parameters
         ;-------------------------------------------------------
-        mov   @parm1,tmp0           ; Use parameter 2?
-        jne   fm.directory.checkdot ; No, skip
-
+        mov   @parm3,@tv.skip.browser ; Set skip filebrowser flag
+        mov   @parm1,tmp0             ; Use parameter 2?
+        jne   fm.directory.checkdot   ; No, skip
+        ;-------------------------------------------------------
+        ; Read directory by index in device list
+        ;-------------------------------------------------------
         mov   @parm2,tmp0           ; Get index
         sla   tmp0,1                ; Word align
         mov   @device.list(tmp0),@parm1
@@ -338,9 +343,15 @@ fm.directory.ftloop.next:
         dec   @cat.var3             ; Adjust file counter
         jgt   fm.directory.ftloop   ; Next file
 *--------------------------------------------------------------
-* Show filebrowser
+* Show filebrowser ?
 *--------------------------------------------------------------        
 fm.directory.browser:
+        mov   @tv.skip.browser,tmp0 ; Get skip filebrowser flag
+        ci    tmp0,>ffff            ; Skip filebrowser if >ffff 
+        jeq   fm.directory.exit     ; Yes, exit early
+*--------------------------------------------------------------
+* Show filebrowser
+*--------------------------------------------------------------        
         clr   @cat.shortcut.idx     ; 1st file/dir in list
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @tv.devpath = Current device name

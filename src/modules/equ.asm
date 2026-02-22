@@ -25,6 +25,7 @@
 fh.fopmode.none           equ  0        ; No file operation in progress
 fh.fopmode.readfile       equ  1        ; Read file from disk to memory
 fh.fopmode.writefile      equ  2        ; Save file from memory to disk
+fh.fopmode.others         equ  3        ; Other file operation (delete,dir,...)
 fh.ea5.vdpbuf             equ  >0000    ; VRAM address for storing EA5 chunk
 tv.colorize.reset         equ  >9900    ; Colorization off
 tv.1timeonly              equ  254      ; One-time only flag indicator
@@ -75,9 +76,7 @@ id.dialog.shortcuts       equ  111     ; "Shortcuts"
 ;-------------------------------------------------------------------------------
 clip1                     equ  >3100   ; '1'
 clip2                     equ  >3200   ; '2'
-clip3                     equ  >3300   ; '3'
-clip4                     equ  >3400   ; '4'
-clip5                     equ  >3500   ; '5'
+clip3                     equ  >3300   ; '3's
 ;-------------------------------------------------------------------------------
 ; Keyboard flags in Stevie
 ;-------------------------------------------------------------------------------
@@ -93,6 +92,7 @@ id.file.saveblock         equ  5       ; Save block to file
 id.file.clipblock         equ  6       ; Save block to clipboard
 id.file.printfile         equ  7       ; Print file
 id.file.printblock        equ  8       ; Print block
+id.file.deletefile        equ  9       ; Delete file
 id.file.interrupt         equ  >ffff   ; File operation interrupted
 ;-------------------------------------------------------------------------------
 ; Special file indicator
@@ -208,9 +208,10 @@ tv.lineterm       equ  tv.struct + 60  ; Default line termination character(s)
 tv.show.linelen   equ  tv.struct + 62  ; Show line length in status line
 tv.clock.state    equ  tv.struct + 64  ; Clock state
                                        ; >0000 Off, >ffff On, >dead No clock
-tv.error.msg      equ  tv.struct + 66  ; Error message (max 80 bytes)
-tv.devpath        equ  tv.struct + 146 ; Device path (max 80 bytes)
-tv.free           equ  tv.struct + 226 ; End of structure
+tv.skip.browser   equ  tv.struct + 66  ; Skip file browser >ffff yes, >0 no
+tv.error.msg      equ  tv.struct + 68  ; Error message (max 80 bytes)
+tv.devpath        equ  tv.struct + 148 ; Device path (max 80 bytes)
+tv.free           equ  tv.struct + 228 ; End of structure
 ;-------------------------------------------------------------------------------
 ; Frame buffer structure               @>a300-a3ff                   (256 bytes)
 ;-------------------------------------------------------------------------------
@@ -403,10 +404,10 @@ free.ad00         equ  >ad00           ; **free** 256
 ;-------------------------------------------------------------------------------
 ; Scratchpad memory work copy          @>ae00-aeff                   (256 bytes)
 ;-------------------------------------------------------------------------------
+cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
+
 cpu.scrpad2       equ  >ae00           ; Stevie secondary scratchpad, used when
                                        ; calling TI Basic/External programs
-
-cpu.scrpad1       equ  >8300           ; Stevie primary scratchpad
 
 cpu.scrpad.src    equ  >7e00           ; \ Dump of OS monitor scratchpad
                                        ; / stored in cartridge ROM bank7.asm

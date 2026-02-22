@@ -54,25 +54,17 @@ fh.file.delete:
         ;------------------------------------------------------
         ; Save parameters
         ;------------------------------------------------------
-        li    tmp0,fh.fopmode.readfile
-                                    ; Going to read a file
-        mov   tmp0,@fh.fopmode      ; Set file operations mode
+        li    tmp0,fh.fopmode.others ; Other file operation 
+        mov   tmp0,@fh.fopmode       ; Set file operations mode
 
-        mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
-        mov   @parm2,@fh.callback1  ; Callback function "Before deleting file"
-        mov   @parm3,@fh.callback2  ; Callback function "File deleted"
-        mov   @parm4,@fh.callback3  ; Callback function "File I/O error"
+        mov   @parm1,@fh.fname.ptr   ; Pointer to file descriptor
+        mov   @parm2,@fh.callback1   ; Callback function "Before deleting file"
+        mov   @parm3,@fh.callback2   ; Callback function "File deleted"
+        mov   @parm4,@fh.callback3   ; Callback function "File I/O error"
 
-        li    tmp0,fh.file.pab.header.binimage
-        mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
-        
-        clr   @fh.ftype.init        ; File type/mode (in LSB)        
-        ;------------------------------------------------------
-        ; deleteing file in destination memory
-        ;------------------------------------------------------
-fh.file.delete.newfile:
-        seto  @fh.temp1             ; Set flag "delete file"
-        clr   @fh.temp3             ; Not used
+        li    tmp0,fh.file.pab.header.delete
+        mov   tmp0,@fh.pabtpl.ptr    ; Set pointer to PAB template in ROM/RAM        
+        clr   @fh.ftype.init         ; File type/mode (in LSB)        
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
@@ -115,17 +107,7 @@ fh.file.delete.delete1:
         jeq   fh.file.delete.pabheader
                                     ; Skip callback
         bl    *tmp0                 ; Run callback function
-        ;------------------------------------------------------
-        ; Clear VRAM destination area
-        ;------------------------------------------------------
-        bl    @filv                 ; Fill VDP memory block (>2000 - 37d0)
-              data >2000            ; \ i  tmp0 = VDP destination address
-              data 00               ; | i  tmp1 = Byte to write
-              data >17d0            ; / i  tmp2 = Number of bytes to write 
-        ;------------------------------------------------------
-        ; Setup VDP memory same as after TI monitor start
-        ;------------------------------------------------------        
-        bl    @file.vmem            ; Setup VDP memory ranges
+
         ;------------------------------------------------------
         ; Copy PAB header to VDP
         ;------------------------------------------------------
@@ -136,27 +118,7 @@ fh.file.delete.pabheader:
         bl    @xpym2v               ; Copy CPU memory to VDP memory
                                     ; \ i  tmp0 = VDP destination
                                     ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Number of bytes to copy
-        ;------------------------------------------------------
-        ; Set file VRAM destination address in PAB
-        ;------------------------------------------------------
-        li    tmp0,fh.vpab + 2      ; Set pointer to file destination address in PAB
-        li    tmp1,parm5            ; Get pointer to VDP destination address
-        li    tmp2,2                ; 2 bytes to copy
-        bl    @xpym2v               ; Copy CPU memory to VDP memory
-                                    ; \ i  tmp0 = VDP destination        
-                                    ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Number of bytes to copy (2)
-        ;------------------------------------------------------
-        ; Set max number of bytes to read in PAB
-        ;------------------------------------------------------
-        li    tmp0,fh.vpab + 6      ; Set pointer to file destination address in PAB
-        li    tmp1,parm7            ; Get max number of bytes to read
-        li    tmp2,2                ; 2 bytes to copy
-        bl    @xpym2v               ; Copy CPU memory to VDP memory
-                                    ; \ i  tmp0 = VDP destination        
-                                    ; | i  tmp1 = CPU source
-                                    ; / i  tmp2 = Number of bytes to copy (2)                                    
+                                    ; / i  tmp2 = Number of bytes to copy                          
         ;------------------------------------------------------
         ; Append file descriptor to PAB header in VDP
         ;------------------------------------------------------
@@ -199,21 +161,25 @@ fh.file.delete.pabheader:
         ; Step 3: Processing complete, call callback
         ;------------------------------------------------------ 
 fh.file.delete.success:
-        clr   @outparm1             ; Clear binary delete failed flag
-        mov   @fh.callback2,tmp0    ; Get pointer to Callback "File deleteed"
+        clr   @outparm1             ; Clear delete failed flag, can be trashed
+        mov   @fh.callback2,tmp0    ; Get pointer to Callback "File deletee"
         jeq   fh.file.delete.exit   ; Skip callback
         bl    *tmp0                 ; Run callback function
-        clr   @outparm1             ; Clear dlete failed flag, might be overwritten          
+        clr   @outparm1             ; Clear delete failed flag
         jmp   fh.file.delete.exit   ; Exit normally
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
 fh.file.delete.error:
-        seto  @outparm1             ; Set binary delete failed flag
+        li    tmp0,id.file.deletefile 
+        mov   tmp0,@fh.workmode     ; Work mode (used in callbacks)
+
+        seto  @outparm1             ; Set delete failed flag, can be trashed
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
         jeq   fh.file.delete.exit   ; Skip callback if not set
+
         bl    *tmp0                 ; Run callback function
-        seto  @outparm1             ; Set binary delete failed flag, might be overwritten          
+        seto  @outparm1             ; Set delete failed flag
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

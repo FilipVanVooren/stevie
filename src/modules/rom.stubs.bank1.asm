@@ -223,6 +223,26 @@ fm.browse.updir:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
+***************************************************************
+* Stub for "fm.delfile"
+* bank2 vec.15
+********|*****|*********************|**************************
+fm.delfile:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 2
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank2.rom        ; | i  p0 = bank address
+              data vec.15           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
 
 ***************************************************************
 * Stub for "edb.find.init"
@@ -814,7 +834,7 @@ fb.hscroll.vector:
 ********|*****|*********************|**************************
 fb.restore:
         mov   @fb.restore.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 fb.restore.vector:
         data  vec.7
 
@@ -1456,20 +1476,3 @@ cart.fg99.mgr:
 cart.fg99.mgr.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
-
-
-
-strg.module:
-        li   tmp0,'*'*256           ; Cartridge load command
-        clr  @>77fc                 ; @LIST_VAR
-        clr  @>7fe0                 ; @VDP_DESTA
-strg.module.load:        
-        clr  @>7ff2                 ; Clear @WAIT_FLAG
-        movb tmp0,@>7ff0            ; Send command to StrangeCart ARM processor
-!       mov  @>7ff2,tmp0            ; Get @WAIT_FLAG
-        jeq  -!                     ; Not ready yet? Wait
-        ci   tmp0,>0200             ; Wait flag 2?
-        jeq  strg.module.load       ; Wait some more
-        limi 0
-        blwp @0                     ; Reset console
