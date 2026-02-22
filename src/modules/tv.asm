@@ -52,9 +52,9 @@ tv.init:
         bl    @cpym2m
               data def.device,tv.devpath,6
 
-
         clr   @edb.autoinsert       ; Set AutoInsert off by default
         clr   @tv.show.linelen      ; Show line length off by default
+        clr   @tv.skip.browser      ; Reset "skip filebrowser" flag
 
         li    tmp0,13               ; \
         mov   tmp0,@tv.lineterm     ; | MSB = 00 Line termination mode off

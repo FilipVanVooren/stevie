@@ -30,11 +30,11 @@ tv.clock.start:
 
         seto  @tv.clock.state        ; Set clock display flag              
         ;------------------------------------------------------
-        ; Fast clock reading task
+        ; Start clock reading task
         ;------------------------------------------------------
         bl    @mkslot               ; Setup Task Scheduler slots         
               data >017f,task.clock ; \ Task 1 - Read clock device
-              data eol              ; / approx. every 1 second
+              data eol              ; /
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

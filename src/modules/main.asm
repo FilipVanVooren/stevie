@@ -121,6 +121,7 @@ main.continue:
 
         bl    @mkslot                      ; Setup Task Scheduler slots         
               data >0002,task.vdp.panes    ; \ Task 0 - Draw VDP editor panes
+              data >017f,task.clock        ; | Task 1 - Read clock device              
               data >020f,task.vdp.cursor   ; | Task 2 - Toggle VDP cursor shape
               data >0360,task.oneshot      ; | Task 3 - One shot task
               data eol                     ; /
@@ -128,7 +129,7 @@ main.continue:
         li    tmp0,>0300            ; \ Set highest slot to use in MSB.
         mov   tmp0,@btihi           ; / Tell Task Scheduler 
 
-        mov   @tv.clock.state,tmp0   ; Show clock?
+        mov   @tv.clock.state,tmp0  ; Show clock?
         jne   !                     ; Yes
 
         bl    @clslot

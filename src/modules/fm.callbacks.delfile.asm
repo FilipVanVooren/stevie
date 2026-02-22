@@ -2,6 +2,54 @@
 * Purpose...: File Manager - Callbacks for delete file operation
 
 ***************************************************************
+* fm.delfile.callback1
+* Callback function "Before deleting file"
+***************************************************************
+* bl  @fm.delfile.callback1
+*--------------------------------------------------------------
+* INPUT
+* none
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Registered as pointer in @fh.callback3
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1
+********|*****|*********************|**************************
+fm.delfile.callback1:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        ;------------------------------------------------------
+        ; Restore status line colors
+        ;------------------------------------------------------
+        bl    @hchar
+              byte 0,70,32,10       ; Remove any left-over junk on top line
+              data eol    
+
+        bl    @pane.botline.busy.on ; \ Put busy indicator on
+                                    ; /
+
+        bl    @putat
+              byte pane.botrow,0
+              data txt.deleting     ; Display "Deleting file...."
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+fm.delfile.callback1.exit:
+        mov   *stack+,tmp1          ; Pop tmp1        
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
 * fm.delfile.callback2
 * Callback function "File deleted"
 ***************************************************************

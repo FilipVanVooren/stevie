@@ -39,7 +39,8 @@ fm.delfile:
         ;-------------------------------------------------------
         ; Delete file
         ;-------------------------------------------------------
-        clr   @parm2                      ; Clear callback 1
+        li    tmp0,fm.delfile.callback1   ; Pointer to callback 1
+        mov   tmp0,@parm2                 ; Register callback 1
         
         li    tmp0,fm.delfile.callback2   ; Pointer to callback 2
         mov   tmp0,@parm3                 ; Register callback 2
@@ -62,7 +63,7 @@ fm.delfile:
         mov   @outparm1,tmp0        ; Check result of delete operation
         jne   fm.delfile.exit       ; Delete failed, exit
         ;-------------------------------------------------------
-        ; Read directory and exit
+        ; Refresh directory
         ;-------------------------------------------------------
 fm.delfile.refreshdir:        
         li    tmp0,tv.devpath       ; \ 
@@ -70,7 +71,7 @@ fm.delfile.refreshdir:
         clr   @parm2                ; /
  
         seto  @parm3                ; Skip filebrowser after reading directory
-        
+
         bl    @fm.directory         ; Read device directory
                                     ; \ @parm1 = Pointer to length-prefixed 
                                     ; |          string containing device
@@ -79,6 +80,7 @@ fm.delfile.refreshdir:
                                     ; |          (ignored if parm1 set)
                                     ; / @parm3 = Skip filebrowser flag
 
+        bl    @pane.cmdb.hide       ; Hide CMDB pane
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

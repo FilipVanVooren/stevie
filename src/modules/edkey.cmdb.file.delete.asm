@@ -71,5 +71,4 @@ edkey.action.cmdb.file.delete.file:
 edkey.action.cmdb.file.delete.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11    
-        b     @edkey.keyscan.hook.debounce 
-                                    ; Back to editor main        
+        b     @edkey.action.top     ; Goto 1st line in editor buffer    

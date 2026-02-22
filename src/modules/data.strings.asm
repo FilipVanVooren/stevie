@@ -14,6 +14,8 @@ txt.printing       stri 'Printing....'
                    even
 txt.searching      stri 'Searching...'
                    even
+txt.deleting       stri 'Deleting...'
+                   even                   
 txt.block.del      stri 'Deleting block....'
                    even
 txt.block.copy     stri 'Copying block....'
