@@ -14,7 +14,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
@@ -23,6 +23,15 @@ dialog.save:
         mov   r11,*stack            ; Save return address
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2                
+        ;-------------------------------------------------------
+        ; Copy dialog strings to RAM
+        ;-------------------------------------------------------
+        bl    @cpym2m
+              data txt.hint.lineterm,ram.msg2,42
         ;-------------------------------------------------------
         ; Crunch current row if dirty
         ;-------------------------------------------------------
@@ -71,7 +80,10 @@ dialog.save.header:
 
         li    tmp0,txt.hint.save
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-        clr   @cmdb.panhint2        ; No extra hint to display
+
+        li    tmp0,txt.ws4          ; \ Empty hint
+        mov   tmp0,@cmdb.panhint2   ; / 
+
         clr   @fh.offsetopcode      ; Data buffer in VDP RAM
         ;-------------------------------------------------------
         ; Line termination on ?
@@ -102,6 +114,8 @@ dialog.save.cursorshape:
         ; Exit
         ;-------------------------------------------------------
 dialog.save.exit:
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     *r11                  ; Return to caller
