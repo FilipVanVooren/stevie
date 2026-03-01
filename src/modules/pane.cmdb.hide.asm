@@ -45,11 +45,6 @@ pane.cmdb.hide:
               byte pane.botrow-cmdb.rows+6,0,32,240
         .ifge cmdb.rows,12
               byte pane.botrow-cmdb.rows+9,0,32,240
-              byte pane.botrow-cmdb.rows+12,0,32,240
-        .else        
-           .ifge cmdb.rows,9
-              byte pane.botrow-cmdb.rows+15,0,32,240
-           .endif
         .endif
               data EOL
         ;------------------------------------------------------
