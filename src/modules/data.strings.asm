@@ -14,7 +14,7 @@ txt.printing       stri 'Printing....'
                    even
 txt.searching      stri 'Searching...'
                    even
-txt.deleting       stri 'Deleting...'
+txt.deleting       stri 'Deleting file...'
                    even                   
 txt.block.del      stri 'Deleting block....'
                    even

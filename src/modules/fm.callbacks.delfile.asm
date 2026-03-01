@@ -29,7 +29,7 @@ fm.delfile.callback1:
         ; Restore status line colors
         ;------------------------------------------------------
         bl    @hchar
-              byte 0,70,32,10       ; Remove any left-over junk on top line
+              byte 0,0,32,80        ; Remove any left-over junk on top line
               data eol    
 
         bl    @pane.botline.busy.on ; \ Put busy indicator on
@@ -38,6 +38,16 @@ fm.delfile.callback1:
         bl    @putat
               byte pane.botrow,0
               data txt.deleting     ; Display "Deleting file...."
+
+        ;------------------------------------------------------
+        ; Display device/filename
+        ;------------------------------------------------------
+fm.delfile.callback1.filename:
+        bl    @at
+              byte pane.botrow,18   ; Cursor YX position
+
+        mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
+        bl    @xutst0               ; Display device/filename  
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
