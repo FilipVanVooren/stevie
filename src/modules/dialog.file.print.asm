@@ -61,7 +61,9 @@ dialog.print.header:
 
         li    tmp0,txt.hint.print
         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
-        clr   @cmdb.panhint2        ; No extra hint to display
+        
+        li    tmp0,txt.ws4          ; \ Empty hint
+        mov   tmp0,@cmdb.panhint2   ; / 
 
         li    tmp0,txt.keys.save1
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
