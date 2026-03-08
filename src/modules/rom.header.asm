@@ -28,7 +28,7 @@ rom.program1:
         data  >0000                 ; 12 \ Next program list entry         >600c
                                     ; 13 / (no more items following)
 
-        data  kickstart.resume      ; 14 \ Program address                 >600e
+        data  kickstart.code1       ; 14 \ Program address                 >600e
                                     ; 15 /
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor

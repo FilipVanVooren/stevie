@@ -44,16 +44,9 @@ bankid  equ   bank1.rom             ; Set bank identifier to bank 1!
         copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
-* Step 1: Switch to bank 7 (Resume Stevie session)
-********|*****|*********************|**************************
-resume.stevie:
-        aorg  >6038
-        clr   @bank7.rom            ; Switch to bank 7 "Jill"
-
-***************************************************************
 * Step 1: Switch to bank 0 (uniform code accross all banks)
 ********|*****|*********************|**************************
-new.stevie:
+new.stevie:        
         aorg  kickstart.code1       ; >6040
         clr   @bank0.rom            ; Switch to bank 0 "Jill"
 ***************************************************************

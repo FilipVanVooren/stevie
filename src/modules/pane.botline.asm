@@ -178,7 +178,7 @@ pane.botline.show_keys.default:
               data txt.keys.default ; Show default keys only
 
         bl    @hchar
-              byte pane.botrow,18,32,30
+              byte pane.botrow,16,32,32
               data EOL              ; Remove any leftover junk after key markers
         ;------------------------------------------------------
         ; Show vertical lines
