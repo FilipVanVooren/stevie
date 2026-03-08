@@ -46,7 +46,7 @@ main.continue:
         ; Clear VDP memory
         ;------------------------------------------------------
         bl    @filv
-              data >0000,32,>12c0   ; Clear screen area
+              data >0000,00,>12c0   ; Clear screen area
 
         bl    @filv
               data fh.vpab,0,vdp.pdt.base - fh.vpab
@@ -71,7 +71,7 @@ main.continue:
 
         .ifeq vdpmode, 6080
 
-        bl    @putvr                ; Turn on 30 rows mode.
+        bl    @putvr                ; Turn on 30   rows mode.
               data >3140            ; F18a VR49 (>31), bit 40
 
         .endif

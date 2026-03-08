@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260308-1857310
+0002               * BUILD: 260308-2023290
 0003               ***************************************************************
                    < stevie_bf.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -61,18 +61,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0028               *--------------------------------------------------------------
 0029               * SPECTRA2 / Stevie startup options
 0030               *--------------------------------------------------------------
-0031      0001     startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
-0032      6040     kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
-0033      6046     kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
-0034      0001     rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
-0035      0000     debug                     equ  0       ; Turn on debugging mode
-0036               *--------------------------------------------------------------
-0037               * ROM layout
-0038               *--------------------------------------------------------------
-0039      7F50     bankx.vdptab              equ  >7f50   ; VDP mode tables
-0040      7F70     bankx.vectab              equ  >7f70   ; Vector table
-0041      7FF0     bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
-0042      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
+0031      6040     kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
+0032      6046     kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
+0033      0001     rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
+0034      0000     debug                     equ  0       ; Turn on debugging mode
+0035               *--------------------------------------------------------------
+0036               * ROM layout
+0037               *--------------------------------------------------------------
+0038      7F50     bankx.vdptab              equ  >7f50   ; VDP mode tables
+0039      7F70     bankx.vectab              equ  >7f70   ; Vector table
+0040      7FF0     bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
+0041      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
                    < stevie_bf.asm
 0026                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
@@ -1778,7 +1777,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0004               ***************************************************************
 0005               * Graphics mode 1 (32 columns/24 rows)
 0006               *--------------------------------------------------------------
-0007 6236 00E2     graph1  byte  >00,>e2,>00,>0e,>01,>06,>02,SPFBCK,0,32
+0007 6236 00A2     graph1  byte  >00,>a2,>00,>0e,>01,>06,>02,SPFBCK,0,32
      6238 000E     
      623A 0106     
      623C 0204     
@@ -1789,7 +1788,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011               * ;      bit 7=0: Disable external VDP input
 0012               * ; VDP#1 Control bits
 0013               * ;      bit 0=1: 16K selection
-0014               * ;      bit 1=1: Enable display
+0014               * ;      bit 1=0: Disable display
 0015               * ;      bit 2=1: Enable VDP interrupt
 0016               * ;      bit 3=0: M1 \ Graphics 1 mode
 0017               * ;      bit 4=0: M2 /
@@ -1807,7 +1806,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0029               ***************************************************************
 0030               * Textmode (40 columns/24 rows)
 0031               *--------------------------------------------------------------
-0032 6240 00F2     tx4024  byte  >00,>f2,>00,>0e,>01,>06,>00,SPFCLR,0,40
+0032 6240 00B2     tx4024  byte  >00,>b2,>00,>0e,>01,>06,>00,SPFCLR,0,40
      6242 000E     
      6244 0106     
      6246 00F4     
@@ -1818,7 +1817,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036               * ;      bit 7=0: Disable external VDP input
 0037               * ; VDP#1 Control bits
 0038               * ;      bit 0=1: 16K selection
-0039               * ;      bit 1=1: Enable display
+0039               * ;      bit 1=0: Disable display
 0040               * ;      bit 2=1: Enable VDP interrupt
 0041               * ;      bit 3=1: M1 \ TEXT MODE
 0042               * ;      bit 4=0: M2 /
@@ -1837,7 +1836,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0055               ***************************************************************
 0056               * Textmode (80 columns, 24 rows) - F18A
 0057               *--------------------------------------------------------------
-0058 624A 04F0     tx8024  byte  >04,>f0,>00,>3f,>02,>40,>03,SPFCLR,0,80
+0058 624A 04B0     tx8024  byte  >04,>b0,>00,>3f,>02,>40,>03,SPFCLR,0,80
      624C 003F     
      624E 0240     
      6250 03F4     
@@ -1848,7 +1847,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0062               * ;      bit 7=0: Disable external VDP input
 0063               * ; VDP#1 Control bits
 0064               * ;      bit 0=1: 16K selection
-0065               * ;      bit 1=1: Enable display
+0065               * ;      bit 1=0: Disable display
 0066               * ;      bit 2=1: Enable VDP interrupt
 0067               * ;      bit 3=1: M1 \ TEXT MODE
 0068               * ;      bit 4=0: M2 /
@@ -6359,69 +6358,68 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0339               *--------------------------------------------------------------
 0340               * Setup video memory
 0341               *--------------------------------------------------------------
-0343 70C6 0280  22         ci    r0,>4a4a              ; Crash flag set?
-     70C8 4A4A     
-0344 70CA 1605  14         jne   runlia
-0345 70CC 06A0  32         bl    @filv                 ; Clear 12K VDP memory instead
-     70CE 62D2     
-0346 70D0 0000             data  >0000,>00,>3000       ; of 16K, so that PABs survive
-     70D2 0000     
-     70D4 3000     
-0351 70D6 06A0  32 runlia  bl    @filv
-     70D8 62D2     
-0352 70DA 12C0             data  pctadr,spfclr,16      ; Load color table
-     70DC 00F4     
-     70DE 0010     
-0353               *--------------------------------------------------------------
-0354               * Check if there is a F18A present
-0355               *--------------------------------------------------------------
-0359 70E0 06A0  32         bl    @f18unl               ; Unlock the F18A
-     70E2 67CE     
-0360 70E4 06A0  32         bl    @f18chk               ; Check if F18A is there \
-     70E6 67F8     
-0361 70E8 06A0  32         bl    @f18chk               ; Check if F18A is there | js99er bug?
-     70EA 67F8     
-0362 70EC 06A0  32         bl    @f18chk               ; Check if F18A is there /
-     70EE 67F8     
-0363 70F0 06A0  32         bl    @f18lck               ; Lock the F18A again
-     70F2 67E4     
+0348               
+0349 70C6 06A0  32         bl    @filv                 ; Clear 16K VDP memory
+     70C8 62D2     
+0350 70CA 0000             data  >0000,>00,>3fff
+     70CC 0000     
+     70CE 3FFF     
+0352 70D0 06A0  32 runlia  bl    @filv
+     70D2 62D2     
+0353 70D4 12C0             data  pctadr,spfclr,16      ; Load color table
+     70D6 00F4     
+     70D8 0010     
+0354               *--------------------------------------------------------------
+0355               * Check if there is a F18A present
+0356               *--------------------------------------------------------------
+0360 70DA 06A0  32         bl    @f18unl               ; Unlock the F18A
+     70DC 67CE     
+0361 70DE 06A0  32         bl    @f18chk               ; Check if F18A is there \
+     70E0 67F8     
+0362 70E2 06A0  32         bl    @f18chk               ; Check if F18A is there | js99er bug?
+     70E4 67F8     
+0363 70E6 06A0  32         bl    @f18chk               ; Check if F18A is there /
+     70E8 67F8     
 0364               
-0365 70F4 06A0  32         bl    @putvr                ; Reset all F18a extended registers
-     70F6 6376     
-0366 70F8 3201                   data >3201            ; F18a VR50 (>32), bit 1
-0368               *--------------------------------------------------------------
-0369               * Check if there is a speech synthesizer attached
+0365 70EA 06A0  32         bl    @putvr                ; Reset all F18a extended registers
+     70EC 6376     
+0366 70EE 3201                   data >3201            ; F18a VR50 (>32), bit
+0367               
+0368 70F0 06A0  32         bl    @f18lck               ; Lock the F18A again
+     70F2 67E4     
 0370               *--------------------------------------------------------------
-0372               *       <<skipped>>
-0376               *--------------------------------------------------------------
-0377               * Load video mode table & font
+0371               * Check if there is a speech synthesizer attached
+0372               *--------------------------------------------------------------
+0374               *       <<skipped>>
 0378               *--------------------------------------------------------------
-0379 70FA 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
-     70FC 633C     
-0380 70FE 7F50             data  spvmod                ; Equate selected video mode table
-0381 7100 0204  20         li    tmp0,spfont           ; Get font option
-     7102 000C     
-0382 7104 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
-0383 7106 1304  14         jeq   runlid                ; Yes, skip it
-0384 7108 06A0  32         bl    @ldfnt
-     710A 63A4     
-0385 710C 2900             data  fntadr,spfont         ; Load specified font
-     710E 000C     
-0386               *--------------------------------------------------------------
-0387               * Did a system crash occur before runlib was called?
+0379               * Load video mode table & font
+0380               *--------------------------------------------------------------
+0381 70F4 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
+     70F6 633C     
+0382 70F8 7F50             data  spvmod                ; Equate selected video mode table
+0383 70FA 0204  20         li    tmp0,spfont           ; Get font option
+     70FC 000C     
+0384 70FE 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
+0385 7100 1304  14         jeq   runlid                ; Yes, skip it
+0386 7102 06A0  32         bl    @ldfnt
+     7104 63A4     
+0387 7106 2900             data  fntadr,spfont         ; Load specified font
+     7108 000C     
 0388               *--------------------------------------------------------------
-0389 7110 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
-     7112 4A4A     
-0390 7114 1602  14         jne   runlie                ; No, continue
-0391 7116 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
-     7118 60CA     
-0392               *--------------------------------------------------------------
-0393               * Branch to main program
+0389               * Did a system crash occur before runlib was called?
+0390               *--------------------------------------------------------------
+0391 710A 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
+     710C 4A4A     
+0392 710E 1602  14         jne   runlie                ; No, continue
+0393 7110 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
+     7112 60CA     
 0394               *--------------------------------------------------------------
-0395 711A 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
-     711C 0040     
-0396 711E 0460  28         b     @main                 ; Give control to main program
-     7120 6046     
+0395               * Branch to main program
+0396               *--------------------------------------------------------------
+0397 7114 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
+     7116 0040     
+0398 7118 0460  28         b     @main                 ; Give control to main program
+     711A 6046     
                    < stevie_bf.asm
 0050                       copy  "rom.farjump.asm"     ; ROM bankswitch trampoline
      **** ****     > rom.farjump.asm
@@ -6452,66 +6450,66 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0025               *  value stack.
 0026               ********|*****|*********************|**************************
 0027               rom.farjump:
-0028 7122 0649  14         dect  stack
-0029 7124 C644  30         mov   tmp0,*stack           ; Push tmp0
-0030 7126 0649  14         dect  stack
-0031 7128 C645  30         mov   tmp1,*stack           ; Push tmp1
-0032 712A 0649  14         dect  stack
-0033 712C C646  30         mov   tmp2,*stack           ; Push tmp2
-0034 712E 0649  14         dect  stack
-0035 7130 C647  30         mov   tmp3,*stack           ; Push tmp3
+0028 711C 0649  14         dect  stack
+0029 711E C644  30         mov   tmp0,*stack           ; Push tmp0
+0030 7120 0649  14         dect  stack
+0031 7122 C645  30         mov   tmp1,*stack           ; Push tmp1
+0032 7124 0649  14         dect  stack
+0033 7126 C646  30         mov   tmp2,*stack           ; Push tmp2
+0034 7128 0649  14         dect  stack
+0035 712A C647  30         mov   tmp3,*stack           ; Push tmp3
 0036                       ;------------------------------------------------------
 0037                       ; Parameters
 0038                       ;------------------------------------------------------
-0039 7132 C13B  30         mov   *r11+,tmp0            ; P0
-0040 7134 C17B  30         mov   *r11+,tmp1            ; P1
-0041 7136 C1BB  30         mov   *r11+,tmp2            ; P2
-0042 7138 1008  14         jmp   xrom.farjump.push_return
+0039 712C C13B  30         mov   *r11+,tmp0            ; P0
+0040 712E C17B  30         mov   *r11+,tmp1            ; P1
+0041 7130 C1BB  30         mov   *r11+,tmp2            ; P2
+0042 7132 1008  14         jmp   xrom.farjump.push_return
 0043                       ;------------------------------------------------------
 0044                       ; Push registers to value stack (but not r11!)
 0045                       ;------------------------------------------------------
 0046               xrom.farjump:
-0047 713A 0649  14         dect  stack
-0048 713C C644  30         mov   tmp0,*stack           ; Push tmp0
-0049 713E 0649  14         dect  stack
-0050 7140 C645  30         mov   tmp1,*stack           ; Push tmp1
-0051 7142 0649  14         dect  stack
-0052 7144 C646  30         mov   tmp2,*stack           ; Push tmp2
-0053 7146 0649  14         dect  stack
-0054 7148 C647  30         mov   tmp3,*stack           ; Push tmp3
+0047 7134 0649  14         dect  stack
+0048 7136 C644  30         mov   tmp0,*stack           ; Push tmp0
+0049 7138 0649  14         dect  stack
+0050 713A C645  30         mov   tmp1,*stack           ; Push tmp1
+0051 713C 0649  14         dect  stack
+0052 713E C646  30         mov   tmp2,*stack           ; Push tmp2
+0053 7140 0649  14         dect  stack
+0054 7142 C647  30         mov   tmp3,*stack           ; Push tmp3
 0055                       ;------------------------------------------------------
 0056                       ; Push to farjump return stack
 0057                       ;------------------------------------------------------
 0058               xrom.farjump.push_return:
-0059 714A 0284  22         ci    tmp0,>6000            ; Invalid bank write address?
-     714C 6000     
-0060 714E 1116  14         jlt   rom.farjump.bankswitch.failed1
+0059 7144 0284  22         ci    tmp0,>6000            ; Invalid bank write address?
+     7146 6000     
+0060 7148 1116  14         jlt   rom.farjump.bankswitch.failed1
 0061                                                   ; Crash if bogus value in bank write address
 0062               
-0063 7150 C1E0  34         mov   @tv.fj.stackpnt,tmp3  ; Get farjump stack pointer
-     7152 A22E     
-0064 7154 0647  14         dect  tmp3
-0065 7156 C5CB  30         mov   r11,*tmp3             ; Push return address to farjump stack
-0066 7158 0647  14         dect  tmp3
-0067 715A C5C6  30         mov   tmp2,*tmp3            ; Push source ROM bank to farjump stack
-0068 715C C807  38         mov   tmp3,@tv.fj.stackpnt  ; Set farjump stack pointer
-     715E A22E     
+0063 714A C1E0  34         mov   @tv.fj.stackpnt,tmp3  ; Get farjump stack pointer
+     714C A22E     
+0064 714E 0647  14         dect  tmp3
+0065 7150 C5CB  30         mov   r11,*tmp3             ; Push return address to farjump stack
+0066 7152 0647  14         dect  tmp3
+0067 7154 C5C6  30         mov   tmp2,*tmp3            ; Push source ROM bank to farjump stack
+0068 7156 C807  38         mov   tmp3,@tv.fj.stackpnt  ; Set farjump stack pointer
+     7158 A22E     
 0069               
 0073               
 0074                       ;------------------------------------------------------
 0075                       ; Bankswitch to target 8K ROM bank
 0076                       ;------------------------------------------------------
 0077               rom.farjump.bankswitch.target.rom8k:
-0078 7160 04D4  26         clr   *tmp0                 ; Switch to target ROM bank 8K >6000
-0079 7162 1004  14         jmp   rom.farjump.bankswitch.tgt.done
+0078 715A 04D4  26         clr   *tmp0                 ; Switch to target ROM bank 8K >6000
+0079 715C 1004  14         jmp   rom.farjump.bankswitch.tgt.done
 0080                       ;------------------------------------------------------
 0081                       ; Bankswitch to target 4K ROM / 4K RAM banks (FG99 advanced mode)
 0082                       ;------------------------------------------------------
 0083               rom.farjump.bankswitch.tgt.advfg99:
-0084 7164 04D4  26         clr   *tmp0                 ; Switch to target ROM bank 4K >6000
-0085 7166 0224  22         ai    tmp0,>0800
-     7168 0800     
-0086 716A 04D4  26         clr   *tmp0                 ; Switch to target RAM bank 4K >7000
+0084 715E 04D4  26         clr   *tmp0                 ; Switch to target ROM bank 4K >6000
+0085 7160 0224  22         ai    tmp0,>0800
+     7162 0800     
+0086 7164 04D4  26         clr   *tmp0                 ; Switch to target RAM bank 4K >7000
 0087                       ;------------------------------------------------------
 0088                       ; Bankswitch to target bank(s) completed
 0089                       ;------------------------------------------------------
@@ -6519,125 +6517,125 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0091                       ;------------------------------------------------------
 0092                       ; Deref vector from @trmpvector if >ffff
 0093                       ;------------------------------------------------------
-0094 716C 0285  22         ci    tmp1,>ffff
-     716E FFFF     
-0095 7170 1602  14         jne   !
-0096 7172 C160  34         mov   @trmpvector,tmp1
-     7174 A034     
+0094 7166 0285  22         ci    tmp1,>ffff
+     7168 FFFF     
+0095 716A 1602  14         jne   !
+0096 716C C160  34         mov   @trmpvector,tmp1
+     716E A034     
 0097                       ;------------------------------------------------------
 0098                       ; Deref value in vector
 0099                       ;------------------------------------------------------
-0100 7176 C115  26 !       mov   *tmp1,tmp0            ; Deref value in vector address
-0101 7178 1301  14         jeq   rom.farjump.bankswitch.failed1
+0100 7170 C115  26 !       mov   *tmp1,tmp0            ; Deref value in vector address
+0101 7172 1301  14         jeq   rom.farjump.bankswitch.failed1
 0102                                                   ; Crash if null-pointer in vector
 0103               
-0104 717A 1004  14         jmp   rom.farjump.bankswitch.call
+0104 7174 1004  14         jmp   rom.farjump.bankswitch.call
 0105                                                   ; Call function in target bank
 0106                       ;------------------------------------------------------
 0107                       ; Assert 1 failed before bank-switch
 0108                       ;------------------------------------------------------
 0109               rom.farjump.bankswitch.failed1:
-0110 717C C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     717E FFCE     
-0111 7180 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     7182 606A     
+0110 7176 C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     7178 FFCE     
+0111 717A 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     717C 606A     
 0112                       ;------------------------------------------------------
 0113                       ; Call function in target bank
 0114                       ;------------------------------------------------------
 0115               rom.farjump.bankswitch.call:
-0116 7184 0694  24         bl    *tmp0                 ; Call function
+0116 717E 0694  24         bl    *tmp0                 ; Call function
 0117                       ;------------------------------------------------------
 0118                       ; Bankswitch back to source bank
 0119                       ;------------------------------------------------------
 0120               rom.farjump.return:
-0121 7186 C120  34         mov   @tv.fj.stackpnt,tmp0  ; Get farjump stack pointer
-     7188 A22E     
-0122 718A C154  26         mov   *tmp0,tmp1            ; Get bank write address of caller
-0123 718C 1319  14         jeq   rom.farjump.bankswitch.failed2
+0121 7180 C120  34         mov   @tv.fj.stackpnt,tmp0  ; Get farjump stack pointer
+     7182 A22E     
+0122 7184 C154  26         mov   *tmp0,tmp1            ; Get bank write address of caller
+0123 7186 1319  14         jeq   rom.farjump.bankswitch.failed2
 0124                                                   ; Crash if null-pointer in address
 0125               
-0126 718E 04F4  30         clr   *tmp0+                ; Remove bank write address from
+0126 7188 04F4  30         clr   *tmp0+                ; Remove bank write address from
 0127                                                   ; farjump stack
 0128               
-0129 7190 C2D4  26         mov   *tmp0,r11             ; Get return addr of caller for return
+0129 718A C2D4  26         mov   *tmp0,r11             ; Get return addr of caller for return
 0130               
-0131 7192 04F4  30         clr   *tmp0+                ; Remove return address of caller from
+0131 718C 04F4  30         clr   *tmp0+                ; Remove return address of caller from
 0132                                                   ; farjump stack
 0133               
 0134                       ;------------------------------------------------------
 0135                       ; Assert on memory source address in cartridge space
 0136                       ;------------------------------------------------------
 0137               rom.farjump.assert.cart:
-0138 7194 028B  22         ci    r11,>6000
-     7196 6000     
-0139 7198 1104  14         jlt   rom.farjump.assert.lowmem
-0140 719A 028B  22         ci    r11,>7fff
-     719C 7FFF     
-0141 719E 1510  14         jgt   rom.farjump.bankswitch.failed2
-0142 71A0 1006  14         jmp   !
+0138 718E 028B  22         ci    r11,>6000
+     7190 6000     
+0139 7192 1104  14         jlt   rom.farjump.assert.lowmem
+0140 7194 028B  22         ci    r11,>7fff
+     7196 7FFF     
+0141 7198 1510  14         jgt   rom.farjump.bankswitch.failed2
+0142 719A 1006  14         jmp   !
 0143                       ;------------------------------------------------------
 0144                       ; Assert on memory source address in low memory expansion
 0145                       ;------------------------------------------------------
 0146               rom.farjump.assert.lowmem:
-0147 71A2 028B  22         ci    r11,>2000
-     71A4 2000     
-0148 71A6 110C  14         jlt   rom.farjump.bankswitch.failed2
-0149 71A8 028B  22         ci    r11,>3fff
-     71AA 3FFF     
-0150 71AC 1509  14         jgt   rom.farjump.bankswitch.failed2
+0147 719C 028B  22         ci    r11,>2000
+     719E 2000     
+0148 71A0 110C  14         jlt   rom.farjump.bankswitch.failed2
+0149 71A2 028B  22         ci    r11,>3fff
+     71A4 3FFF     
+0150 71A6 1509  14         jgt   rom.farjump.bankswitch.failed2
 0151                       ;------------------------------------------------------
 0152                       ; Update farjump return stack pointer
 0153                       ;------------------------------------------------------
-0154 71AE C804  38 !       mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
-     71B0 A22E     
+0154 71A8 C804  38 !       mov   tmp0,@tv.fj.stackpnt  ; Update farjump return stack pointer
+     71AA A22E     
 0155               
 0159                       ;------------------------------------------------------
 0160                       ; Bankswitch to source 8K ROM bank
 0161                       ;------------------------------------------------------
 0162               rom.farjump.bankswitch.src.rom8k:
-0163 71B2 04D5  26         clr   *tmp1                 ; Switch to source ROM bank 8K >6000
-0164 71B4 1009  14         jmp   rom.farjump.exit
+0163 71AC 04D5  26         clr   *tmp1                 ; Switch to source ROM bank 8K >6000
+0164 71AE 1009  14         jmp   rom.farjump.exit
 0165                       ;------------------------------------------------------
 0166                       ; Bankswitch to source 4K ROM / 4K RAM banks (FG99 advanced mode)
 0167                       ;------------------------------------------------------
 0168               rom.farjump.bankswitch.src.advfg99:
-0169 71B6 04D5  26         clr   *tmp1                 ; Switch to source ROM bank 4K >6000
-0170 71B8 0225  22         ai    tmp1,>0800
-     71BA 0800     
-0171 71BC 04D5  26         clr   *tmp1                 ; Switch to source RAM bank 4K >7000
-0172 71BE 1004  14         jmp   rom.farjump.exit
+0169 71B0 04D5  26         clr   *tmp1                 ; Switch to source ROM bank 4K >6000
+0170 71B2 0225  22         ai    tmp1,>0800
+     71B4 0800     
+0171 71B6 04D5  26         clr   *tmp1                 ; Switch to source RAM bank 4K >7000
+0172 71B8 1004  14         jmp   rom.farjump.exit
 0173                       ;------------------------------------------------------
 0174                       ; Assert 2 failed after bank-switch
 0175                       ;------------------------------------------------------
 0176               rom.farjump.bankswitch.failed2:
-0177 71C0 C80B  38         mov   r11,@>ffce            ; \ Save caller address
-     71C2 FFCE     
-0178 71C4 06A0  32         bl    @cpu.crash            ; / Crash and halt system
-     71C6 606A     
+0177 71BA C80B  38         mov   r11,@>ffce            ; \ Save caller address
+     71BC FFCE     
+0178 71BE 06A0  32         bl    @cpu.crash            ; / Crash and halt system
+     71C0 606A     
 0179                       ;-------------------------------------------------------
 0180                       ; Exit
 0181                       ;-------------------------------------------------------
 0182               rom.farjump.exit:
-0183 71C8 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0184 71CA C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0185 71CC C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0186 71CE C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0183 71C2 C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0184 71C4 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0185 71C6 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0186 71C8 C139  30         mov   *stack+,tmp0          ; Pop tmp0
 0187                       ;
 0188                       ; Attention!
 0189                       ; r11 was popped from farjump stack, not from value stack!
 0190                       ; See rom.farjump.return
 0191                       ;
-0192 71D0 045B  20         b     *r11                  ; Return to caller
+0192 71CA 045B  20         b     *r11                  ; Return to caller
                    < stevie_bf.asm
 0051                       ;------------------------------------------------------
 0052                       ; Activate bank 1 and branch to  >6036
 0053                       ;------------------------------------------------------
-0054 71D2 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
-     71D4 6002     
+0054 71CC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+     71CE 6002     
 0055               
 0059               
-0060 71D6 0460  28         b     @kickstart.code2      ; Jump to entry routine
-     71D8 6046     
+0060 71D0 0460  28         b     @kickstart.code2      ; Jump to entry routine
+     71D2 6046     
 0061               ***************************************************************
 0062               * Step 3: Include main editor modules
 0063               ********|*****|*********************|**************************
@@ -6671,7 +6669,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
 0017 604E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6050 7122     
+     6050 711C     
 0018 6052 6002                   data bank1.rom        ; | i  p0 = bank address
 0019 6054 7F70                   data vec.1            ; | i  p1 = Vector with target address
 0020 6056 601E                   data bankid           ; / i  p2 = Source ROM bank for return
@@ -6694,7 +6692,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
 0042 6060 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6062 7122     
+     6062 711C     
 0043 6064 600E                   data bank7.rom        ; | i  p0 = bank address
 0044 6066 7F70                   data vec.1            ; | i  p1 = Vector with target address
 0045 6068 601E                   data bankid           ; / i  p2 = Source ROM bank for return
@@ -6717,7 +6715,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
 0064 6072 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6074 7122     
+     6074 711C     
 0065 6076 600E                   data bank7.rom        ; | i  p0 = bank address
 0066 6078 7F72                   data vec.2            ; | i  p1 = Vector with target address
 0067 607A 601E                   data bankid           ; / i  p2 = Source ROM bank for return
@@ -6739,7 +6737,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
 0085 6084 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6086 7122     
+     6086 711C     
 0086 6088 600E                   data bank7.rom        ; | i  p0 = bank address
 0087 608A 7F74                   data vec.3            ; | i  p1 = Vector with target address
 0088 608C 601E                   data bankid           ; / i  p2 = Source ROM bank for return
@@ -7785,19 +7783,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     RAMBUF.............. >A100 :     
     RKSCAN.............. >69AA :     
     RKSCAN.EXIT......... >6A00 :     
-    ROM.FARJUMP......... >7122 :     
-    ROM.FARJUMP.ASSERT.CART >7194 :     
-    ROM.FARJUMP.ASSERT.LOWMEM >71A2 :     
-    ROM.FARJUMP.BANKSWITCH.CALL >7184 :     
-    ROM.FARJUMP.BANKSWITCH.FAILED1 >717C :     
-    ROM.FARJUMP.BANKSWITCH.FAILED2 >71C0 :     
-    ROM.FARJUMP.BANKSWITCH.SRC.ADVFG99 >71B6 :     
-    ROM.FARJUMP.BANKSWITCH.SRC.ROM8K >71B2 :     
-    ROM.FARJUMP.BANKSWITCH.TARGET.ROM8K >7160 :     
-    ROM.FARJUMP.BANKSWITCH.TGT.ADVFG99 >7164 :     
-    ROM.FARJUMP.BANKSWITCH.TGT.DONE >716C :     
-    ROM.FARJUMP.EXIT.... >71C8 :     
-    ROM.FARJUMP.RETURN.. >7186 :     
+    ROM.FARJUMP......... >711C :     
+    ROM.FARJUMP.ASSERT.CART >718E :     
+    ROM.FARJUMP.ASSERT.LOWMEM >719C :     
+    ROM.FARJUMP.BANKSWITCH.CALL >717E :     
+    ROM.FARJUMP.BANKSWITCH.FAILED1 >7176 :     
+    ROM.FARJUMP.BANKSWITCH.FAILED2 >71BA :     
+    ROM.FARJUMP.BANKSWITCH.SRC.ADVFG99 >71B0 :     
+    ROM.FARJUMP.BANKSWITCH.SRC.ROM8K >71AC :     
+    ROM.FARJUMP.BANKSWITCH.TARGET.ROM8K >715A :     
+    ROM.FARJUMP.BANKSWITCH.TGT.ADVFG99 >715E :     
+    ROM.FARJUMP.BANKSWITCH.TGT.DONE >7166 :     
+    ROM.FARJUMP.EXIT.... >71C2 :     
+    ROM.FARJUMP.RETURN.. >7180 :     
     ROM.PROGRAM1........ >600C :     
     ROM0_KSCAN_ON....... >0001 :     
     ROM0_KSCAN_OUT...... >A028 :     
@@ -7811,11 +7809,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     RUNLI6.............. >70A2 :     
     RUNLI7.............. >70B0 :     
     RUNLI9.............. >70B4 :     
-    RUNLIA.............. >70D6 :     
+    RUNLIA.............. >70D0 :     
     RUNLIB.............. >7064 :     
-    RUNLIC.............. >70FA :     
-    RUNLID.............. >7110 :     
-    RUNLIE.............. >711A :     
+    RUNLIC.............. >70F4 :     
+    RUNLID.............. >710A :     
+    RUNLIE.............. >7114 :     
     S16X16.............. >6762 :     
     S8X8................ >675A :     
     SAMS.LAYOUT......... >6692 :     
@@ -7887,7 +7885,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     SPRSAT.............. >2580 :     
     SPVMOD.............. >7F50 :     
     STACK............... >0009 :     
-    STARTUP_KEEP_VDPMEMORY >0001 :     
     STEVIE.80X30........ >7F50 :     
     STRING.GETLENC...... >6B8E :     
     STRING.GETLENC.EXIT. >6BDA :     
@@ -8161,8 +8158,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     XPYM2M.............. >6584 :     
     XPYM2V.............. >6530 :     
     XPYV2M.............. >6562 :     
-    XROM.FARJUMP........ >713A :     
-    XROM.FARJUMP.PUSH_RETURN >714A :     
+    XROM.FARJUMP........ >7134 :     
+    XROM.FARJUMP.PUSH_RETURN >7144 :     
     XSAMS.LAYOUT........ >6694 :     
     XSAMS.PAGE.GET...... >65E2 :     
     XSAMS.PAGE.SET...... >661A :     

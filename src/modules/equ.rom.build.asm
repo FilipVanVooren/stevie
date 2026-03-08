@@ -28,7 +28,6 @@ skip_fio_memprep          equ  1       ; Skip VDP memory setup for file I/O
 *--------------------------------------------------------------
 * SPECTRA2 / Stevie startup options
 *--------------------------------------------------------------
-startup_keep_vdpmemory    equ  1       ; Do not clear VDP vram on start
 kickstart.code1           equ  >6040   ; Uniform aorg entry addr accross banks
 kickstart.code2           equ  >6046   ; Uniform aorg entry addr accross banks
 rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
