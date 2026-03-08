@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260308-2023290
+0002               * BUILD: 260308-2025320
 0003               ***************************************************************
                    < stevie_bf.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -6358,67 +6358,66 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0339               *--------------------------------------------------------------
 0340               * Setup video memory
 0341               *--------------------------------------------------------------
-0348               
-0349 70C6 06A0  32         bl    @filv                 ; Clear 16K VDP memory
+0348 70C6 06A0  32         bl    @filv                 ; Clear 16K VDP memory
      70C8 62D2     
-0350 70CA 0000             data  >0000,>00,>3fff
+0349 70CA 0000             data  >0000,>00,>3fff
      70CC 0000     
      70CE 3FFF     
-0352 70D0 06A0  32 runlia  bl    @filv
+0351 70D0 06A0  32 runlia  bl    @filv
      70D2 62D2     
-0353 70D4 12C0             data  pctadr,spfclr,16      ; Load color table
+0352 70D4 12C0             data  pctadr,spfclr,16      ; Load color table
      70D6 00F4     
      70D8 0010     
-0354               *--------------------------------------------------------------
-0355               * Check if there is a F18A present
-0356               *--------------------------------------------------------------
-0360 70DA 06A0  32         bl    @f18unl               ; Unlock the F18A
+0353               *--------------------------------------------------------------
+0354               * Check if there is a F18A present
+0355               *--------------------------------------------------------------
+0359 70DA 06A0  32         bl    @f18unl               ; Unlock the F18A
      70DC 67CE     
-0361 70DE 06A0  32         bl    @f18chk               ; Check if F18A is there \
+0360 70DE 06A0  32         bl    @f18chk               ; Check if F18A is there \
      70E0 67F8     
-0362 70E2 06A0  32         bl    @f18chk               ; Check if F18A is there | js99er bug?
+0361 70E2 06A0  32         bl    @f18chk               ; Check if F18A is there | js99er bug?
      70E4 67F8     
-0363 70E6 06A0  32         bl    @f18chk               ; Check if F18A is there /
+0362 70E6 06A0  32         bl    @f18chk               ; Check if F18A is there /
      70E8 67F8     
-0364               
-0365 70EA 06A0  32         bl    @putvr                ; Reset all F18a extended registers
+0363               
+0364 70EA 06A0  32         bl    @putvr                ; Reset all F18a extended registers
      70EC 6376     
-0366 70EE 3201                   data >3201            ; F18a VR50 (>32), bit
-0367               
-0368 70F0 06A0  32         bl    @f18lck               ; Lock the F18A again
+0365 70EE 3201                   data >3201            ; F18a VR50 (>32), bit
+0366               
+0367 70F0 06A0  32         bl    @f18lck               ; Lock the F18A again
      70F2 67E4     
-0370               *--------------------------------------------------------------
-0371               * Check if there is a speech synthesizer attached
-0372               *--------------------------------------------------------------
-0374               *       <<skipped>>
-0378               *--------------------------------------------------------------
-0379               * Load video mode table & font
-0380               *--------------------------------------------------------------
-0381 70F4 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
+0369               *--------------------------------------------------------------
+0370               * Check if there is a speech synthesizer attached
+0371               *--------------------------------------------------------------
+0373               *       <<skipped>>
+0377               *--------------------------------------------------------------
+0378               * Load video mode table & font
+0379               *--------------------------------------------------------------
+0380 70F4 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
      70F6 633C     
-0382 70F8 7F50             data  spvmod                ; Equate selected video mode table
-0383 70FA 0204  20         li    tmp0,spfont           ; Get font option
+0381 70F8 7F50             data  spvmod                ; Equate selected video mode table
+0382 70FA 0204  20         li    tmp0,spfont           ; Get font option
      70FC 000C     
-0384 70FE 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
-0385 7100 1304  14         jeq   runlid                ; Yes, skip it
-0386 7102 06A0  32         bl    @ldfnt
+0383 70FE 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
+0384 7100 1304  14         jeq   runlid                ; Yes, skip it
+0385 7102 06A0  32         bl    @ldfnt
      7104 63A4     
-0387 7106 2900             data  fntadr,spfont         ; Load specified font
+0386 7106 2900             data  fntadr,spfont         ; Load specified font
      7108 000C     
-0388               *--------------------------------------------------------------
-0389               * Did a system crash occur before runlib was called?
-0390               *--------------------------------------------------------------
-0391 710A 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
+0387               *--------------------------------------------------------------
+0388               * Did a system crash occur before runlib was called?
+0389               *--------------------------------------------------------------
+0390 710A 0280  22 runlid  ci    r0,>4a4a              ; Crash flag set?
      710C 4A4A     
-0392 710E 1602  14         jne   runlie                ; No, continue
-0393 7110 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
+0391 710E 1602  14         jne   runlie                ; No, continue
+0392 7110 0460  28         b     @cpu.crash.main       ; Yes, back to crash handler
      7112 60CA     
-0394               *--------------------------------------------------------------
-0395               * Branch to main program
-0396               *--------------------------------------------------------------
-0397 7114 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
+0393               *--------------------------------------------------------------
+0394               * Branch to main program
+0395               *--------------------------------------------------------------
+0396 7114 0262  22 runlie  ori   config,>0040          ; Enable kernel thread (bit 9 on)
      7116 0040     
-0398 7118 0460  28         b     @main                 ; Give control to main program
+0397 7118 0460  28         b     @main                 ; Give control to main program
      711A 6046     
                    < stevie_bf.asm
 0050                       copy  "rom.farjump.asm"     ; ROM bankswitch trampoline
