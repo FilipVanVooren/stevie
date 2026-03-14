@@ -30,7 +30,7 @@ dialog.help.content:
         ; Clear screen and set colors
         ;------------------------------------------------------
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 160
+              data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 240
                                     ; Clear screen
 
         bl    @hchar
@@ -46,15 +46,13 @@ dialog.help.content:
         li    tmp0,vdp.fb.toprow.tat + 80
         mov   @tv.color,tmp1        ; Get color for framebuffer
         srl   tmp1,8                ; Right justify
-        li    tmp2,15 * 80          ; Prepare for loading color attributes
+        li    tmp2,vdp.sit.size - (cmdb.rows * 80) - 240          
+                                    ; Prepare for loading color attributes
 
         bl    @xfilv                ; \ Fill VDP memory
                                     ; | i  tmp0 = Memory start address
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Number of bytes to fill
-
-        bl    @filv
-              data sprsat,>d0,12    ; Turn off sprites
         ;------------------------------------------------------
         ; Display left column
         ;------------------------------------------------------
@@ -70,7 +68,8 @@ dialog.help.content:
         mov   @dialog.help.data.pages+2(tmp3),tmp2
                                     ; Number of strings to display
 
-        clr   tmp3                  ; No string padding                                    
+        mov   @dialog.help.data.pages+4(tmp3),tmp3
+                                    ; String padding
 
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
@@ -93,16 +92,13 @@ dialog.help.content:
               byte 0,42             ; Y=0, X=42
 
         mov   @cmdb.dialog.var,tmp3 ; Get Page index
-
         clr   tmp0                  ; Single-column list
-
-        mov   @dialog.help.data.pages+4(tmp3),tmp1
+        mov   @dialog.help.data.pages+6(tmp3),tmp1
                                     ; Pointer to list of strings
-        mov   @dialog.help.data.pages+6(tmp3),tmp2
+        mov   @dialog.help.data.pages+8(tmp3),tmp2
                                     ; Number of strings to display
-
-        clr   tmp3                  ; No string padding
-
+        mov   @dialog.help.data.pages+10(tmp3),tmp3
+                                    ; String padding
         bl    @putlst               ; Loop over string list and display
                                     ; \ i  @wyx = Cursor position
                                     ; | i  tmp0 = Cutover row and column offset
@@ -116,7 +112,6 @@ dialog.help.content:
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
                                     ; /             (tmp2) entries                                    
-
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
@@ -132,10 +127,10 @@ dialog.help.content.exit:
 
 
 dialog.help.data.pages:
-        data  dialog.help.data.page1.left,16
-        data  dialog.help.data.page1.right,14
-        data  dialog.help.data.page2.left,16
-        data  dialog.help.data.page2.right,17
+        data  dialog.help.data.page1.left,15,41
+        data  dialog.help.data.page1.right,13,37
+        data  dialog.help.data.page2.left,15,41
+        data  dialog.help.data.page2.right,16,37
 
 
 dialog.help.data.page1.left:
@@ -155,18 +150,16 @@ dialog.help.data.page1.left:
         stri 'Fctn v        Screen top'
         stri 'Ctrl v   ^v   File top'
         stri 'Fctn b        Screen bottom'
-        stri ''        
         stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
         stri 'This is free software, you are welcome to redistribute under certain conditions'
 
 
 dialog.help.data.page1.right:
-        stri '                            Page 1/2  '
+        stri '                            Page 1/2'
         stri 'Ctrl b   ^b   File bottom'
         stri 'Ctrl g   ^g   Goto line'        
         stri 'Ctrl ,   ^,   Goto previous match'
         stri 'Ctrl .   ^.   Goto next match'
-        stri ' '
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' File '
@@ -192,7 +185,6 @@ dialog.help.data.page2.left:
         stri 'Fctn .        Insert/Overwrite'
         stri 'Ctrl c   ^c   Copy clipboard'
         stri 'Ctrl u   ^u   Unlock editor'
-        stri ' '
         byte    35
         byte    1,1,1,1,1,1
         text    ' File picker (catalog) '
@@ -204,10 +196,9 @@ dialog.help.data.page2.left:
         stri 'Fctn e/x      Up/Down'
 
 dialog.help.data.page2.right:
-        stri '                            Page 2/2  '
+        stri '                            Page 2/2'
         stri 'Ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
         stri 'SPACE         Parent directory'
-        stri ''        
         byte    36
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Block Mode '
@@ -219,7 +210,6 @@ dialog.help.data.page2.right:
         stri 'Ctrl m   ^m   Move block'
         stri 'Ctrl s   ^s   Save block to file'
         stri 'Ctrl ^1..^3   Copy to clipboard 1-3'
-        stri ' '
         byte    35
         byte    1,1,1,1,1,1,1,1,1,1,1,1,1
         text    ' Others '
@@ -227,6 +217,5 @@ dialog.help.data.page2.right:
         stri 'Fctn +   ^q   Quit'
         stri 'Fctn 0        TI Basic session'
         stri 'Ctrl 0   ^0   TI Basic submenu'
-        stri 'Ctrl h   ^h   Help'
         stri 'Ctrl u   ^u   Shortcuts menu'
         stri 'Ctrl z   ^z   Cycle color schemes'        

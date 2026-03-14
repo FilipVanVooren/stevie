@@ -291,9 +291,9 @@ edb.find.search:
 * bank3 vec.1
 ********|*****|*********************|**************************
 dialog.help.next:
-        c     @w$0008,@cmdb.dialog.var
+        c     @const.12,@cmdb.dialog.var
         jeq   !
-        a     @w$0008,@cmdb.dialog.var
+        a     @const.12,@cmdb.dialog.var
         jmp   dialog.help
 !       clr   @cmdb.dialog.var
 dialog.help:

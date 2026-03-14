@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260308-2025320
+0002               * BUILD: 260314-1935220
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -16067,12 +16067,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0291               * bank3 vec.1
 0292               ********|*****|*********************|**************************
 0293               dialog.help.next:
-0294 76FC 8820  50         c     @w$0008,@cmdb.dialog.var
-     76FE 2008     
+0294 76FC 8820  50         c     @const.12,@cmdb.dialog.var
+     76FE 3904     
      7700 A722     
 0295 7702 1304  14         jeq   !
-0296 7704 A820  54         a     @w$0008,@cmdb.dialog.var
-     7706 2008     
+0296 7704 A820  54         a     @const.12,@cmdb.dialog.var
+     7706 3904     
      7708 A722     
 0297 770A 1002  14         jmp   dialog.help
 0298 770C 04E0  34 !       clr   @cmdb.dialog.var
