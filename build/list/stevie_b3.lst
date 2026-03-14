@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260314-1935220
+0002               * BUILD: 260314-2059410
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -127,21 +127,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               ***************************** F18a/PICO9918 30x80 ******************************
 0013               
 0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
-0021                   copy 'equ.vdp.6080.asm' ; Character cursor
-     **** ****     > equ.vdp.6080.asm
-0001               * FILE......: equ.vdp.6080.asm
-0002               * Purpose...: PICO9918 60x80 mode
+0016                   copy 'equ.vdp.4880.asm' ; Character cursor
+     **** ****     > equ.vdp.4880.asm
+0001               * FILE......: equ.vdp.4880.asm
+0002               * Purpose...: PICO9918 48x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
 0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
+0010      0F00     vdp.sit.size              equ  48*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
+0012      0F00     vdp.tat.size              equ  48*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -151,7 +149,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
 0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
-0022      003B     pane.botrow               equ  59      ; Bottom row on screen
+0022      002F     pane.botrow               equ  47      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -179,6 +177,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b3.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -947,15 +947,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0033               
 0037               
 0041               
-0045               
-0047 6010 0F53                 stri 'STEVIE 1.9.9-60'
+0043 6010 0F53                 stri 'STEVIE 1.9.9-48'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 312E     
      601A 392E     
      601C 392D     
-     601E 3630     
+     601E 3438     
+0045               
                    < stevie_b3.asm
 0039               
 0040               ***************************************************************
@@ -6674,7 +6674,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      31B2 A310     
 0038               
 0039 31B4 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B6 003A     
+     31B6 002E     
 0040 31B8 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BA A320     
 0041               
@@ -7322,7 +7322,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33D4 0204  20         li    tmp0,pane.botrow      ; \
-     33D6 003B     
+     33D6 002F     
 0047 33D8 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33DA A706     
 0048 33DC 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -10106,7 +10106,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      61D6 A720     
 0015               
 0016 61D8 06A0  32         bl    @dialog.help.content  ; display content in modal dialog
-     61DA 72CE     
+     61DA 72F2     
 0017               
 0018 61DC 0204  20         li    tmp0,txt.head.about
      61DE 77A4     
@@ -11658,7 +11658,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045               
 0046 67DA 06A0  32         bl    @hchar
      67DC 2832     
-0047 67DE 3702                   byte pane.botrow-4,2,32,70
+0047 67DE 2B02                   byte pane.botrow-4,2,32,70
      67E0 2046     
 0048 67E2 FFFF                   data EOL              ; Remove markers
 0049               
@@ -12258,7 +12258,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042                       ; Show command buffer pane
 0043                       ;------------------------------------------------------
 0044 6A3C 0204  20         li    tmp0,pane.botrow      ; \
-     6A3E 003B     
+     6A3E 002F     
 0045 6A40 6120  34         s     @cmdb.scrrows,tmp0    ; | Determine framebuffer rows
      6A42 A706     
 0046 6A44 C804  38         mov   tmp0,@fb.scrrows      ; /
@@ -12277,7 +12277,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0055 6A56 04E0  34         clr   @fb.curtoggle         ; \ Hide cursor in frambuffer
      6A58 A314     
 0056 6A5A 06A0  32         bl    @vdp.cursor.tat.fb    ; /
-     6A5C 72F2     
+     6A5C 72E0     
 0057                       ;------------------------------------------------------
 0058                       ; Determine initial cursor position
 0059                       ;------------------------------------------------------
@@ -12369,13 +12369,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041                       ;------------------------------------------------------
 0042 6ABA 06A0  32         bl    @hchar                ; Destroys tmp0, tmp1,tmp2, tmp3
      6ABC 2832     
-0043 6ABE 2F00                   byte pane.botrow-cmdb.rows,0,32,240
+0043 6ABE 2300                   byte pane.botrow-cmdb.rows,0,32,240
      6AC0 20F0     
-0044 6AC2 3200                   byte pane.botrow-cmdb.rows+3,0,32,240
+0044 6AC2 2600                   byte pane.botrow-cmdb.rows+3,0,32,240
      6AC4 20F0     
-0045 6AC6 3500                   byte pane.botrow-cmdb.rows+6,0,32,240
+0045 6AC6 2900                   byte pane.botrow-cmdb.rows+6,0,32,240
      6AC8 20F0     
-0047 6ACA 3800                   byte pane.botrow-cmdb.rows+9,0,32,240
+0047 6ACA 2C00                   byte pane.botrow-cmdb.rows+9,0,32,240
      6ACC 20F0     
 0049 6ACE FFFF                   data EOL
 0050                       ;------------------------------------------------------
@@ -12507,22 +12507,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0058               
 0059 6B5C 06A0  32         bl    @vchar
      6B5E 285A     
-0060 6B60 30                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+0060 6B60 24                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
 0061 6B61   00                   byte 0                           ; X-position         |   LEFT VERT BAR
 0062 6B62 06                     byte 6                           ; Vertical line char |
 0063 6B63   0A                   byte cmdb.rows - 2               ; Y-repeat           /
 0064               
-0065 6B64 30                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+0065 6B64 24                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
 0066 6B65   01                   byte 1                           ; X-position         |   Clear left-over
 0067 6B66 20                     byte 32                          ; Vertical line char |   garbage
 0068 6B67   0A                   byte cmdb.rows - 2               ; Y-repeat           /
 0069               
-0070 6B68 30                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+0070 6B68 24                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
 0071 6B69   4E                   byte 78                          ; X-position         |   Clear left-over
 0072 6B6A 20                     byte 32                          ; Vertical line char |   garbage
 0073 6B6B   0A                   byte cmdb.rows - 2               ; Y-repeat           /
 0074               
-0075 6B6C 30                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
+0075 6B6C 24                     byte pane.botrow - cmdb.rows + 1 ; Y-position         \
 0076 6B6D   4F                   byte 79                          ; X-position         |   RIGHT VERT BAR
 0077 6B6E 07                     byte 7                           ; Vertical line char |
 0078 6B6F   0A                   byte cmdb.rows - 2               ; Y-repeat           /
@@ -12530,13 +12530,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0080               
 0081 6B72 06A0  32         bl    @hchar
      6B74 2832     
-0082 6B76 3002                   byte pane.botrow - cmdb.rows + 1,2,32,76 ; Clear header line
+0082 6B76 2402                   byte pane.botrow - cmdb.rows + 1,2,32,76 ; Clear header line
      6B78 204C     
-0083 6B7A 3A00                   byte pane.botrow-1,0,8,1                 ; Draw bottom left corner
+0083 6B7A 2E00                   byte pane.botrow-1,0,8,1                 ; Draw bottom left corner
      6B7C 0801     
-0084 6B7E 3A01                   byte pane.botrow-1,1,10,78               ; Draw horizontal line
+0084 6B7E 2E01                   byte pane.botrow-1,1,10,78               ; Draw horizontal line
      6B80 0A4E     
-0085 6B82 3A4F                   byte pane.botrow-1,79,9,1                ; Draw bottom right corner
+0085 6B82 2E4F                   byte pane.botrow-1,79,9,1                ; Draw bottom right corner
      6B84 0901     
 0086 6B86 FFFF                   data EOL
 0087                       ;------------------------------------------------------
@@ -12584,7 +12584,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0115               
 0116 6BC2 06A0  32         bl    @at
      6BC4 2726     
-0117 6BC6 3102                   byte pane.botrow-cmdb.rows+2,2  ; Position cursor
+0117 6BC6 2502                   byte pane.botrow-cmdb.rows+2,2  ; Position cursor
 0118               
 0119 6BC8 C160  34         mov   @outparm1,tmp1        ; \ Display menu row
      6BCA A018     
@@ -12651,7 +12651,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0165               
 0166 6C12 06A0  32         bl    @putat
      6C14 2442     
-0167 6C16 3202                   byte pane.botrow-cmdb.rows+3,2
+0167 6C16 2602                   byte pane.botrow-cmdb.rows+3,2
 0168 6C18 A100                   data rambuf           ; Render markers
 0169                                                   ; \ i  p0 = YX position
 0170                                                   ; | i  p1 = Pointer to string with markers
@@ -12659,15 +12659,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0172               
 0174 6C1A 06A0  32         bl    @hchar
      6C1C 2832     
-0175 6C1E 3302                   byte pane.botrow-cmdb.rows+4,2,32,76
+0175 6C1E 2702                   byte pane.botrow-cmdb.rows+4,2,32,76
      6C20 204C     
-0176 6C22 3402                   byte pane.botrow-cmdb.rows+5,2,32,76
+0176 6C22 2802                   byte pane.botrow-cmdb.rows+5,2,32,76
      6C24 204C     
-0177 6C26 3502                   byte pane.botrow-cmdb.rows+6,2,32,76
+0177 6C26 2902                   byte pane.botrow-cmdb.rows+6,2,32,76
      6C28 204C     
-0178 6C2A 3602                   byte pane.botrow-cmdb.rows+7,2,32,76
+0178 6C2A 2A02                   byte pane.botrow-cmdb.rows+7,2,32,76
      6C2C 204C     
-0179 6C2E 3802                   byte pane.botrow-cmdb.rows+9,2,32,76
+0179 6C2E 2C02                   byte pane.botrow-cmdb.rows+9,2,32,76
      6C30 204C     
 0180 6C32 FFFF                   data EOL              ; Clear empty space
 0182 6C34 100F  14         jmp   pane.cmdb.draw.hint
@@ -12677,17 +12677,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0186               pane.cmdb.draw.nomarkers:
 0188 6C36 06A0  32         bl    @hchar
      6C38 2832     
-0189 6C3A 3202                   byte pane.botrow-cmdb.rows+3,2,32,76
+0189 6C3A 2602                   byte pane.botrow-cmdb.rows+3,2,32,76
      6C3C 204C     
-0190 6C3E 3302                   byte pane.botrow-cmdb.rows+4,2,32,76
+0190 6C3E 2702                   byte pane.botrow-cmdb.rows+4,2,32,76
      6C40 204C     
-0191 6C42 3402                   byte pane.botrow-cmdb.rows+5,2,32,76
+0191 6C42 2802                   byte pane.botrow-cmdb.rows+5,2,32,76
      6C44 204C     
-0192 6C46 3502                   byte pane.botrow-cmdb.rows+6,2,32,76
+0192 6C46 2902                   byte pane.botrow-cmdb.rows+6,2,32,76
      6C48 204C     
-0193 6C4A 3602                   byte pane.botrow-cmdb.rows+7,2,32,76
+0193 6C4A 2A02                   byte pane.botrow-cmdb.rows+7,2,32,76
      6C4C 204C     
-0194 6C4E 3802                   byte pane.botrow-cmdb.rows+9,2,32,76
+0194 6C4E 2C02                   byte pane.botrow-cmdb.rows+9,2,32,76
      6C50 204C     
 0195 6C52 FFFF                   data EOL              ; Remove menu item markers/clear empty space
 0201                       ;------------------------------------------------------
@@ -12700,7 +12700,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0206 6C5A 130D  14         jeq   pane.cmdb.draw.hint2  ; No pane hint to display
 0207               
 0208 6C5C 0204  20         li    tmp0,pane.botrow - 2  ; \
-     6C5E 0039     
+     6C5E 002D     
 0209 6C60 0A84  32         sla   tmp0,8                ; | Y=bottom row - 2
 0210 6C62 0264  22         ori   tmp0,2                ; | X=2
      6C64 0002     
@@ -12727,7 +12727,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0225 6C7C 1310  14         jeq   pane.cmdb.draw.keys   ; No extra pane hint to display
 0226               
 0228 6C7E 0204  20         li    tmp0,pane.botrow - 4
-     6C80 0037     
+     6C80 002B     
 0232               
 0233 6C82 0A84  32         sla   tmp0,8                ; \ Y=bottom row
 0234 6C84 0264  22         ori   tmp0,2                ; | X=2
@@ -12753,7 +12753,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0247                       ;------------------------------------------------------
 0248               pane.cmdb.draw.keys:
 0249 6C9E 0204  20         li    tmp0,pane.botrow      ; \
-     6CA0 003B     
+     6CA0 002F     
 0250 6CA2 0A84  32         sla   tmp0,8                ; / Y=bottom row, X=0
 0251 6CA4 C804  38         mov   tmp0,@parm1           ; Set parameter
      6CA6 A006     
@@ -12785,7 +12785,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6CC6 A240     
 0270               
 0271 6CC8 06A0  32         bl    @pane.clock.time      ; Display clock time & date
-     6CCA 72E0     
+     6CCA 72CE     
 0272                                                   ; \ i  tv.clock.state = Clock on/off flag
 0273                                                   ; /
 0274                       ;------------------------------------------------------
@@ -12800,7 +12800,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0282                       ;------------------------------------------------------
 0283 6CD2 06A0  32         bl    @putat
      6CD4 2442     
-0284 6CD6 3B4E                   byte   pane.botrow,78
+0284 6CD6 2F4E                   byte   pane.botrow,78
 0285 6CD8 3C38                   data   txt.ws2
 0286               
 0287 6CDA 1004  14         jmp   pane.cmdb.draw.promptcmd
@@ -12810,7 +12810,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0291               pane.cmdb.draw.alpha.down:
 0292 6CDC 06A0  32         bl    @putat
      6CDE 2442     
-0293 6CE0 3B4E                   byte   pane.botrow,78
+0293 6CE0 2F4E                   byte   pane.botrow,78
 0294 6CE2 3C2E                   data   txt.alpha.down
 0295                       ;------------------------------------------------------
 0296                       ; Command line
@@ -14440,68 +14440,70 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0343 72CA C2F9  30         mov   *stack+,r11           ; Pop r11
 0344 72CC 045B  20         b     *r11                  ; Return to caller
 0345               
-0346               ***************************************************************
-0347               * Stub for "dialog.help.content"
-0348               * bank4 vec.64
-0349               ********|*****|*********************|**************************
-0350               dialog.help.content:
-0351 72CE 0649  14         dect  stack
-0352 72D0 C64B  30         mov   r11,*stack            ; Save return address
-0353                       ;------------------------------------------------------
-0354                       ; Call function in bank 4
-0355                       ;------------------------------------------------------
-0356 72D2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0346               
+0347               ***************************************************************
+0348               * Stub for "pane.clock.time"
+0349               * bank5 vec.25
+0350               ********|*****|*********************|**************************
+0351               pane.clock.time:
+0352 72CE 0649  14         dect  stack
+0353 72D0 C64B  30         mov   r11,*stack            ; Save return address
+0354                       ;------------------------------------------------------
+0355                       ; Call function in bank 5
+0356                       ;------------------------------------------------------
+0357 72D2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      72D4 30D8     
-0357 72D6 6008                   data bank4.rom        ; | i  p0 = bank address
-0358 72D8 7FEE                   data vec.64           ; | i  p1 = Vector with target address
-0359 72DA 6006                   data bankid           ; / i  p2 = Source ROM bank for return
-0360                       ;------------------------------------------------------
-0361                       ; Exit
-0362                       ;------------------------------------------------------
-0363 72DC C2F9  30         mov   *stack+,r11           ; Pop r11
-0364 72DE 045B  20         b     *r11                  ; Return to caller
-0365               
-0366               ***************************************************************
-0367               * Stub for "pane.clock.time"
-0368               * bank5 vec.25
-0369               ********|*****|*********************|**************************
-0370               pane.clock.time:
-0371 72E0 0649  14         dect  stack
-0372 72E2 C64B  30         mov   r11,*stack            ; Save return address
-0373                       ;------------------------------------------------------
-0374                       ; Call function in bank 5
-0375                       ;------------------------------------------------------
-0376 72E4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0358 72D6 600A                   data bank5.rom        ; | i  p0 = bank address
+0359 72D8 7FA0                   data vec.25           ; | i  p1 = Vector with target address
+0360 72DA 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0361                       ;------------------------------------------------------
+0362                       ; Exit
+0363                       ;------------------------------------------------------
+0364 72DC C2F9  30         mov   *stack+,r11           ; Pop r11
+0365 72DE 045B  20         b     *r11                  ; Return to caller
+0366               
+0367               ***************************************************************
+0368               * Stub for "vdp.cursor.tat.fb"
+0369               * bank6 vec.4
+0370               ********|*****|*********************|**************************
+0371               vdp.cursor.tat.fb:
+0372 72E0 0649  14         dect  stack
+0373 72E2 C64B  30         mov   r11,*stack            ; Save return address
+0374                       ;------------------------------------------------------
+0375                       ; Call function in bank 6
+0376                       ;------------------------------------------------------
+0377 72E4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      72E6 30D8     
-0377 72E8 600A                   data bank5.rom        ; | i  p0 = bank address
-0378 72EA 7FA0                   data vec.25           ; | i  p1 = Vector with target address
-0379 72EC 6006                   data bankid           ; / i  p2 = Source ROM bank for return
-0380                       ;------------------------------------------------------
-0381                       ; Exit
-0382                       ;------------------------------------------------------
-0383 72EE C2F9  30         mov   *stack+,r11           ; Pop r11
-0384 72F0 045B  20         b     *r11                  ; Return to caller
-0385               
-0386               ***************************************************************
-0387               * Stub for "vdp.cursor.tat.fb"
-0388               * bank6 vec.4
-0389               ********|*****|*********************|**************************
-0390               vdp.cursor.tat.fb:
-0391 72F2 0649  14         dect  stack
-0392 72F4 C64B  30         mov   r11,*stack            ; Save return address
-0393                       ;------------------------------------------------------
-0394                       ; Call function in bank 6
+0378 72E8 600C                   data bank6.rom        ; | i  p0 = bank address
+0379 72EA 7F76                   data vec.4            ; | i  p1 = Vector with target address
+0380 72EC 6006                   data bankid           ; / i  p2 = Source ROM bank for return
+0381                       ;------------------------------------------------------
+0382                       ; Exit
+0383                       ;------------------------------------------------------
+0384 72EE C2F9  30         mov   *stack+,r11           ; Pop r11
+0385 72F0 045B  20         b     *r11                  ; Return to caller
+0386               
+0387               
+0388               ***************************************************************
+0389               * Stub for "dialog.help.content"
+0390               * bankf vec.1
+0391               ********|*****|*********************|**************************
+0392               dialog.help.content:
+0393 72F2 0649  14         dect  stack
+0394 72F4 C64B  30         mov   r11,*stack            ; Save return address
 0395                       ;------------------------------------------------------
-0396 72F6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0396                       ; Call function in bank F
+0397                       ;------------------------------------------------------
+0398 72F6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      72F8 30D8     
-0397 72FA 600C                   data bank6.rom        ; | i  p0 = bank address
-0398 72FC 7F76                   data vec.4            ; | i  p1 = Vector with target address
-0399 72FE 6006                   data bankid           ; / i  p2 = Source ROM bank for return
-0400                       ;------------------------------------------------------
-0401                       ; Exit
+0399 72FA 601E                   data bankf.rom        ; | i  p0 = bank address
+0400 72FC 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0401 72FE 6006                   data bankid           ; / i  p2 = Source ROM bank for return
 0402                       ;------------------------------------------------------
-0403 7300 C2F9  30         mov   *stack+,r11           ; Pop r11
-0404 7302 045B  20         b     *r11                  ; Return to caller
+0403                       ; Exit
+0404                       ;------------------------------------------------------
+0405 7300 C2F9  30         mov   *stack+,r11           ; Pop r11
+0406 7302 045B  20         b     *r11                  ; Return to caller
                    < stevie_b3.asm
 0119                       copy  "rom.stubs.bankx.asm"     ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
@@ -14616,8 +14618,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0009               txt.stevie:
 0014               
 0019               
-0024               
-0026 734C 2020                 text '  Stevie 1.9.9   '
+0021 734C 2020                 text '  Stevie 1.9.9   '
      734E 5374     
      7350 6576     
      7352 6965     
@@ -14626,7 +14627,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7358 2E39     
      735A 2020     
      735C 20       
-0027                           even
+0022                           even
+0024               
 0029               
 0030               
 0031               ;--------------------------------------------------------------
@@ -15364,13 +15366,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      782C 20       
 0179                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 782D   32                        text '260314-1935220'
+0001 782D   32                        text '260314-2059410'
      782E 3630     
      7830 3331     
      7832 342D     
-     7834 3139     
-     7836 3335     
-     7838 3232     
+     7834 3230     
+     7836 3539     
+     7838 3431     
      783A 30       
                    < data.dialogs.asm
 0180 783B   20                        text ' - Stevie 1.9.9 - (c)2018-2026 Filip Van Vooren'
@@ -16272,7 +16274,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0051 7F50 0C              byte   >0c
+0048 7F50 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -16735,7 +16737,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.GOTO.CURSOR.. >694C :     
     DIALOG.GOTO.EXIT.... >6950 :     
     DIALOG.HELP......... >61CC :     
-    DIALOG.HELP.CONTENT. >72CE :     
+    DIALOG.HELP.CONTENT. >72F2 :     
     DIALOG.HELP.EXIT.... >6208 :     
     DIALOG.INSERT....... >63A2 :     
     DIALOG.INSERT.CURSOR >6432 :     
@@ -17355,8 +17357,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.BOTROW......... >003B :     
-    PANE.CLOCK.TIME..... >72E0 :     
+    PANE.BOTROW......... >002F :     
+    PANE.CLOCK.TIME..... >72CE :     
     PANE.CMDB.DRAW...... >6B12 :     
     PANE.CMDB.DRAW.ALPHA >6CCC :     
     PANE.CMDB.DRAW.ALPHA.DOWN >6CDC :     
@@ -17928,14 +17930,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VCHAR1.............. >2860 :     
     VCHAR2.............. >286E :     
     VCHAR3.............. >2886 :     
-    VDP.CURSOR.TAT.FB... >72F2 :     
+    VDP.CURSOR.TAT.FB... >72E0 :     
     VDP.FB.TOPROW.SIT... >0050 :     
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >12C0 :     
+    VDP.SIT.SIZE........ >0F00 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >12C0 :     
+    VDP.TAT.SIZE........ >0F00 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     

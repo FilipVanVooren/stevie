@@ -16,7 +16,7 @@
 *   You should have received a copy of the GNU General Public License
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************************
-* File: stevie_b6.asm
+* File: stevie_bf.asm
 *
 * Bank F "Sarah"
 * ROM bank with spectra2 library running in ROM address space
@@ -46,8 +46,9 @@ bankid  equ   bankf.rom             ; Set bank identifier to current bank
 ***************************************************************
 * Step 2: Satisfy assembler, must know relocated code
 ********|*****|*********************|**************************
-        copy  "runlib.asm"          ; spectra2 library
-        copy  "rom.farjump.asm"     ; ROM bankswitch trampoline        
+        aorg  >2000                 ; Relocate to >2000
+        copy  "runlib.asm"
+        copy  "ram.resident.asm"   
         ;------------------------------------------------------
         ; Activate bank 1 and branch to  >6036
         ;------------------------------------------------------
@@ -65,6 +66,10 @@ main:
         aorg  kickstart.code2       ; >6046
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
+        ; Dialogs
+        ;-----------------------------------------------------------------------             
+        copy  "dialog.help.content.asm"  ; Draw help dialog content
+        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.bankf.asm" ; Bank specific stubs
@@ -72,6 +77,7 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
+        copy  "data.help.2480.asm"           ; Help dialog content        
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

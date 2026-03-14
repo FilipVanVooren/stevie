@@ -16,7 +16,7 @@
 *   You should have received a copy of the GNU General Public License
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ********************************************************************************
-* File: stevie_b6.asm
+* File: stevie_bd.asm
 *
 * Bank D "Q"
 * Empty bank for future expansion

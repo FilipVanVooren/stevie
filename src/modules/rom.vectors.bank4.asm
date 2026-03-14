@@ -77,4 +77,4 @@ vec.60  data  cpu.crash              ;
 vec.61  data  cpu.crash              ;
 vec.62  data  cpu.crash              ;
 vec.63  data  cpu.crash              ;
-vec.64  data  dialog.help.content    ; Content for Help dialog
+vec.64  data  cpu.crash              ;

@@ -11,7 +11,7 @@ cpu.crash.showbank.bankstr:
 * ROM F: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
-vec.1   data  cpu.crash             ;
+vec.1   data  dialog.help.content   ; Draw help dialog content
 vec.2   data  cpu.crash             ;
 vec.3   data  cpu.crash             ;
 vec.4   data  cpu.crash             ;
