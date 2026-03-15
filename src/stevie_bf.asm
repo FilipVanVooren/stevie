@@ -77,7 +77,20 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        copy  "data.help.2480.asm"           ; Help dialog content        
+
+  .ifeq vdpmode, 2480
+        copy  "data.help.2480.asm"  ; Help dialog content 24x80 mode version
+  .endif
+  .ifeq vdpmode, 3080
+        copy  "data.help.3080.asm"  ; Help dialog content 30x80 mode version
+  .endif
+  .ifeq vdpmode, 4880
+        copy  "data.help.4880.asm"  ; Help dialog content 48x80 mode version
+  .endif
+  .ifeq vdpmode, 6080
+        copy  "data.help.6080.asm"  ; Help dialog content 60x80 mode version
+  .endif
+
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

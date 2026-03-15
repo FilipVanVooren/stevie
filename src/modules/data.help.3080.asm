@@ -1,18 +1,17 @@
 
 dialog.help.maxpage:
-        data 2               ; Index of highest page in help system
+        data 1               ; Index of highest page in help system
 
 txt.dialog.help.maxpage:
-        stri '/3'            ; Display "x/3" in help system
+        stri '/2'            ; Display "x/2" in help system
         even
 
 dialog.help.data.pages:
         ;------------------------------------------------------
         ; Page index table
         ;------------------------------------------------------
-        data  dialog.help.data.page1,27,37,>0f2a
-        data  dialog.help.data.page2,27,37,>0f2a
-        data  dialog.help.data.page3,15,37,>0f2a
+        data  dialog.help.data.page1,38,37,>142a
+        data  dialog.help.data.page2,39,37,>142a
 
 
 dialog.help.data.page1:
@@ -35,15 +34,15 @@ dialog.help.data.page1:
         stri 'fctn v        Screen top'
         stri 'ctrl v   ^v   File top'
         stri 'fctn b        Screen bottom'
-        stri ' '
-        ;------------------------------------------------------
-        ; Right column
-        ;------------------------------------------------------        
         stri 'ctrl b   ^b   File bottom'
         stri 'ctrl g   ^g   Goto line'        
         stri 'ctrl ,   ^,   Goto previous match'
         stri 'ctrl .   ^.   Goto next match'
-        stri ' ' 
+        stri ' '
+        stri ' '        
+        ;------------------------------------------------------
+        ; Right column
+        ;------------------------------------------------------
         byte 36
         byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text ' File '
@@ -54,16 +53,12 @@ dialog.help.data.page1:
         stri 'ctrl o   ^o   Open file'
         stri 'ctrl p   ^p   Print file'
         stri 'ctrl r   ^r   Run program image (EA5)'        
-        stri 'ctrl s   ^s   Save file'        
-
-dialog.help.data.page2:
-        ;------------------------------------------------------
-        ; Left column
-        ;------------------------------------------------------
-        byte 38
+        stri 'ctrl s   ^s   Save file'
+        stri ' '
+        byte 36
         byte 1,1,1,1,1,1,1,1,1,1,1,1,1
         text ' Modifiers '
-        byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        byte 1,1,1,1,1,1,1,1,1,1,1,1
         stri 'fctn 1        Delete character'
         stri 'fctn 2        Insert character'
         stri 'fctn 3        Delete line'
@@ -73,54 +68,55 @@ dialog.help.data.page2:
         stri 'ctrl c   ^c   Copy clipboard'
         stri 'ctrl u   ^u   Unlock editor'
         stri ' '
+        stri ' '
+
+
+dialog.help.data.page2:
+        ;------------------------------------------------------
+        ; Left column
+        ;------------------------------------------------------
         byte 38
         byte 1,1,1,1,1,1,1,1
         text ' File picker (catalog) '
         byte 1,1,1,1,1,1,1
         stri 'ctrl e   ^e   Previous page'
         stri 'ctrl x   ^x   Next page'
-        stri ' ' 
-        ;------------------------------------------------------
-        ; Right column
-        ;------------------------------------------------------
         stri 'ctrl s   ^s   Previous column'        
         stri 'ctrl d   ^d   Next column'
         stri 'fctn e/x      Up/Down'
         stri 'ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
         stri 'SPACE         Parent directory'
         stri ' '
-        byte 36
+        byte 38
         byte 1,1,1,1,1,1,1,1,1,1,1,1,1
         text ' Block Mode '
-        byte 1,1,1,1,1,1,1,1,1,1,1
+        byte 1,1,1,1,1,1,1,1,1,1,1,1,1
         stri 'ctrl SPACE    Set M1/M2 marker'
         stri 'ctrl d   ^d   Delete block'
         stri 'ctrl c   ^c   Copy block'
         stri 'ctrl g   ^g   Goto line'
+        stri ' '
+        stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
+        stri 'This is free software, you are welcome to redistribute under certain conditions'
+        stri ' '
+        stri ' '
+        ;------------------------------------------------------
+        ; Right column
+        ;------------------------------------------------------
+        byte 36
+        byte 1,1,1,1,1,1,1,1,1
+        text ' Block Mode (rest) '
+        byte 1,1,1,1,1,1,1,1
         stri 'ctrl m   ^m   Move block'
         stri 'ctrl s   ^s   Save block to file'
-        stri ' '
-
-
-dialog.help.data.page3:        
-        ;------------------------------------------------------
-        ; Left column
-        ;------------------------------------------------------
-        byte 38
-        byte 1,1,1,1,1,1,1,1,1,1
-        text ' Block Mode (rest) '
-        byte 1,1,1,1,1,1,1,1,1
         stri 'ctrl ^1..^3   Copy to clipboard 1-3'
         stri ' '
-        byte 38
+        byte 36
         byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         text ' Others '
-        byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+        byte 1,1,1,1,1,1,1,1,1,1,1,1,1
         stri 'fctn +   ^q   Quit'
         stri 'fctn 0        TI Basic session'
         stri 'ctrl 0   ^0   TI Basic submenu'
         stri 'ctrl u   ^u   Shortcuts menu'
         stri 'ctrl z   ^z   Cycle color schemes'
-        stri ' '
-        stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
-        stri 'This is free software, you are welcome to redistribute under certain conditions'

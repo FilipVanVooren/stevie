@@ -287,15 +287,18 @@ edb.find.search:
 
 
 ***************************************************************
-* Stub for dialog "Help"
+* Stub for dialog "Help (next)"
 * bank3 vec.1
 ********|*****|*********************|**************************
 dialog.help.next:
-        c     @const.16,@cmdb.dialog.var
-        jeq   !
-        a     @const.8,@cmdb.dialog.var
+        inc   @cmdb.dialog.var      ; Adjust page table index for next page
         jmp   dialog.help
-!       clr   @cmdb.dialog.var
+
+
+***************************************************************
+* Stub for dialog "Help"
+* bank3 vec.1
+********|*****|*********************|**************************
 dialog.help:
         mov   @dialog.help.vector,@trmpvector
         jmp   _trampoline.bank3     ; Show dialog
