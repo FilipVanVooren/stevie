@@ -1,3 +1,6 @@
+* FILE......: data.help.4880.asm
+* Purpose...: Help dialog content for 48x80 mode
+
 
 dialog.help.maxpage:
         data 1               ; Index of highest page in help system
@@ -12,6 +15,11 @@ dialog.help.data.pages:
         ;------------------------------------------------------
         data  dialog.help.data.page1,58,37,>202a        
         data  dialog.help.data.page2,6,37,>0000
+                             ; 1. Pointer to string list, 
+                             ; 2. Number of strings to display
+                             ; 3. String padding length
+                             ; 4. Cutover row and column offset for next column 
+                             ;    (or >0000 for single column list)
 
 
 dialog.help.data.page1:
@@ -77,8 +85,8 @@ dialog.help.data.page1:
         stri 'ctrl s   ^s   Previous column'        
         stri 'ctrl d   ^d   Next column'
         stri 'fctn e/x      Up/Down'
-        stri 'ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
         stri 'SPACE         Parent directory'
+        stri 'ctrl ^0..^9   Catalog DSK1-DSK9'                       
         stri ' '
         byte 36
         byte 1,1,1,1,1,1,1,1,1,1,1,1,1

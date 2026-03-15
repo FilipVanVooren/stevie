@@ -1,3 +1,6 @@
+* FILE......: data.help.3080.asm
+* Purpose...: Help dialog content for 30x80 mode
+
 
 dialog.help.maxpage:
         data 1               ; Index of highest page in help system
@@ -12,7 +15,11 @@ dialog.help.data.pages:
         ;------------------------------------------------------
         data  dialog.help.data.page1,38,37,>142a
         data  dialog.help.data.page2,39,37,>142a
-
+                             ; 1. Pointer to string list, 
+                             ; 2. Number of strings to display
+                             ; 3. String padding length
+                             ; 4. Cutover row and column offset for next column 
+                             ;    (or >0000 for single column list)
 
 dialog.help.data.page1:
         ;------------------------------------------------------
@@ -84,8 +91,8 @@ dialog.help.data.page2:
         stri 'ctrl s   ^s   Previous column'        
         stri 'ctrl d   ^d   Next column'
         stri 'fctn e/x      Up/Down'
-        stri 'ctrl 0-9 ^0-9 Catalog DSK1-DSK9'
         stri 'SPACE         Parent directory'
+        stri 'ctrl ^0..^9   Catalog DSK1-DSK9'               
         stri ' '
         byte 38
         byte 1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -96,9 +103,9 @@ dialog.help.data.page2:
         stri 'ctrl c   ^c   Copy block'
         stri 'ctrl g   ^g   Goto line'
         stri ' '
+        stri ' '        
         stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
         stri 'This is free software, you are welcome to redistribute under certain conditions'
-        stri ' '
         stri ' '
         ;------------------------------------------------------
         ; Right column
