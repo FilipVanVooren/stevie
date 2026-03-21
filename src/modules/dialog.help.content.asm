@@ -41,7 +41,7 @@ dialog.help.content:
         ;------------------------------------------------------
 dialog.help.content.clear:        
         bl    @filv
-              data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 240
+              data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 180
                                     ; Clear screen
 
         bl    @hchar
@@ -107,7 +107,9 @@ dialog.help.content.clear:
                                     ; |
                                     ; | o  @waux1 = Pointer to next entry  
                                     ; |             in list after displaying
-                                    ; /             (tmp2) entries                                    
+                                    ; /             (tmp2) entries
+
+                                            
                                     
         ;------------------------------------------------------
         ; Exit

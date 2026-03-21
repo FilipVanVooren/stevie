@@ -6,7 +6,7 @@ dialog.help.maxpage:
         data 1               ; Index of highest page in help system
 
 txt.dialog.help.maxpage:
-        stri '/2'            ; Display "x/2" in help system
+        stri '/2  '          ; Display max page in help system
         even
 
 dialog.help.data.pages:
