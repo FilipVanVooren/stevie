@@ -31,21 +31,14 @@
         copy  "equ.asm"             ; Stevie main configuration
         copy  "equ.c99.asm"         ; Classic99 emulator configuration
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
-
 ***************************************************************
 * BANK 1
 ********|*****|*********************|**************************
 bankid  equ   bank1.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
-
 ***************************************************************
-* Step 1: Switch to bank 0 (uniform code accross all banks)
-********|*****|*********************|**************************
-        aorg  kickstart.code1       ; >6040
-        clr   @bank0.rom            ; Switch to bank 0 "Jill"
-***************************************************************
-* Step 2: Satisfy assembler, must know relocated code
+* Step 1: Satisfy assembler, must know relocated code
 ********|*****|*********************|**************************
         aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
@@ -61,10 +54,10 @@ bankid  equ   bank1.rom             ; Set bank identifier to current bank
 
         b     @kickstart.code2      ; Jump to entry routine
 ***************************************************************
-* Step 3: Include main editor modules
+* Step 2: Include main editor modules
 ********|*****|*********************|**************************
 main:
-        aorg  kickstart.code2       ; >6046
+        aorg  kickstart.code2       ; >6000
         b     @main.stevie          ; Start editor
         ;-----------------------------------------------------------------------
         ; Include files

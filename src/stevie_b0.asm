@@ -45,14 +45,11 @@ bankid  equ   bank1.rom             ; Set bank identifier to bank 1!
         copy  "rom.header.asm"      ; Include cartridge header
 
 ***************************************************************
-* Step 1: Switch to bank 0 (uniform code accross all banks)
+* Step 1: Setup SAMS banks (inline code because no SP2 yet!)
 ********|*****|*********************|**************************
 new.stevie:        
-        aorg  kickstart.code1       ; >6040
-        clr   @bank0.rom            ; Switch to bank 0 "Jill"
-***************************************************************
-* Step 2: Setup SAMS banks (inline code because no SP2 yet!)
-********|*****|*********************|**************************
+        aorg  kickstart.code1       ; >6030
+
         li    r12,>1e00             ; SAMS CRU address
         sbz   1                     ; Disable SAMS mapper
         sbo   0                     ; Enable access to SAMS registers

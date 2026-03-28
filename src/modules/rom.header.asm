@@ -4,7 +4,7 @@
 *--------------------------------------------------------------
 * Cartridge header
 ********|*****|*********************|**************************
-         byte  >aa                   ; 0  Standard header                   >6000
+        byte  >aa                   ; 0  Standard header                   >6000
         byte  >01                   ; 1  Version number
         byte  >02                   ; 2  Number of programs (optional)     >6002
         byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
