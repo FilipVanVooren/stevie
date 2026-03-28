@@ -4,7 +4,7 @@
 *--------------------------------------------------------------
 * Cartridge header
 ********|*****|*********************|**************************
-        byte  >aa                   ; 0  Standard header                   >6000
+         byte  >aa                   ; 0  Standard header                   >6000
         byte  >01                   ; 1  Version number
         byte  >02                   ; 2  Number of programs (optional)     >6002
         byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
@@ -32,17 +32,17 @@ rom.program1:
                                     ; 15 /
 
         .ifeq vdpmode, 2480         ; F18a 24x80 sprite cursor
-            stri 'STEVIE 1.9.10-24'
+            stri 'STEVIE 2.0.0-24'
         .endif
 
         .ifeq vdpmode, 3080         ; F18a 30x80 sprite cursor
-            stri 'STEVIE 1.9.10-30'
+            stri 'STEVIE 2.0.0-30'
         .endif
 
         .ifeq vdpmode, 4880         ; PICO9918 48x80 character cursor
-            stri 'STEVIE 1.9.10-48'                   
+            stri 'STEVIE 2.0.0-48'                   
         .endif
 
         .ifeq vdpmode, 6080         ; PICO9918 60x80 character cursor
-            stri 'STEVIE 1.9.10-60'                   
+            stri 'STEVIE 2.0.0-60'                   
         .endif        

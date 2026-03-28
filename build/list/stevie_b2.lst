@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260321-2044160
+0002               * BUILD: 260328-1938200
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -123,19 +123,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: VDP configuration (F18a, PICO9918, 9938, ...)
 0003               
 0004               ***************************** F18a/PICO9918 24x80 ******************************
-0006                   copy 'equ.vdp.2480.asm' ; Character cursor
-     **** ****     > equ.vdp.2480.asm
-0001               * FILE......: equ.vdp.2480.chr.asm
-0002               * Purpose...: F18a/PICO9918 24x80 mode
+0008               
+0009               ***************************** F18a/PICO9918 30x80 ******************************
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
+0021                   copy 'equ.vdp.6080.asm' ; Character cursor
+     **** ****     > equ.vdp.6080.asm
+0001               * FILE......: equ.vdp.6080.asm
+0002               * Purpose...: PICO9918 60x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 24x80
+0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0780     vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 48 rows
+0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      0780     vdp.tat.size              equ  24*80   ; VDP TAT size 80 columns, 60 rows
+0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -144,8 +150,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      0007     cmdb.rows                 equ  7       ; Number of rows in command buffer
-0022      0017     pane.botrow               equ  23      ; Bottom row on screen
+0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
+0022      003B     pane.botrow               equ  59      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -173,12 +179,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
-0008               
-0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b2.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -924,66 +924,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036      6004     bankid  equ   bank2.rom             ; Set bank identifier to current bank
 0037                       aorg  >6000
 0038                       save  >6000,>8000           ; Save bank
-0039                       copy  "rom.header.asm"      ; Include cartridge header
-     **** ****     > rom.header.asm
-0001               * FILE......: rom.header.asm
-0002               * Purpose...: Cartridge header
-0003               
-0004               *--------------------------------------------------------------
-0005               * Cartridge header
-0006               ********|*****|*********************|**************************
-0007 6000 AA               byte  >aa                   ; 0  Standard header                   >6000
-0008 6001   01             byte  >01                   ; 1  Version number
-0009 6002 02               byte  >02                   ; 2  Number of programs (optional)     >6002
-0010 6003   00             byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
-0011               
-0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
-0013                                                   ; 5  /
-0014               
-0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
-0016                                                   ; 7  /
-0017               
-0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
-0019                                                   ; 9  /
-0020               
-0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
-0022                                                   ; 11 /
-0023               
-0024                       ;-----------------------------------------------------------------------
-0025                       ; Program list entry
-0026                       ;-----------------------------------------------------------------------
-0027               rom.program1:
-0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
-0029                                                   ; 13 / (no more items following)
-0030               
-0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
-0032                                                   ; 15 /
-0033               
-0035 6010 1053                 stri 'STEVIE 1.9.10-24'
-     6012 5445     
-     6014 5649     
-     6016 4520     
-     6018 312E     
-     601A 392E     
-     601C 3130     
-     601E 2D32     
-     6020 34       
-0037               
-0041               
-0045               
-                   < stevie_b2.asm
-0040               
-0041               ***************************************************************
-0042               * Step 1: Switch to bank 0 (uniform code accross all banks)
-0043               ********|*****|*********************|**************************
-0044                       aorg  kickstart.code1       ; >6040
-0045 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0039               
+0040               ***************************************************************
+0041               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0042               ********|*****|*********************|**************************
+0043                       aorg  kickstart.code1       ; >6040
+0044 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000     
-0046               ***************************************************************
-0047               * Step 2: Satisfy assembler, must know relocated code
-0048               ********|*****|*********************|**************************
-0049                       aorg  >2000                 ; Relocate to >2000
-0050                       copy  "runlib.asm"
+0045               ***************************************************************
+0046               * Step 2: Satisfy assembler, must know relocated code
+0047               ********|*****|*********************|**************************
+0048                       aorg  >2000                 ; Relocate to >2000
+0049                       copy  "runlib.asm"
      **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -6422,7 +6374,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0397 30D4 0460  28         b     @main                 ; Give control to main program
      30D6 6046     
                    < stevie_b2.asm
-0051                       copy  "ram.resident.asm"
+0050                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
 0002               * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
@@ -6689,7 +6641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      31B2 A310     
 0038               
 0039 31B4 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B6 0016     
+     31B6 003A     
 0040 31B8 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BA A320     
 0041               
@@ -7319,7 +7271,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034 33B4 04E0  34         clr   @cmdb.visible         ; Hide command buffer
      33B6 A702     
 0035 33B8 0204  20         li    tmp0,cmdb.rows
-     33BA 0007     
+     33BA 000C     
 0036 33BC C804  38         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
      33BE A706     
 0037 33C0 C804  38         mov   tmp0,@cmdb.default    ; Set default command buffer size
@@ -7337,7 +7289,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33D4 0204  20         li    tmp0,pane.botrow      ; \
-     33D6 0017     
+     33D6 003B     
 0047 33D8 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33DA A706     
 0048 33DC 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -9662,26 +9614,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0017                                   even
                    < ram.resident.asm
                    < stevie_b2.asm
-0052                       ;------------------------------------------------------
-0053                       ; Activate bank 1 and branch to  >6036
-0054                       ;------------------------------------------------------
-0055 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0051                       ;------------------------------------------------------
+0052                       ; Activate bank 1 and branch to  >6036
+0053                       ;------------------------------------------------------
+0054 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3DCE 6002     
-0056               
-0060               
-0061 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0055               
+0059               
+0060 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3DD2 6046     
-0062               ***************************************************************
-0063               * Step 3: Include modules
-0064               ********|*****|*********************|**************************
-0065               main:
-0066                       aorg  kickstart.code2       ; >6046
-0067 6046 06A0  32         bl    @cpu.crash            ; Should never get here
+0061               ***************************************************************
+0062               * Step 3: Include modules
+0063               ********|*****|*********************|**************************
+0064               main:
+0065                       aorg  kickstart.code2       ; >6046
+0066 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026     
-0068                       ;-----------------------------------------------------------------------
-0069                       ; File handling
-0070                       ;-----------------------------------------------------------------------
-0071                       copy  "fio_memprep.asm"          ; Spectra2 file memory prepare
+0067                       ;-----------------------------------------------------------------------
+0068                       ; File handling
+0069                       ;-----------------------------------------------------------------------
+0070                       copy  "fio_memprep.asm"          ; Spectra2 file memory prepare
      **** ****     > fio_memprep.asm
 0001               * FILE......: fio_memprep.asm
 0002               * Purpose...: File I/O VDP memory setup
@@ -9748,7 +9700,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0054               file.vmem.part2:
 0055 6088 10FF            data  >10FF
                    < stevie_b2.asm
-0072                       copy  "fh.file.read.mem.asm"     ; Read file into memory
+0071                       copy  "fh.file.read.mem.asm"     ; Read file into memory
      **** ****     > fh.file.read.mem.asm
 0001               * FILE......: fh.file.read.mem.asm
 0002               * Purpose...: Read any kind of file into memory
@@ -10141,7 +10093,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0304 6232 C2F9  30         mov   *stack+,r11           ; Pop R11
 0305 6234 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0073                       copy  "fh.file.read.edb.asm"     ; Read file to editor buffer
+0072                       copy  "fh.file.read.edb.asm"     ; Read file to editor buffer
      **** ****     > fh.file.read.edb.asm
 0001               * FILE......: fh.file.read.edb.asm
 0002               * Purpose...: File reader module
@@ -10817,7 +10769,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0515 652A C2F9  30         mov   *stack+,r11           ; Pop R11
 0516 652C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0074                       copy  "fh.file.write.edb.asm"    ; Write editor buffer to file
+0073                       copy  "fh.file.write.edb.asm"    ; Write editor buffer to file
      **** ****     > fh.file.write.edb.asm
 0001               * FILE......: fh.write.edb.asm
 0002               * Purpose...: File write module
@@ -11217,7 +11169,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0299 66F8 C2F9  30         mov   *stack+,r11           ; Pop R11
 0300 66FA 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0075                       copy  "fh.file.load.bin.asm"     ; Load binary image into memory
+0074                       copy  "fh.file.load.bin.asm"     ; Load binary image into memory
      **** ****     > fh.file.load.bin.asm
 0001               * FILE......: fh.file.load.bin.asm
 0002               * Purpose...: Load binary file into memory
@@ -11565,7 +11517,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0263 689C C2F9  30         mov   *stack+,r11           ; Pop R11
 0264 689E 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0076                       copy  "fh.file.load.ea5.asm"     ; Load EA5 program image into memory
+0075                       copy  "fh.file.load.ea5.asm"     ; Load EA5 program image into memory
      **** ****     > fh.file.load.ea5.asm
 0001               * FILE......: fh.file.load.ea5.asm
 0002               * Purpose...: Load binary file into memory
@@ -11839,7 +11791,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0202 69FE C2F9  30         mov   *stack+,r11           ; Pop R11
 0203 6A00 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0077                       copy  "fh.file.delete.asm"       ; Delete file
+0076                       copy  "fh.file.delete.asm"       ; Delete file
      **** ****     > fh.file.delete.asm
 0001               * FILE......: fh.file.delete.asm
 0002               * Purpose...: Delete file
@@ -12099,7 +12051,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0197 6B3C C2F9  30         mov   *stack+,r11           ; Pop R11
 0198 6B3E 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0078                       copy  "fm.loadfile.asm"          ; Load DV80 file into editor buffer
+0077                       copy  "fm.loadfile.asm"          ; Load DV80 file into editor buffer
      **** ****     > fm.loadfile.asm
 0001               * FILE......: fm.loadfile.asm
 0002               * Purpose...: File Manager - Load file into editor buffer
@@ -12345,7 +12297,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0181 6C64 C2F9  30         mov   *stack+,r11           ; Pop R11
 0182 6C66 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0079                       copy  "fm.insertfile.asm"        ; Insert DV80 file into editor buffer
+0078                       copy  "fm.insertfile.asm"        ; Insert DV80 file into editor buffer
      **** ****     > fm.insertfile.asm
 0001               * FILE......: fm.insertfile.asm
 0002               * Purpose...: File Manager - Insert (or append) file into editor buffer
@@ -12454,7 +12406,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0084 6CD4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0085 6CD6 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0080                       copy  "fm.savefile.asm"          ; Save DV80 file from editor buffer
+0079                       copy  "fm.savefile.asm"          ; Save DV80 file from editor buffer
      **** ****     > fm.savefile.asm
 0001               * FILE......: fm.savefile.asm
 0002               * Purpose...: File Manager - Save file from editor buffer
@@ -12578,7 +12530,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0095 6D48 C2F9  30         mov   *stack+,r11           ; Pop R11
 0096 6D4A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0081                       copy  "fm.newfile.asm"           ; New DV80 file in editor buffer
+0080                       copy  "fm.newfile.asm"           ; New DV80 file in editor buffer
      **** ****     > fm.newfile.asm
 0001               * FILE......: fm.newfile.asm
 0002               * Purpose...: File Manager - New file in editor buffer
@@ -12614,7 +12566,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0031               
 0032 6D5C 06A0  32         bl    @putat
      6D5E 2442     
-0033 6D60 1700                   byte pane.botrow,0
+0033 6D60 3B00                   byte pane.botrow,0
 0034 6D62 39D0                   data txt.clearmem     ; Display "Clearing memory...."
 0035               *--------------------------------------------------------------
 0036               * Clear SAMS pages and exit editor
@@ -12647,7 +12599,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057 6D82 C2F9  30         mov   *stack+,r11           ; Pop R11
 0058 6D84 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0082                       copy  "fm.delfile.asm"           ; Delete file from filesystem
+0081                       copy  "fm.delfile.asm"           ; Delete file from filesystem
      **** ****     > fm.delfile.asm
 0001               * FILE......: fm.delfile.asm
 0002               * Purpose...: File Manager - Delete file from filesystem
@@ -12768,7 +12720,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0095 6DFE C2F9  30         mov   *stack+,r11           ; Pop R11
 0096 6E00 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0083                       copy  "fm.run.ea5.asm"           ; Run EA5 program image
+0082                       copy  "fm.run.ea5.asm"           ; Run EA5 program image
      **** ****     > fm.run.ea5.asm
 0001               * FILE......: fm.run.ea5.asm
 0002               * Purpose...: File Manager - Run EA5 program image
@@ -12919,7 +12871,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0118 6E9C C2F9  30         mov   *stack+,r11           ; Pop R11
 0119 6E9E 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0084                       copy  "fm.clock.read.asm"        ; Read Date/Time from clock device
+0083                       copy  "fm.clock.read.asm"        ; Read Date/Time from clock device
      **** ****     > fm.clock.read.asm
 0001               * FILE......: fm.readclock.asm
 0002               * Purpose...: File Manager - Catalog drive/directory
@@ -13069,7 +13021,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0109 6F52 C2F9  30         mov   *stack+,r11           ; Pop R11
 0110 6F54 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0085                       copy  "fm.callbacks.edb.asm"     ; Callbacks for editor buffer file IO
+0084                       copy  "fm.callbacks.edb.asm"     ; Callbacks for editor buffer file IO
      **** ****     > fm.callbacks.edb.asm
 0001               * FILE......: fm.callbacks.edb.asm
 0002               * Purpose...: File Manager - Callbacks for editor buffer file I/O
@@ -13165,7 +13117,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0073               fm.loadsave.cb.indicator1.savefile:
 0074 6FC0 06A0  32         bl    @putat
      6FC2 2442     
-0075 6FC4 1700                   byte pane.botrow,0
+0075 6FC4 3B00                   byte pane.botrow,0
 0076 6FC6 3920                   data txt.saving       ; Display "Saving...."
 0077 6FC8 1022  14         jmp   fm.loadsave.cb.indicator1.filename
 0078                       ;------------------------------------------------------
@@ -13174,7 +13126,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0081               fm.loadsave.cb.indicator1.saveblock:
 0082 6FCA 06A0  32         bl    @putat
      6FCC 2442     
-0083 6FCE 1700                   byte pane.botrow,0
+0083 6FCE 3B00                   byte pane.botrow,0
 0084 6FD0 3992                   data txt.block.save   ; Display "Saving block...."
 0085               
 0086 6FD2 1024  14         jmp   fm.loadsave.cb.indicator1.exit
@@ -13184,7 +13136,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0090               fm.loadsave.cb.indicator1.printfile:
 0091 6FD4 06A0  32         bl    @putat
      6FD6 2442     
-0092 6FD8 1700                   byte pane.botrow,0
+0092 6FD8 3B00                   byte pane.botrow,0
 0093 6FDA 392C                   data txt.printing    ; Display "Printing...."
 0094 6FDC 101F  14         jmp   fm.loadsave.cb.indicator1.exit
 0095                       ;------------------------------------------------------
@@ -13193,7 +13145,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0098               fm.loadsave.cb.indicator1.printblock:
 0099 6FDE 06A0  32         bl    @putat
      6FE0 2442     
-0100 6FE2 1700                   byte pane.botrow,0
+0100 6FE2 3B00                   byte pane.botrow,0
 0101 6FE4 39BE                   data txt.block.print  ; Display "Printing block...."
 0102 6FE6 101A  14         jmp   fm.loadsave.cb.indicator1.exit
 0103                       ;------------------------------------------------------
@@ -13202,7 +13154,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0106               fm.loadsave.cb.indicator1.clipblock:
 0107 6FE8 06A0  32         bl    @putat
      6FEA 2442     
-0108 6FEC 1700                   byte pane.botrow,0
+0108 6FEC 3B00                   byte pane.botrow,0
 0109 6FEE 39A4                   data txt.block.clip  ; Display "Copying to clipboard...."
 0110 6FF0 1015  14         jmp   fm.loadsave.cb.indicator1.exit
 0111               
@@ -13212,7 +13164,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0115               fm.loadsave.cb.indicator1.loading:
 0116 6FF2 06A0  32         bl    @putat
      6FF4 2442     
-0117 6FF6 1700                   byte pane.botrow,0
+0117 6FF6 3B00                   byte pane.botrow,0
 0118 6FF8 3914                   data txt.loading      ; Display "Loading file...."
 0119               
 0120 6FFA C120  34         mov   @fh.temp1,tmp0
@@ -13233,7 +13185,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0131               fm.loadsave.cb.indicator1.filename:
 0132 700E 06A0  32         bl    @at
      7010 2726     
-0133 7012 170B                   byte pane.botrow,11   ; Cursor YX position
+0133 7012 3B0B                   byte pane.botrow,11   ; Cursor YX position
 0134               
 0135 7014 C160  34         mov   @parm1,tmp1           ; Get pointer to file descriptor
      7016 A006     
@@ -13376,7 +13328,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0242               fm.loadsave.cb.indicator2.lines:
 0243 70AC 06A0  32         bl    @putnum
      70AE 2AD4     
-0244 70B0 1748                   byte pane.botrow,72   ; Show lines processed
+0244 70B0 3B48                   byte pane.botrow,72   ; Show lines processed
 0245 70B2 A43C                   data fh.records,rambuf,>3020
      70B4 A100     
      70B6 3020     
@@ -13446,7 +13398,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0299               
 0300 7104 06A0  32         bl    @putnum
      7106 2AD4     
-0301 7108 1748                   byte pane.botrow,72   ; Show lines processed
+0301 7108 3B48                   byte pane.botrow,72   ; Show lines processed
 0302 710A A504                   data edb.lines,rambuf,>3020
      710C A100     
      710E 3020     
@@ -13542,7 +13494,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0381                       ;------------------------------------------------------
 0382 717C 06A0  32         bl    @hchar
      717E 2832     
-0383 7180 1700                   byte pane.botrow,0,32,80
+0383 7180 3B00                   byte pane.botrow,0,32,80
      7182 2050     
 0384 7184 FFFF                   data EOL              ; Erase loading/saving indicator
 0385                       ;------------------------------------------------------
@@ -13680,7 +13632,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0490               
 0491 7234 06A0  32         bl    @putnum               ; Convert unsigned number to string
      7236 2AD4     
-0492 7238 160C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
+0492 7238 3A0C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
 0493 723A A438                   data fh.pabstat       ; | i p1  = Pointer to 16bit unsigned number
 0494 723C A100                   data rambuf           ; | i p2  = Pointer to 5 byte string buffer
 0495 723E 30                     byte 48               ; | i p3H = Offset for ASCII digit 0
@@ -13688,7 +13640,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0497               
 0498 7240 06A0  32         bl    @putat                ; Display "I/O error code:"
      7242 2442     
-0499 7244 1600                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
+0499 7244 3A00                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
 0500 7246 3D50                   data txt.ioerr.code   ; /  i tmp1 = Pointer to length-prefixed string
 0501                       ;------------------------------------------------------
 0502                       ; Restore status line colors
@@ -13750,7 +13702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0551                       ;------------------------------------------------------
 0552 7284 06A0  32         bl    @hchar
      7286 2832     
-0553 7288 1700                   byte pane.botrow,0,32,55
+0553 7288 3B00                   byte pane.botrow,0,32,55
      728A 2037     
 0554 728C FFFF                   data EOL              ; Erase loading indicator
 0555                       ;------------------------------------------------------
@@ -13782,7 +13734,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0577 72A4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0578 72A6 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0086                       copy  "fm.callbacks.dir.asm"     ; Callbacks for drive/directory file IO
+0085                       copy  "fm.callbacks.dir.asm"     ; Callbacks for drive/directory file IO
      **** ****     > fm.callbacks.dir.asm
 0001               * FILE......: fm.callbacks.dir.asm
 0002               * Purpose...: File Manager - Callbacks for drive/directory listing
@@ -13917,12 +13869,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0124               
 0125 72D8 06A0  32         bl    @putat
      72DA 2442     
-0126 72DC 1700                   byte pane.botrow,0
+0126 72DC 3B00                   byte pane.botrow,0
 0127 72DE 39E4                   data txt.readdir      ; Display "Reading catalog..."
 0128               
 0129 72E0 06A0  32         bl    @at
      72E2 2726     
-0130 72E4 1713                   byte pane.botrow,19   ; Set cursor YX position
+0130 72E4 3B13                   byte pane.botrow,19   ; Set cursor YX position
 0131               
 0132 72E6 C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to device/directory name
      72E8 A444     
@@ -14310,7 +14262,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0472               
 0473 7480 06A0  32         bl    @putnum               ; Show filecount
      7482 2AD4     
-0474 7484 1748                   byte pane.botrow,72   ; \ i p1 = Y,X
+0474 7484 3B48                   byte pane.botrow,72   ; \ i p1 = Y,X
 0475 7486 E220                   data cat.filecount    ; | i p2 = Number to display
 0476 7488 A100                   data rambuf           ; | i p3 = Workbuffer for string conversion
 0477 748A 3020                   data >3020            ; / i p4 = ASCII offset, fill character
@@ -14511,7 +14463,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0657 751E C2F9  30         mov   *stack+,r11           ; Pop R11
 0658 7520 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0087                       copy  "fm.callbacks.ea5.asm"     ; Callbacks for EA5 file IO
+0086                       copy  "fm.callbacks.ea5.asm"     ; Callbacks for EA5 file IO
      **** ****     > fm.callbacks.ea5.asm
 0001               * FILE......: fm.callbacks.ea5.asm
 0002               * Purpose...: File Manager - Callbacks for EA5 image file I/O
@@ -14541,7 +14493,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0025               fm.load.ea5.cb.indicator1.loading:
 0026 7534 06A0  32         bl    @putat
      7536 2442     
-0027 7538 1700                   byte pane.botrow,0
+0027 7538 3B00                   byte pane.botrow,0
 0028 753A 3914                   data txt.loading      ; Display "Loading file...."
 0029                       ;------------------------------------------------------
 0030                       ; Display device/filename
@@ -14549,7 +14501,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032               fm.load.ea5.cb.indicator1.filename:
 0033 753C 06A0  32         bl    @at
      753E 2726     
-0034 7540 170B                   byte pane.botrow,11   ; Cursor YX position
+0034 7540 3B0B                   byte pane.botrow,11   ; Cursor YX position
 0035               
 0036 7542 C160  34         mov   @parm1,tmp1           ; Get pointer to file descriptor
      7544 A006     
@@ -14713,7 +14665,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0171               
 0172 75F4 06A0  32         bl    @hchar
      75F6 2832     
-0173 75F8 1700                   byte pane.botrow,0,32,80
+0173 75F8 3B00                   byte pane.botrow,0,32,80
      75FA 2050     
 0174 75FC FFFF                   data EOL              ; Erase loading/saving indicator
 0175                       ;------------------------------------------------------
@@ -14773,7 +14725,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0220               
 0221 763C 06A0  32         bl    @putnum               ; Convert unsigned number to string
      763E 2AD4     
-0222 7640 160C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
+0222 7640 3A0C                   byte pane.botrow-1,12 ; \ i p0  = Cursor position
 0223 7642 A438                   data fh.pabstat       ; | i p1  = Pointer to 16bit unsigned number
 0224 7644 A100                   data rambuf           ; | i p2  = Pointer to 5 byte string buffer
 0225 7646 30                     byte 48               ; | i p3H = Offset for ASCII digit 0
@@ -14781,7 +14733,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0227               
 0228 7648 06A0  32         bl    @putat                ; Display "I/O error code:"
      764A 2442     
-0229 764C 1600                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
+0229 764C 3A00                   byte pane.botrow-1,0  ; \  i @wyx = Cursor position
 0230 764E 3D50                   data txt.ioerr.code   ; /  i tmp1 = Pointer to length-prefixed string
 0231                       ;------------------------------------------------------
 0232                       ; Restore status line colors
@@ -14825,7 +14777,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0264 767E C2F9  30         mov   *stack+,r11           ; Pop R11
 0265 7680 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0088                       copy  "fm.callbacks.clock.asm"   ; Callbacks for reading date/time
+0087                       copy  "fm.callbacks.clock.asm"   ; Callbacks for reading date/time
      **** ****     > fm.callbacks.clock.asm
 0001               * FILE......: fm.callbacks.clock.asm
 0002               * Purpose...: File Manager - Callbacks for clock device
@@ -14854,7 +14806,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024 768A C2F9  30         mov   *stack+,r11           ; Pop R11
 0025 768C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0089                       copy  "fm.callbacks.delfile.asm" ; Callbacks for delete file operations
+0088                       copy  "fm.callbacks.delfile.asm" ; Callbacks for delete file operations
      **** ****     > fm.callbacks.delfile.asm
 0001               * FILE......: fm.callbacks.delfile.asm
 0002               * Purpose...: File Manager - Callbacks for delete file operation
@@ -14898,7 +14850,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0037               
 0038 76A8 06A0  32         bl    @putat
      76AA 2442     
-0039 76AC 1700                   byte pane.botrow,0
+0039 76AC 3B00                   byte pane.botrow,0
 0040 76AE 3948                   data txt.deleting     ; Display "Deleting file...."
 0041               
 0042                       ;------------------------------------------------------
@@ -14907,7 +14859,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0045               fm.delfile.callback1.filename:
 0046 76B0 06A0  32         bl    @at
      76B2 2726     
-0047 76B4 1712                   byte pane.botrow,18   ; Cursor YX position
+0047 76B4 3B12                   byte pane.botrow,18   ; Cursor YX position
 0048               
 0049 76B6 C160  34         mov   @fh.fname.ptr,tmp1    ; Get pointer to file descriptor
      76B8 A444     
@@ -14980,7 +14932,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0110 76F0 C2F9  30         mov   *stack+,r11           ; Pop R11
 0111 76F2 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0090                       copy  "fm.browse.fname.set.asm"  ; Create string with device/filename
+0089                       copy  "fm.browse.fname.set.asm"  ; Create string with device/filename
      **** ****     > fm.browse.fname.set.asm
 0001               * FILE......: fm.browse.fname.set
 0002               * Purpose...: File Manager - File browse support routines
@@ -15117,7 +15069,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0109 7788 C2F9  30         mov   *stack+,r11           ; Pop R11
 0110 778A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0091                       copy  "fm.browse.fname.prev.asm" ; Pick prev filename in filename list
+0090                       copy  "fm.browse.fname.prev.asm" ; Pick prev filename in filename list
      **** ****     > fm.browse.fname.prev.asm
 0001               * FILE......: fm.browse.fmname.prev
 0002               * Purpose...: File Manager - File browse support routines
@@ -15235,7 +15187,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0101 77E2 C2F9  30         mov   *stack+,r11           ; Pop R11
 0102 77E4 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0092                       copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
+0091                       copy  "fm.browse.fname.next.asm" ; Pick next filename in filename list
      **** ****     > fm.browse.fname.next.asm
 0001               * FILE......: fm.browse.fmname.next
 0002               * Purpose...: File Manager - File browse support routines
@@ -15359,7 +15311,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105 7846 C2F9  30         mov   *stack+,r11           ; Pop R11
 0106 7848 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0093                       copy  "fm.browse.updir.asm"      ; Directory up
+0092                       copy  "fm.browse.updir.asm"      ; Directory up
      **** ****     > fm.browse.updir.asm
 0001               * FILE......: fm.browse.updir
 0002               * Purpose...: File Manager - File browse support routines
@@ -15472,7 +15424,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093 78C4 C2F9  30         mov   *stack+,r11           ; Pop R11
 0094 78C6 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0094                       copy  "fm.directory.asm"         ; File manager drive/directory listing
+0093                       copy  "fm.directory.asm"         ; File manager drive/directory listing
      **** ****     > fm.directory.asm
 0001               * FILE......: fm.directory.asm
 0002               * Purpose...: File Manager - Catalog drive/directory
@@ -15563,7 +15515,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7926 228E     
 0073 7928 0050                   data 80,32,(pane.botrow - cmdb.rows - 1) * 80
      792A 0020     
-     792C 04B0     
+     792C 0E60     
 0074                                                   ; Clear files list on screen
 0075               
 0076 792E 0204  20         li    tmp0,vdp.tat.base + 80
@@ -15572,7 +15524,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7934 A218     
 0078 7936 06C5  14         swpb  tmp1                  ; /
 0079 7938 0206  20         li    tmp2,(pane.botrow - cmdb.rows - 1) * 80
-     793A 04B0     
+     793A 0E60     
 0080               
 0081 793C 06A0  32         bl    @xfilv                ; Fill colors
      793E 2294     
@@ -16016,10 +15968,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      7B72 75       
 0398 7B73   00            byte   0
                    < stevie_b2.asm
-0095                       ;-----------------------------------------------------------------------
-0096                       ; Stubs
-0097                       ;-----------------------------------------------------------------------
-0098                       copy  "rom.stubs.bank2.asm" ; Bank specific stubs
+0094                       ;-----------------------------------------------------------------------
+0095                       ; Stubs
+0096                       ;-----------------------------------------------------------------------
+0097                       copy  "rom.stubs.bank2.asm" ; Bank specific stubs
      **** ****     > rom.stubs.bank2.asm
 0001               * FILE......: rom.stubs.bank2.asm
 0002               * Purpose...: Bank 2 stubs for functions in other banks
@@ -16617,7 +16569,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0567 7D56 C2F9  30         mov   *stack+,r11           ; Pop r11
 0568 7D58 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
-0099                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
+0098                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -16714,10 +16666,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093 7DA0 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b2.asm
-0100                       ;-----------------------------------------------------------------------
-0101                       ; Program data
-0102                       ;-----------------------------------------------------------------------
-0103                       copy  "data.pab.tpl.asm"    ; PAB templates
+0099                       ;-----------------------------------------------------------------------
+0100                       ; Program data
+0101                       ;-----------------------------------------------------------------------
+0102                       copy  "data.pab.tpl.asm"    ; PAB templates
      **** ****     > data.pab.tpl.asm
 0001               * FILE......: data.pab.tpl.asm
 0002               * Purpose...: PAB templates for accessing files
@@ -16816,7 +16768,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0095                       ; text 'DSK3.XBEADOC'       ; 10-.. - File descriptor
 0096                                                   ;         (Device + '.' + File name)
                    < stevie_b2.asm
-0104                       copy  "data.devices.asm"    ; Device names
+0103                       copy  "data.devices.asm"    ; Device names
      **** ****     > data.devices.asm
 0001               * FILE......: data.devices.asm
 0002               * Purpose...: Device name strings
@@ -16907,13 +16859,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0039                       ;-------------------------------------------------------
 0040 7E5E FFFF             data  EOL             ; EOL
                    < stevie_b2.asm
-0105                       ;-----------------------------------------------------------------------
-0106                       ; Bank full check
-0107                       ;-----------------------------------------------------------------------
-0111                       ;-----------------------------------------------------------------------
-0112                       ; Show ROM bank in CPU crash screen
-0113                       ;-----------------------------------------------------------------------
-0114                       copy  "rom.crash.asm"
+0104                       ;-----------------------------------------------------------------------
+0105                       ; Bank full check
+0106                       ;-----------------------------------------------------------------------
+0110                       ;-----------------------------------------------------------------------
+0111                       ; Show ROM bank in CPU crash screen
+0112                       ;-----------------------------------------------------------------------
+0113                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -16929,10 +16881,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_b2.asm
-0115                       ;-----------------------------------------------------------------------
-0116                       ; Table for VDP modes
-0117                       ;-----------------------------------------------------------------------
-0118                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0114                       ;-----------------------------------------------------------------------
+0115                       ; Table for VDP modes
+0116                       ;-----------------------------------------------------------------------
+0117                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -16974,7 +16926,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0042 7F50 04              byte   >04
+0051 7F50 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -17042,10 +16994,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_b2.asm
-0119                       ;-----------------------------------------------------------------------
-0120                       ; Vector table
-0121                       ;-----------------------------------------------------------------------
-0122                       copy  "rom.vectors.bank2.asm"
+0118                       ;-----------------------------------------------------------------------
+0119                       ; Vector table
+0120                       ;-----------------------------------------------------------------------
+0121                       copy  "rom.vectors.bank2.asm"
      **** ****     > rom.vectors.bank2.asm
 0001               * FILE......: rom.vectors.bank2.asm
 0002               * Purpose...: Bank 2 vectors for trampoline function
@@ -17130,7 +17082,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 7FEC 2026     vec.63  data  cpu.crash             ;
 0080 7FEE 2026     vec.64  data  cpu.crash             ;
                    < stevie_b2.asm
-0123                                                   ; Vector table bank 2
+0122                                                   ; Vector table bank 2
 
     ANYKEY.............. >200A :     
     AT.................. >2726 :     
@@ -17284,7 +17236,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.PANKEYS........ >A72E :     
     CMDB.PANMARKERS..... >A72C :     
     CMDB.PREVCURSOR..... >A710 :     
-    CMDB.ROWS........... >0007 :     
+    CMDB.ROWS........... >000C :     
     CMDB.SCRROWS........ >A706 :     
     CMDB.SIZE........... >0100 :     
     CMDB.STRUCT......... >A700 :     
@@ -18193,7 +18145,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PALON............... >201C :     
     PANE.BOTLINE.BUSY.OFF >7C4C :     
     PANE.BOTLINE.BUSY.ON >7C3A :     
-    PANE.BOTROW......... >0017 :     
+    PANE.BOTROW......... >003B :     
     PANE.CMDB.HIDE...... >7C04 :     
     PANE.CMDB.SHOW...... >7BF2 :     
     PANE.COLORSCHEME.BOTLINE >7BE0 :     
@@ -18303,7 +18255,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ROM.FARJUMP.BANKSWITCH.TGT.DONE >3122 :     
     ROM.FARJUMP.EXIT.... >317E :     
     ROM.FARJUMP.RETURN.. >313C :     
-    ROM.PROGRAM1........ >600C :     
     ROM0_KSCAN_ON....... >0001 :     
     ROM0_KSCAN_OUT...... >A028 :     
     RSSLOT.............. >300C :     
@@ -18635,9 +18586,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0780 :     
+    VDP.SIT.SIZE........ >12C0 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >0780 :     
+    VDP.TAT.SIZE........ >12C0 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     

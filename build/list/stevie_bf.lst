@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260321-2044160
+0002               * BUILD: 260328-1938200
 0003               ***************************************************************
                    < stevie_bf.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -123,19 +123,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: VDP configuration (F18a, PICO9918, 9938, ...)
 0003               
 0004               ***************************** F18a/PICO9918 24x80 ******************************
-0006                   copy 'equ.vdp.2480.asm' ; Character cursor
-     **** ****     > equ.vdp.2480.asm
-0001               * FILE......: equ.vdp.2480.chr.asm
-0002               * Purpose...: F18a/PICO9918 24x80 mode
+0008               
+0009               ***************************** F18a/PICO9918 30x80 ******************************
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
+0021                   copy 'equ.vdp.6080.asm' ; Character cursor
+     **** ****     > equ.vdp.6080.asm
+0001               * FILE......: equ.vdp.6080.asm
+0002               * Purpose...: PICO9918 60x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 24x80
+0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0780     vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 48 rows
+0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      0780     vdp.tat.size              equ  24*80   ; VDP TAT size 80 columns, 60 rows
+0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -144,8 +150,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      0007     cmdb.rows                 equ  7       ; Number of rows in command buffer
-0022      0017     pane.botrow               equ  23      ; Bottom row on screen
+0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
+0022      003B     pane.botrow               equ  59      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -173,12 +179,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
-0008               
-0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_bf.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -924,66 +924,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036      601E     bankid  equ   bankf.rom             ; Set bank identifier to current bank
 0037                       aorg  >6000
 0038                       save  >6000,>8000           ; Save bank
-0039                       copy  "rom.header.asm"      ; Include cartridge header
-     **** ****     > rom.header.asm
-0001               * FILE......: rom.header.asm
-0002               * Purpose...: Cartridge header
-0003               
-0004               *--------------------------------------------------------------
-0005               * Cartridge header
-0006               ********|*****|*********************|**************************
-0007 6000 AA               byte  >aa                   ; 0  Standard header                   >6000
-0008 6001   01             byte  >01                   ; 1  Version number
-0009 6002 02               byte  >02                   ; 2  Number of programs (optional)     >6002
-0010 6003   00             byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
-0011               
-0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
-0013                                                   ; 5  /
-0014               
-0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
-0016                                                   ; 7  /
-0017               
-0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
-0019                                                   ; 9  /
-0020               
-0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
-0022                                                   ; 11 /
-0023               
-0024                       ;-----------------------------------------------------------------------
-0025                       ; Program list entry
-0026                       ;-----------------------------------------------------------------------
-0027               rom.program1:
-0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
-0029                                                   ; 13 / (no more items following)
-0030               
-0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
-0032                                                   ; 15 /
-0033               
-0035 6010 1053                 stri 'STEVIE 1.9.10-24'
-     6012 5445     
-     6014 5649     
-     6016 4520     
-     6018 312E     
-     601A 392E     
-     601C 3130     
-     601E 2D32     
-     6020 34       
-0037               
-0041               
-0045               
-                   < stevie_bf.asm
-0040               
-0041               ***************************************************************
-0042               * Step 1: Switch to bank 0 (uniform code accross all banks)
-0043               ********|*****|*********************|**************************
-0044                       aorg  kickstart.code1       ; >6040
-0045 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0039               
+0040               ***************************************************************
+0041               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0042               ********|*****|*********************|**************************
+0043                       aorg  kickstart.code1       ; >6040
+0044 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000     
-0046               ***************************************************************
-0047               * Step 2: Satisfy assembler, must know relocated code
-0048               ********|*****|*********************|**************************
-0049                       aorg  >2000                 ; Relocate to >2000
-0050                       copy  "runlib.asm"
+0045               ***************************************************************
+0046               * Step 2: Satisfy assembler, must know relocated code
+0047               ********|*****|*********************|**************************
+0048                       aorg  >2000                 ; Relocate to >2000
+0049                       copy  "runlib.asm"
      **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -6422,7 +6374,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0397 30D4 0460  28         b     @main                 ; Give control to main program
      30D6 6046     
                    < stevie_bf.asm
-0051                       copy  "ram.resident.asm"
+0050                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
 0002               * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
@@ -6689,7 +6641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      31B2 A310     
 0038               
 0039 31B4 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B6 0016     
+     31B6 003A     
 0040 31B8 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BA A320     
 0041               
@@ -7319,7 +7271,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034 33B4 04E0  34         clr   @cmdb.visible         ; Hide command buffer
      33B6 A702     
 0035 33B8 0204  20         li    tmp0,cmdb.rows
-     33BA 0007     
+     33BA 000C     
 0036 33BC C804  38         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
      33BE A706     
 0037 33C0 C804  38         mov   tmp0,@cmdb.default    ; Set default command buffer size
@@ -7337,7 +7289,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33D4 0204  20         li    tmp0,pane.botrow      ; \
-     33D6 0017     
+     33D6 003B     
 0047 33D8 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33DA A706     
 0048 33DC 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -9662,26 +9614,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0017                                   even
                    < ram.resident.asm
                    < stevie_bf.asm
-0052                       ;------------------------------------------------------
-0053                       ; Activate bank 1 and branch to  >6036
-0054                       ;------------------------------------------------------
-0055 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0051                       ;------------------------------------------------------
+0052                       ; Activate bank 1 and branch to  >6036
+0053                       ;------------------------------------------------------
+0054 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3DCE 6002     
-0056               
-0060               
-0061 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0055               
+0059               
+0060 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3DD2 6046     
-0062               ***************************************************************
-0063               * Step 3: Include main editor modules
-0064               ********|*****|*********************|**************************
-0065               main:
-0066                       aorg  kickstart.code2       ; >6046
-0067 6046 06A0  32         bl    @cpu.crash            ; Should never get here
+0061               ***************************************************************
+0062               * Step 3: Include main editor modules
+0063               ********|*****|*********************|**************************
+0064               main:
+0065                       aorg  kickstart.code2       ; >6046
+0066 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026     
-0068                       ;-----------------------------------------------------------------------
-0069                       ; Dialogs
-0070                       ;-----------------------------------------------------------------------
-0071                       copy  "dialog.help.content.asm"  ; Draw help dialog content
+0067                       ;-----------------------------------------------------------------------
+0068                       ; Dialogs
+0069                       ;-----------------------------------------------------------------------
+0070                       copy  "dialog.help.content.asm"  ; Draw help dialog content
      **** ****     > dialog.help.content.asm
 0001               * FILE......: dialog.help.content.asm
 0002               * Purpose...: Content for Help dialog
@@ -9733,12 +9685,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6074 228E     
 0044 6076 0050                   data vdp.fb.toprow.sit,32,vdp.sit.size - (cmdb.rows * 80) - 180
      6078 0020     
-     607A 049C     
+     607A 0E4C     
 0045                                                   ; Clear screen
 0046               
 0047 607C 06A0  32         bl    @hchar
      607E 2832     
-0048 6080 1302                   byte pane.botrow - 4,2,32,76
+0048 6080 3702                   byte pane.botrow - 4,2,32,76
      6082 204C     
 0049 6084 FFFF                   data EOL              ; Fill with space characters
 0050               
@@ -9766,7 +9718,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      60A0 A218     
 0069 60A2 0985  32         srl   tmp1,8                ; Right justify
 0070 60A4 0206  20         li    tmp2,vdp.sit.size - (cmdb.rows * 80) - 240
-     60A6 0460     
+     60A6 0E10     
 0071                                                   ; Prepare for loading color attributes
 0072               
 0073 60A8 06A0  32         bl    @xfilv                ; \ Fill VDP memory
@@ -9831,15 +9783,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0123 60D8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0124 60DA 045B  20         b     *r11                  ; Return
                    < stevie_bf.asm
-0072                       ;-----------------------------------------------------------------------
-0073                       ; Stubs
-0074                       ;-----------------------------------------------------------------------
-0075                       copy  "rom.stubs.bankf.asm" ; Bank specific stubs
+0071                       ;-----------------------------------------------------------------------
+0072                       ; Stubs
+0073                       ;-----------------------------------------------------------------------
+0074                       copy  "rom.stubs.bankf.asm" ; Bank specific stubs
      **** ****     > rom.stubs.bankf.asm
 0001               * FILE......: rom.stubs.bankf.asm
 0002               * Purpose...: Bank F stubs for functions in other banks
                    < stevie_bf.asm
-0076                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
+0075                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -9936,22 +9888,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093 6122 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_bf.asm
-0077                       ;-----------------------------------------------------------------------
-0078                       ; Program data
-0079                       ;-----------------------------------------------------------------------
-0080               
-0082                       copy  "data.help.2480.asm"  ; Help dialog content 24x80 mode version
-     **** ****     > data.help.2480.asm
-0001               * FILE......: data.help.2480.asm
-0002               * Purpose...: Help dialog content for 24x80 mode
+0076                       ;-----------------------------------------------------------------------
+0077                       ; Program data
+0078                       ;-----------------------------------------------------------------------
+0079               
+0090                       copy  "data.help.6080.asm"  ; Help dialog content 60x80 mode version
+     **** ****     > data.help.6080.asm
+0001               * FILE......: data.help.6080.asm
+0002               * Purpose...: Help dialog content for 60x80 mode
 0003               
 0004               
 0005               dialog.help.maxpage:
-0006 6124 0002             data 2               ; Index of highest page in help system
+0006 6124 0000             data 0               ; Index of highest page in help system
 0007               
 0008               txt.dialog.help.maxpage:
-0009 6126 042F             stri '/3  '          ; Display max page in help system
-     6128 3320     
+0009 6126 042F             stri '/1  '          ; Display max page in help system
+     6128 3120     
      612A 20       
 0010                       even
 0011               
@@ -9959,1047 +9911,997 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0013                       ;------------------------------------------------------
 0014                       ; Page index table
 0015                       ;------------------------------------------------------
-0016 612C 6144             data  dialog.help.data.page1,27,37,>0f2a
-     612E 001B     
+0016 612C 6134             data  dialog.help.data.page1,67,37,>2e2a
+     612E 0043     
      6130 0025     
-     6132 0F2A     
-0017 6134 6432             data  dialog.help.data.page2,27,37,>0f2a
-     6136 001B     
-     6138 0025     
-     613A 0F2A     
-0018 613C 66FE             data  dialog.help.data.page3,16,37,>0000
-     613E 0010     
-     6140 0025     
-     6142 0000     
-0019                                            ; 1. Pointer to string list,
-0020                                            ; 2. Number of strings to display
-0021                                            ; 3. String padding length
-0022                                            ; 4. Cutover row and column offset for next column
-0023                                            ;    (or >0000 for single column list)
-0024               
-0025               
-0026               dialog.help.data.page1:
+     6132 2E2A     
+0017                                            ; 1. Pointer to string list,
+0018                                            ; 2. Number of strings to display
+0019                                            ; 3. String padding length
+0020                                            ; 4. Cutover row and column offset for next column
+0021                                            ;    (or >0000 for single column list)
+0022               
+0023               
+0024               dialog.help.data.page1:
+0025                       ;------------------------------------------------------
+0026                       ; Left column
 0027                       ;------------------------------------------------------
-0028                       ; Left column
-0029                       ;------------------------------------------------------
-0030 6144 26               byte 38
-0031 6145   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     6146 0101     
-     6148 0101     
-     614A 0101     
-     614C 0101     
+0028 6134 26               byte 38
+0029 6135   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+     6136 0101     
+     6138 0101     
+     613A 0101     
+     613C 0101     
+     613E 0101     
+     6140 0101     
+     6142 0101     
+0030 6144 2043             text ' Cursor '
+     6146 7572     
+     6148 736F     
+     614A 7220     
+0031 614C 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
      614E 0101     
      6150 0101     
      6152 0101     
-0032 6154 2043             text ' Cursor '
-     6156 7572     
-     6158 736F     
-     615A 7220     
-0033 615C 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     615E 0101     
-     6160 0101     
-     6162 0101     
-     6164 0101     
-     6166 0101     
-     6168 0101     
-     616A 01       
-0034 616B   23             stri 'fctn s/d/e/x  Left, Right, Up, Down'
-     616C 6663     
-     616E 746E     
-     6170 2073     
-     6172 2F64     
-     6174 2F65     
-     6176 2F78     
-     6178 2020     
-     617A 4C65     
-     617C 6674     
-     617E 2C20     
-     6180 5269     
-     6182 6768     
-     6184 742C     
-     6186 2055     
-     6188 702C     
-     618A 2044     
-     618C 6F77     
-     618E 6E       
-0035 618F   1F             stri 'fctn h/l      Home, End of line'
-     6190 6663     
-     6192 746E     
-     6194 2068     
-     6196 2F6C     
-     6198 2020     
-     619A 2020     
-     619C 2020     
-     619E 486F     
-     61A0 6D65     
-     61A2 2C20     
-     61A4 456E     
-     61A6 6420     
-     61A8 6F66     
-     61AA 206C     
-     61AC 696E     
-     61AE 65       
-0036 61AF   26             stri 'fctn j/k      Previous word, Next word'
-     61B0 6663     
-     61B2 746E     
-     61B4 206A     
-     61B6 2F6B     
-     61B8 2020     
-     61BA 2020     
-     61BC 2020     
-     61BE 5072     
-     61C0 6576     
-     61C2 696F     
-     61C4 7573     
-     61C6 2077     
-     61C8 6F72     
-     61CA 642C     
-     61CC 204E     
-     61CE 6578     
-     61D0 7420     
-     61D2 776F     
-     61D4 7264     
-0037 61D6 1766             stri 'fctn 4   ^x   Page down'
-     61D8 6374     
-     61DA 6E20     
-     61DC 3420     
-     61DE 2020     
-     61E0 5E78     
-     61E2 2020     
-     61E4 2050     
-     61E6 6167     
-     61E8 6520     
-     61EA 646F     
-     61EC 776E     
-0038 61EE 2466             stri 'fctn 5        move view window right'
-     61F0 6374     
-     61F2 6E20     
-     61F4 3520     
-     61F6 2020     
-     61F8 2020     
-     61FA 2020     
-     61FC 206D     
-     61FE 6F76     
-     6200 6520     
-     6202 7669     
-     6204 6577     
-     6206 2077     
-     6208 696E     
-     620A 646F     
-     620C 7720     
-     620E 7269     
-     6210 6768     
-     6212 74       
-0039 6213   23             stri 'ctrl 5   ^5   move view window left'
-     6214 6374     
-     6216 726C     
-     6218 2035     
-     621A 2020     
-     621C 205E     
-     621E 3520     
-     6220 2020     
-     6222 6D6F     
-     6224 7665     
-     6226 2076     
-     6228 6965     
-     622A 7720     
-     622C 7769     
-     622E 6E64     
-     6230 6F77     
-     6232 206C     
-     6234 6566     
-     6236 74       
-0040 6237   15             stri 'fctn 6   ^e   Page up'
-     6238 6663     
-     623A 746E     
-     623C 2036     
-     623E 2020     
-     6240 205E     
-     6242 6520     
+     6154 0101     
+     6156 0101     
+     6158 0101     
+     615A 01       
+0032 615B   23             stri 'fctn s/d/e/x  Left, Right, Up, Down'
+     615C 6663     
+     615E 746E     
+     6160 2073     
+     6162 2F64     
+     6164 2F65     
+     6166 2F78     
+     6168 2020     
+     616A 4C65     
+     616C 6674     
+     616E 2C20     
+     6170 5269     
+     6172 6768     
+     6174 742C     
+     6176 2055     
+     6178 702C     
+     617A 2044     
+     617C 6F77     
+     617E 6E       
+0033 617F   1F             stri 'fctn h/l      Home, End of line'
+     6180 6663     
+     6182 746E     
+     6184 2068     
+     6186 2F6C     
+     6188 2020     
+     618A 2020     
+     618C 2020     
+     618E 486F     
+     6190 6D65     
+     6192 2C20     
+     6194 456E     
+     6196 6420     
+     6198 6F66     
+     619A 206C     
+     619C 696E     
+     619E 65       
+0034 619F   26             stri 'fctn j/k      Previous word, Next word'
+     61A0 6663     
+     61A2 746E     
+     61A4 206A     
+     61A6 2F6B     
+     61A8 2020     
+     61AA 2020     
+     61AC 2020     
+     61AE 5072     
+     61B0 6576     
+     61B2 696F     
+     61B4 7573     
+     61B6 2077     
+     61B8 6F72     
+     61BA 642C     
+     61BC 204E     
+     61BE 6578     
+     61C0 7420     
+     61C2 776F     
+     61C4 7264     
+0035 61C6 1766             stri 'fctn 4   ^x   Page down'
+     61C8 6374     
+     61CA 6E20     
+     61CC 3420     
+     61CE 2020     
+     61D0 5E78     
+     61D2 2020     
+     61D4 2050     
+     61D6 6167     
+     61D8 6520     
+     61DA 646F     
+     61DC 776E     
+0036 61DE 2466             stri 'fctn 5        move view window right'
+     61E0 6374     
+     61E2 6E20     
+     61E4 3520     
+     61E6 2020     
+     61E8 2020     
+     61EA 2020     
+     61EC 206D     
+     61EE 6F76     
+     61F0 6520     
+     61F2 7669     
+     61F4 6577     
+     61F6 2077     
+     61F8 696E     
+     61FA 646F     
+     61FC 7720     
+     61FE 7269     
+     6200 6768     
+     6202 74       
+0037 6203   23             stri 'ctrl 5   ^5   move view window left'
+     6204 6374     
+     6206 726C     
+     6208 2035     
+     620A 2020     
+     620C 205E     
+     620E 3520     
+     6210 2020     
+     6212 6D6F     
+     6214 7665     
+     6216 2076     
+     6218 6965     
+     621A 7720     
+     621C 7769     
+     621E 6E64     
+     6220 6F77     
+     6222 206C     
+     6224 6566     
+     6226 74       
+0038 6227   15             stri 'fctn 6   ^e   Page up'
+     6228 6663     
+     622A 746E     
+     622C 2036     
+     622E 2020     
+     6230 205E     
+     6232 6520     
+     6234 2020     
+     6236 5061     
+     6238 6765     
+     623A 2075     
+     623C 70       
+0039 623D   16             stri 'fctn 7        Next tab'
+     623E 6663     
+     6240 746E     
+     6242 2037     
      6244 2020     
-     6246 5061     
-     6248 6765     
-     624A 2075     
-     624C 70       
-0041 624D   16             stri 'fctn 7        Next tab'
-     624E 6663     
-     6250 746E     
-     6252 2037     
-     6254 2020     
-     6256 2020     
-     6258 2020     
-     625A 2020     
-     625C 4E65     
-     625E 7874     
-     6260 2074     
-     6262 6162     
-0042 6264 1663             stri 'ctrl 7   ^7   Prev tab'
-     6266 7472     
-     6268 6C20     
-     626A 3720     
-     626C 2020     
-     626E 5E37     
-     6270 2020     
-     6272 2050     
-     6274 7265     
-     6276 7620     
-     6278 7461     
-     627A 62       
-0043 627B   18             stri 'fctn v        Screen top'
-     627C 6663     
-     627E 746E     
-     6280 2076     
-     6282 2020     
-     6284 2020     
-     6286 2020     
-     6288 2020     
-     628A 5363     
-     628C 7265     
-     628E 656E     
-     6290 2074     
-     6292 6F70     
-0044 6294 1663             stri 'ctrl v   ^v   File top'
-     6296 7472     
-     6298 6C20     
-     629A 7620     
-     629C 2020     
-     629E 5E76     
-     62A0 2020     
-     62A2 2046     
-     62A4 696C     
-     62A6 6520     
-     62A8 746F     
-     62AA 70       
-0045 62AB   1B             stri 'fctn b        Screen bottom'
-     62AC 6663     
-     62AE 746E     
+     6246 2020     
+     6248 2020     
+     624A 2020     
+     624C 4E65     
+     624E 7874     
+     6250 2074     
+     6252 6162     
+0040 6254 1663             stri 'ctrl 7   ^7   Prev tab'
+     6256 7472     
+     6258 6C20     
+     625A 3720     
+     625C 2020     
+     625E 5E37     
+     6260 2020     
+     6262 2050     
+     6264 7265     
+     6266 7620     
+     6268 7461     
+     626A 62       
+0041 626B   18             stri 'fctn v        Screen top'
+     626C 6663     
+     626E 746E     
+     6270 2076     
+     6272 2020     
+     6274 2020     
+     6276 2020     
+     6278 2020     
+     627A 5363     
+     627C 7265     
+     627E 656E     
+     6280 2074     
+     6282 6F70     
+0042 6284 1663             stri 'ctrl v   ^v   File top'
+     6286 7472     
+     6288 6C20     
+     628A 7620     
+     628C 2020     
+     628E 5E76     
+     6290 2020     
+     6292 2046     
+     6294 696C     
+     6296 6520     
+     6298 746F     
+     629A 70       
+0043 629B   1B             stri 'fctn b        Screen bottom'
+     629C 6663     
+     629E 746E     
+     62A0 2062     
+     62A2 2020     
+     62A4 2020     
+     62A6 2020     
+     62A8 2020     
+     62AA 5363     
+     62AC 7265     
+     62AE 656E     
      62B0 2062     
-     62B2 2020     
-     62B4 2020     
-     62B6 2020     
-     62B8 2020     
-     62BA 5363     
-     62BC 7265     
-     62BE 656E     
-     62C0 2062     
-     62C2 6F74     
-     62C4 746F     
-     62C6 6D       
-0046 62C7   01             stri ' '
-     62C8 20       
-0047                       ;------------------------------------------------------
-0048                       ; Right column
-0049                       ;------------------------------------------------------
-0050 62C9   19             stri 'ctrl b   ^b   File bottom'
-     62CA 6374     
-     62CC 726C     
-     62CE 2062     
-     62D0 2020     
-     62D2 205E     
-     62D4 6220     
-     62D6 2020     
-     62D8 4669     
-     62DA 6C65     
-     62DC 2062     
-     62DE 6F74     
-     62E0 746F     
-     62E2 6D       
-0051 62E3   17             stri 'ctrl g   ^g   Goto line'
-     62E4 6374     
-     62E6 726C     
-     62E8 2067     
-     62EA 2020     
-     62EC 205E     
-     62EE 6720     
+     62B2 6F74     
+     62B4 746F     
+     62B6 6D       
+0044 62B7   19             stri 'ctrl b   ^b   File bottom'
+     62B8 6374     
+     62BA 726C     
+     62BC 2062     
+     62BE 2020     
+     62C0 205E     
+     62C2 6220     
+     62C4 2020     
+     62C6 4669     
+     62C8 6C65     
+     62CA 2062     
+     62CC 6F74     
+     62CE 746F     
+     62D0 6D       
+0045 62D1   17             stri 'ctrl g   ^g   Goto line'
+     62D2 6374     
+     62D4 726C     
+     62D6 2067     
+     62D8 2020     
+     62DA 205E     
+     62DC 6720     
+     62DE 2020     
+     62E0 476F     
+     62E2 746F     
+     62E4 206C     
+     62E6 696E     
+     62E8 65       
+0046 62E9   21             stri 'ctrl ,   ^,   Goto previous match'
+     62EA 6374     
+     62EC 726C     
+     62EE 202C     
      62F0 2020     
-     62F2 476F     
-     62F4 746F     
-     62F6 206C     
-     62F8 696E     
-     62FA 65       
-0052 62FB   21             stri 'ctrl ,   ^,   Goto previous match'
-     62FC 6374     
-     62FE 726C     
-     6300 202C     
-     6302 2020     
-     6304 205E     
-     6306 2C20     
-     6308 2020     
-     630A 476F     
-     630C 746F     
-     630E 2070     
-     6310 7265     
-     6312 7669     
-     6314 6F75     
-     6316 7320     
-     6318 6D61     
-     631A 7463     
-     631C 68       
-0053 631D   1D             stri 'ctrl .   ^.   Goto next match'
-     631E 6374     
-     6320 726C     
-     6322 202E     
-     6324 2020     
-     6326 205E     
-     6328 2E20     
-     632A 2020     
-     632C 476F     
-     632E 746F     
-     6330 206E     
-     6332 6578     
-     6334 7420     
-     6336 6D61     
-     6338 7463     
-     633A 68       
-0054 633B   01             stri ' '
-     633C 20       
-0055 633D   24             byte 36
-0056 633E 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     6340 0101     
-     6342 0101     
+     62F2 205E     
+     62F4 2C20     
+     62F6 2020     
+     62F8 476F     
+     62FA 746F     
+     62FC 2070     
+     62FE 7265     
+     6300 7669     
+     6302 6F75     
+     6304 7320     
+     6306 6D61     
+     6308 7463     
+     630A 68       
+0047 630B   1D             stri 'ctrl .   ^.   Goto next match'
+     630C 6374     
+     630E 726C     
+     6310 202E     
+     6312 2020     
+     6314 205E     
+     6316 2E20     
+     6318 2020     
+     631A 476F     
+     631C 746F     
+     631E 206E     
+     6320 6578     
+     6322 7420     
+     6324 6D61     
+     6326 7463     
+     6328 68       
+0048 6329   01             stri ' '
+     632A 20       
+0049 632B   26             byte 38
+0050 632C 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+     632E 0101     
+     6330 0101     
+     6332 0101     
+     6334 0101     
+     6336 0101     
+     6338 0101     
+     633A 0101     
+0051 633C 2046             text ' File '
+     633E 696C     
+     6340 6520     
+0052 6342 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
      6344 0101     
      6346 0101     
      6348 0101     
      634A 0101     
-     634C 01       
-0057 634D   20             text ' File '
-     634E 4669     
-     6350 6C65     
-     6352 20       
-0058 6353   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     6354 0101     
-     6356 0101     
-     6358 0101     
-     635A 0101     
-     635C 0101     
-     635E 0101     
-     6360 0101     
-0059 6362 1963             stri 'ctrl a   ^a   Append file'
-     6364 7472     
-     6366 6C20     
-     6368 6120     
-     636A 2020     
-     636C 5E61     
-     636E 2020     
-     6370 2041     
-     6372 7070     
-     6374 656E     
-     6376 6420     
-     6378 6669     
-     637A 6C65     
-0060 637C 2163             stri 'ctrl i   ^i   Insert file at line'
-     637E 7472     
-     6380 6C20     
-     6382 6920     
-     6384 2020     
-     6386 5E69     
-     6388 2020     
-     638A 2049     
-     638C 6E73     
-     638E 6572     
-     6390 7420     
-     6392 6669     
-     6394 6C65     
-     6396 2061     
-     6398 7420     
-     639A 6C69     
-     639C 6E65     
-0061 639E 2463             stri 'ctrl c   ^c   Copy clipboard to line'
-     63A0 7472     
-     63A2 6C20     
-     63A4 6320     
-     63A6 2020     
-     63A8 5E63     
-     63AA 2020     
-     63AC 2043     
-     63AE 6F70     
-     63B0 7920     
-     63B2 636C     
-     63B4 6970     
-     63B6 626F     
-     63B8 6172     
-     63BA 6420     
-     63BC 746F     
-     63BE 206C     
-     63C0 696E     
-     63C2 65       
-0062 63C3   17             stri 'ctrl o   ^o   Open file'
-     63C4 6374     
-     63C6 726C     
-     63C8 206F     
-     63CA 2020     
-     63CC 205E     
-     63CE 6F20     
-     63D0 2020     
-     63D2 4F70     
-     63D4 656E     
-     63D6 2066     
-     63D8 696C     
-     63DA 65       
-0063 63DB   18             stri 'ctrl p   ^p   Print file'
-     63DC 6374     
-     63DE 726C     
-     63E0 2070     
-     63E2 2020     
-     63E4 205E     
-     63E6 7020     
-     63E8 2020     
-     63EA 5072     
-     63EC 696E     
-     63EE 7420     
-     63F0 6669     
-     63F2 6C65     
-0064 63F4 2563             stri 'ctrl r   ^r   Run program image (EA5)'
-     63F6 7472     
-     63F8 6C20     
-     63FA 7220     
-     63FC 2020     
-     63FE 5E72     
-     6400 2020     
-     6402 2052     
-     6404 756E     
-     6406 2070     
-     6408 726F     
-     640A 6772     
-     640C 616D     
-     640E 2069     
-     6410 6D61     
-     6412 6765     
-     6414 2028     
-     6416 4541     
-     6418 3529     
-0065 641A 1763             stri 'ctrl s   ^s   Save file'
-     641C 7472     
-     641E 6C20     
-     6420 7320     
-     6422 2020     
-     6424 5E73     
-     6426 2020     
-     6428 2053     
-     642A 6176     
-     642C 6520     
-     642E 6669     
-     6430 6C65     
-0066               
-0067               dialog.help.data.page2:
-0068                       ;------------------------------------------------------
-0069                       ; Left column
-0070                       ;------------------------------------------------------
-0071 6432 26               byte 38
-0072 6433   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1
-     6434 0101     
-     6436 0101     
-     6438 0101     
-     643A 0101     
-     643C 0101     
-     643E 0101     
-0073 6440 204D             text ' Modifiers '
-     6442 6F64     
-     6444 6966     
-     6446 6965     
-     6448 7273     
-     644A 20       
-0074 644B   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     644C 0101     
-     644E 0101     
-     6450 0101     
-     6452 0101     
-     6454 0101     
-     6456 0101     
-     6458 01       
-0075 6459   1E             stri 'fctn 1        Delete character'
-     645A 6663     
-     645C 746E     
-     645E 2031     
-     6460 2020     
-     6462 2020     
-     6464 2020     
-     6466 2020     
-     6468 4465     
-     646A 6C65     
-     646C 7465     
-     646E 2063     
-     6470 6861     
-     6472 7261     
-     6474 6374     
-     6476 6572     
-0076 6478 1E66             stri 'fctn 2        Insert character'
-     647A 6374     
-     647C 6E20     
-     647E 3220     
-     6480 2020     
-     6482 2020     
-     6484 2020     
-     6486 2049     
-     6488 6E73     
-     648A 6572     
-     648C 7420     
-     648E 6368     
-     6490 6172     
-     6492 6163     
-     6494 7465     
-     6496 72       
-0077 6497   19             stri 'fctn 3        Delete line'
-     6498 6663     
-     649A 746E     
-     649C 2033     
-     649E 2020     
-     64A0 2020     
-     64A2 2020     
-     64A4 2020     
-     64A6 4465     
-     64A8 6C65     
-     64AA 7465     
-     64AC 206C     
-     64AE 696E     
-     64B0 65       
-0078 64B1   20             stri 'ctrl l   ^l   Delete end of line'
-     64B2 6374     
-     64B4 726C     
-     64B6 206C     
-     64B8 2020     
-     64BA 205E     
-     64BC 6C20     
-     64BE 2020     
-     64C0 4465     
-     64C2 6C65     
-     64C4 7465     
-     64C6 2065     
-     64C8 6E64     
-     64CA 206F     
-     64CC 6620     
-     64CE 6C69     
-     64D0 6E65     
-0079 64D2 1966             stri 'fctn 8        Insert line'
-     64D4 6374     
-     64D6 6E20     
-     64D8 3820     
-     64DA 2020     
-     64DC 2020     
-     64DE 2020     
-     64E0 2049     
-     64E2 6E73     
-     64E4 6572     
-     64E6 7420     
-     64E8 6C69     
-     64EA 6E65     
-0080 64EC 1E66             stri 'fctn .        Insert/Overwrite'
-     64EE 6374     
-     64F0 6E20     
-     64F2 2E20     
-     64F4 2020     
-     64F6 2020     
-     64F8 2020     
-     64FA 2049     
-     64FC 6E73     
-     64FE 6572     
-     6500 742F     
-     6502 4F76     
-     6504 6572     
-     6506 7772     
-     6508 6974     
-     650A 65       
-0081 650B   1C             stri 'ctrl c   ^c   Copy clipboard'
-     650C 6374     
-     650E 726C     
+     634C 0101     
+     634E 0101     
+     6350 0101     
+0053 6352 1963             stri 'ctrl a   ^a   Append file'
+     6354 7472     
+     6356 6C20     
+     6358 6120     
+     635A 2020     
+     635C 5E61     
+     635E 2020     
+     6360 2041     
+     6362 7070     
+     6364 656E     
+     6366 6420     
+     6368 6669     
+     636A 6C65     
+0054 636C 2163             stri 'ctrl i   ^i   Insert file at line'
+     636E 7472     
+     6370 6C20     
+     6372 6920     
+     6374 2020     
+     6376 5E69     
+     6378 2020     
+     637A 2049     
+     637C 6E73     
+     637E 6572     
+     6380 7420     
+     6382 6669     
+     6384 6C65     
+     6386 2061     
+     6388 7420     
+     638A 6C69     
+     638C 6E65     
+0055 638E 2463             stri 'ctrl c   ^c   Copy clipboard to line'
+     6390 7472     
+     6392 6C20     
+     6394 6320     
+     6396 2020     
+     6398 5E63     
+     639A 2020     
+     639C 2043     
+     639E 6F70     
+     63A0 7920     
+     63A2 636C     
+     63A4 6970     
+     63A6 626F     
+     63A8 6172     
+     63AA 6420     
+     63AC 746F     
+     63AE 206C     
+     63B0 696E     
+     63B2 65       
+0056 63B3   17             stri 'ctrl o   ^o   Open file'
+     63B4 6374     
+     63B6 726C     
+     63B8 206F     
+     63BA 2020     
+     63BC 205E     
+     63BE 6F20     
+     63C0 2020     
+     63C2 4F70     
+     63C4 656E     
+     63C6 2066     
+     63C8 696C     
+     63CA 65       
+0057 63CB   18             stri 'ctrl p   ^p   Print file'
+     63CC 6374     
+     63CE 726C     
+     63D0 2070     
+     63D2 2020     
+     63D4 205E     
+     63D6 7020     
+     63D8 2020     
+     63DA 5072     
+     63DC 696E     
+     63DE 7420     
+     63E0 6669     
+     63E2 6C65     
+0058 63E4 2563             stri 'ctrl r   ^r   Run program image (EA5)'
+     63E6 7472     
+     63E8 6C20     
+     63EA 7220     
+     63EC 2020     
+     63EE 5E72     
+     63F0 2020     
+     63F2 2052     
+     63F4 756E     
+     63F6 2070     
+     63F8 726F     
+     63FA 6772     
+     63FC 616D     
+     63FE 2069     
+     6400 6D61     
+     6402 6765     
+     6404 2028     
+     6406 4541     
+     6408 3529     
+0059 640A 1763             stri 'ctrl s   ^s   Save file'
+     640C 7472     
+     640E 6C20     
+     6410 7320     
+     6412 2020     
+     6414 5E73     
+     6416 2020     
+     6418 2053     
+     641A 6176     
+     641C 6520     
+     641E 6669     
+     6420 6C65     
+0060 6422 0120             stri ' '
+0061 6424 26               byte 38
+0062 6425   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1
+     6426 0101     
+     6428 0101     
+     642A 0101     
+     642C 0101     
+     642E 0101     
+     6430 0101     
+     6432 01       
+0063 6433   20             text ' Modifiers '
+     6434 4D6F     
+     6436 6469     
+     6438 6669     
+     643A 6572     
+     643C 7320     
+0064 643E 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1
+     6440 0101     
+     6442 0101     
+     6444 0101     
+     6446 0101     
+     6448 0101     
+     644A 01       
+0065 644B   1E             stri 'fctn 1        Delete character'
+     644C 6663     
+     644E 746E     
+     6450 2031     
+     6452 2020     
+     6454 2020     
+     6456 2020     
+     6458 2020     
+     645A 4465     
+     645C 6C65     
+     645E 7465     
+     6460 2063     
+     6462 6861     
+     6464 7261     
+     6466 6374     
+     6468 6572     
+0066 646A 1E66             stri 'fctn 2        Insert character'
+     646C 6374     
+     646E 6E20     
+     6470 3220     
+     6472 2020     
+     6474 2020     
+     6476 2020     
+     6478 2049     
+     647A 6E73     
+     647C 6572     
+     647E 7420     
+     6480 6368     
+     6482 6172     
+     6484 6163     
+     6486 7465     
+     6488 72       
+0067 6489   19             stri 'fctn 3        Delete line'
+     648A 6663     
+     648C 746E     
+     648E 2033     
+     6490 2020     
+     6492 2020     
+     6494 2020     
+     6496 2020     
+     6498 4465     
+     649A 6C65     
+     649C 7465     
+     649E 206C     
+     64A0 696E     
+     64A2 65       
+0068 64A3   20             stri 'ctrl l   ^l   Delete end of line'
+     64A4 6374     
+     64A6 726C     
+     64A8 206C     
+     64AA 2020     
+     64AC 205E     
+     64AE 6C20     
+     64B0 2020     
+     64B2 4465     
+     64B4 6C65     
+     64B6 7465     
+     64B8 2065     
+     64BA 6E64     
+     64BC 206F     
+     64BE 6620     
+     64C0 6C69     
+     64C2 6E65     
+0069 64C4 1966             stri 'fctn 8        Insert line'
+     64C6 6374     
+     64C8 6E20     
+     64CA 3820     
+     64CC 2020     
+     64CE 2020     
+     64D0 2020     
+     64D2 2049     
+     64D4 6E73     
+     64D6 6572     
+     64D8 7420     
+     64DA 6C69     
+     64DC 6E65     
+0070 64DE 1E66             stri 'fctn .        Insert/Overwrite'
+     64E0 6374     
+     64E2 6E20     
+     64E4 2E20     
+     64E6 2020     
+     64E8 2020     
+     64EA 2020     
+     64EC 2049     
+     64EE 6E73     
+     64F0 6572     
+     64F2 742F     
+     64F4 4F76     
+     64F6 6572     
+     64F8 7772     
+     64FA 6974     
+     64FC 65       
+0071 64FD   1C             stri 'ctrl c   ^c   Copy clipboard'
+     64FE 6374     
+     6500 726C     
+     6502 2063     
+     6504 2020     
+     6506 205E     
+     6508 6320     
+     650A 2020     
+     650C 436F     
+     650E 7079     
      6510 2063     
-     6512 2020     
-     6514 205E     
-     6516 6320     
-     6518 2020     
-     651A 436F     
-     651C 7079     
-     651E 2063     
-     6520 6C69     
-     6522 7062     
-     6524 6F61     
-     6526 7264     
-0082 6528 1B63             stri 'ctrl u   ^u   Unlock editor'
-     652A 7472     
-     652C 6C20     
-     652E 7520     
-     6530 2020     
-     6532 5E75     
-     6534 2020     
-     6536 2055     
-     6538 6E6C     
-     653A 6F63     
-     653C 6B20     
-     653E 6564     
-     6540 6974     
-     6542 6F72     
-0083 6544 0120             stri ' '
-0084 6546 26               byte 38
-0085 6547   01             byte 1,1,1,1,1,1,1,1
-     6548 0101     
-     654A 0101     
-     654C 0101     
-     654E 01       
-0086 654F   20             text ' File picker (catalog) '
-     6550 4669     
-     6552 6C65     
-     6554 2070     
-     6556 6963     
-     6558 6B65     
-     655A 7220     
-     655C 2863     
-     655E 6174     
-     6560 616C     
-     6562 6F67     
-     6564 2920     
-0087 6566 0101             byte 1,1,1,1,1,1,1
-     6568 0101     
-     656A 0101     
-     656C 01       
-0088 656D   1B             stri 'ctrl e   ^e   Previous page'
-     656E 6374     
-     6570 726C     
-     6572 2065     
-     6574 2020     
-     6576 205E     
-     6578 6520     
-     657A 2020     
-     657C 5072     
-     657E 6576     
-     6580 696F     
-     6582 7573     
-     6584 2070     
-     6586 6167     
-     6588 65       
-0089 6589   17             stri 'ctrl x   ^x   Next page'
-     658A 6374     
-     658C 726C     
-     658E 2078     
-     6590 2020     
-     6592 205E     
-     6594 7820     
-     6596 2020     
-     6598 4E65     
-     659A 7874     
-     659C 2070     
-     659E 6167     
-     65A0 65       
-0090 65A1   01             stri ' '
-     65A2 20       
-0091                       ;------------------------------------------------------
-0092                       ; Right column
-0093                       ;------------------------------------------------------
-0094 65A3   1D             stri 'ctrl s   ^s   Previous column'
-     65A4 6374     
-     65A6 726C     
-     65A8 2073     
-     65AA 2020     
-     65AC 205E     
-     65AE 7320     
-     65B0 2020     
-     65B2 5072     
-     65B4 6576     
-     65B6 696F     
-     65B8 7573     
-     65BA 2063     
-     65BC 6F6C     
-     65BE 756D     
-     65C0 6E       
-0095 65C1   19             stri 'ctrl d   ^d   Next column'
-     65C2 6374     
-     65C4 726C     
-     65C6 2064     
-     65C8 2020     
-     65CA 205E     
-     65CC 6420     
-     65CE 2020     
-     65D0 4E65     
-     65D2 7874     
-     65D4 2063     
-     65D6 6F6C     
-     65D8 756D     
-     65DA 6E       
-0096 65DB   15             stri 'fctn e/x      Up/Down'
-     65DC 6663     
-     65DE 746E     
-     65E0 2065     
-     65E2 2F78     
-     65E4 2020     
-     65E6 2020     
-     65E8 2020     
-     65EA 5570     
-     65EC 2F44     
-     65EE 6F77     
-     65F0 6E       
-0097 65F1   1E             stri 'SPACE         Parent directory'
-     65F2 5350     
-     65F4 4143     
-     65F6 4520     
-     65F8 2020     
-     65FA 2020     
-     65FC 2020     
-     65FE 2020     
-     6600 5061     
-     6602 7265     
-     6604 6E74     
-     6606 2064     
-     6608 6972     
-     660A 6563     
-     660C 746F     
-     660E 7279     
-0098 6610 1F63             stri 'ctrl ^0..^9   Catalog DSK1-DSK9'
-     6612 7472     
-     6614 6C20     
-     6616 5E30     
-     6618 2E2E     
-     661A 5E39     
-     661C 2020     
-     661E 2043     
-     6620 6174     
-     6622 616C     
-     6624 6F67     
-     6626 2044     
-     6628 534B     
-     662A 312D     
-     662C 4453     
-     662E 4B39     
-0099 6630 0120             stri ' '
-0100 6632 24               byte 36
-0101 6633   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1
-     6634 0101     
-     6636 0101     
-     6638 0101     
-     663A 0101     
-     663C 0101     
-     663E 0101     
-0102 6640 2042             text ' Block Mode '
-     6642 6C6F     
-     6644 636B     
-     6646 204D     
-     6648 6F64     
-     664A 6520     
-0103 664C 0101             byte 1,1,1,1,1,1,1,1,1,1,1
-     664E 0101     
-     6650 0101     
-     6652 0101     
-     6654 0101     
-     6656 01       
-0104 6657   1E             stri 'ctrl SPACE    Set M1/M2 marker'
-     6658 6374     
-     665A 726C     
-     665C 2053     
-     665E 5041     
-     6660 4345     
-     6662 2020     
-     6664 2020     
-     6666 5365     
-     6668 7420     
-     666A 4D31     
-     666C 2F4D     
-     666E 3220     
-     6670 6D61     
-     6672 726B     
-     6674 6572     
-0105 6676 1A63             stri 'ctrl d   ^d   Delete block'
-     6678 7472     
-     667A 6C20     
-     667C 6420     
+     6512 6C69     
+     6514 7062     
+     6516 6F61     
+     6518 7264     
+0072 651A 1B63             stri 'ctrl u   ^u   Unlock editor'
+     651C 7472     
+     651E 6C20     
+     6520 7520     
+     6522 2020     
+     6524 5E75     
+     6526 2020     
+     6528 2055     
+     652A 6E6C     
+     652C 6F63     
+     652E 6B20     
+     6530 6564     
+     6532 6974     
+     6534 6F72     
+0073 6536 0120             stri ' '
+0074 6538 0120             stri ' '
+0075 653A 0120             stri ' '
+0076 653C 0120             stri ' '
+0077 653E 4D4C             stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
+     6540 6963     
+     6542 656E     
+     6544 7365     
+     6546 6420     
+     6548 756E     
+     654A 6465     
+     654C 7220     
+     654E 4750     
+     6550 4C76     
+     6552 3320     
+     6554 6F72     
+     6556 206C     
+     6558 6174     
+     655A 6572     
+     655C 2E20     
+     655E 5468     
+     6560 6973     
+     6562 2070     
+     6564 726F     
+     6566 6772     
+     6568 616D     
+     656A 2063     
+     656C 6F6D     
+     656E 6573     
+     6570 2077     
+     6572 6974     
+     6574 6820     
+     6576 4142     
+     6578 534F     
+     657A 4C55     
+     657C 5445     
+     657E 4C59     
+     6580 204E     
+     6582 4F20     
+     6584 5741     
+     6586 5252     
+     6588 414E     
+     658A 5459     
+0078 658C 4F54             stri 'This is free software, you are welcome to redistribute under certain conditions'
+     658E 6869     
+     6590 7320     
+     6592 6973     
+     6594 2066     
+     6596 7265     
+     6598 6520     
+     659A 736F     
+     659C 6674     
+     659E 7761     
+     65A0 7265     
+     65A2 2C20     
+     65A4 796F     
+     65A6 7520     
+     65A8 6172     
+     65AA 6520     
+     65AC 7765     
+     65AE 6C63     
+     65B0 6F6D     
+     65B2 6520     
+     65B4 746F     
+     65B6 2072     
+     65B8 6564     
+     65BA 6973     
+     65BC 7472     
+     65BE 6962     
+     65C0 7574     
+     65C2 6520     
+     65C4 756E     
+     65C6 6465     
+     65C8 7220     
+     65CA 6365     
+     65CC 7274     
+     65CE 6169     
+     65D0 6E20     
+     65D2 636F     
+     65D4 6E64     
+     65D6 6974     
+     65D8 696F     
+     65DA 6E73     
+0079 65DC 0120             stri ' '
+0080 65DE 0120             stri ' '
+0081 65E0 0120             stri ' '
+0082 65E2 24               byte 36
+0083 65E3   01             byte 1,1,1,1,1,1
+     65E4 0101     
+     65E6 0101     
+     65E8 01       
+0084 65E9   20             text ' File picker (catalog) '
+     65EA 4669     
+     65EC 6C65     
+     65EE 2070     
+     65F0 6963     
+     65F2 6B65     
+     65F4 7220     
+     65F6 2863     
+     65F8 6174     
+     65FA 616C     
+     65FC 6F67     
+     65FE 2920     
+0085 6600 0101             byte 1,1,1,1,1,1,1
+     6602 0101     
+     6604 0101     
+     6606 01       
+0086 6607   1B             stri 'ctrl e   ^e   Previous page'
+     6608 6374     
+     660A 726C     
+     660C 2065     
+     660E 2020     
+     6610 205E     
+     6612 6520     
+     6614 2020     
+     6616 5072     
+     6618 6576     
+     661A 696F     
+     661C 7573     
+     661E 2070     
+     6620 6167     
+     6622 65       
+0087 6623   17             stri 'ctrl x   ^x   Next page'
+     6624 6374     
+     6626 726C     
+     6628 2078     
+     662A 2020     
+     662C 205E     
+     662E 7820     
+     6630 2020     
+     6632 4E65     
+     6634 7874     
+     6636 2070     
+     6638 6167     
+     663A 65       
+0088 663B   1D             stri 'ctrl s   ^s   Previous column'
+     663C 6374     
+     663E 726C     
+     6640 2073     
+     6642 2020     
+     6644 205E     
+     6646 7320     
+     6648 2020     
+     664A 5072     
+     664C 6576     
+     664E 696F     
+     6650 7573     
+     6652 2063     
+     6654 6F6C     
+     6656 756D     
+     6658 6E       
+0089 6659   19             stri 'ctrl d   ^d   Next column'
+     665A 6374     
+     665C 726C     
+     665E 2064     
+     6660 2020     
+     6662 205E     
+     6664 6420     
+     6666 2020     
+     6668 4E65     
+     666A 7874     
+     666C 2063     
+     666E 6F6C     
+     6670 756D     
+     6672 6E       
+0090 6673   15             stri 'fctn e/x      Up/Down'
+     6674 6663     
+     6676 746E     
+     6678 2065     
+     667A 2F78     
+     667C 2020     
      667E 2020     
-     6680 5E64     
-     6682 2020     
-     6684 2044     
-     6686 656C     
-     6688 6574     
-     668A 6520     
-     668C 626C     
-     668E 6F63     
-     6690 6B       
-0106 6691   18             stri 'ctrl c   ^c   Copy block'
-     6692 6374     
-     6694 726C     
-     6696 2063     
-     6698 2020     
-     669A 205E     
-     669C 6320     
-     669E 2020     
-     66A0 436F     
-     66A2 7079     
-     66A4 2062     
-     66A6 6C6F     
-     66A8 636B     
-0107 66AA 1763             stri 'ctrl g   ^g   Goto line'
-     66AC 7472     
-     66AE 6C20     
-     66B0 6720     
-     66B2 2020     
-     66B4 5E67     
-     66B6 2020     
-     66B8 2047     
-     66BA 6F74     
-     66BC 6F20     
-     66BE 6C69     
-     66C0 6E65     
-0108 66C2 1863             stri 'ctrl m   ^m   Move block'
-     66C4 7472     
-     66C6 6C20     
-     66C8 6D20     
-     66CA 2020     
-     66CC 5E6D     
-     66CE 2020     
-     66D0 204D     
-     66D2 6F76     
-     66D4 6520     
-     66D6 626C     
-     66D8 6F63     
-     66DA 6B       
-0109 66DB   20             stri 'ctrl s   ^s   Save block to file'
-     66DC 6374     
-     66DE 726C     
-     66E0 2073     
-     66E2 2020     
-     66E4 205E     
-     66E6 7320     
-     66E8 2020     
-     66EA 5361     
-     66EC 7665     
-     66EE 2062     
-     66F0 6C6F     
-     66F2 636B     
-     66F4 2074     
-     66F6 6F20     
-     66F8 6669     
-     66FA 6C65     
-0110 66FC 0120             stri ' '
-0111               
-0112               
-0113               dialog.help.data.page3:
-0114                       ;------------------------------------------------------
-0115                       ; Left column
-0116                       ;------------------------------------------------------
-0117 66FE 26               byte 38
-0118 66FF   01             byte 1,1,1,1,1,1,1,1,1,1
-     6700 0101     
-     6702 0101     
-     6704 0101     
-     6706 0101     
-     6708 01       
-0119 6709   20             text ' Block Mode (rest) '
-     670A 426C     
-     670C 6F63     
-     670E 6B20     
-     6710 4D6F     
-     6712 6465     
-     6714 2028     
-     6716 7265     
-     6718 7374     
-     671A 2920     
-0120 671C 0101             byte 1,1,1,1,1,1,1,1,1
-     671E 0101     
-     6720 0101     
-     6722 0101     
-     6724 01       
-0121 6725   23             stri 'ctrl ^1..^3   Copy to clipboard 1-3'
-     6726 6374     
-     6728 726C     
-     672A 205E     
-     672C 312E     
-     672E 2E5E     
-     6730 3320     
-     6732 2020     
-     6734 436F     
-     6736 7079     
-     6738 2074     
-     673A 6F20     
-     673C 636C     
-     673E 6970     
-     6740 626F     
-     6742 6172     
-     6744 6420     
-     6746 312D     
-     6748 33       
-0122 6749   01             stri ' '
-     674A 20       
-0123 674B   26             byte 38
-0124 674C 0101             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     674E 0101     
-     6750 0101     
-     6752 0101     
-     6754 0101     
-     6756 0101     
-     6758 0101     
-     675A 01       
-0125 675B   20             text ' Others '
-     675C 4F74     
-     675E 6865     
-     6760 7273     
-     6762 20       
-0126 6763   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-     6764 0101     
-     6766 0101     
-     6768 0101     
-     676A 0101     
-     676C 0101     
-     676E 0101     
-     6770 0101     
-0127 6772 1266             stri 'fctn +   ^q   Quit'
+     6680 2020     
+     6682 5570     
+     6684 2F44     
+     6686 6F77     
+     6688 6E       
+0091 6689   1E             stri 'SPACE         Parent directory'
+     668A 5350     
+     668C 4143     
+     668E 4520     
+     6690 2020     
+     6692 2020     
+     6694 2020     
+     6696 2020     
+     6698 5061     
+     669A 7265     
+     669C 6E74     
+     669E 2064     
+     66A0 6972     
+     66A2 6563     
+     66A4 746F     
+     66A6 7279     
+0092 66A8 1F63             stri 'ctrl ^0..^9   Catalog DSK1-DSK9'
+     66AA 7472     
+     66AC 6C20     
+     66AE 5E30     
+     66B0 2E2E     
+     66B2 5E39     
+     66B4 2020     
+     66B6 2043     
+     66B8 6174     
+     66BA 616C     
+     66BC 6F67     
+     66BE 2044     
+     66C0 534B     
+     66C2 312D     
+     66C4 4453     
+     66C6 4B39     
+0093 66C8 0120             stri ' '
+0094 66CA 24               byte 36
+0095 66CB   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1
+     66CC 0101     
+     66CE 0101     
+     66D0 0101     
+     66D2 0101     
+     66D4 0101     
+     66D6 0101     
+0096 66D8 2042             text ' Block Mode '
+     66DA 6C6F     
+     66DC 636B     
+     66DE 204D     
+     66E0 6F64     
+     66E2 6520     
+0097 66E4 0101             byte 1,1,1,1,1,1,1,1,1,1,1
+     66E6 0101     
+     66E8 0101     
+     66EA 0101     
+     66EC 0101     
+     66EE 01       
+0098 66EF   1E             stri 'ctrl SPACE    Set M1/M2 marker'
+     66F0 6374     
+     66F2 726C     
+     66F4 2053     
+     66F6 5041     
+     66F8 4345     
+     66FA 2020     
+     66FC 2020     
+     66FE 5365     
+     6700 7420     
+     6702 4D31     
+     6704 2F4D     
+     6706 3220     
+     6708 6D61     
+     670A 726B     
+     670C 6572     
+0099 670E 1A63             stri 'ctrl d   ^d   Delete block'
+     6710 7472     
+     6712 6C20     
+     6714 6420     
+     6716 2020     
+     6718 5E64     
+     671A 2020     
+     671C 2044     
+     671E 656C     
+     6720 6574     
+     6722 6520     
+     6724 626C     
+     6726 6F63     
+     6728 6B       
+0100 6729   18             stri 'ctrl c   ^c   Copy block'
+     672A 6374     
+     672C 726C     
+     672E 2063     
+     6730 2020     
+     6732 205E     
+     6734 6320     
+     6736 2020     
+     6738 436F     
+     673A 7079     
+     673C 2062     
+     673E 6C6F     
+     6740 636B     
+0101 6742 1763             stri 'ctrl g   ^g   Goto line'
+     6744 7472     
+     6746 6C20     
+     6748 6720     
+     674A 2020     
+     674C 5E67     
+     674E 2020     
+     6750 2047     
+     6752 6F74     
+     6754 6F20     
+     6756 6C69     
+     6758 6E65     
+0102 675A 1863             stri 'ctrl m   ^m   Move block'
+     675C 7472     
+     675E 6C20     
+     6760 6D20     
+     6762 2020     
+     6764 5E6D     
+     6766 2020     
+     6768 204D     
+     676A 6F76     
+     676C 6520     
+     676E 626C     
+     6770 6F63     
+     6772 6B       
+0103 6773   20             stri 'ctrl s   ^s   Save block to file'
      6774 6374     
-     6776 6E20     
-     6778 2B20     
+     6776 726C     
+     6778 2073     
      677A 2020     
-     677C 5E71     
-     677E 2020     
-     6780 2051     
-     6782 7569     
-     6784 74       
-0128 6785   1E             stri 'fctn 0        TI Basic session'
-     6786 6663     
-     6788 746E     
-     678A 2030     
-     678C 2020     
-     678E 2020     
-     6790 2020     
-     6792 2020     
-     6794 5449     
-     6796 2042     
-     6798 6173     
-     679A 6963     
-     679C 2073     
-     679E 6573     
-     67A0 7369     
-     67A2 6F6E     
-0129 67A4 1E63             stri 'ctrl 0   ^0   TI Basic submenu'
-     67A6 7472     
-     67A8 6C20     
-     67AA 3020     
-     67AC 2020     
-     67AE 5E30     
-     67B0 2020     
-     67B2 2054     
-     67B4 4920     
-     67B6 4261     
-     67B8 7369     
-     67BA 6320     
-     67BC 7375     
-     67BE 626D     
-     67C0 656E     
-     67C2 75       
-0130 67C3   1C             stri 'ctrl u   ^u   Shortcuts menu'
-     67C4 6374     
-     67C6 726C     
-     67C8 2075     
-     67CA 2020     
-     67CC 205E     
-     67CE 7520     
-     67D0 2020     
-     67D2 5368     
-     67D4 6F72     
-     67D6 7463     
-     67D8 7574     
-     67DA 7320     
-     67DC 6D65     
-     67DE 6E75     
-0131 67E0 2163             stri 'ctrl z   ^z   Cycle color schemes'
-     67E2 7472     
-     67E4 6C20     
-     67E6 7A20     
-     67E8 2020     
-     67EA 5E7A     
+     677C 205E     
+     677E 7320     
+     6780 2020     
+     6782 5361     
+     6784 7665     
+     6786 2062     
+     6788 6C6F     
+     678A 636B     
+     678C 2074     
+     678E 6F20     
+     6790 6669     
+     6792 6C65     
+0104 6794 2363             stri 'ctrl ^1..^3   Copy to clipboard 1-3'
+     6796 7472     
+     6798 6C20     
+     679A 5E31     
+     679C 2E2E     
+     679E 5E33     
+     67A0 2020     
+     67A2 2043     
+     67A4 6F70     
+     67A6 7920     
+     67A8 746F     
+     67AA 2063     
+     67AC 6C69     
+     67AE 7062     
+     67B0 6F61     
+     67B2 7264     
+     67B4 2031     
+     67B6 2D33     
+0105 67B8 0120             stri ' '
+0106 67BA 24               byte 36
+0107 67BB   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1
+     67BC 0101     
+     67BE 0101     
+     67C0 0101     
+     67C2 0101     
+     67C4 0101     
+     67C6 0101     
+     67C8 01       
+0108 67C9   20             text ' Others '
+     67CA 4F74     
+     67CC 6865     
+     67CE 7273     
+     67D0 20       
+0109 67D1   01             byte 1,1,1,1,1,1,1,1,1,1,1,1,1,1
+     67D2 0101     
+     67D4 0101     
+     67D6 0101     
+     67D8 0101     
+     67DA 0101     
+     67DC 0101     
+     67DE 01       
+0110 67DF   12             stri 'fctn +   ^q   Quit'
+     67E0 6663     
+     67E2 746E     
+     67E4 202B     
+     67E6 2020     
+     67E8 205E     
+     67EA 7120     
      67EC 2020     
-     67EE 2043     
-     67F0 7963     
-     67F2 6C65     
-     67F4 2063     
-     67F6 6F6C     
-     67F8 6F72     
-     67FA 2073     
-     67FC 6368     
-     67FE 656D     
-     6800 6573     
-0132 6802 0120             stri ' '
-0133 6804 0100             stri ''
-0134 6806 4D4C             stri 'Licensed under GPLv3 or later. This program comes with ABSOLUTELY NO WARRANTY'
-     6808 6963     
-     680A 656E     
-     680C 7365     
-     680E 6420     
-     6810 756E     
-     6812 6465     
-     6814 7220     
-     6816 4750     
-     6818 4C76     
-     681A 3320     
-     681C 6F72     
-     681E 206C     
-     6820 6174     
-     6822 6572     
-     6824 2E20     
-     6826 5468     
-     6828 6973     
-     682A 2070     
-     682C 726F     
-     682E 6772     
-     6830 616D     
-     6832 2063     
-     6834 6F6D     
-     6836 6573     
-     6838 2077     
-     683A 6974     
-     683C 6820     
-     683E 4142     
-     6840 534F     
-     6842 4C55     
-     6844 5445     
-     6846 4C59     
-     6848 204E     
-     684A 4F20     
-     684C 5741     
-     684E 5252     
-     6850 414E     
-     6852 5459     
-0135 6854 4F54             stri 'This is free software, you are welcome to redistribute under certain conditions'
-     6856 6869     
-     6858 7320     
-     685A 6973     
-     685C 2066     
-     685E 7265     
+     67EE 5175     
+     67F0 6974     
+0111 67F2 1E66             stri 'fctn 0        TI Basic session'
+     67F4 6374     
+     67F6 6E20     
+     67F8 3020     
+     67FA 2020     
+     67FC 2020     
+     67FE 2020     
+     6800 2054     
+     6802 4920     
+     6804 4261     
+     6806 7369     
+     6808 6320     
+     680A 7365     
+     680C 7373     
+     680E 696F     
+     6810 6E       
+0112 6811   1E             stri 'ctrl 0   ^0   TI Basic submenu'
+     6812 6374     
+     6814 726C     
+     6816 2030     
+     6818 2020     
+     681A 205E     
+     681C 3020     
+     681E 2020     
+     6820 5449     
+     6822 2042     
+     6824 6173     
+     6826 6963     
+     6828 2073     
+     682A 7562     
+     682C 6D65     
+     682E 6E75     
+0113 6830 1C63             stri 'ctrl u   ^u   Shortcuts menu'
+     6832 7472     
+     6834 6C20     
+     6836 7520     
+     6838 2020     
+     683A 5E75     
+     683C 2020     
+     683E 2053     
+     6840 686F     
+     6842 7274     
+     6844 6375     
+     6846 7473     
+     6848 206D     
+     684A 656E     
+     684C 75       
+0114 684D   21             stri 'ctrl z   ^z   Cycle color schemes'
+     684E 6374     
+     6850 726C     
+     6852 207A     
+     6854 2020     
+     6856 205E     
+     6858 7A20     
+     685A 2020     
+     685C 4379     
+     685E 636C     
      6860 6520     
-     6862 736F     
-     6864 6674     
-     6866 7761     
-     6868 7265     
-     686A 2C20     
-     686C 796F     
-     686E 7520     
-     6870 6172     
-     6872 6520     
-     6874 7765     
-     6876 6C63     
-     6878 6F6D     
-     687A 6520     
-     687C 746F     
-     687E 2072     
-     6880 6564     
-     6882 6973     
-     6884 7472     
-     6886 6962     
-     6888 7574     
-     688A 6520     
-     688C 756E     
-     688E 6465     
-     6890 7220     
-     6892 6365     
-     6894 7274     
-     6896 6169     
-     6898 6E20     
-     689A 636F     
-     689C 6E64     
-     689E 6974     
-     68A0 696F     
-     68A2 6E73     
+     6862 636F     
+     6864 6C6F     
+     6866 7220     
+     6868 7363     
+     686A 6865     
+     686C 6D65     
+     686E 73       
                    < stevie_bf.asm
-0093               
-0094                       ;-----------------------------------------------------------------------
-0095                       ; Bank full check
-0096                       ;-----------------------------------------------------------------------
-0100                       ;-----------------------------------------------------------------------
-0101                       ; Show ROM bank in CPU crash screen
-0102                       ;-----------------------------------------------------------------------
-0103                       copy  "rom.crash.asm"
+0092               
+0093                       ;-----------------------------------------------------------------------
+0094                       ; Bank full check
+0095                       ;-----------------------------------------------------------------------
+0099                       ;-----------------------------------------------------------------------
+0100                       ; Show ROM bank in CPU crash screen
+0101                       ;-----------------------------------------------------------------------
+0102                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -11015,10 +10917,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_bf.asm
-0104                       ;-----------------------------------------------------------------------
-0105                       ; Table for VDP modes
-0106                       ;-----------------------------------------------------------------------
-0107                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0103                       ;-----------------------------------------------------------------------
+0104                       ; Table for VDP modes
+0105                       ;-----------------------------------------------------------------------
+0106                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -11060,7 +10962,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0042 7F50 04              byte   >04
+0051 7F50 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -11128,10 +11030,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_bf.asm
-0108                       ;-----------------------------------------------------------------------
-0109                       ; Vector table
-0110                       ;-----------------------------------------------------------------------
-0111                       copy  "rom.vectors.bankf.asm"
+0107                       ;-----------------------------------------------------------------------
+0108                       ; Vector table
+0109                       ;-----------------------------------------------------------------------
+0110                       copy  "rom.vectors.bankf.asm"
      **** ****     > rom.vectors.bankf.asm
 0001               * FILE......: rom.vectors.bank6.asm
 0002               * Purpose...: Bank F vectors for trampoline function
@@ -11216,7 +11118,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 7FEC 2026     vec.63  data  cpu.crash             ;
 0080 7FEE 2026     vec.64  data  cpu.crash             ;
                    < stevie_bf.asm
-0112                                                   ; Vector table bank f
+0111                                                   ; Vector table bank f
 
     ANYKEY.............. >200A :     
     AT.................. >2726 :     
@@ -11370,7 +11272,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.PANKEYS........ >A72E :     
     CMDB.PANMARKERS..... >A72C :     
     CMDB.PREVCURSOR..... >A710 :     
-    CMDB.ROWS........... >0007 :     
+    CMDB.ROWS........... >000C :     
     CMDB.SCRROWS........ >A706 :     
     CMDB.SIZE........... >0100 :     
     CMDB.STRUCT......... >A700 :     
@@ -11461,9 +11363,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     DIALOG.HELP.CONTENT. >604A :     
     DIALOG.HELP.CONTENT.CLEAR >6072 :     
     DIALOG.HELP.CONTENT.EXIT >60CC :     
-    DIALOG.HELP.DATA.PAGE1 >6144 :     
-    DIALOG.HELP.DATA.PAGE2 >6432 :     
-    DIALOG.HELP.DATA.PAGE3 >66FE :     
+    DIALOG.HELP.DATA.PAGE1 >6134 :     
     DIALOG.HELP.DATA.PAGES >612C :     
     DIALOG.HELP.MAXPAGE. >6124 :     
     DOFILL.............. >2280 :     
@@ -12025,7 +11925,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.BOTROW......... >0017 :     
+    PANE.BOTROW......... >003B :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.TOPLINE.ONESHOT.CLEARMSG >387E :     
@@ -12125,7 +12025,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ROM.FARJUMP.BANKSWITCH.TGT.DONE >3122 :     
     ROM.FARJUMP.EXIT.... >317E :     
     ROM.FARJUMP.RETURN.. >313C :     
-    ROM.PROGRAM1........ >600C :     
     ROM0_KSCAN_ON....... >0001 :     
     ROM0_KSCAN_OUT...... >A028 :     
     RSSLOT.............. >300C :     
@@ -12442,9 +12341,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0780 :     
+    VDP.SIT.SIZE........ >12C0 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >0780 :     
+    VDP.TAT.SIZE........ >12C0 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     

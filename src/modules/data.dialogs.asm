@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 2480         ; F18a/PICO9918 24x80
-            text '  Stevie 1.9.10   '
+            text '  Stevie 2.0.0   '
             even
         .endif
 
         .ifeq vdpmode, 3080         ; F18a/PICO9918 30x80
-            text '  Stevie 1.9.10   '
+            text '  Stevie 2.0.0   '
             even
         .endif
 
         .ifeq vdpmode, 4880         ; PICO9918 48x80
-            text '  Stevie 1.9.10   '  
+            text '  Stevie 2.0.0   '  
             even
         .endif
 
         .ifeq vdpmode, 6080         ; PICO9918 60x80
-            text '  Stevie 1.9.10   '  
+            text '  Stevie 2.0.0   '  
             even
         .endif
 
@@ -177,7 +177,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 1.9.10 - (c)2018-2026 Filip Van Vooren'
+                   text ' - Stevie 2.0.0 - (c)2018-2026 Filip Van Vooren'
                    even
 
 ;--------------------------------------------------------------

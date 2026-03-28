@@ -36,6 +36,7 @@
 ***************************************************************
 * BANK 0
 ********|*****|*********************|**************************
+romhead equ   1                     ; Include rom header
 bankid  equ   bank1.rom             ; Set bank identifier to bank 1!
                                     ; We never want to return to bank 0, after
                                     ; doing trampoline call, from low memexp.

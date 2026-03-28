@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260321-2044160
+0002               * BUILD: 260328-1938200
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -123,19 +123,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: VDP configuration (F18a, PICO9918, 9938, ...)
 0003               
 0004               ***************************** F18a/PICO9918 24x80 ******************************
-0006                   copy 'equ.vdp.2480.asm' ; Character cursor
-     **** ****     > equ.vdp.2480.asm
-0001               * FILE......: equ.vdp.2480.chr.asm
-0002               * Purpose...: F18a/PICO9918 24x80 mode
+0008               
+0009               ***************************** F18a/PICO9918 30x80 ******************************
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
+0021                   copy 'equ.vdp.6080.asm' ; Character cursor
+     **** ****     > equ.vdp.6080.asm
+0001               * FILE......: equ.vdp.6080.asm
+0002               * Purpose...: PICO9918 60x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 24x80
+0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0780     vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 48 rows
+0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      0780     vdp.tat.size              equ  24*80   ; VDP TAT size 80 columns, 60 rows
+0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -144,8 +150,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      0007     cmdb.rows                 equ  7       ; Number of rows in command buffer
-0022      0017     pane.botrow               equ  23      ; Bottom row on screen
+0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
+0022      003B     pane.botrow               equ  59      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -173,12 +179,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
-0008               
-0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b5.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -924,66 +924,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036      600A     bankid  equ   bank5.rom             ; Set bank identifier to current bank
 0037                       aorg  >6000
 0038                       save  >6000,>8000           ; Save bank
-0039                       copy  "rom.header.asm"      ; Include cartridge header
-     **** ****     > rom.header.asm
-0001               * FILE......: rom.header.asm
-0002               * Purpose...: Cartridge header
-0003               
-0004               *--------------------------------------------------------------
-0005               * Cartridge header
-0006               ********|*****|*********************|**************************
-0007 6000 AA               byte  >aa                   ; 0  Standard header                   >6000
-0008 6001   01             byte  >01                   ; 1  Version number
-0009 6002 02               byte  >02                   ; 2  Number of programs (optional)     >6002
-0010 6003   00             byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
-0011               
-0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
-0013                                                   ; 5  /
-0014               
-0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
-0016                                                   ; 7  /
-0017               
-0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
-0019                                                   ; 9  /
-0020               
-0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
-0022                                                   ; 11 /
-0023               
-0024                       ;-----------------------------------------------------------------------
-0025                       ; Program list entry
-0026                       ;-----------------------------------------------------------------------
-0027               rom.program1:
-0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
-0029                                                   ; 13 / (no more items following)
-0030               
-0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
-0032                                                   ; 15 /
-0033               
-0035 6010 1053                 stri 'STEVIE 1.9.10-24'
-     6012 5445     
-     6014 5649     
-     6016 4520     
-     6018 312E     
-     601A 392E     
-     601C 3130     
-     601E 2D32     
-     6020 34       
-0037               
-0041               
-0045               
-                   < stevie_b5.asm
-0040               
-0041               ***************************************************************
-0042               * Step 1: Switch to bank 0 (uniform code accross all banks)
-0043               ********|*****|*********************|**************************
-0044                       aorg  kickstart.code1       ; >6040
-0045 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0039               
+0040               ***************************************************************
+0041               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0042               ********|*****|*********************|**************************
+0043                       aorg  kickstart.code1       ; >6040
+0044 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000     
-0046               ***************************************************************
-0047               * Step 2: Satisfy assembler, must know relocated code
-0048               ********|*****|*********************|**************************
-0049                       aorg  >2000                 ; Relocate to >2000
-0050                       copy  "runlib.asm"
+0045               ***************************************************************
+0046               * Step 2: Satisfy assembler, must know relocated code
+0047               ********|*****|*********************|**************************
+0048                       aorg  >2000                 ; Relocate to >2000
+0049                       copy  "runlib.asm"
      **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -6422,7 +6374,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0397 30D4 0460  28         b     @main                 ; Give control to main program
      30D6 6046     
                    < stevie_b5.asm
-0051                       copy  "ram.resident.asm"
+0050                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
 0002               * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
@@ -6689,7 +6641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      31B2 A310     
 0038               
 0039 31B4 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B6 0016     
+     31B6 003A     
 0040 31B8 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BA A320     
 0041               
@@ -7319,7 +7271,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034 33B4 04E0  34         clr   @cmdb.visible         ; Hide command buffer
      33B6 A702     
 0035 33B8 0204  20         li    tmp0,cmdb.rows
-     33BA 0007     
+     33BA 000C     
 0036 33BC C804  38         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
      33BE A706     
 0037 33C0 C804  38         mov   tmp0,@cmdb.default    ; Set default command buffer size
@@ -7337,7 +7289,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33D4 0204  20         li    tmp0,pane.botrow      ; \
-     33D6 0017     
+     33D6 003B     
 0047 33D8 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33DA A706     
 0048 33DC 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -9662,26 +9614,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0017                                   even
                    < ram.resident.asm
                    < stevie_b5.asm
-0052                       ;------------------------------------------------------
-0053                       ; Activate bank 1 and branch to  >6036
-0054                       ;------------------------------------------------------
-0055 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0051                       ;------------------------------------------------------
+0052                       ; Activate bank 1 and branch to  >6036
+0053                       ;------------------------------------------------------
+0054 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3DCE 6002     
-0056               
-0060               
-0061 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0055               
+0059               
+0060 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3DD2 6046     
-0062               ***************************************************************
-0063               * Step 3: Include main editor modules
-0064               ********|*****|*********************|**************************
-0065               main:
-0066                       aorg  kickstart.code2       ; >6046
-0067 6046 06A0  32         bl    @cpu.crash            ; Should never get here
+0061               ***************************************************************
+0062               * Step 3: Include main editor modules
+0063               ********|*****|*********************|**************************
+0064               main:
+0065                       aorg  kickstart.code2       ; >6046
+0066 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026     
-0068                       ;-----------------------------------------------------------------------
-0069                       ; Logic for Editor Buffer
-0070                       ;-----------------------------------------------------------------------
-0071                       copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer
+0067                       ;-----------------------------------------------------------------------
+0068                       ; Logic for Editor Buffer
+0069                       ;-----------------------------------------------------------------------
+0070                       copy  "edb.clear.sams.asm"  ; Clear SAMS pages of editor buffer
      **** ****     > edb.clear.sams.asm
 0001               * FILE......: edb.clear.sams.asm
 0002               * Purpose...: Clear SAMS pages of editor buffer
@@ -9778,7 +9730,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 60A8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0080 60AA 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0072                       copy  "edb.line.del.asm"    ; Delete line
+0071                       copy  "edb.line.del.asm"    ; Delete line
      **** ****     > edb.line.del.asm
 0001               * FILE......: edb.line.del.asm
 0002               * Purpose...: Delete line in editor buffer
@@ -9917,7 +9869,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0104 6138 C2F9  30         mov   *stack+,r11           ; Pop r11
 0105 613A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0073                       copy  "edb.line.copy.asm"   ; Copy line
+0072                       copy  "edb.line.copy.asm"   ; Copy line
      **** ****     > edb.line.copy.asm
 0001               * FILE......: edb.line.copy.asm
 0002               * Purpose...: Copy line in editor buffer
@@ -10153,7 +10105,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0181 621A C2F9  30         mov   *stack+,r11           ; Pop r11
 0182 621C 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0074                       copy  "edb.block.mark.asm"  ; Mark code block
+0073                       copy  "edb.block.mark.asm"  ; Mark code block
      **** ****     > edb.block.mark.asm
 0001               * FILE......: edb.block.mark.asm
 0002               * Purpose...: Mark line for block operation
@@ -10345,7 +10297,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0160 62B0 C2F9  30         mov   *stack+,r11           ; Pop r11
 0161 62B2 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0075                       copy  "edb.block.clip.asm"  ; Save code block to clipboard
+0074                       copy  "edb.block.clip.asm"  ; Save code block to clipboard
      **** ****     > edb.block.clip.asm
 0001               * FILE......: edb.block.clip.asm
 0002               * Purpose...: Save block to clipboard
@@ -10469,7 +10421,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0095 6330 C2F9  30         mov   *stack+,r11           ; Pop R11
 0096 6332 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0076                       copy  "edb.block.reset.asm" ; Reset markers
+0075                       copy  "edb.block.reset.asm" ; Reset markers
      **** ****     > edb.block.reset.asm
 0001               * FILE......: edb.block.reset.asm
 0002               * Purpose...: Reset block markers M1/M2
@@ -10547,7 +10499,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      636E 2832     
 0061 6370 0032                   byte 0,50,32,20           ; Remove markers
      6372 2014     
-0062 6374 1700                   byte pane.botrow,0,32,55  ; Remove block shortcuts
+0062 6374 3B00                   byte pane.botrow,0,32,55  ; Remove block shortcuts
      6376 2037     
 0063 6378 FFFF                   data eol
 0064                       ;------------------------------------------------------
@@ -10559,7 +10511,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0069 637E C2F9  30         mov   *stack+,r11           ; Pop r11
 0070 6380 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0077                       copy  "edb.block.del.asm"   ; Delete code block
+0076                       copy  "edb.block.del.asm"   ; Delete code block
      **** ****     > edb.block.del.asm
 0001               * FILE......: edb.block.del.asm
 0002               * Purpose...: Delete code block
@@ -10633,13 +10585,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0063               
 0064 63B6 06A0  32         bl    @hchar
      63B8 2832     
-0065 63BA 1700                   byte pane.botrow,0,32,55
+0065 63BA 3B00                   byte pane.botrow,0,32,55
      63BC 2037     
 0066 63BE FFFF                   data eol              ; Remove markers and block shortcuts
 0067               
 0068 63C0 06A0  32         bl    @putat
      63C2 2442     
-0069 63C4 1700                   byte pane.botrow,0
+0069 63C4 3B00                   byte pane.botrow,0
 0070 63C6 395A                   data txt.block.del    ; Display "Deleting block...."
 0071                       ;------------------------------------------------------
 0072                       ; Prepare for delete
@@ -10721,7 +10673,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0130 6422 C2F9  30         mov   *stack+,r11           ; Pop R11
 0131 6424 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0078                       copy  "edb.block.copy.asm"  ; Copy code block
+0077                       copy  "edb.block.copy.asm"  ; Copy code block
      **** ****     > edb.block.copy.asm
 0001               * FILE......: edb.block.copy.asm
 0002               * Purpose...: Copy code block
@@ -10837,7 +10789,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0089               
 0090 6496 06A0  32         bl    @hchar
      6498 2832     
-0091 649A 1700                   byte pane.botrow,0,32,55
+0091 649A 3B00                   byte pane.botrow,0,32,55
      649C 2037     
 0092 649E FFFF                   data eol              ; Remove markers and block shortcuts
 0093                       ;------------------------------------------------------
@@ -10849,14 +10801,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0099               
 0100 64A4 06A0  32         bl    @putat
      64A6 2442     
-0101 64A8 1700                   byte pane.botrow,0
+0101 64A8 3B00                   byte pane.botrow,0
 0102 64AA 396E                   data txt.block.copy   ; Display "Copying block...."
 0103 64AC 1004  14         jmp   edb.block.copy.prep
 0104               
 0105               edb.block.copy.msg2:
 0106 64AE 06A0  32         bl    @putat
      64B0 2442     
-0107 64B2 1700                   byte pane.botrow,0
+0107 64B2 3B00                   byte pane.botrow,0
 0108 64B4 3980                   data txt.block.move   ; Display "Moving block...."
 0109                       ;------------------------------------------------------
 0110                       ; Prepare for copy
@@ -10943,7 +10895,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0172 6518 C2F9  30         mov   *stack+,r11           ; Pop R11
 0173 651A 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0079                       copy  "edb.block.match.asm" ; Check if within marked block
+0078                       copy  "edb.block.match.asm" ; Check if within marked block
      **** ****     > edb.block.match.asm
 0001               * FILE......: edb.block.match.asm
 0002               * Purpose...: Check if current line is within block markers M1/M2
@@ -11024,7 +10976,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0065 655E C2F9  30         mov   *stack+,r11           ; Pop r11
 0066 6560 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0080                       copy  "edb.lock.asm"        ; Lock editor buffer
+0079                       copy  "edb.lock.asm"        ; Lock editor buffer
      **** ****     > edb.lock.asm
 0001               * FILE......: edb.lock.asm
 0002               ***************************************************************
@@ -11099,7 +11051,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      65A4 6564     
 0058                       even
                    < stevie_b5.asm
-0081                       copy  "edb.unlock.asm"      ; Unlock editor buffer
+0080                       copy  "edb.unlock.asm"      ; Unlock editor buffer
      **** ****     > edb.unlock.asm
 0001               * FILE......: edb.unlock.asm
 0002               ***************************************************************
@@ -11176,7 +11128,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      65EC 6564     
 0059                       even
                    < stevie_b5.asm
-0082                       copy  "edb.find.asm"        ; Initialize for find function
+0081                       copy  "edb.find.asm"        ; Initialize for find function
      **** ****     > edb.find.asm
 0001               * FILE......: edb.find.asm
 0002               * Purpose...: Initialize memory used for editor buffer find functionality
@@ -11237,7 +11189,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0050 6624 C2F9  30         mov   *stack+,r11           ; Pop r11
 0051 6626 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0083                       copy  "edb.find.search.asm" ; Find functionality
+0082                       copy  "edb.find.search.asm" ; Find functionality
      **** ****     > edb.find.search.asm
 0001               * FILE......: edb.find.search.asm
 0002               * Purpose...: Editor buffer find functionality
@@ -11342,7 +11294,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6692 30       
 0081                             even
                    < stevie_b5.asm
-0084                       copy  "edb.find.scan.asm"   ; Scan editor buffer for matches
+0083                       copy  "edb.find.scan.asm"   ; Scan editor buffer for matches
      **** ****     > edb.find.scan.asm
 0001               * FILE......: edb.find.scan.asm
 0002               * Purpose...: Scan source code for search string
@@ -11439,12 +11391,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079               
 0080 66E6 06A0  32         bl    @putat
      66E8 2442     
-0081 66EA 1700                   byte pane.botrow,0
+0081 66EA 3B00                   byte pane.botrow,0
 0082 66EC 393A                   data txt.searching    ; Show "Searching..."
 0083               
 0084 66EE 06A0  32         bl    @putat
      66F0 2442     
-0085 66F2 170D                   byte pane.botrow,13
+0085 66F2 3B0D                   byte pane.botrow,13
 0086 66F4 A576                   data edb.srch.str     ; Show search string
 0087               
 0088               
@@ -11593,7 +11545,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0197               edb.find.scan.show:
 0198 6798 06A0  32         bl    @putnum
      679A 2AD4     
-0199 679C 1748                   byte pane.botrow,72   ; Show lines processed
+0199 679C 3B48                   byte pane.botrow,72   ; Show lines processed
 0200 679E A43C                   data fh.records,rambuf,>3020
      67A0 A100     
      67A2 3020     
@@ -11717,10 +11669,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6834 64       
 0282                                  even
                    < stevie_b5.asm
-0085                       ;-----------------------------------------------------------------------
-0086                       ; Clock device support
-0087                       ;-----------------------------------------------------------------------
-0088                       copy  "pane.clock.time.asm" ; Read date/time from clock and display
+0084                       ;-----------------------------------------------------------------------
+0085                       ; Clock device support
+0086                       ;-----------------------------------------------------------------------
+0087                       copy  "pane.clock.time.asm" ; Read date/time from clock and display
      **** ****     > pane.clock.time.asm
 0001               * FILE......: pane.clock.time.asm
 0002               * Purpose...: Display clock time and date in pane
@@ -11801,13 +11753,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0068               pane.clock.time.only:
 0069 687C 06A0  32         bl    @cpym2v                     ; \ Display vertical line
      687E 24E6     
-0070 6880 0760                   data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
+0070 6880 12A0                   data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
 0071 6882 68D8                   data txt.vtline             ; | i  p2 = Source RAM address
 0072 6884 0002                   data 2                      ; / i  p3 = Number of bytes to copy
 0073               
 0074 6886 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
      6888 24E6     
-0075 688A 0762                   data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
+0075 688A 12A2                   data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
 0076 688C A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
 0077 688E 0005                   data 5                      ; / i  p3 = Number of bytes to copy
 0078               
@@ -11818,7 +11770,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0083               pane.clock.time.date:
 0084 6892 06A0  32         bl    @cpym2v                     ; \ Display vertical line
      6894 24E6     
-0085 6896 0768                   data pane.botrow * 80 + 56  ; | i  p1 = Destination VDP address
+0085 6896 12A8                   data pane.botrow * 80 + 56  ; | i  p1 = Destination VDP address
 0086 6898 68D8                   data txt.vtline             ; | i  p2 = Source RAM address
 0087 689A 0002                   data 2                      ; / i  p3 = Number of bytes to copy
 0088                       ;------------------------------------------------------
@@ -11835,7 +11787,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      68AC 68DA     
 0096               
 0097 68AE 0204  20         li    tmp0,pane.botrow * 80 + 58  ; Destination VDP address
-     68B0 076A     
+     68B0 12AA     
 0098 68B2 0206  20         li    tmp2,3                      ; Number of bytes to copy
      68B4 0003     
 0099 68B6 06A0  32         bl    @xpym2v                     ; \ Copy day of week to VDP memory
@@ -11848,7 +11800,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105                       ;------------------------------------------------------
 0106 68BA 06A0  32         bl    @cpym2v                     ; \ Copy date to VDP memory
      68BC 24E6     
-0107 68BE 076E                   data pane.botrow * 80 + 62  ; | i  p1 = Destination VDP address
+0107 68BE 12AE                   data pane.botrow * 80 + 62  ; | i  p1 = Destination VDP address
 0108 68C0 A4CA                   data fh.clock.datetime + 4  ; | i  p2 = Source RAM address
 0109 68C2 0008                   data 8                      ; / i  p3 = Number of bytes to copy
 0110                       ;------------------------------------------------------
@@ -11856,7 +11808,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0112                       ;------------------------------------------------------
 0113 68C4 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
      68C6 24E6     
-0114 68C8 0777                   data pane.botrow * 80 + 71  ; | i  p1 = Destination VDP address
+0114 68C8 12B7                   data pane.botrow * 80 + 71  ; | i  p1 = Destination VDP address
 0115 68CA A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
 0116 68CC 0005                   data 5                      ; / i  p3 = Number of bytes to copy
 0117                       ;------------------------------------------------------
@@ -11887,7 +11839,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      68EE 54       
 0133                       even
                    < stevie_b5.asm
-0089                       copy  "fm.clock.on.asm"     ; Turn clock reading/display on
+0088                       copy  "fm.clock.on.asm"     ; Turn clock reading/display on
      **** ****     > fm.clock.on.asm
 0001               * FILE......: fm.clock.on.asm
 0002               * Purpose...: Turn clock functionality on
@@ -11963,7 +11915,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      6936 4F4E     
 0062                       even
                    < stevie_b5.asm
-0090                       copy  "fm.clock.off.asm"    ; Turn clock reading/display off
+0089                       copy  "fm.clock.off.asm"    ; Turn clock reading/display off
      **** ****     > fm.clock.off.asm
 0001               * FILE......: fm.clock.off.asm
 0002               * Purpose...: Turn clock functionality off
@@ -12083,10 +12035,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      69BA 6421     
 0089                       even
                    < stevie_b5.asm
-0091                       ;-----------------------------------------------------------------------
-0092                       ; Miscelaneous functions
-0093                       ;-----------------------------------------------------------------------
-0094                       copy  "tv.flash.screen.asm" ; Flash screen for visual feedback
+0090                       ;-----------------------------------------------------------------------
+0091                       ; Miscelaneous functions
+0092                       ;-----------------------------------------------------------------------
+0093                       copy  "tv.flash.screen.asm" ; Flash screen for visual feedback
      **** ****     > tv.flash.screen.asm
 0001               * FILE......: tv.flash.screen.asm
 0002               * Purpose...: Flash screeen for a moment
@@ -12154,10 +12106,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0052 69F0 C2F9  30         mov   *stack+,r11           ; Pop r11
 0053 69F2 045B  20         b     *r11                  ; Return
                    < stevie_b5.asm
-0095                       ;-----------------------------------------------------------------------
-0096                       ; Stubs
-0097                       ;-----------------------------------------------------------------------
-0098                       copy  "rom.stubs.bank5.asm" ; Bank specific stubs
+0094                       ;-----------------------------------------------------------------------
+0095                       ; Stubs
+0096                       ;-----------------------------------------------------------------------
+0097                       copy  "rom.stubs.bank5.asm" ; Bank specific stubs
      **** ****     > rom.stubs.bank5.asm
 0001               * FILE......: rom.stubs.bank5.asm
 0002               * Purpose...: Bank 5 stubs for functions in other banks
@@ -12426,7 +12378,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0253 6AC8 C2F9  30         mov   *stack+,r11           ; Pop r11
 0254 6ACA 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
-0099                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
+0098                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -12523,17 +12475,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093 6B12 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b5.asm
-0100                       ;-----------------------------------------------------------------------
-0101                       ; Program data
-0102                       ;-----------------------------------------------------------------------
-0103                                                   ; Not applicable
-0104                       ;-----------------------------------------------------------------------
-0105                       ; Bank full check
-0106                       ;-----------------------------------------------------------------------
-0110                       ;-----------------------------------------------------------------------
-0111                       ; Show ROM bank in CPU crash screen
-0112                       ;-----------------------------------------------------------------------
-0113                       copy  "rom.crash.asm"
+0099                       ;-----------------------------------------------------------------------
+0100                       ; Program data
+0101                       ;-----------------------------------------------------------------------
+0102                                                   ; Not applicable
+0103                       ;-----------------------------------------------------------------------
+0104                       ; Bank full check
+0105                       ;-----------------------------------------------------------------------
+0109                       ;-----------------------------------------------------------------------
+0110                       ; Show ROM bank in CPU crash screen
+0111                       ;-----------------------------------------------------------------------
+0112                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -12549,10 +12501,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_b5.asm
-0114                       ;-----------------------------------------------------------------------
-0115                       ; Table for VDP modes
-0116                       ;-----------------------------------------------------------------------
-0117                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0113                       ;-----------------------------------------------------------------------
+0114                       ; Table for VDP modes
+0115                       ;-----------------------------------------------------------------------
+0116                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -12594,7 +12546,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0042 7F50 04              byte   >04
+0051 7F50 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -12662,10 +12614,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_b5.asm
-0118                       ;-----------------------------------------------------------------------
-0119                       ; Vector table
-0120                       ;-----------------------------------------------------------------------
-0121                       copy  "rom.vectors.bank5.asm"
+0117                       ;-----------------------------------------------------------------------
+0118                       ; Vector table
+0119                       ;-----------------------------------------------------------------------
+0120                       copy  "rom.vectors.bank5.asm"
      **** ****     > rom.vectors.bank5.asm
 0001               * FILE......: rom.vectors.bank5.asm
 0002               * Purpose...: Bank 5 vectors for trampoline function
@@ -12750,7 +12702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 7FEC 2026     vec.63  data  cpu.crash             ;
 0080 7FEE 2026     vec.64  data  cpu.crash             ;
                    < stevie_b5.asm
-0122                                                   ; Vector table bank 5
+0121                                                   ; Vector table bank 5
 
     ANYKEY.............. >200A :     
     AT.................. >2726 :     
@@ -12904,7 +12856,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.PANKEYS........ >A72E :     
     CMDB.PANMARKERS..... >A72C :     
     CMDB.PREVCURSOR..... >A710 :     
-    CMDB.ROWS........... >0007 :     
+    CMDB.ROWS........... >000C :     
     CMDB.SCRROWS........ >A706 :     
     CMDB.SIZE........... >0100 :     
     CMDB.STRUCT......... >A700 :     
@@ -13623,7 +13575,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     PALON............... >201C :     
     PANE.BOTLINE.BUSY.OFF >6A84 :     
     PANE.BOTLINE.BUSY.ON >6A72 :     
-    PANE.BOTROW......... >0017 :     
+    PANE.BOTROW......... >003B :     
     PANE.CLOCK.TIME..... >6836 :     
     PANE.CLOCK.TIME.DATE >6892 :     
     PANE.CLOCK.TIME.EXIT >68CE :     
@@ -13731,7 +13683,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ROM.FARJUMP.BANKSWITCH.TGT.DONE >3122 :     
     ROM.FARJUMP.EXIT.... >317E :     
     ROM.FARJUMP.RETURN.. >313C :     
-    ROM.PROGRAM1........ >600C :     
     ROM0_KSCAN_ON....... >0001 :     
     ROM0_KSCAN_OUT...... >A028 :     
     RSSLOT.............. >300C :     
@@ -14060,9 +14011,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0780 :     
+    VDP.SIT.SIZE........ >12C0 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >0780 :     
+    VDP.TAT.SIZE........ >12C0 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     

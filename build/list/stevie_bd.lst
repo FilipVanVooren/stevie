@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260321-2044160
+0002               * BUILD: 260328-1938200
 0003               ***************************************************************
                    < stevie_bd.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -123,19 +123,25 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0002               * Purpose...: VDP configuration (F18a, PICO9918, 9938, ...)
 0003               
 0004               ***************************** F18a/PICO9918 24x80 ******************************
-0006                   copy 'equ.vdp.2480.asm' ; Character cursor
-     **** ****     > equ.vdp.2480.asm
-0001               * FILE......: equ.vdp.2480.chr.asm
-0002               * Purpose...: F18a/PICO9918 24x80 mode
+0008               
+0009               ***************************** F18a/PICO9918 30x80 ******************************
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
+0021                   copy 'equ.vdp.6080.asm' ; Character cursor
+     **** ****     > equ.vdp.6080.asm
+0001               * FILE......: equ.vdp.6080.asm
+0002               * Purpose...: PICO9918 60x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 24x80
+0007               * Video mode configuration (stevie) - Graphics mode 48x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      0780     vdp.sit.size              equ  24*80   ; VDP SIT size 80 columns, 48 rows
+0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      0780     vdp.tat.size              equ  24*80   ; VDP TAT size 80 columns, 60 rows
+0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -144,8 +150,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      0007     cmdb.rows                 equ  7       ; Number of rows in command buffer
-0022      0017     pane.botrow               equ  23      ; Bottom row on screen
+0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
+0022      003B     pane.botrow               equ  59      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -173,12 +179,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
-0008               
-0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_bd.asm
 0028                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -924,66 +924,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0036      601A     bankid  equ   bankd.rom             ; Set bank identifier to current bank
 0037                       aorg  >6000
 0038                       save  >6000,>8000           ; Save bank
-0039                       copy  "rom.header.asm"      ; Include cartridge header
-     **** ****     > rom.header.asm
-0001               * FILE......: rom.header.asm
-0002               * Purpose...: Cartridge header
-0003               
-0004               *--------------------------------------------------------------
-0005               * Cartridge header
-0006               ********|*****|*********************|**************************
-0007 6000 AA               byte  >aa                   ; 0  Standard header                   >6000
-0008 6001   01             byte  >01                   ; 1  Version number
-0009 6002 02               byte  >02                   ; 2  Number of programs (optional)     >6002
-0010 6003   00             byte  0                     ; 3  Reserved ('R' = adv. mode FG99)
-0011               
-0012 6004 0000             data  >0000                 ; 4  \ Pointer to power-up list        >6004
-0013                                                   ; 5  /
-0014               
-0015 6006 600C             data  rom.program1          ; 6  \ Pointer to program list         >6006
-0016                                                   ; 7  /
-0017               
-0018 6008 0000             data  >0000                 ; 8  \ Pointer to DSR list             >6008
-0019                                                   ; 9  /
-0020               
-0021 600A 0000             data  >0000                 ; 10 \ Pointer to subprogram list      >600a
-0022                                                   ; 11 /
-0023               
-0024                       ;-----------------------------------------------------------------------
-0025                       ; Program list entry
-0026                       ;-----------------------------------------------------------------------
-0027               rom.program1:
-0028 600C 0000             data  >0000                 ; 12 \ Next program list entry         >600c
-0029                                                   ; 13 / (no more items following)
-0030               
-0031 600E 6040             data  kickstart.code1       ; 14 \ Program address                 >600e
-0032                                                   ; 15 /
-0033               
-0035 6010 1053                 stri 'STEVIE 1.9.10-24'
-     6012 5445     
-     6014 5649     
-     6016 4520     
-     6018 312E     
-     601A 392E     
-     601C 3130     
-     601E 2D32     
-     6020 34       
-0037               
-0041               
-0045               
-                   < stevie_bd.asm
-0040               
-0041               ***************************************************************
-0042               * Step 1: Switch to bank 0 (uniform code accross all banks)
-0043               ********|*****|*********************|**************************
-0044                       aorg  kickstart.code1       ; >6040
-0045 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
+0039               
+0040               ***************************************************************
+0041               * Step 1: Switch to bank 0 (uniform code accross all banks)
+0042               ********|*****|*********************|**************************
+0043                       aorg  kickstart.code1       ; >6040
+0044 6040 04E0  34         clr   @bank0.rom            ; Switch to bank 0 "Jill"
      6042 6000     
-0046               ***************************************************************
-0047               * Step 2: Satisfy assembler, must know relocated code
-0048               ********|*****|*********************|**************************
-0049                       aorg  >2000                 ; Relocate to >2000
-0050                       copy  "runlib.asm"
+0045               ***************************************************************
+0046               * Step 2: Satisfy assembler, must know relocated code
+0047               ********|*****|*********************|**************************
+0048                       aorg  >2000                 ; Relocate to >2000
+0049                       copy  "runlib.asm"
      **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -6422,7 +6374,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0397 30D4 0460  28         b     @main                 ; Give control to main program
      30D6 6046     
                    < stevie_bd.asm
-0051                       copy  "ram.resident.asm"
+0050                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
 0002               * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
@@ -6689,7 +6641,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      31B2 A310     
 0038               
 0039 31B4 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B6 0016     
+     31B6 003A     
 0040 31B8 C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BA A320     
 0041               
@@ -7319,7 +7271,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0034 33B4 04E0  34         clr   @cmdb.visible         ; Hide command buffer
      33B6 A702     
 0035 33B8 0204  20         li    tmp0,cmdb.rows
-     33BA 0007     
+     33BA 000C     
 0036 33BC C804  38         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
      33BE A706     
 0037 33C0 C804  38         mov   tmp0,@cmdb.default    ; Set default command buffer size
@@ -7337,7 +7289,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0044                       ; Calculate VDP address of CMDB top row (TAT!)
 0045                       ;------------------------------------------------------
 0046 33D4 0204  20         li    tmp0,pane.botrow      ; \
-     33D6 0017     
+     33D6 003B     
 0047 33D8 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33DA A706     
 0048 33DC 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -9662,31 +9614,31 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0017                                   even
                    < ram.resident.asm
                    < stevie_bd.asm
-0052                       ;------------------------------------------------------
-0053                       ; Activate bank 1 and branch to  >6036
-0054                       ;------------------------------------------------------
-0055 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0051                       ;------------------------------------------------------
+0052                       ; Activate bank 1 and branch to  >6036
+0053                       ;------------------------------------------------------
+0054 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3DCE 6002     
-0056               
-0060               
-0061 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0055               
+0059               
+0060 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3DD2 6046     
-0062               ***************************************************************
-0063               * Step 3: Include main editor modules
-0064               ********|*****|*********************|**************************
-0065               main:
-0066                       aorg  kickstart.code2       ; >6046
-0067 6046 06A0  32         bl    @cpu.crash            ; Should never get here
+0061               ***************************************************************
+0062               * Step 3: Include main editor modules
+0063               ********|*****|*********************|**************************
+0064               main:
+0065                       aorg  kickstart.code2       ; >6046
+0066 6046 06A0  32         bl    @cpu.crash            ; Should never get here
      6048 2026     
-0068                       ;-----------------------------------------------------------------------
-0069                       ; Stubs
-0070                       ;-----------------------------------------------------------------------
-0071                       copy  "rom.stubs.bankd.asm" ; Bank specific stubs
+0067                       ;-----------------------------------------------------------------------
+0068                       ; Stubs
+0069                       ;-----------------------------------------------------------------------
+0070                       copy  "rom.stubs.bankd.asm" ; Bank specific stubs
      **** ****     > rom.stubs.bankd.asm
 0001               * FILE......: rom.stubs.bankd.asm
 0002               * Purpose...: Bank D stubs for functions in other banks
                    < stevie_bd.asm
-0072                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
+0071                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -9783,17 +9735,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093 6090 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_bd.asm
-0073                       ;-----------------------------------------------------------------------
-0074                       ; Program data
-0075                       ;-----------------------------------------------------------------------
-0076                       ; copy  "data.bankd.asm"    ; Data for bank D
-0077                       ;-----------------------------------------------------------------------
-0078                       ; Bank full check
-0079                       ;-----------------------------------------------------------------------
-0083                       ;-----------------------------------------------------------------------
-0084                       ; Show ROM bank in CPU crash screen
-0085                       ;-----------------------------------------------------------------------
-0086                       copy  "rom.crash.asm"
+0072                       ;-----------------------------------------------------------------------
+0073                       ; Program data
+0074                       ;-----------------------------------------------------------------------
+0075                       ; copy  "data.bankd.asm"    ; Data for bank D
+0076                       ;-----------------------------------------------------------------------
+0077                       ; Bank full check
+0078                       ;-----------------------------------------------------------------------
+0082                       ;-----------------------------------------------------------------------
+0083                       ; Show ROM bank in CPU crash screen
+0084                       ;-----------------------------------------------------------------------
+0085                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -9809,10 +9761,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_bd.asm
-0087                       ;-----------------------------------------------------------------------
-0088                       ; Table for VDP modes
-0089                       ;-----------------------------------------------------------------------
-0090                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0086                       ;-----------------------------------------------------------------------
+0087                       ; Table for VDP modes
+0088                       ;-----------------------------------------------------------------------
+0089                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -9854,7 +9806,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0042 7F50 04              byte   >04
+0051 7F50 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -9922,10 +9874,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_bd.asm
-0091                       ;-----------------------------------------------------------------------
-0092                       ; Vector table
-0093                       ;-----------------------------------------------------------------------
-0094                       copy  "rom.vectors.bankd.asm"
+0090                       ;-----------------------------------------------------------------------
+0091                       ; Vector table
+0092                       ;-----------------------------------------------------------------------
+0093                       copy  "rom.vectors.bankd.asm"
      **** ****     > rom.vectors.bankd.asm
 0001               * FILE......: rom.vectors.bankD.asm
 0002               * Purpose...: Bank D vectors for trampoline function
@@ -10010,7 +9962,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 7FEC 2026     vec.63  data  cpu.crash             ;
 0080 7FEE 2026     vec.64  data  cpu.crash             ;
                    < stevie_bd.asm
-0095                                                   ; Vector table bank D
+0094                                                   ; Vector table bank D
 
     ANYKEY.............. >200A :     
     AT.................. >2726 :     
@@ -10164,7 +10116,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     CMDB.PANKEYS........ >A72E :     
     CMDB.PANMARKERS..... >A72C :     
     CMDB.PREVCURSOR..... >A710 :     
-    CMDB.ROWS........... >0007 :     
+    CMDB.ROWS........... >000C :     
     CMDB.SCRROWS........ >A706 :     
     CMDB.SIZE........... >0100 :     
     CMDB.STRUCT......... >A700 :     
@@ -10811,7 +10763,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     OUTPARM6............ >A022 :     
     OUTPARM7............ >A024 :     
     PALON............... >201C :     
-    PANE.BOTROW......... >0017 :     
+    PANE.BOTROW......... >003B :     
     PANE.FOCUS.CMDB..... >0001 :     
     PANE.FOCUS.FB....... >0000 :     
     PANE.TOPLINE.ONESHOT.CLEARMSG >387E :     
@@ -10911,7 +10863,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     ROM.FARJUMP.BANKSWITCH.TGT.DONE >3122 :     
     ROM.FARJUMP.EXIT.... >317E :     
     ROM.FARJUMP.RETURN.. >313C :     
-    ROM.PROGRAM1........ >600C :     
     ROM0_KSCAN_ON....... >0001 :     
     ROM0_KSCAN_OUT...... >A028 :     
     RSSLOT.............. >300C :     
@@ -11227,9 +11178,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
     VDP.FB.TOPROW.TAT... >1310 :     
     VDP.PDT.BASE........ >2800 :     
     VDP.SIT.BASE........ >0000 :     
-    VDP.SIT.SIZE........ >0780 :     
+    VDP.SIT.SIZE........ >12C0 :     
     VDP.TAT.BASE........ >12C0 :     
-    VDP.TAT.SIZE........ >0780 :     
+    VDP.TAT.SIZE........ >12C0 :     
     VDPA................ >8C02 :     
     VDPLA1.............. >2910 :     
     VDPLA2.............. >2916 :     
