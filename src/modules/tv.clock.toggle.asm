@@ -59,14 +59,12 @@ tv.clock.oneshot:
         mov   tmp0,@tv.task.oneshot
 
         bl    @rsslot               ; \ Reset loop counter slot 3
-              data 3                ; / for getting consistent delay
+              data 3           ß     ; / for getting consistent delay
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 tv.clock.toggle.exit:
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 0                  ; Pop registers and return to caller
 
 txt.clock.on       stri 'Clock: ON'
                    even

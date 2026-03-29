@@ -52,11 +52,7 @@ fm.delfile.callback1.filename:
         ; Exit
         ;------------------------------------------------------
 fm.delfile.callback1.exit:
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
+        .popregs 1                  ; Pop registers and return to caller                
 
 
 ***************************************************************
@@ -105,7 +101,4 @@ fm.delfile.callback2:
         ; Exit
         ;------------------------------------------------------
 fm.delfile.callback2.exit:
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 1                  ; Pop registers and return to caller                

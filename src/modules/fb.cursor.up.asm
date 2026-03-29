@@ -15,11 +15,13 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* none
+* tmp0
 ********|*****|*********************|**************************
 fb.cursor.up
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
         ; Crunch current line if dirty 
         ;-------------------------------------------------------
@@ -92,5 +94,4 @@ fb.cursor.up.exit:
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer                                    
         bl    @vdp.cursor.tat       ; Update cursor
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return     
+        .popregs 0                  ; Pop registers and return to caller        

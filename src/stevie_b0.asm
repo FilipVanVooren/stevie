@@ -21,6 +21,7 @@
 * Bank 0 "Jill"
 * Setup resident Spectra2 modules + low-level stevie modules, start kernel.
 ********************************************************************************
+        copy  "macros.asm"          ; Macros for code generation
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"

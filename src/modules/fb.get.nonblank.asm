@@ -10,10 +10,19 @@
 * OUTPUT
 * @outparm1 = Matching column
 * @outparm2 = Character on matching column
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fb.get.nonblank:
         dect  stack
         mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
         ;------------------------------------------------------
         ; Prepare for scanning
         ;------------------------------------------------------
@@ -69,5 +78,4 @@ fb.get.nonblank.nomatch:
         ; Exit
         ;------------------------------------------------------
 fb.get.nonblank.exit:
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        .popregs 2                  ; Pop registers and return to caller        

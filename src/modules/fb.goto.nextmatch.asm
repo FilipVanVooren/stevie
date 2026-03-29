@@ -90,6 +90,4 @@ fg.goto.nextmatch.goto:
         ; Exit
         ;-------------------------------------------------------
 fb.goto.nextmatch.exit:
-        mov   *stack+,tmp0          ; Pop tmp0    
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return                
+        .popregs 0                  ; Pop registers and return to caller                

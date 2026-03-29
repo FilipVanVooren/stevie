@@ -9,6 +9,9 @@
 * @parm1 = Pointer to length-prefixed filname descriptor
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback1
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1
 *---------------------------------------------------------------
 fm.load.ea5.cb.indicator1:
         dect  stack
@@ -40,11 +43,7 @@ fm.load.ea5.cb.indicator1.filename:
         ;------------------------------------------------------
 fm.load.ea5.cb.indicator1.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
+        .popregs 1                  ; Pop registers and return to caller                
 
 
 *---------------------------------------------------------------
@@ -52,6 +51,9 @@ fm.load.ea5.cb.indicator1.exit:
 * After loading image
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback2
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2, tmp3
 *--------------------------------------------------------------- 
 fm.load.ea5.cb.indicator2:
         dect  stack
@@ -111,18 +113,16 @@ fm.load.ea5.cb.message:
         ; Exit
         ;------------------------------------------------------
 fm.load.ea5.cb.indicator2.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 3                  ; Pop registers and return to caller                
+
 
 *---------------------------------------------------------------
 * Callback function "File I/O error handler"
 * I/O error
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback3
+* Register usage
+* tmp0, tmp1, tmp2, tmp3, tmp4
 *---------------------------------------------------------------
 fm.load.ea5.cb.fioerr:
         dect  stack
@@ -256,10 +256,4 @@ fm.load.ea5.cb.fioerr.interrupt:
         ;------------------------------------------------------
 fm.load.ea5.cb.fioerr.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp4          ; Pop tmp4        
-        mov   *stack+,tmp3          ; Pop tmp3        
-        mov   *stack+,tmp2          ; Pop tmp2        
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 4                  ; Pop registers and return to caller                        

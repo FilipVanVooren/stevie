@@ -23,13 +23,20 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0021               * Bank E "Q"
 0022               * Empty bank for future expansion
 0023               ********************************************************************************
-0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
+0024                       copy  "macros.asm"          ; Macros for code generation
+     **** ****     > macros.asm
+0001               ;
+0002               ; Pop registers from stack and return to caller
+0003               ; #1 = Highest register to pop (0-7)
+0004               ;
+                   < stevie_be.asm
+0025                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260328-2048540
+0002               * BUILD: 260329-2001400
 0003               ***************************************************************
                    < stevie_be.asm
-0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
+0026                       copy  "equ.rom.build.asm"   ; Cartridge build options
      **** ****     > equ.rom.build.asm
 0001               * FILE......: equ.rom.build.asm
 0002               * Purpose...: Cartridge build options
@@ -73,7 +80,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0040      7FF0     bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
 0041      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
                    < stevie_be.asm
-0026                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
+0027                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
      **** ****     > rom.order.asm
 0001               * FILE......: rom.order.asm
 0002               * Purpose...: Equates with CPU write addresses for switching banks
@@ -117,7 +124,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0040      681C     banke.ram                 equ  >681c   ; free
 0041      681E     bankf.ram                 equ  >681e   ; free
                    < stevie_be.asm
-0027                       copy  "equ.vdp.asm"         ; VDP configuration (F18a/9938/...)
+0028                       copy  "equ.vdp.asm"         ; VDP configuration (F18a/9938/...)
      **** ****     > equ.vdp.asm
 0001               * FILE......: equ.vdp.asm
 0002               * Purpose...: VDP configuration (F18a, PICO9918, 9938, ...)
@@ -180,7 +187,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0048               
                    < equ.vdp.asm
                    < stevie_be.asm
-0028                       copy  "equ.asm"             ; Stevie main configuration
+0029                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
 0001               * FILE......: equ.asm
 0002               * Purpose...: The main equates file for Stevie editor
@@ -695,7 +702,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0511               ;-------------------------------------------------------------------------------
 0512      0600     free.size         equ  1536            ; Free space size
                    < stevie_be.asm
-0029                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
+0030                       copy  "equ.c99.asm"         ; Classic99 emulator configuration
      **** ****     > equ.c99.asm
 0001               * FILE......: equ.c99.asm
 0002               * Purpose...: Equates related to classic99
@@ -731,7 +738,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0032      0128     c99_dbg_tmp4  equ  c99_dbg_r8       ; Debug printf tmp4
 0033      0199     c99_dbg_stck  equ  c99_dbg_r9       ; Debug printf stack
                    < stevie_be.asm
-0030                       copy  "equ.tib.asm"         ; Equates related to TI Basic session
+0031                       copy  "equ.tib.asm"         ; Equates related to TI Basic session
      **** ****     > equ.tib.asm
 0001               * FILE......: equ.tib.asm
 0002               * Purpose...: Equates for TI Basic session
@@ -745,7 +752,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0010                                                      ; | >fffc-ffff is reserved
 0011                                                      ; / for NMI vector.
                    < stevie_be.asm
-0031                       copy  "equ.keys.asm"        ; Equates for keyboard mapping
+0032                       copy  "equ.keys.asm"        ; Equates for keyboard mapping
      **** ****     > equ.keys.asm
 0001               * FILE......: data.keymap.keys.asm
 0002               * Purpose...: Keyboard mapping
@@ -917,14 +924,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0168      000D     key.enter     equ >0d               ; enter
 0169      0020     key.space     equ >20               ; space
                    < stevie_be.asm
-0032               
-0033               ***************************************************************
-0034               * BANK E
-0035               ********|*****|*********************|**************************
-0036      601C     bankid  equ   banke.rom             ; Set bank identifier to current bank
-0037                       aorg  >6000
-0038                       save  >6000,>8000           ; Save bank
-0039                       copy  "rom.header.asm"      ; Include cartridge header
+0033               
+0034               ***************************************************************
+0035               * BANK E
+0036               ********|*****|*********************|**************************
+0037      601C     bankid  equ   banke.rom             ; Set bank identifier to current bank
+0038                       aorg  >6000
+0039                       save  >6000,>8000           ; Save bank
+0040                       copy  "rom.header.asm"      ; Include cartridge header
      **** ****     > rom.header.asm
 0001               * FILE......: rom.header.asm
 0002               * Purpose...: Cartridge header
@@ -971,11 +978,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      601C 302D     
      601E 3630     
                    < stevie_be.asm
-0040               ***************************************************************
-0041               * Step 1: Satisfy assembler, must know relocated code
-0042               ********|*****|*********************|**************************
-0043                       aorg  >2000                 ; Relocate to >2000
-0044                       copy  "runlib.asm"
+0041               ***************************************************************
+0042               * Step 1: Satisfy assembler, must know relocated code
+0043               ********|*****|*********************|**************************
+0044                       aorg  >2000                 ; Relocate to >2000
+0045                       copy  "runlib.asm"
      **** ****     > runlib.asm
 0001               *******************************************************************************
 0002               *              ___  ____  ____  ___  ____  ____    __    ___
@@ -6414,7 +6421,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0397 30D4 0460  28         b     @main                 ; Give control to main program
      30D6 6000     
                    < stevie_be.asm
-0045                       copy  "ram.resident.asm"
+0046                       copy  "ram.resident.asm"
      **** ****     > ram.resident.asm
 0001               * FILE......: ram.resident.asm
 0002               * Purpose...: Resident modules in LOW MEMEXP RAM callable from all ROM banks.
@@ -6711,10 +6718,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0057                       ; Exit
 0058                       ;------------------------------------------------------
 0059               fb.init.exit:
-0060 31DA C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0061 31DC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0062 31DE C2F9  30         mov   *stack+,r11           ; Pop r11
-0063 31E0 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0020 31DA C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 31DC C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 31DE C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 31E0 045B  20         b     *r11                  ; Return
+                   < fb.asm
                    < ram.resident.asm
 0013                       copy  "fb.row2line.asm"      ; Calculate line in editor buffer
      **** ****     > fb.row2line.asm
@@ -6758,9 +6767,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0035                       ; Exit
 0036                       ;------------------------------------------------------
 0037               fb.row2line.exit:
-0038 31F6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0039 31F8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0040 31FA 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0023 31F6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 31F8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 31FA 045B  20         b     *r11                  ; Return
+                   < fb.row2line.asm
                    < ram.resident.asm
 0014                       copy  "fb.calc.pointer.asm"  ; Calculate pointer address frame buffer
      **** ****     > fb.calc.pointer.asm
@@ -6813,10 +6824,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0042                       ; Exit
 0043                       ;------------------------------------------------------
 0044               fb.calc.pointer.exit:
-0045 321C C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0046 321E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0047 3220 C2F9  30         mov   *stack+,r11           ; Pop r11
-0048 3222 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0020 321C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 321E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 3220 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 3222 045B  20         b     *r11                  ; Return
+                   < fb.calc.pointer.asm
                    < ram.resident.asm
 0015                       copy  "fb.calc.scrrows.asm"  ; Calculate number of rows frame buffer
      **** ****     > fb.calc.scrrows.asm
@@ -7262,14 +7275,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
      3394 3C3C     
 0052 3396 C804  38         mov   tmp0,@edb.filetype.ptr
      3398 A516     
-0053               
-0054               edb.init.exit:
+0053                       ;------------------------------------------------------
+0054                       ; Exit
 0055                       ;------------------------------------------------------
-0056                       ; Exit
-0057                       ;------------------------------------------------------
-0058 339A C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0059 339C C2F9  30         mov   *stack+,r11           ; Pop r11
-0060 339E 045B  20         b     *r11                  ; Return to caller
+0056               edb.init.exit:
+     **** ****     > POPREGS
+0023 339A C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 339C C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 339E 045B  20         b     *r11                  ; Return
+                   < edb.asm
                    < ram.resident.asm
 0018                       copy  "cmdb.asm"             ; Command buffer
      **** ****     > cmdb.asm
@@ -7352,10 +7366,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0059                       ; Exit
 0060                       ;------------------------------------------------------
 0061               cmdb.init.exit:
-0062 33F4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0063 33F6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0064 33F8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0065 33FA 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0020 33F4 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 33F6 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 33F8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 33FA 045B  20         b     *r11                  ; Return
+                   < cmdb.asm
                    < ram.resident.asm
 0019                       copy  "errpane.asm"          ; Error pane
      **** ****     > errpane.asm
@@ -7407,11 +7423,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0040                       ; Exit
 0041                       ;-------------------------------------------------------
 0042               errpane.exit:
-0043 3422 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0044 3424 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0045 3426 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0046 3428 C2F9  30         mov   *stack+,r11           ; Pop R11
-0047 342A 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0017 3422 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0020 3424 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 3426 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 3428 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 342A 045B  20         b     *r11                  ; Return
+                   < errpane.asm
                    < ram.resident.asm
 0020                       copy  "tv.asm"               ; Main editor configuration
      **** ****     > tv.asm
@@ -8493,10 +8511,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0071                       ; Exit
 0072                       ;------------------------------------------------------
 0073               edb.line.mappage.exit:
-0074 37C8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0075 37CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0076 37CC C2F9  30         mov   *stack+,r11           ; Pop r11
-0077 37CE 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0020 37C8 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 37CA C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 37CC C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 37CE 045B  20         b     *r11                  ; Return
+                   < edb.line.mappage.asm
                    < ram.resident.asm
 0036                       copy  "edb.line.getlength.asm"  ; Get line length
      **** ****     > edb.line.getlength.asm
@@ -8578,10 +8598,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0067                       ; Exit
 0068                       ;------------------------------------------------------
 0069               edb.line.getlength.exit:
-0070 380C C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0071 380E C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0072 3810 C2F9  30         mov   *stack+,r11           ; Pop r11
-0073 3812 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0020 380C C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 380E C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 3810 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 3812 045B  20         b     *r11                  ; Return
+                   < edb.line.getlength.asm
                    < ram.resident.asm
 0037                       copy  "edb.line.getlength2.asm" ; Get length of current row
      **** ****     > edb.line.getlength2.asm
@@ -8634,9 +8656,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0041                       ; Exit
 0042                       ;------------------------------------------------------
 0043               edb.line.getlength2.exit:
-0044 3832 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0045 3834 C2F9  30         mov   *stack+,r11           ; Pop R11
-0046 3836 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0023 3832 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 3834 C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 3836 045B  20         b     *r11                  ; Return
+                   < edb.line.getlength2.asm
                    < ram.resident.asm
 0038                       copy  "edb.hipage.alloc.asm"    ; Check/increase highest SAMS page
      **** ****     > edb.hipage.alloc.asm
@@ -8717,10 +8741,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0063                       ; Exit
 0064                       ;------------------------------------------------------
 0065               edb.hipage.alloc.exit:
-0066 3876 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0067 3878 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0068 387A C2F9  30         mov   *stack+,r11           ; Pop R11
-0069 387C 045B  20         b     *r11                  ; Return to caller
+     **** ****     > POPREGS
+0020 3876 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0023 3878 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0025 387A C2F9  30         mov   *stack+,r11           ; Pop r11
+0026 387C 045B  20         b     *r11                  ; Return
+                   < edb.hipage.alloc.asm
                    < ram.resident.asm
 0039                       ;-----------------------------------------------------------------------
 0040                       ; Utility functions
@@ -9654,31 +9680,31 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0017                                   even
                    < ram.resident.asm
                    < stevie_be.asm
-0046                       ;------------------------------------------------------
-0047                       ; Activate bank 1
-0048                       ;------------------------------------------------------
-0049 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
+0047                       ;------------------------------------------------------
+0048                       ; Activate bank 1
+0049                       ;------------------------------------------------------
+0050 3DCC 04E0  34         clr   @bank1.rom            ; Activate bank 1 "James" ROM
      3DCE 6002     
-0050               
-0054               
-0055 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
+0051               
+0055               
+0056 3DD0 0460  28         b     @kickstart.code2      ; Jump to entry routine
      3DD2 6000     
-0056               ***************************************************************
-0057               * Step 2: Include main editor modules
-0058               ********|*****|*********************|**************************
-0059               main:
-0060                       aorg  kickstart.code2       ; >6000
-0061 6000 06A0  32         bl    @cpu.crash            ; Should never get here
+0057               ***************************************************************
+0058               * Step 2: Include main editor modules
+0059               ********|*****|*********************|**************************
+0060               main:
+0061                       aorg  kickstart.code2       ; >6000
+0062 6000 06A0  32         bl    @cpu.crash            ; Should never get here
      6002 2026     
-0062                       ;-----------------------------------------------------------------------
-0063                       ; Stubs
-0064                       ;-----------------------------------------------------------------------
-0065                       copy  "rom.stubs.banke.asm" ; Bank specific stubs
+0063                       ;-----------------------------------------------------------------------
+0064                       ; Stubs
+0065                       ;-----------------------------------------------------------------------
+0066                       copy  "rom.stubs.banke.asm" ; Bank specific stubs
      **** ****     > rom.stubs.banke.asm
 0001               * FILE......: rom.stubs.banke.asm
 0002               * Purpose...: Bank E stubs for functions in other banks
                    < stevie_be.asm
-0066                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
+0067                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
 0001               * FILE......: rom.stubs.bankx.asm
 0002               * Purpose...: Stubs to include in all banks (with exceptions)
@@ -9775,17 +9801,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0093 604A 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_be.asm
-0067                       ;-----------------------------------------------------------------------
-0068                       ; Program data
-0069                       ;-----------------------------------------------------------------------
-0070                       ; copy  "data.banke.asm"    ; Data for bank E
-0071                       ;-----------------------------------------------------------------------
-0072                       ; Bank full check
-0073                       ;-----------------------------------------------------------------------
-0077                       ;-----------------------------------------------------------------------
-0078                       ; Show ROM bank in CPU crash screen
-0079                       ;-----------------------------------------------------------------------
-0080                       copy  "rom.crash.asm"
+0068                       ;-----------------------------------------------------------------------
+0069                       ; Program data
+0070                       ;-----------------------------------------------------------------------
+0071                       ; copy  "data.banke.asm"    ; Data for bank E
+0072                       ;-----------------------------------------------------------------------
+0073                       ; Bank full check
+0074                       ;-----------------------------------------------------------------------
+0078                       ;-----------------------------------------------------------------------
+0079                       ; Show ROM bank in CPU crash screen
+0080                       ;-----------------------------------------------------------------------
+0081                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -9801,10 +9827,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0011 7FF6 7F6E                   data cpu.crash.showbank.bankstr
 0012 7FF8 10FF  14         jmp   $
                    < stevie_be.asm
-0081                       ;-----------------------------------------------------------------------
-0082                       ; Table for VDP modes
-0083                       ;-----------------------------------------------------------------------
-0084                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0082                       ;-----------------------------------------------------------------------
+0083                       ; Table for VDP modes
+0084                       ;-----------------------------------------------------------------------
+0085                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -9914,10 +9940,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_be.asm
-0085                       ;-----------------------------------------------------------------------
-0086                       ; Vector table
-0087                       ;-----------------------------------------------------------------------
-0088                       copy  "rom.vectors.banke.asm"
+0086                       ;-----------------------------------------------------------------------
+0087                       ; Vector table
+0088                       ;-----------------------------------------------------------------------
+0089                       copy  "rom.vectors.banke.asm"
      **** ****     > rom.vectors.banke.asm
 0001               * FILE......: rom.vectors.bank6.asm
 0002               * Purpose...: Bank E vectors for trampoline function
@@ -10002,7 +10028,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.4.0
 0079 7FEC 2026     vec.63  data  cpu.crash             ;
 0080 7FEE 2026     vec.64  data  cpu.crash             ;
                    < stevie_be.asm
-0089                                                   ; Vector table bank E
+0090                                                   ; Vector table bank E
 
     ANYKEY.............. >200A :     
     AT.................. >2726 :     

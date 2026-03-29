@@ -19,7 +19,7 @@
 * NONE
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0, tmp1, tmp2, tmp3
 ********|*****|*********************|**************************
 fm.directory:
         dect  stack
@@ -376,12 +376,7 @@ fm.directory.exit:
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp3          ; Pop tmp3        
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0      
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 3                  ; Pop registers and return to caller                
 
 
 txt.ftype0    stri 'VOL'

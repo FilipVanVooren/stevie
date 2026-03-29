@@ -168,11 +168,5 @@ fb.scan.fname.done:
         ;------------------------------------------------------
 fb.scan.fname.exit:
         mov   *stack+,r3            ; Pop r3
-        mov   *stack+,r2            ; Pop r2        
-        mov   *stack+,tmp4          ; Pop tmp4
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2        
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0          
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        mov   *stack+,r2            ; Pop r2
+        .popregs 4                  ; Pop registers and return to caller                                

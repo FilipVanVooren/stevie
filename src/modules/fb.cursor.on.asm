@@ -14,24 +14,20 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* none
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
 fb.cursor.on:
         dect  stack
         mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
         ;-------------------------------------------------------
         ; Turn cursor on
         ;-------------------------------------------------------
-        clr   @fb.curtoggle         ; Turn cursor on
-        
+        clr   @fb.curtoggle         ; Turn cursor on        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 fb.cursor.on.exit:
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller        
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return         

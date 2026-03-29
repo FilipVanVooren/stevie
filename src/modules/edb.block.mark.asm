@@ -155,7 +155,4 @@ edb.block.mark.is_line_m1:
         ; Exit
         ;------------------------------------------------------        
 edb.block.mark.exit:
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11        
-        b     *r11                  ; Return to caller        
+        .popregs 1                  ; Pop registers and return to caller        

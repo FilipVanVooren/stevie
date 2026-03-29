@@ -9,6 +9,9 @@
 * @parm1 = Pointer to length-prefixed filname descriptor
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback1
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1
 *---------------------------------------------------------------
 fm.loadsave.cb.indicator1:
         dect  stack
@@ -139,12 +142,7 @@ fm.loadsave.cb.indicator1.filename:
         ;------------------------------------------------------
 fm.loadsave.cb.indicator1.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
-
+        .popregs 1                  ; Pop registers and return to caller                        
 
 
 *---------------------------------------------------------------
@@ -152,6 +150,9 @@ fm.loadsave.cb.indicator1.exit:
 * Read line from file / Write line to file
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback2
+*--------------------------------------------------------------
+* Register usage
+* tmp0
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator2:
         dect  stack
@@ -247,11 +248,7 @@ fm.loadsave.cb.indicator2.lines:
         ; Exit
         ;------------------------------------------------------
 fm.loadsave.cb.indicator2.exit:
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
-
+        .popregs 0                  ; Pop registers and return to caller                        
 
 
 *---------------------------------------------------------------
@@ -259,6 +256,9 @@ fm.loadsave.cb.indicator2.exit:
 * Close file
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback3
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2, tmp3
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator3:
         dect  stack
@@ -335,12 +335,7 @@ fm.loadsave.cb.message:
         ;------------------------------------------------------
 fm.loadsave.cb.indicator3.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 3                  ; Pop registers and return to caller                                
         ;------------------------------------------------------
         ; Table with pointers for messages to display.
         ; (@fh.workmode used as index into table)
@@ -355,11 +350,15 @@ fm.loadsave.cb.indicator3.data:
         data  txt.done.print        ; id.file.printfile
         data  txt.done.print        ; id.file.printblock
 
+
 *---------------------------------------------------------------
 * Callback function "File I/O error handler"
 * I/O error
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback4
+*--------------------------------------------------------------
+* Register usage
+* tmp0, tmp1, tmp2, tmp3, tmp4
 *---------------------------------------------------------------
 fm.loadsave.cb.fioerr:
         dect  stack
@@ -526,13 +525,7 @@ fm.loadsave.cb.fioerr.interrupt:
         ;------------------------------------------------------
 fm.loadsave.cb.fioerr.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        mov   *stack+,tmp3          ; Pop tmp4        
-        mov   *stack+,tmp3          ; Pop tmp3        
-        mov   *stack+,tmp2          ; Pop tmp2        
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 4                  ; Pop registers and return to caller                                        
 
 
 *---------------------------------------------------------------
@@ -540,6 +533,9 @@ fm.loadsave.cb.fioerr.exit:
 * Memory full error
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback5
+*--------------------------------------------------------------
+* Register usage
+* none
 *---------------------------------------------------------------
 fm.load.cb.memfull:
         dect  stack

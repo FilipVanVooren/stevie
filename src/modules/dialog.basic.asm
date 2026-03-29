@@ -133,6 +133,4 @@ dialog.basic.done:
         ; Exit
         ;-------------------------------------------------------
 dialog.basic.exit:
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        .popregs 0                  ; Pop registers and return to caller

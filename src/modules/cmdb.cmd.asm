@@ -41,10 +41,8 @@ cmdb.cmd.clear:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-cmdb.cmd.clear.exit:        
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+cmdb.cmd.clear.exit:
+        .popregs 0                  ; Pop registers and return to caller        
 
 
 ***************************************************************
@@ -124,7 +122,5 @@ cmdb.cmd.cursor_eol:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-cmdb.cmd.cursor_eol.exit:        
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller     
+cmdb.cmd.cursor_eol.exit:
+        .popregs 0                  ; Pop registers and return to caller        

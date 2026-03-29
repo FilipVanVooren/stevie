@@ -43,8 +43,4 @@ error.display:
         ; Exit
         ;------------------------------------------------------
 error.display.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return      
+        .popregs 2                  ; Pop registers and return to caller        

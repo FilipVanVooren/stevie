@@ -21,6 +21,7 @@
 * Bank 5 "Jumbo"
 * Methods delegated from banks 1 and 2
 ********************************************************************************
+        copy  "macros.asm"          ; Macros for code generation
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
