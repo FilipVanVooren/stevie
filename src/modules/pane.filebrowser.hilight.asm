@@ -10,7 +10,7 @@
 * @cat.shortcut.idx = Index in filename list
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.filebrowser.hilight:
         dect  stack
@@ -142,12 +142,8 @@ pane.filebrowser.hilight.draw.marker:
         ; Exit
         ;------------------------------------------------------
 pane.filebrowser.hilight.exit:
-        mov   *stack+,@wyx          ; Pop cursor position                
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        mov   *stack+,@wyx          ; Pop cursor position
+        .popregs 2                  ; Pop registers and return to caller                        
 
 nomarker  stri  ' '
        

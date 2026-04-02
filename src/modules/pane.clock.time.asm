@@ -18,7 +18,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.clock.time:
         dect  stack
@@ -118,11 +118,7 @@ pane.clock.time.date:
         ; Exit
         ;------------------------------------------------------
 pane.clock.time.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1        
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        .popregs 2                  ; Pop registers and return to caller
 
 txt.vtline:
         byte  0,6                   ; Vertical line character

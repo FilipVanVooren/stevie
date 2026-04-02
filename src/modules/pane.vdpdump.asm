@@ -163,6 +163,4 @@ pane.vdpdump.statlines:
         ;------------------------------------------------------
 pane.vdpdump.exit:
         mov   *stack+,@wyx          ; Pop cursor position
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        .popregs 0                  ; Pop registers and return to caller        

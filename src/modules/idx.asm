@@ -82,17 +82,15 @@ idx.init:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-idx.init.exit:        
-        mov   *stack+,tmp0          ; Pop tmp0                
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+idx.init.exit:
+        .popregs 0                  ; Pop registers and return to caller        
 
 
 ***************************************************************
 * bl @_idx.sams.mapcolumn.on
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module
@@ -127,11 +125,7 @@ _idx.sams.mapcolumn.on:
 * Exit
 *--------------------------------------------------------------
 _idx.sams.mapcolumn.on.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop return address
-        b     *r11                  ; Return to caller       
+        .popregs 2                  ; Pop registers and return to caller
 
 
 ***************************************************************
@@ -141,7 +135,7 @@ _idx.sams.mapcolumn.on.exit:
 * bl @_idx.sams.mapcolumn.off
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module
@@ -179,13 +173,7 @@ _idx.sams.mapcolumn.off:
 * Exit
 *--------------------------------------------------------------
 _idx.sams.mapcolumn.off.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop return address
-        b     *r11                  ; Return to caller
-
+        .popregs 3                  ; Pop registers and return to caller
 
 
 ***************************************************************
@@ -201,7 +189,7 @@ _idx.sams.mapcolumn.off.exit:
 * @outparm1 = Offset for index entry in index SAMS page
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 *--------------------------------------------------------------
 *  Remarks
 *  Private, only to be called from inside idx module.
@@ -258,8 +246,4 @@ _idx.samspage.get:
         ; Exit
         ;------------------------------------------------------
 _idx.samspage.get.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0                
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        .popregs 2                  ; Pop registers and return to caller

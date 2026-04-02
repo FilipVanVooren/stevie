@@ -24,7 +24,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------
 * Remarks
 * File content processing expected to be handled in callback.

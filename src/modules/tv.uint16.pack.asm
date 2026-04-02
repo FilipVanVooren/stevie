@@ -18,7 +18,7 @@
 * None
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, r0, r1
+* tmp0,tmp1,tmp2,tmp3,r0,r1
 ***************************************************************
 tv.uint16.pack:
         dect  stack
@@ -119,15 +119,8 @@ tv.uint16.pack.done:
 tv.uint16.pack.exit:
         mov   *stack+,r1            ; Pop r1
         mov   *stack+,r0            ; Pop r0
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0 
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-        ;-------------------------------------------------------
-        ; Constants for base 10 mmultipliers
-        ;-------------------------------------------------------
+        .popregs 3                  ; Pop registers and return to caller        
+
 tv.uint16.mpy:
-        data  10000,1000,100,10,1
+        data  10000,1000,100,10,1   ; Constants for base 10 multipliers
  

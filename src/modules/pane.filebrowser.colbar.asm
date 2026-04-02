@@ -11,7 +11,7 @@
 * tmp0 = Color combination to show (in LSB)
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0,tmp1,tmp2,tmp3
 ********|*****|*********************|**************************
 pane.filebrowser.colbar:
         dect  stack
@@ -86,7 +86,7 @@ pane.filebrowser.colbar.exit:
 * @cat.barpos = YX position of color bar
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.filebrowser.colbar.remove:
         dect  stack
@@ -136,9 +136,5 @@ pane.filebrowser.colbar.remove:
         ; Exit
         ;------------------------------------------------------
 pane.filebrowser.colbar.remove.exit:
-        mov   *stack+,@wyx          ; Pop cursor position                
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
+        mov   *stack+,@wyx          ; Pop cursor position
+        .popregs 2                  ; Pop registers and return to caller                        

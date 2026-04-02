@@ -17,7 +17,7 @@
 * None
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ***************************************************************
 vdp.dump.font:
         dect  stack
@@ -44,8 +44,4 @@ vdp.dump.font:
         ; Exit
         ;-------------------------------------------------------
 vdp.dump.font.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to task
+        .popregs 2                  ; Pop registers and return to caller

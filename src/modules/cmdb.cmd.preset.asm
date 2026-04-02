@@ -12,7 +12,7 @@
 * @cmdb.dialog = ID of current dialog
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 cmdb.cmd.preset:
         dect  stack

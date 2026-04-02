@@ -11,7 +11,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* r1 in GPL WS, tmp0, tmp1
+* r1 in GPL WS, tmp0,tmp1
 *--------------------------------------------------------------
 * REMARKS
 * Called from ISR code
@@ -201,11 +201,7 @@ tib.run.return.refresh:
         ;------------------------------------------------------
 tib.run.return.exit:
         mov   *stack+,r12           ; Pop r12
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        .popregs 2                  ; Pop registers and return to caller        
 
 tib.run.return.data.samspage
         data  >0f00                 ; SAMS page >0f

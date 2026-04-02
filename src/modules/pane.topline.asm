@@ -191,8 +191,6 @@ pane.topline.total:
         ;------------------------------------------------------
 pane.topline.exit:
         mov   *stack+,@wyx          ; Pop cursor position
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        .popregs 0                  ; Pop registers and return to caller        
 
 txt.find stri  'Find: '             ; Find message

@@ -18,7 +18,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.cmdb.draw:
         dect  stack
@@ -303,8 +303,4 @@ pane.cmdb.draw.promptcmd:
         ; Exit
         ;------------------------------------------------------
 pane.cmdb.draw.exit:
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        .popregs 2                  ; Pop registers and return to caller

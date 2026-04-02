@@ -1,15 +1,19 @@
 # Memory map
 
-## CPU RAM (SAMS 32K range)
+Stevie requires at minimum a 1 MB SAMS expansion to run.
+
+## CPU RAM (32K address space)
 
 The following table reflects the CPU-side RAM layout derived from `equ.asm`.  
-Sizes are approximate where structures contain many small fields; see `equ.asm` 
+Sizes are approximate where structures contain many small fields; see `equ.asm`
 for exact offsets and field names.
 
 | Address    |  SAMS  | Size | Purpose                                         |
 |------------|--------|------|-------------------------------------------------|
 | >2000-2fff |  #02   | 4096 | Resident spectra2 and Stevie modules            |
+|------------|--------|------|-------------------------------------------------|
 | >3000-3fff |  #03   | 4096 | Resident spectra2 and Stevie modules            |
+|------------|--------|------|-------------------------------------------------|
 | >a000-a0ff |  #04   |  256 | Stevie core 1 RAM                               |
 |            |        |      | >a006-a016 : parm1..parm9 (input parameters)    |
 |            |        |      | >a018-a024 : outparm1..outparm7 (output params) |
@@ -46,20 +50,25 @@ for exact offsets and field names.
 | >ad00-adff |  #04   |  256 | FREE                                            |
 | >ae00-aeff |  #04   |  256 | Paged-out scratchpad memory (maps >8300-83ff)   |
 | >af00-afff |  #04   |  256 | Far-jump / cartridge bankswitch trampoline stack|
+|------------|--------|------|-------------------------------------------------|
 | >b000-bfff | #10-1f | 4096 | Index / bankswitched pages (EA5 image, index)   |
+|------------|--------|------|-------------------------------------------------|
 | >c000-cfff | #30-xx | 4096 | Editor buffer pages (bankswitched via SAMS)     |
+|------------|--------|------|-------------------------------------------------|
 | >d000-dfff |  #05   | 4096 | Frame buffer area and uncrunch space            |
 |            |        |      | >d000-dfff : framebuffer                        |
 |            |        |      | >d960-dcff : uncrunch area for TI-Basic lines   |
+|------------|--------|------|-------------------------------------------------|
 | >e000-efff |  #06   | 4096 | Frame buffer / file catalog / command buffers   |
 |            |        |      | catalog and filename lists starting at >e220    |
+|------------|--------|------|-------------------------------------------------|
 | >f000-ffff |  #07   | 4096 | Heap, strings, search indices and misc          |
 |            |        |      | >f000-f0ff : heap & strings (heap.top = >f700)  |
 |            |        |      | >f100-f4ff : search results index (rows)        |
 |            |        |      | >f500-f6ff : search results index (cols)        |
 |            |        |      | >f900-f9ff : command history buffer             |
 |            |        |      | >fa00-ffff : free (1536 bytes)                  |
-
+|------------|--------|------|-------------------------------------------------|
 
 ### Memory layout when activiating index
 
@@ -72,11 +81,15 @@ Note: Other memory ranges are the same as the regular memory map.
 | Address    |  SAMS  | Size | Purpose                                         |
 |------------|--------|------|-------------------------------------------------|
 | >b000-bfff |  #20   | 4096 | SAMS line index                                 |
+|------------|--------|------|-------------------------------------------------|
 | >c000-cfff |  #21   | 4096 | SAMS line index                                 |
+|------------|--------|------|-------------------------------------------------|
 | >d000-dfff |  #22   | 4096 | SAMS line index                                 |
+|------------|--------|------|-------------------------------------------------|
 | >e000-efff |  #23   | 4096 | SAMS line index                                 |
+|------------|--------|------|-------------------------------------------------|
 | >f000-ffff |  #24   | 4096 | SAMS line index                                 |
-
+|------------|--------|------|-------------------------------------------------|
 
 ### Memory layout when activating TI Basic
 
@@ -85,13 +98,18 @@ Note: Other memory ranges are the same as the regular memory map.
 | Address    | SAMS | Size | Purpose                                        |
 |------------|------|------|------------------------------------------------|
 | >b000-bfff |  #10 | 4096 | TI Basic VDP buffer                            |
+|------------|------|------|------------------------------------------------|
 | >c000-cfff |  #11 | 4096 | TI Basic VDP buffer                            |
+|------------|------|------|------------------------------------------------|
 | >d000-dfff |  #12 | 4096 | TI Basic VDP buffer                            |
+|------------|------|------|------------------------------------------------|
 | >e000-efff |  #13 | 4096 | TI Basic VDP buffer                            |
+|------------|------|------|------------------------------------------------|
 | >f000-ffff |  #07 | 4096 | Stevie VDP, scratchpad, ...                    |
 |            |      |      | >f000-f95f  2400  Stevie VDP scrbuf copy 80x30 |
 |            |      |      | >f960-f97f    32  TI Basic scratchpad memory   |
 |            |      |      | >f980-ffff  1664  FREE                         |
+|------------|------|------|------------------------------------------------|
 
 ## VDP VRAM map
 

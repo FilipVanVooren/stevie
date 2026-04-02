@@ -14,7 +14,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* tmp0
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
@@ -51,6 +51,4 @@ vdp.cursor.tat.cur.fb:
         ; Exit
         ;------------------------------------------------------
 vdp.cursor.tat.exit:
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        .popregs 0                  ; Pop registers and return to caller

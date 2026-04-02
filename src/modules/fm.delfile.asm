@@ -17,7 +17,7 @@
 * outparm1 = >0000 delete success, >FFFF delete failed
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fm.delfile:
         dect  stack

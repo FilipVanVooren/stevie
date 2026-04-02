@@ -11,7 +11,7 @@
 * Registered as pointer in @fh.callback1
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0,tmp1
 *---------------------------------------------------------------
 fm.load.ea5.cb.indicator1:
         dect  stack
@@ -53,7 +53,7 @@ fm.load.ea5.cb.indicator1.exit:
 * Registered as pointer in @fh.callback2
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------- 
 fm.load.ea5.cb.indicator2:
         dect  stack
@@ -122,7 +122,7 @@ fm.load.ea5.cb.indicator2.exit:
 *---------------------------------------------------------------
 * Registered as pointer in @fh.callback3
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, tmp4
+* tmp0,tmp1,tmp2,tmp3,tmp4
 *---------------------------------------------------------------
 fm.load.ea5.cb.fioerr:
         dect  stack

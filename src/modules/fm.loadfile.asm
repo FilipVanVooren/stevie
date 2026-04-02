@@ -15,7 +15,7 @@
 * outparm1 = >FFFF if editor bufer dirty (does not load file)
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fm.loadfile:
         dect  stack

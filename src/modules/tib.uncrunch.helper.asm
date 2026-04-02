@@ -15,7 +15,7 @@
 * @tib.var3 = SAMS page ID mapped to VRAM address
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0,tmp1
 *--------------------------------------------------------------
 * Remarks
 * Converts the VDP address to index into SAMS page layout table
@@ -65,7 +65,4 @@ _v2sams:
         ; Exit
         ;------------------------------------------------------
 _v2sams.exit:
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        .popregs 1                  ; Pop registers and return to caller

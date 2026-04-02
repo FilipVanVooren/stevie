@@ -18,7 +18,7 @@
 * @tib.var6  = Current position (addr) in uncrunch area
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, tmp4
+* tmp0,tmp1,tmp2,tmp3,tmp4
 *--------------------------------------------------------------
 * Remarks
 * For TI Basic statement decode see:
@@ -287,10 +287,4 @@ tib.uncrunch.token.setlen:
 tib.uncrunch.token.exit:
         mov   *stack+,@tib.var10    ; Pop @tib.var10
         mov   *stack+,@tib.var9     ; Pop @tib.var9
-        mov   *stack+,tmp4          ; Pop tmp4
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return
+        .popregs 4                  ; Pop registers and return to caller        

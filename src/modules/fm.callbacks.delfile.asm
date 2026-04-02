@@ -16,7 +16,7 @@
 * Registered as pointer in @fh.callback3
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0,tmp1
 ********|*****|*********************|**************************
 fm.delfile.callback1:
         dect  stack
@@ -70,7 +70,7 @@ fm.delfile.callback1.exit:
 * Registered as pointer in @fh.callback3
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0,tmp1
 ********|*****|*********************|**************************
 fm.delfile.callback2:
         dect  stack

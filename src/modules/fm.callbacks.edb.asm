@@ -11,7 +11,7 @@
 * Registered as pointer in @fh.callback1
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1
+* tmp0,tmp1
 *---------------------------------------------------------------
 fm.loadsave.cb.indicator1:
         dect  stack
@@ -258,7 +258,7 @@ fm.loadsave.cb.indicator2.exit:
 * Registered as pointer in @fh.callback3
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator3:
         dect  stack
@@ -358,7 +358,7 @@ fm.loadsave.cb.indicator3.data:
 * Registered as pointer in @fh.callback4
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3, tmp4
+* tmp0,tmp1,tmp2,tmp3,tmp4
 *---------------------------------------------------------------
 fm.loadsave.cb.fioerr:
         dect  stack

@@ -23,7 +23,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0, tmp1, tmp2, tmp3
+* tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------
 * Remarks
 * @fh.temp1 =  >ffff if loading new file into editor buffer

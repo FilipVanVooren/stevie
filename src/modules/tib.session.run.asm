@@ -15,7 +15,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* r1 in GPL WS, tmp0, tmp1, tmp2, r12
+* r1 in GPL WS, tmp0,tmp1,tmp2, r12
 *--------------------------------------------------------------
 * Remarks
 * tib.run >> b @0070 (GPL interpreter/TI Basic)

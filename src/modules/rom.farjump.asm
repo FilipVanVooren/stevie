@@ -180,13 +180,9 @@ rom.farjump.bankswitch.failed2:
         ; Exit
         ;-------------------------------------------------------
 rom.farjump.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
+        .popregs 3                  ; Pop registers and return to caller
         ;
         ; Attention! 
         ; r11 was popped from farjump stack, not from value stack!
         ; See rom.farjump.return
         ;        
-        b     *r11                  ; Return to caller

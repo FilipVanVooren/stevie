@@ -128,13 +128,7 @@ vdp.cursor.tat.fb.dump:
         ;------------------------------------------------------
 vdp.cursor.tat.fb.exit:
         mov   *stack+,@wyx          ; Pop cursor position
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
-
+        .popregs 2                  ; Pop registers and return to caller        
 
 
 ***************************************************************
@@ -206,8 +200,5 @@ get_cursorcolor:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-get_cursorcolor.exit:        
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+get_cursorcolor.exit:
+        .popregs 1                  ; Pop registers and return to caller        
