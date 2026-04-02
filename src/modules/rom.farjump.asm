@@ -70,7 +70,6 @@ xrom.farjump.push_return:
         .ifeq device.fg99.mode.adv,1
         jmp   rom.farjump.bankswitch.tgt.advfg99
         .endif
-
         ;------------------------------------------------------
         ; Bankswitch to target 8K ROM bank 
         ;------------------------------------------------------
