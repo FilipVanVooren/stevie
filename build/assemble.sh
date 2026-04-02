@@ -4,7 +4,8 @@
 source helper.sh
 
 # Constants
-IMAGE="${IMAGE:-easyxdt99:3.6.5-cpython3.14-slim}"
+#IMAGE="${IMAGE:-easyxdt99:3.6.5-cpython3.14-slim}"
+IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"
 
 # Variables
 marker="***************************************************************"

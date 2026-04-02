@@ -126,12 +126,8 @@ pane.errline.show:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.errline.show.exit:        
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
-
+pane.errline.show.exit:
+        .popregs 1                  ; Pop registers and return to caller                
 
 
 ***************************************************************
@@ -193,7 +189,5 @@ pane.errline.hide.fbcolor:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-pane.errline.hide.exit:        
-        mov   *stack+,tmp0          ; Pop tmp0        
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+pane.errline.hide.exit:
+        .popregs 0                  ; Pop registers and return to caller                
