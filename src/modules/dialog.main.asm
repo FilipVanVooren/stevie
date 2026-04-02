@@ -76,9 +76,6 @@ dialog.main.statlines:
                                     ; Remove filepicker color bar
                                     ; i \  @cat.barpos = YX position color bar
                                     ;   / 
-
-  
-
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
