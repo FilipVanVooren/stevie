@@ -70,9 +70,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0040      7FF0     bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
 0041      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
                    < stevie_bf.asm
-0028                       copy  "rom.order.asm"       ; ROM bank order "non-inverted"
-     **** ****     > rom.order.asm
-0001               * FILE......: rom.order.asm
+0028                       copy  "equ.romseq.asm"      ; ROM bank order "non-inverted"
+     **** ****     > equ.romseq.asm
+0001               * FILE......: equ.romseq.asm
 0002               * Purpose...: Equates with CPU write addresses for switching banks
 0003               
 0004               *--------------------------------------------------------------

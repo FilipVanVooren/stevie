@@ -23,7 +23,7 @@
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
+        copy  "equ.romseq.asm"      ; ROM bank order "non-inverted"
         ;-----------------------------------------------------------------------
         ; Equates
         ;-----------------------------------------------------------------------    

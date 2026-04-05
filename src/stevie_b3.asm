@@ -26,7 +26,7 @@
         ; Equates
         ;-----------------------------------------------------------------------            
         copy  "equ.rom.build.asm"   ; Cartridge build options
-        copy  "rom.order.asm"       ; ROM bank order "non-inverted"
+        copy  "equ.romseq.asm"      ; ROM bank order "non-inverted"
         copy  "equ.vdp.asm"         ; VDP configuration (F18a/9938/...)
         copy  "equ.asm"             ; Stevie main configuration
         copy  "equ.c99.asm"         ; Classic99 emulator configuration
