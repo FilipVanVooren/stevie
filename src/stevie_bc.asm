@@ -21,7 +21,7 @@
 * Bank C "Q"
 * Empty bank for future expansion
 ********************************************************************************
-        copy  "macros.asm"          ; Macros for code generation
+        copy  "macros/popregs.mac"  ; Pop registers macro
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"

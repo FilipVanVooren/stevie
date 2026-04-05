@@ -21,7 +21,6 @@
 * Bank 1 "James"
 * Editor core
 ********************************************************************************
-        copy  "macros.asm"          ; Macros for code generation
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         copy  "equ.rom.build.asm"   ; Cartridge build options
         copy  "rom.order.asm"       ; ROM bank order "non-inverted"
@@ -32,6 +31,11 @@
         copy  "equ.asm"             ; Stevie main configuration
         copy  "equ.c99.asm"         ; Classic99 emulator configuration
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
+        ;-----------------------------------------------------------------------
+        ; Macros 
+        ;-----------------------------------------------------------------------    
+        copy  "macros/pushregs.mac" ; Push registers macro
+        copy  "macros/popregs.mac"  ; Pop registers macro
 ***************************************************************
 * BANK 1
 ********|*****|*********************|**************************
