@@ -32,8 +32,6 @@
         copy  "equ.asm"             ; Stevie main configuration
         copy  "equ.c99.asm"         ; Classic99 emulator configuration
         copy  "equ.keys.asm"        ; Equates for keyboard mapping
-
-
 ***************************************************************
 * BANK 0
 ********|*****|*********************|**************************

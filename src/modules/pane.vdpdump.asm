@@ -21,10 +21,7 @@
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.vdpdump:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push registers and return address on stack
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
