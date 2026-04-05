@@ -97,10 +97,7 @@ edkey.action.cmdb.file.directory.device:
 * Drive/Directory listing
 *---------------------------------------------------------------
 edkey.action.cmdb.file.directory:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push registers and return address on stack
         ;-------------------------------------------------------
         ; Skip if not in file dialog mode
         ;-------------------------------------------------------

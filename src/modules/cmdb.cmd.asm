@@ -19,10 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 cmdb.cmd.clear:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push registers and return address on stack
         ;------------------------------------------------------
         ; Clear command
         ;------------------------------------------------------

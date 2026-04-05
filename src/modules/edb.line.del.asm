@@ -14,17 +14,14 @@
 * NONE
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* tmp0
 *--------------------------------------------------------------
 * Remarks
 * @parm1 must be provided in base 1, but internally we work 
 * with base 0!
 ********|*****|*********************|**************************
 edb.line.del:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push registers and return address on stack
         ;------------------------------------------------------
         ; Assert
         ;------------------------------------------------------

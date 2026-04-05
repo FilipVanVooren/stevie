@@ -17,10 +17,7 @@
 * tmp0,tmp1
 ********|*****|*********************|**************************
 edb.block.match:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0  
+        .pushregs 0                 ; Push registers and return address on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------

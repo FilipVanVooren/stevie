@@ -19,10 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.opt.clip:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push registers and return address on stack
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------

@@ -15,15 +15,10 @@
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 cmdb.cmd.preset:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-
+        .pushregs 2                 ; Push registers and return address on stack
+        ;-------------------------------------------------------
+        ; Initialize
+        ;-------------------------------------------------------
         li    tmp0,cmdb.cmd.preset.data
                                     ; Load table
         mov   @keycode1,tmp2        ; Get keyboard code
