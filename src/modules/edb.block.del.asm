@@ -27,7 +27,7 @@
 * Makes it easier when comparing values.
 ********|*****|*********************|**************************
 edb.block.delete:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         clr   @outparm1             ; No action (>0000)        
         ;------------------------------------------------------        
         ; Asserts

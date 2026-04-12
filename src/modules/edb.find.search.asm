@@ -18,7 +18,7 @@
 * tmp0,tmp1,tmp2,tmp3
 ********|*****|*********************|**************************
 edb.find.search:
-        .pushregs 3                 ; Push registers and return address on stack
+        .pushregs 3                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Initialisation
         ;-------------------------------------------------------

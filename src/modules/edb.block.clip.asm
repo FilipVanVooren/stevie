@@ -23,7 +23,7 @@
 * none
 ********|*****|*********************|**************************
 edb.block.clip:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------        
         ; Asserts
         ;------------------------------------------------------        

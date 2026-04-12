@@ -2,7 +2,7 @@
 * Purpose...: Previous column in filebrowser
 
 edkey.action.filebrowser.prevcol:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Check column boundaries
         ;-------------------------------------------------------

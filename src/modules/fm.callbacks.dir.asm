@@ -93,19 +93,10 @@
 * Registered as pointer in @fh.callback1
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0,tmp1,tmp2,tmp3
 ********|*****|*********************|**************************
 fm.dir.callback1:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Prepare for reading directory
         ;------------------------------------------------------
@@ -157,18 +148,7 @@ fm.dir.callback1.exit:
 * tmp0,tmp1,tmp2,tmp3,tmp4
 ********|*****|*********************|**************************
 fm.dir.callback2:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0W
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2        
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
-        dect  stack
-        mov   tmp4,*stack           ; Push tmp4        
+        .pushregs 4                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Check if volume name
         ;------------------------------------------------------
@@ -495,12 +475,7 @@ fm.dir.callback2.exit:
 * tmp0,tmp1
 ********|*****|*********************|**************************
 fm.dir.callback3:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
@@ -562,12 +537,7 @@ fm.dir.callback3.exit:
 * tmp0,tmp1
 ********|*****|*********************|**************************
 fm.dir.callback4:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
@@ -620,12 +590,7 @@ fm.dir.callback4.exit:
 * tmp0,tmp1
 ********|*****|*********************|**************************
 fm.dir.callback5:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------

@@ -32,16 +32,7 @@
 * None
 ********|*****|*********************|**************************
 fh.file.load.bin:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
@@ -227,28 +218,31 @@ fh.file.load.bin.vdp2cpu:
         ; Step 3: Processing complete, call callback
         ;------------------------------------------------------ 
 fh.file.load.bin.success:
-        clr   @outparm1             ; Clear binary load failed flag
-        mov   @fh.callback2,tmp0    ; Get pointer to Callback "Binary image loaded"
-        jeq   fh.file.load.bin.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function
-        clr   @outparm1             ; Clear binary load failed flag, might be overwritten          
-        jmp   fh.file.load.bin.exit ; Exit normally
+        clr   @outparm1               ; Clear binary load failed flag
+        mov   @fh.callback2,tmp0      ; Get pointer to Callback "Binary image loaded"
+        jeq   fh.file.load.bin.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function
+        clr   @outparm1               ; Clear binary load failed flag, might be overwritten          
+        jmp   fh.file.load.bin.prexit ; Exit normally
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
 fh.file.load.bin.error:
-        seto  @outparm1             ; Set binary load failed flag
-        mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.load.bin.exit ; Skip callback if not set
-        bl    *tmp0                 ; Run callback function
-        seto  @outparm1             ; Set binary load failed flag, might be overwritten          
+        seto  @outparm1               ; Set binary load failed flag
+        mov   @fh.callback3,tmp0      ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.load.bin.prexit ; Skip callback if not set
+        bl    *tmp0                   ; Run callback function
+        seto  @outparm1               ; Set binary load failed flag, might be overwritten          
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+fh.file.load.bin.prexit:
+        bl    @film
+              data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fh.file.load.bin.exit:
-        bl    @film
-              data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
-
         mov   *stack+,@parm7        ; Pop @parm7
         mov   *stack+,@parm6        ; Pop @parm6
         mov   *stack+,@parm5        ; Pop @parm5

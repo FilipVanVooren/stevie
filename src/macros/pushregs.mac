@@ -1,5 +1,5 @@
 ; 
-; Push registers and return address on stack
+; Push return address and registers on stack
 ; #1 = Highest register to push (0-4)
 ; Allocation size = regs * 2 + 4 (for tmp0 + return address)
 ;

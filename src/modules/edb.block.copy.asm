@@ -27,7 +27,7 @@
 * Makes it easier when comparing values.
 ********|*****|*********************|**************************
 edb.block.copy:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push parm1
         clr   @outparm1             ; No action (>0000)

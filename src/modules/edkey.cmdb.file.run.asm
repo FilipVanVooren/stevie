@@ -5,7 +5,7 @@
 * Run EA5 program image
 ********|*****|*********************|**************************
 edkey.action.cmdb.file.run:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Read directory if last character is '.'
         ;-------------------------------------------------------

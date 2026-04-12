@@ -22,7 +22,7 @@
 * Configure filename
 *---------------------------------------------------------------
 cmdb.cfg.fname:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Configure
         ;-------------------------------------------------------

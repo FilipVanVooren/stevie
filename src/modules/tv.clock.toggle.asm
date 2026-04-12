@@ -21,7 +21,7 @@
 * none
 ********|*****|*********************|**************************
 tv.clock.toggle:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Toggle clock display
         ;-------------------------------------------------------

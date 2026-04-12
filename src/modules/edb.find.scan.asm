@@ -33,7 +33,7 @@
 * r1   = Additional temp variable
 ********|*****|*********************|**************************
 edb.find.scan
-        .pushregs 4                 ; Push registers and return address on stack
+        .pushregs 4                 ; Push return address and registers on stack
         dect  stack
         mov   r1,*stack             ; Push r1
         ;------------------------------------------------------        

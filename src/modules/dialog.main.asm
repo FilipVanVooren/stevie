@@ -19,7 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.main:
-        .pushregs 4                 ; Push registers and return address on stack
+        .pushregs 4                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------

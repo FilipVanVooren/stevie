@@ -17,7 +17,7 @@
 * Memory usage
 ********|*****|*********************|**************************
 edb.unlock:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Sanity check
         ;-------------------------------------------------------

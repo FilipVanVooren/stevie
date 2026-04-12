@@ -19,7 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 cmdb.cmd.set:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Clear command
         ;------------------------------------------------------

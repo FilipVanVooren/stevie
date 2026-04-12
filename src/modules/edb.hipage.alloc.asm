@@ -17,7 +17,7 @@
 * tmp0,tmp1
 ********|*****|*********************|**************************
 edb.hipage.alloc:
-        .pushregs 1                 ; Push registers and return address on stack
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; 1a. Check if highest SAMS page needs to be increased
         ;------------------------------------------------------

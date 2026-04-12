@@ -27,7 +27,7 @@
 * rambuf+10 = Length of line
 ********|*****|*********************|**************************
 edb.line.unpack.fb:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Save parameters
         ;------------------------------------------------------

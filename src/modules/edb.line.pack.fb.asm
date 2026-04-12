@@ -24,7 +24,7 @@
 * rambuf+4 = Saved length of row
 ********|*****|*********************|**************************
 edb.line.pack.fb:
-        .pushregs 3                 ; Push registers and return address on stack
+        .pushregs 3                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Get values
         ;------------------------------------------------------

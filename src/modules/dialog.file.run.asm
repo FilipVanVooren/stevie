@@ -19,7 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.run:
-        .pushregs 1                 ; Push registers and return address on stack
+        .pushregs 1                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------

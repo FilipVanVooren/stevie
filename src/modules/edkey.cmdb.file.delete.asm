@@ -5,7 +5,7 @@
 * Delete file from file system
 ********|*****|*********************|**************************
 edkey.action.cmdb.file.delete:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Read directory if last character is '.'
         ;-------------------------------------------------------

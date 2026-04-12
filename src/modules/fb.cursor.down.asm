@@ -15,11 +15,10 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* none
+* tmp0
 ********|*****|*********************|**************************
 fb.cursor.down:
-        dect  stack
-        mov   r11,*stack            ; Save return address
+        .pushregs 0                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Last line?
         ;------------------------------------------------------
@@ -86,8 +85,7 @@ fb.cursor.down.set_cursorx:
                                     ; / o  @fb.row.length = Length of row
         
         c     @fb.column,@fb.row.length
-        jle   fb.cursor.down.exit  
-                                    ; Exit
+        jle   fb.cursor.down.prexit ; Exit
         ;-------------------------------------------------------
         ; Adjust cursor column position
         ;-------------------------------------------------------
@@ -95,9 +93,9 @@ fb.cursor.down.set_cursorx:
         mov   @fb.column,tmp0
         bl    @xsetx                ; Set VDP cursor X
         ;-------------------------------------------------------
-        ; Exit
+        ; Prepare exit
         ;-------------------------------------------------------
-fb.cursor.down.exit:
+fb.cursor.down.prexit:
         bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
@@ -108,5 +106,8 @@ fb.cursor.down.exit:
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer
         bl    @vdp.cursor.tat       ; Update cursor
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return        
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+fb.cursor.down.exit:
+        .popregs 0                  ; Pop return address and registers from stack        

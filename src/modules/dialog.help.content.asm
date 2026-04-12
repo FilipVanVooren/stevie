@@ -17,7 +17,7 @@
 * tmp0
 ********|*****|*********************|**************************
 dialog.help.content:
-        .pushregs 3                 ; Push registers and return address on stack
+        .pushregs 3                 ; Push return address and registers on stack
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------

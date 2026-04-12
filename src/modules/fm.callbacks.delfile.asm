@@ -19,12 +19,7 @@
 * tmp0,tmp1
 ********|*****|*********************|**************************
 fm.delfile.callback1:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------
@@ -38,7 +33,6 @@ fm.delfile.callback1:
         bl    @putat
               byte pane.botrow,0
               data txt.deleting     ; Display "Deleting file...."
-
         ;------------------------------------------------------
         ; Display device/filename
         ;------------------------------------------------------
@@ -73,12 +67,7 @@ fm.delfile.callback1.exit:
 * tmp0,tmp1
 ********|*****|*********************|**************************
 fm.delfile.callback2:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Restore status line colors
         ;------------------------------------------------------

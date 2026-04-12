@@ -22,16 +22,7 @@
 * tmp0,tmp1,tmp2,tmp3
 ********|*****|*********************|**************************
 fm.directory:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack

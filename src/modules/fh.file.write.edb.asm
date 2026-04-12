@@ -23,14 +23,7 @@
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fh.file.write.edb:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------   
@@ -243,13 +236,13 @@ fh.file.write.edb.check.interrupt:
         ;------------------------------------------------------
         ; Interrupt occured
         ;------------------------------------------------------
-        li    tmp0,id.file.interrupt ; \ Set flag "keyboard interrupt" occured
-        mov   tmp0,@fh.workmode      ; /
+        li    tmp0,id.file.interrupt   ; \ Set flag "keyboard interrupt" occured
+        mov   tmp0,@fh.workmode        ; /
 
-        mov   @fh.callback4,tmp0     ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.write.edb.exit ; Skip callback
-        bl    *tmp0                  ; Run callback function  
-        jmp   fh.file.write.edb.exit
+        mov   @fh.callback4,tmp0       ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.write.edb.prexit ; Skip callback
+        bl    *tmp0                    ; Run callback function  
+        jmp   fh.file.write.edb.prexit
         ;------------------------------------------------------
         ; Step 3b: Next record
         ;------------------------------------------------------
@@ -272,7 +265,7 @@ fh.file.write.edb.error:
         ;------------------------------------------------------
         mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
         bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.write.edb.exit
+        jmp   fh.file.write.edb.prexit
         ;------------------------------------------------------
         ; All records written. Close file
         ;------------------------------------------------------     
@@ -285,12 +278,15 @@ fh.file.write.edb.done:
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
         bl    *tmp0                 ; Run callback function
 *--------------------------------------------------------------
-* Exit
+* Prepare exit
 *--------------------------------------------------------------
-fh.file.write.edb.exit:
+fh.file.write.edb.prexit:
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
-
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+fh.file.write.edb.exit:
         .popregs 2                  ; Pop registers and return to caller                

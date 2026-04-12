@@ -5,7 +5,7 @@
 * Toggle editor auto insert mode
 *---------------------------------------------------------------
 edkey.action.cmdb.autoinsert:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Exit early if editor buffer is locked
         ;-------------------------------------------------------

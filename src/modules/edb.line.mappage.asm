@@ -18,7 +18,7 @@
 * tmp0,tmp1
 ***************************************************************
 edb.line.mappage:
-        .pushregs 1                 ; Push registers and return address on stack
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Assert
         ;------------------------------------------------------

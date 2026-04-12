@@ -5,7 +5,7 @@
 * Configure clipboard
 *---------------------------------------------------------------
 edkey.action.cmdb.cfg.clip:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Set filename
         ;-------------------------------------------------------

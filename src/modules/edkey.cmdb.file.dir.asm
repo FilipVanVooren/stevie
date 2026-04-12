@@ -97,7 +97,7 @@ edkey.action.cmdb.file.directory.device:
 * Drive/Directory listing
 *---------------------------------------------------------------
 edkey.action.cmdb.file.directory:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Skip if not in file dialog mode
         ;-------------------------------------------------------

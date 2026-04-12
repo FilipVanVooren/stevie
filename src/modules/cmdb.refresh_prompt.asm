@@ -20,7 +20,7 @@
 * Notes
 ********|*****|*********************|**************************
 cmdb.refresh_prompt:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------

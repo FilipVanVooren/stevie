@@ -19,7 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.cart.fg99:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------

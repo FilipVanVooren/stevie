@@ -18,7 +18,7 @@
 * tmp0,tmp1
 ********|*****|*********************|**************************
 edb.line.getlength:
-        .pushregs 1                 ; Push registers and return address on stack
+        .pushregs 1                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------

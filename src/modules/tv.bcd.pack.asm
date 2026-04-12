@@ -15,22 +15,13 @@
 * @outparm2 = 0 conversion ok, >FFFF invalid input string
 *--------------------------------------------------------------
 * REMARKS
-* nonw
+* none
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2,tmp3
 ***************************************************************
 tv.bcd.pack:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2        
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3   
+        .pushregs 3                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Loop over string (5 bytes max)
         ;------------------------------------------------------

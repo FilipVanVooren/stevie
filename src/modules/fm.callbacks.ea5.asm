@@ -14,12 +14,7 @@
 * tmp0,tmp1
 *---------------------------------------------------------------
 fm.load.ea5.cb.indicator1:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         dect  stack        
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
@@ -56,16 +51,7 @@ fm.load.ea5.cb.indicator1.exit:
 * tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------- 
 fm.load.ea5.cb.indicator2:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Get next chunk needed flag directly from VRAM
         ;------------------------------------------------------
@@ -125,18 +111,7 @@ fm.load.ea5.cb.indicator2.exit:
 * tmp0,tmp1,tmp2,tmp3,tmp4
 *---------------------------------------------------------------
 fm.load.ea5.cb.fioerr:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0        
-        dect  stack        
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack  
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack  
-        mov   tmp3,*stack           ; Push tmp3
-        dect  stack                          
-        mov   tmp4,*stack           ; Push tmp4
+        .pushregs 4                 ; Push return address and registers on stack
         dect  stack                          
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------

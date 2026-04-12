@@ -19,7 +19,7 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.save:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Copy dialog strings to RAM
         ;-------------------------------------------------------

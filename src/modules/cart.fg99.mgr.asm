@@ -19,7 +19,7 @@
 * Remarks
 ********|*****|*********************|**************************
 cart.fg99.mgr:
-        .pushregs 2                 ; Push registers and return address on stack
+        .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------        
         ; Exit early if no image name specified
         ;-------------------------------------------------------

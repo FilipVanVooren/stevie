@@ -5,7 +5,7 @@
 * Toggle clock display in editor
 *---------------------------------------------------------------
 edkey.action.cmdb.clock:
-        .pushregs 0                 ; Push registers and return address on stack
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Toggle clock display
         ;-------------------------------------------------------

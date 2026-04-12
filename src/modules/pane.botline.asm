@@ -14,12 +14,7 @@
 * tmp0,tmp1
 ********|*****|*********************|**************************
 pane.botline:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address on stack
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------
