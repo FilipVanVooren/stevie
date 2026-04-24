@@ -35,16 +35,7 @@
 * buffer handling purely done in callback code.
 ********|*****|*********************|**************************
 fh.file.read.mem:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
@@ -270,10 +261,10 @@ fh.file.read.mem.error:
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
-        mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.mem.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.mem.exit
+        mov   @fh.callback4,tmp0      ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.mem.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function  
+        jmp   fh.file.read.mem.prexit
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
@@ -285,16 +276,19 @@ fh.file.read.mem.eof:
         ; Callback "Close file"
         ;------------------------------------------------------
 fh.file.read.mem.eof.callback:
-        mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
-        jeq   fh.file.read.mem.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function                                    
+        mov   @fh.callback3,tmp0      ; Get pointer to Callback "Close file"
+        jeq   fh.file.read.mem.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.read.mem.exit:
+fh.file.read.mem.prexit:
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
-
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+fh.file.read.mem.exit:
         .popregs 3                  ; Pop registers and return to caller                

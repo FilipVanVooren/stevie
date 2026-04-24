@@ -18,10 +18,7 @@
 * tmp0
 ********|*****|*********************|**************************
 fm.clock.read:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push return address on stack
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack

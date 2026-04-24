@@ -14,11 +14,10 @@
 * tmp0
 ********|*****|*********************|**************************
 pane.colorscheme.cycle:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-
+        .pushregs 0                 ; Push return address and registers on stack
+        ;-------------------------------------------------------
+        ; Cycle to next color scheme
+        ;-------------------------------------------------------
         mov   @tv.colorscheme,tmp0  ; Load color scheme index
         ci    tmp0,tv.colorscheme.entries
                                     ; Last entry reached?

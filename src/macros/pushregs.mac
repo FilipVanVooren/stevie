@@ -1,0 +1,25 @@
+; 
+; Push return address and registers on stack
+; #1 = Highest register to push (0-4)
+; Allocation size = regs * 2 + 4 (for tmp0 + return address)
+;
+ .defm pushregs
+        ai    stack,-(#1 * 2 + 4)    ; Make room on stack for registers
+    .ifge #1, 4
+        mov   tmp4,*stack+          ; Push tmp4
+    .endif
+    .ifge #1, 3
+        mov   tmp3,*stack+          ; Push tmp3
+    .endif
+    .ifge #1, 2
+        mov   tmp2,*stack+          ; Push tmp2
+    .endif
+    .ifge #1, 1
+        mov   tmp1,*stack+          ; Push tmp1        
+    .endif
+    .ifge #1, 0
+        mov   tmp0,*stack+          ; Push tmp0
+    .endif
+        mov   r11,*stack            ; Push return address
+        ai    stack,-(#1 * 2 + 2)    ; Set stack pointer back to original position
+ .endm 

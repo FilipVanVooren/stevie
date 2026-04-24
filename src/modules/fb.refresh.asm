@@ -17,14 +17,7 @@
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fb.refresh:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------        
         ; Setup starting position in index
         ;------------------------------------------------------
@@ -58,7 +51,7 @@ fb.refresh.unpack_line:
         c     @parm2,@fb.scrrows 
         jlt   fb.refresh.unpack_line
                                     ; No, unpack next line
-        jmp   fb.refresh.exit       ; Yes, exit without erasing
+        jmp   fb.refresh.prexit     ; Yes, exit without erasing
         ;------------------------------------------------------
         ; Erase until end of frame buffer
         ;------------------------------------------------------
@@ -69,7 +62,7 @@ fb.refresh.erase_eob:
         mpy   @fb.colsline,tmp1     ; tmp2 = cols per row * tmp1
 
         mov   tmp2,tmp2             ; Already at end of frame buffer?
-        jeq   fb.refresh.exit       ; Yes, so exit
+        jeq   fb.refresh.prexit     ; Yes, so exit
         
         mpy   @fb.colsline,tmp0     ; cols per row * tmp0 (Result in tmp1!)
         a     @fb.top.ptr,tmp1      ; Add framebuffer base
@@ -82,9 +75,13 @@ fb.refresh.erase_eob:
                                     ; | i  tmp1 = Byte to fill
                                     ; / i  tmp2 = Number of bytes to fill
         ;------------------------------------------------------
+        ; Prepare exit
+        ;------------------------------------------------------                                    
+fb.refresh.prexit:
+        seto  @fb.dirty             ; Refresh screen
+        ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
 fb.refresh.exit:
-        seto  @fb.dirty             ; Refresh screen
         .popregs 2                  ; Pop registers and return to caller                
         

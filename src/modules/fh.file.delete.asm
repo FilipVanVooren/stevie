@@ -28,16 +28,7 @@
 * None
 ********|*****|*********************|**************************
 fh.file.delete:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         dect  stack
@@ -163,10 +154,10 @@ fh.file.delete.pabheader:
 fh.file.delete.success:
         clr   @outparm1             ; Clear delete failed flag, can be trashed
         mov   @fh.callback2,tmp0    ; Get pointer to Callback "File deletee"
-        jeq   fh.file.delete.exit   ; Skip callback
+        jeq   fh.file.delete.prexit ; Skip callback
         bl    *tmp0                 ; Run callback function
         clr   @outparm1             ; Clear delete failed flag
-        jmp   fh.file.delete.exit   ; Exit normally
+        jmp   fh.file.delete.prexit ; Exit normally
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
@@ -176,19 +167,22 @@ fh.file.delete.error:
 
         seto  @outparm1             ; Set delete failed flag, can be trashed
         mov   @fh.callback3,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.delete.exit   ; Skip callback if not set
+        jeq   fh.file.delete.prexit ; Skip callback if not set
 
         bl    *tmp0                 ; Run callback function
         seto  @outparm1             ; Set delete failed flag
 *--------------------------------------------------------------
-* Exit
+* Prepare exit
 *--------------------------------------------------------------
-fh.file.delete.exit:
+fh.file.delete.prexit:
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------        
+fh.file.delete.exit:
         mov   *stack+,@parm4        ; Pop @parm4
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1
-        .popregs 3                  ; Pop registers and return to caller                        
-        b     *r11                  ; Return to caller   
+        .popregs 3                  ; Pop registers and return to caller

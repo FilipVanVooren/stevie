@@ -13,14 +13,7 @@
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.filebrowser:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack        
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         dect  stack
         mov   @wyx,*stack           ; Push cursor position                
         ;------------------------------------------------------
@@ -29,7 +22,6 @@ pane.filebrowser:
         bl    @filv
               data vdp.sit.base,32,vdp.sit.size - ((cmdb.rows + 1) * 80)
                                     ; Clear screen (up to CMDB)
-
         ;------------------------------------------------------
         ; Load colorscheme and turn on screen
         ;------------------------------------------------------

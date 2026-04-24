@@ -5,10 +5,7 @@
 * Run EA5 program image
 ********|*****|*********************|**************************
 edkey.action.cmdb.file.run:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0       
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Read directory if last character is '.'
         ;-------------------------------------------------------

@@ -28,14 +28,7 @@
 * >f000-ffff  Mailbox Stevie integration
 ********|*****|*********************|**************************
 tib.run:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         dect  stack
         mov   r12,*stack            ; Push r12
         ;-------------------------------------------------------
@@ -112,7 +105,6 @@ tib.run.init.basic1:
               data >0320,old.basic.prg,16
 
         jmp   tib.run.init.rest     ; Continue initialisation
-
         ;-------------------------------------------------------
         ; New TI Basic session 2
         ;-------------------------------------------------------

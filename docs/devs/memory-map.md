@@ -42,7 +42,8 @@ for exact offsets and field names.
 | >a700-a7ff |  #04   |  256 | Command buffer structure (`cmdb.struct`)        |
 |            |        |      | history buffer pointer, pane sizing, dialog ids,|
 |            |        |      | current command buffer and pane header buffers  |
-| >a800-a8ff |  #04   |  256 | Stevie value stack (SP2 user stack area)        |
+| >a800-a8ff |  #04   |  256 | Stevie value stack (SP2 stack pointer R9)       |
+|            |        |      | Stack grows down from >a8ff towards >a800       |
 | >a900-a9ff |  #04   |  256 | FREE                                            |
 | >aa00-aaff |  #04   |  256 | FREE                                            |
 | >ab00-abff |  #04   |  256 | FREE                                            |

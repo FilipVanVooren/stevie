@@ -1,4 +1,4 @@
-* FILE......: rom.order.asm
+* FILE......: equ.romseq.asm
 * Purpose...: Equates with CPU write addresses for switching banks
 
 *--------------------------------------------------------------

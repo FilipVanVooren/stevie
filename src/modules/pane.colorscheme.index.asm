@@ -17,12 +17,7 @@
 * tmp0,tmp1
 ********|*****|*********************|**************************
 pane.colorscheme.index:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Calculate index into colorscheme table
         ;-------------------------------------------------------
@@ -46,11 +41,7 @@ pane.colorscheme.index:
         ; Exit
         ;-------------------------------------------------------
 pane.colorscheme.index.exit:
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop R11
-        b     *r11                  ; Return to caller
-
+        .popregs 1                  ; Pop registers and return to caller
 
 
 ***************************************************************
@@ -69,12 +60,7 @@ pane.colorscheme.index.exit:
 * tmp0,tmp1
 ********|*****|*********************|**************************
 pane.colorscheme.address:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Calculate index into colorscheme table
         ;-------------------------------------------------------

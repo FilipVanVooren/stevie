@@ -18,15 +18,10 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1
+* tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 fm.savefile:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Check if filename must be changed in editor buffer
         ;-------------------------------------------------------
@@ -45,7 +40,6 @@ fm.savefile:
         bl    @xpym2m               ; tmp0 = Memory source address
                                     ; tmp1 = Memory target address
                                     ; tmp2 = Number of bytes to copy
-
         ;-------------------------------------------------------
         ; Save DV80 file
         ;-------------------------------------------------------
@@ -89,4 +83,4 @@ fm.savefile:
 * Exit
 *--------------------------------------------------------------
 fm.savefile.exit:
-        .popregs 1                  ; Pop registers and return to caller                
+        .popregs 2                  ; Pop registers and return to caller                

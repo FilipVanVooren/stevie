@@ -38,14 +38,7 @@
 * @tib.lines = Number of lines in TI Basic program
 ********|*****|*********************|**************************
 tib.uncrunch.prepare:
-        dect  stack
-        mov   r11,*stack            ; Save return address        
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------

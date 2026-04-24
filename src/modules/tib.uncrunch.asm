@@ -15,18 +15,10 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2,tmp3,tmp4
+* tmp0,tmp1
 ********|*****|*********************|**************************
 tib.uncrunch:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        ;------------------------------------------------------
-        ; Set indicator
-        ;------------------------------------------------------
+        .pushregs 1                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------

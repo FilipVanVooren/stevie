@@ -14,12 +14,7 @@
 * tmp0,tmp1
 *---------------------------------------------------------------
 fm.loadsave.cb.indicator1:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 1                 ; Push return address and registers on stack
         dect  stack        
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
@@ -155,10 +150,7 @@ fm.loadsave.cb.indicator1.exit:
 * tmp0
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator2:
-        dect  stack
-        mov   r11,*stack            ; Push return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Check if first page processed (speedup impression)
         ;------------------------------------------------------
@@ -261,16 +253,7 @@ fm.loadsave.cb.indicator2.exit:
 * tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------- 
 fm.loadsave.cb.indicator3:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push @parm1            
         ;------------------------------------------------------
@@ -335,7 +318,9 @@ fm.loadsave.cb.message:
         ;------------------------------------------------------
 fm.loadsave.cb.indicator3.exit:
         mov   *stack+,@parm1        ; Pop @parm1
-        .popregs 3                  ; Pop registers and return to caller                                
+        .popregs 3                  ; Pop registers and return to caller     
+
+                                           
         ;------------------------------------------------------
         ; Table with pointers for messages to display.
         ; (@fh.workmode used as index into table)
@@ -361,18 +346,7 @@ fm.loadsave.cb.indicator3.data:
 * tmp0,tmp1,tmp2,tmp3,tmp4
 *---------------------------------------------------------------
 fm.loadsave.cb.fioerr:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0        
-        dect  stack        
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack  
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack  
-        mov   tmp3,*stack           ; Push tmp3
-        dect  stack                          
-        mov   tmp4,*stack           ; Push tmp4
+        .pushregs 4                 ; Push return address and registers on stack
         dect  stack                          
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------

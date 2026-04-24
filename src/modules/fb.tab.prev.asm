@@ -23,12 +23,7 @@
 * Makes it easier when comparing values.
 ********|*****|*********************|**************************
 fb.tab.prev:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
+        .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Initialize
         ;-------------------------------------------------------
@@ -97,4 +92,4 @@ fb.tab.prev.eol:
         ; Exit
         ;------------------------------------------------------
 fb.tab.prev.exit:
-        .popregs 1                  ; Pop registers and return to caller                
+        .popregs 2                  ; Pop registers and return to caller                

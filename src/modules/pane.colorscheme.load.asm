@@ -20,14 +20,7 @@
 * tmp0,tmp1,tmp2
 ********|*****|*********************|**************************
 pane.colorscheme.load:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         dect  stack
         mov   @parm1,*stack         ; Push parm1
         dect  stack
@@ -314,10 +307,14 @@ pane.colorscheme.cursorcolor.fb:
         sla   tmp0,8                ; Move to MSB
 !       movb  tmp0,@tv.curshape+1   ; Save cursor color
         ;-------------------------------------------------------
+        ; Prepare exit
+        ;-------------------------------------------------------
+pane.colorscheme.load.prexit:
+        bl    @scron                ; Turn screen on
+        ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 pane.colorscheme.load.exit:
-        bl    @scron                ; Turn screen on
         mov   *stack+,@parm3        ; Pop @parm3
         mov   *stack+,@parm2        ; Pop @parm2
         mov   *stack+,@parm1        ; Pop @parm1

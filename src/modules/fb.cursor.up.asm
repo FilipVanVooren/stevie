@@ -18,10 +18,7 @@
 * tmp0
 ********|*****|*********************|**************************
 fb.cursor.up
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Crunch current line if dirty 
         ;-------------------------------------------------------
@@ -73,7 +70,7 @@ fb.cursor.up.set_cursorx:
                                     ; / o  @fb.row.length = Length of row
 
         c     @fb.column,@fb.row.length
-        jle   fb.cursor.up.exit
+        jle   fb.cursor.up.prexit
         ;-------------------------------------------------------
         ; Adjust cursor column position
         ;-------------------------------------------------------
@@ -81,9 +78,9 @@ fb.cursor.up.set_cursorx:
         mov   @fb.column,tmp0
         bl    @xsetx                ; Set VDP cursor X
         ;-------------------------------------------------------
-        ; Exit
+        ; Prepare exit
         ;-------------------------------------------------------
-fb.cursor.up.exit:
+fb.cursor.up.prexit:
         bl    @fb.calc.pointer      ; Calculate position in frame buffer
                                     ; \ i   @fb.top      = Address top row in FB
                                     ; | i   @fb.topline  = Top line in FB
@@ -94,4 +91,8 @@ fb.cursor.up.exit:
                                     ; | 
                                     ; / o   @fb.current  = Updated pointer                                    
         bl    @vdp.cursor.tat       ; Update cursor
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+fb.cursor.up.exit:
         .popregs 0                  ; Pop registers and return to caller        

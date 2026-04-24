@@ -20,14 +20,7 @@
 * Notes
 ********|*****|*********************|**************************
 pane.errline.drawcolor:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
+        .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Determine 1st row in error pane
         ;-------------------------------------------------------
@@ -73,13 +66,10 @@ pane.errline.drawcolor.exit:
 * Notes
 ********|*****|*********************|**************************
 pane.errline.show:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-
+        .pushregs 1                 ; Push return address and registers on stack
+        ;------------------------------------------------------
+        ; Draw color on rows in error pane
+        ;------------------------------------------------------
         li    tmp1,>00f6            ; White on dark red
         mov   tmp1,@parm1
 
@@ -148,15 +138,11 @@ pane.errline.show.exit:
 * Hiding the error line passes pane focus to frame buffer.
 ********|*****|*********************|**************************
 pane.errline.hide:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Get color combination
         ;------------------------------------------------------
         bl    @errpane.init         ; Clear error line string in RAM        
-
         mov   @cmdb.visible,tmp0
         jeq   pane.errline.hide.fbcolor
         ;------------------------------------------------------

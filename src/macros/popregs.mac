@@ -1,17 +1,8 @@
 ; 
 ; Pop registers from stack and return to caller
-; #1 = Highest register to pop (0-7)
+; #1 = Highest register to pop (0-4)
 ;
  .defm popregs
-    .ifeq #1, 7
-        mov   *stack+,tmp7          ; Pop tmp7
-    .endif
-    .ifge #1, 6
-        mov   *stack+,tmp6          ; Pop tmp6
-    .endif
-    .ifge #1, 5    
-        mov   *stack+,tmp5          ; Pop tmp5
-    .endif
     .ifge #1, 4
         mov   *stack+,tmp4          ; Pop tmp4
     .endif

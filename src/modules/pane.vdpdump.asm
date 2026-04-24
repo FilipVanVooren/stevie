@@ -18,13 +18,10 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0,tmp1,tmp2
+* tmp0
 ********|*****|*********************|**************************
 pane.vdpdump:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
+        .pushregs 0                 ; Push return address and registers on stack
         dect  stack
         mov   @wyx,*stack           ; Push cursor position
         ;------------------------------------------------------

@@ -421,10 +421,10 @@ fh.file.read.edb.next:
         ;------------------------------------------------------
         ; Callback "Memory full error"
         ;------------------------------------------------------
-        mov   @fh.callback5,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.edb.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.edb.exit
+        mov   @fh.callback5,tmp0      ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.edb.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function  
+        jmp   fh.file.read.edb.prexit
         ;------------------------------------------------------
         ; 5c: Check for keyboard interrupt <FCTN-4>
         ;------------------------------------------------------
@@ -434,17 +434,17 @@ fh.file.read.edb.check.interrupt:
         ;------------------------------------------------------
         ; Interrupt occured
         ;------------------------------------------------------
-        li    tmp0,id.file.interrupt ; \ Set flag "keyboard interrupt" occured
-        mov   tmp0,@fh.workmode      ; /
+        li    tmp0,id.file.interrupt  ; \ Set flag "keyboard interrupt" occured
+        mov   tmp0,@fh.workmode       ; /
 
-        bl    @file.close           ; Close file
-              data fh.vpab          ; \ i  p0 = Address of PAB in VRAM
-                                    ; /        
+        bl    @file.close             ; Close file
+              data fh.vpab            ; \ i  p0 = Address of PAB in VRAM
+                                      ; /        
 
-        mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.edb.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.edb.exit
+        mov   @fh.callback4,tmp0      ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.edb.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function  
+        jmp   fh.file.read.edb.prexit
         ;------------------------------------------------------
         ; 5d: Next record
         ;------------------------------------------------------
@@ -470,10 +470,10 @@ fh.file.read.edb.error:
         ;------------------------------------------------------
         ; Callback "File I/O error"
         ;------------------------------------------------------
-        mov   @fh.callback4,tmp0    ; Get pointer to Callback "File I/O error"
-        jeq   fh.file.read.edb.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function  
-        jmp   fh.file.read.edb.exit
+        mov   @fh.callback4,tmp0      ; Get pointer to Callback "File I/O error"
+        jeq   fh.file.read.edb.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function  
+        jmp   fh.file.read.edb.prexit
         ;------------------------------------------------------
         ; End-Of-File reached
         ;------------------------------------------------------     
@@ -487,25 +487,28 @@ fh.file.read.edb.eof:
         ;------------------------------------------------------
         ; Callback "Close file"
         ;------------------------------------------------------
-        mov   @fh.temp1,tmp0        ; Insert file or load file?
+        mov   @fh.temp1,tmp0          ; Insert file or load file?
         ci    tmp0,>ffff
         jne   fh.file.read.edb.eof.callback
-                                    ; Insert file, skip to callback
-        dec   @edb.lines            ; Load file, one-time adjustment
+                                      ; Insert file, skip to callback
+        dec   @edb.lines              ; Load file, one-time adjustment
 
 fh.file.read.edb.eof.callback:
-        mov   @fh.callback3,tmp0    ; Get pointer to Callback "Close file"
-        jeq   fh.file.read.edb.exit ; Skip callback
-        bl    *tmp0                 ; Run callback function                                    
+        mov   @fh.callback3,tmp0      ; Get pointer to Callback "Close file"
+        jeq   fh.file.read.edb.prexit ; Skip callback
+        bl    *tmp0                   ; Run callback function                                    
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
-fh.file.read.edb.exit:
+fh.file.read.edb.prexit:
         mov   @fh.sams.hipage,@edb.sams.hipage 
                                     ; Set highest SAMS page in use
         clr   @fh.fopmode           ; Set FOP mode to idle operation
 
         bl    @film
               data >83a0,>00,96     ; Clear any garbage left-over by DSR calls.
-
+*--------------------------------------------------------------
+* Exit
+*--------------------------------------------------------------
+fh.file.read.edb.exit:
         .popregs 3                  ; Pop registers and return to caller                                       
