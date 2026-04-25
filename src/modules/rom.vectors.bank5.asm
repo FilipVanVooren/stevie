@@ -1,11 +1,6 @@
 * FILE......: rom.vectors.bank5.asm
 * Purpose...: Bank 5 vectors for trampoline function
 
-*--------------------------------------------------------------
-* ROM identification string for CPU crash
-*--------------------------------------------------------------
-cpu.crash.showbank.bankstr:
-        stri 'ROM#5'
 
 *--------------------------------------------------------------
 * ROM 5: Vectors 1-32
@@ -78,3 +73,10 @@ vec.61  data  cpu.crash             ;
 vec.62  data  cpu.crash             ;
 vec.63  data  cpu.crash             ;
 vec.64  data  cpu.crash             ;
+
+*--------------------------------------------------------------
+* ROM identification string for CPU crash
+*--------------------------------------------------------------
+cpu.crash.showbank.bankstr:
+        aorg >7fea
+        stri 'ROM#5'

@@ -2,12 +2,6 @@
 * Purpose...: Bank 3 vectors for trampoline function
 
 *--------------------------------------------------------------
-* ROM identification string for CPU crash
-*--------------------------------------------------------------
-cpu.crash.showbank.bankstr:
-        stri 'ROM#3'
-
-*--------------------------------------------------------------
 * ROM 3: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
@@ -78,3 +72,10 @@ vec.61  data  cpu.crash             ;
 vec.62  data  cpu.crash             ;
 vec.63  data  cpu.crash             ;
 vec.64  data  cpu.crash             ;
+
+*--------------------------------------------------------------
+* ROM identification string for CPU crash
+*--------------------------------------------------------------
+cpu.crash.showbank.bankstr:
+        aorg >7fea
+        stri 'ROM#3'

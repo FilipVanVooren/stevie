@@ -2,11 +2,6 @@
 * Purpose...: Bank 0 "dummy" vectors for trampoline function
 
 *--------------------------------------------------------------
-* ROM identification string for CPU crash
-*--------------------------------------------------------------
-cpu.crash.showbank.bankstr:
-        stri 'ROM#0'
-*--------------------------------------------------------------
 * ROM 0: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
@@ -77,3 +72,10 @@ vec.61  equ   bankx.vectab + 120    ;
 vec.62  equ   bankx.vectab + 122    ;
 vec.63  equ   bankx.vectab + 124    ;
 vec.64  equ   bankx.vectab + 126    ;
+
+*--------------------------------------------------------------
+* ROM identification string for CPU crash
+*--------------------------------------------------------------
+cpu.crash.showbank.bankstr:
+        aorg >7fea
+        stri 'ROM#0'

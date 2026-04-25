@@ -9,4 +9,6 @@ cpu.crash.showbank:
         bl    @putat
               byte 3,20
               data cpu.crash.showbank.bankstr
+              
+        bl    @scron                ; Turn screen on
         jmp   $
