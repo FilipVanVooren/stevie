@@ -4,7 +4,7 @@
 ; Allocation size = regs * 2 + 4 (for tmp0 + return address)
 ;
  .defm pushregs
-        ai    stack,-(#1 * 2 + 4)    ; Make room on stack for registers
+        ai    stack,-(#1 * 2 + 4)   ; Make room on stack for registers
     .ifge #1, 4
         mov   tmp4,*stack+          ; Push tmp4
     .endif
@@ -21,5 +21,5 @@
         mov   tmp0,*stack+          ; Push tmp0
     .endif
         mov   r11,*stack            ; Push return address
-        ai    stack,-(#1 * 2 + 2)    ; Set stack pointer back to original position
+        ai    stack,-(#1 * 2 + 2)   ; Set stack pointer back to original position
  .endm 

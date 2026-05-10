@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260425-1554070
+0002               * BUILD: 260510-1837270
 0003               ***************************************************************
                    < stevie_b0.asm
 0025                       ;-----------------------------------------------------------------------
@@ -294,22 +294,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0107      A000     free1             equ  core1.top + 0   ; **free**
 0108      A002     free2             equ  core1.top + 2   ; **free**
 0109      A004     free3             equ  core1.top + 4   ; **free**
-0110      A006     parm1             equ  core1.top + 6   ; Function parameter 1
-0111      A008     parm2             equ  core1.top + 8   ; Function parameter 2
-0112      A00A     parm3             equ  core1.top + 10  ; Function parameter 3
-0113      A00C     parm4             equ  core1.top + 12  ; Function parameter 4
+0110      A006     parm9             equ  core1.top + 6   ; Function parameter 9
+0111      A008     parm8             equ  core1.top + 8   ; Function parameter 8
+0112      A00A     parm7             equ  core1.top + 10  ; Function parameter 7
+0113      A00C     parm6             equ  core1.top + 12  ; Function parameter 6
 0114      A00E     parm5             equ  core1.top + 14  ; Function parameter 5
-0115      A010     parm6             equ  core1.top + 16  ; Function parameter 6
-0116      A012     parm7             equ  core1.top + 18  ; Function parameter 7
-0117      A014     parm8             equ  core1.top + 20  ; Function parameter 8
-0118      A016     parm9             equ  core1.top + 22  ; Function parameter 9
-0119      A018     outparm1          equ  core1.top + 24  ; Function output parameter 1
-0120      A01A     outparm2          equ  core1.top + 26  ; Function output parameter 2
-0121      A01C     outparm3          equ  core1.top + 28  ; Function output parameter 3
+0115      A010     parm4             equ  core1.top + 16  ; Function parameter 4
+0116      A012     parm3             equ  core1.top + 18  ; Function parameter 3
+0117      A014     parm2             equ  core1.top + 20  ; Function parameter 2
+0118      A016     parm1             equ  core1.top + 22  ; Function parameter 1
+0119      A018     outparm7          equ  core1.top + 24  ; Function output parameter 7
+0120      A01A     outparm6          equ  core1.top + 26  ; Function output parameter 6
+0121      A01C     outparm5          equ  core1.top + 28  ; Function output parameter 5
 0122      A01E     outparm4          equ  core1.top + 30  ; Function output parameter 4
-0123      A020     outparm5          equ  core1.top + 32  ; Function output parameter 5
-0124      A022     outparm6          equ  core1.top + 34  ; Function output parameter 6
-0125      A024     outparm7          equ  core1.top + 36  ; Function output parameter 7
+0123      A020     outparm3          equ  core1.top + 32  ; Function output parameter 3
+0124      A022     outparm2          equ  core1.top + 34  ; Function output parameter 2
+0125      A024     outparm1          equ  core1.top + 36  ; Function output parameter 1
 0126      A026     kbflags           equ  core1.top + 38  ; Keyboard control flags
 0127      A028     keycode1          equ  core1.top + 40  ; Current key scanned
 0128      A02A     keycode2          equ  core1.top + 42  ; Previous key scanned
@@ -971,13 +971,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 2.0.0-60'
+0047 6010 0F53                 stri 'STEVIE 2.0.1-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 322E     
      601A 302E     
-     601C 302D     
+     601C 312D     
      601E 3630     
                    < stevie_b0.asm
 0049               
@@ -6953,11 +6953,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0026                       ; Calculate line in editor buffer
 0027                       ;------------------------------------------------------
 0028 72D2 C120  34         mov   @parm1,tmp0
-     72D4 A006     
+     72D4 A016     
 0029 72D6 A120  34         a     @fb.topline,tmp0
      72D8 A304     
 0030 72DA C804  38         mov   tmp0,@outparm1
-     72DC A018     
+     72DC A024     
 0031                       ;------------------------------------------------------
 0032                       ; Exit
 0033                       ;------------------------------------------------------
@@ -7375,7 +7375,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0214               
 0215 740C 0A16  18         sla   tmp2,1                ; line number * 2
 0216 740E C806  38         mov   tmp2,@outparm1        ; Offset index entry
-     7410 A018     
+     7410 A024     
 0217               
 0218 7412 A160  34         a     @idx.sams.lopage,tmp1 ; Add SAMS page base
      7414 A602     
@@ -7851,12 +7851,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030                       ; Initialisation
 0031                       ;------------------------------------------------------
 0032 75B0 C120  34         mov   @parm1,tmp0           ; Pointer to input string
-     75B2 A006     
+     75B2 A016     
 0033 75B4 04C5  14         clr   tmp1                  ; Termination character >00
 0034 75B6 04E0  34         clr   @outparm1             ; Reset output parameters
-     75B8 A018     
+     75B8 A024     
 0035 75BA 04E0  34         clr   @outparm2             ; Reset output parameters
-     75BC A01A     
+     75BC A022     
 0036                       ;------------------------------------------------------
 0037                       ; Get string length
 0038                       ;------------------------------------------------------
@@ -7878,7 +7878,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0051                       ; Prepare register values
 0052                       ;------------------------------------------------------
 0053 75CE C120  34         mov   @parm1,tmp0           ; Pointer to input string
-     75D0 A006     
+     75D0 A016     
 0054               
 0055 75D2 A186  18         a     tmp2,tmp2             ; \ Starting offset in tv.uint16.mpy
 0056 75D4 0226  22         ai    tmp2,-10              ; |    10 - (tmp2 * 2)
@@ -7932,15 +7932,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0098                       ;------------------------------------------------------
 0099               tv.uint16.pack.error:
 0100 7606 04E0  34         clr   @outparm1             ; Empty uint16
-     7608 A018     
+     7608 A024     
 0101 760A 0720  34         seto  @outparm2             ; Invalid input string
-     760C A01A     
+     760C A022     
 0102                       ;-------------------------------------------------------
 0103                       ; Save final uint16
 0104                       ;-------------------------------------------------------
 0105               tv.uint16.pack.done:
 0106 760E C807  38         mov   tmp3,@outparm1
-     7610 A018     
+     7610 A024     
 0107                       ;-------------------------------------------------------
 0108                       ; Exit
 0109                       ;-------------------------------------------------------
@@ -8001,7 +8001,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       ;------------------------------------------------------
 0025 7638 06A0  32         bl    @mknum                ; Convert unsigned number to string
      763A 2A56     
-0026 763C A006                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
+0026 763C A016                   data parm1            ; \ i p0  = Pointer to 16bit unsigned number
 0027 763E A100                   data rambuf           ; | i p1  = Pointer to 5 byte string buffer
 0028 7640 30                     byte 48               ; | i p2H = Offset for ASCII digit 0
 0029 7641   20                   byte 32               ; / i p2L = Char for replacing leading 0's
@@ -8075,21 +8075,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0032                       ; Asserts
 0033                       ;------------------------------------------------------
 0034 766E C120  34         mov   @parm1,tmp0           ; \ Get string prefix (length-byte)
-     7670 A006     
+     7670 A016     
 0035 7672 D194  26         movb  *tmp0,tmp2            ; /
 0036 7674 0986  32         srl   tmp2,8                ; Right align
 0037 7676 C1C6  18         mov   tmp2,tmp3             ; Make copy of length-byte for later use
 0038               
 0039 7678 8806  34         c     tmp2,@parm2           ; String length > requested length?
-     767A A008     
+     767A A014     
 0040 767C 1520  14         jgt   tv.pad.string.panic   ; Yes, crash
 0041                       ;------------------------------------------------------
 0042                       ; Copy string to buffer
 0043                       ;------------------------------------------------------
 0044 767E C120  34         mov   @parm1,tmp0           ; Get source address
-     7680 A006     
+     7680 A016     
 0045 7682 C160  34         mov   @parm4,tmp1           ; Get destination address
-     7684 A00C     
+     7684 A010     
 0046 7686 0586  14         inc   tmp2                  ; Also include length-byte in copy
 0047               
 0048 7688 0649  14         dect  stack
@@ -8106,10 +8106,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0058                       ; Set length of new string
 0059                       ;------------------------------------------------------
 0060 7692 C120  34         mov   @parm2,tmp0           ; Get requested length
-     7694 A008     
+     7694 A014     
 0061 7696 0A84  32         sla   tmp0,8                ; Left align
 0062 7698 C160  34         mov   @parm4,tmp1           ; Get pointer to buffer
-     769A A00C     
+     769A A010     
 0063 769C D544  30         movb  tmp0,*tmp1            ; Set new length of string
 0064 769E A147  18         a     tmp3,tmp1             ; \ Skip to end of string
 0065 76A0 0585  14         inc   tmp1                  ; /
@@ -8117,12 +8117,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0067                       ; Prepare for padding string
 0068                       ;------------------------------------------------------
 0069 76A2 C1A0  34         mov   @parm2,tmp2           ; \ Get number of bytes to fill
-     76A4 A008     
+     76A4 A014     
 0070 76A6 6187  18         s     tmp3,tmp2             ; |
 0071 76A8 0586  14         inc   tmp2                  ; /
 0072               
 0073 76AA C120  34         mov   @parm3,tmp0           ; Get byte to padd
-     76AC A00A     
+     76AC A012     
 0074 76AE 0A84  32         sla   tmp0,8                ; Left align
 0075                       ;------------------------------------------------------
 0076                       ; Right-pad string to destination length
@@ -8133,8 +8133,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0081 76B4 15FD  14         jgt   tv.pad.string.loop    ; Next character
 0082               
 0083 76B6 C820  54         mov   @parm4,@outparm1      ; Set pointer to padded string
-     76B8 A00C     
-     76BA A018     
+     76B8 A010     
+     76BA A024     
 0084 76BC 1004  14         jmp   tv.pad.string.exit    ; Exit
 0085                       ;-----------------------------------------------------------------------
 0086                       ; CPU crash
@@ -8198,9 +8198,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       ; Get parameters
 0025                       ;------------------------------------------------------
 0026 76E0 C120  34         mov   @parm1,tmp0           ; Get line number
-     76E2 A006     
+     76E2 A016     
 0027 76E4 C160  34         mov   @parm2,tmp1           ; Get pointer
-     76E6 A008     
+     76E6 A014     
 0028 76E8 1312  14         jeq   idx.entry.update.clear
 0029                                                   ; Special handling for "null"-pointer
 0030                       ;------------------------------------------------------
@@ -8213,11 +8213,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0036                       ; Calculate MSB value index slot (SAMS page editor buffer)
 0037                       ;------------------------------------------------------
 0038 76F0 06E0  34         swpb  @parm3
-     76F2 A00A     
+     76F2 A012     
 0039 76F4 D160  34         movb  @parm3,tmp1           ; Put SAMS page in MSB
-     76F6 A00A     
+     76F6 A012     
 0040 76F8 06E0  34         swpb  @parm3                ; \ Restore original order again,
-     76FA A00A     
+     76FA A012     
 0041                                                   ; / important for messing up caller parm3!
 0042                       ;------------------------------------------------------
 0043                       ; Update index slot
@@ -8229,11 +8229,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0048                                                   ; / o  outparm1 = Slot offset in SAMS page
 0049               
 0050 7700 C120  34         mov   @outparm1,tmp0        ; \ Update index slot
-     7702 A018     
+     7702 A024     
 0051 7704 C905  38         mov   tmp1,@idx.top(tmp0)   ; /
      7706 B000     
 0052 7708 C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
-     770A A018     
+     770A A024     
 0053 770C 1008  14         jmp   idx.entry.update.exit
 0054                       ;------------------------------------------------------
 0055                       ; Special handling for "null"-pointer
@@ -8245,11 +8245,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0060                                                   ; / o  outparm1 = Slot offset in SAMS page
 0061               
 0062 7712 C120  34         mov   @outparm1,tmp0        ; \ Clear index slot
-     7714 A018     
+     7714 A024     
 0063 7716 04E4  34         clr   @idx.top(tmp0)        ; /
      7718 B000     
 0064 771A C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
-     771C A018     
+     771C A024     
 0065                       ;------------------------------------------------------
 0066                       ; Exit
 0067                       ;------------------------------------------------------
@@ -8299,7 +8299,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0023                       ; Get slot entry
 0024                       ;------------------------------------------------------
 0025 7736 C120  34         mov   @parm1,tmp0           ; Line number in editor buffer
-     7738 A006     
+     7738 A016     
 0026               
 0027 773A 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page with index slot
      773C 3310     
@@ -8307,7 +8307,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029                                                   ; / o  outparm1 = Slot offset in SAMS page
 0030               
 0031 773E C120  34         mov   @outparm1,tmp0        ; \ Get slot entry
-     7740 A018     
+     7740 A024     
 0032 7742 C164  34         mov   @idx.top(tmp0),tmp1   ; /
      7744 B000     
 0033               
@@ -8331,18 +8331,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0049                       ;------------------------------------------------------
 0050               idx.pointer.get.parm:
 0051 7756 C805  38         mov   tmp1,@outparm1        ; Index slot -> Pointer
-     7758 A018     
+     7758 A024     
 0052 775A C806  38         mov   tmp2,@outparm2        ; Index slot -> SAMS page
-     775C A01A     
+     775C A022     
 0053 775E 1004  14         jmp   idx.pointer.get.exit
 0054                       ;------------------------------------------------------
 0055                       ; Special handling for "null"-pointer
 0056                       ;------------------------------------------------------
 0057               idx.pointer.get.parm.null:
 0058 7760 04E0  34         clr   @outparm1
-     7762 A018     
+     7762 A024     
 0059 7764 04E0  34         clr   @outparm2
-     7766 A01A     
+     7766 A022     
 0060                       ;------------------------------------------------------
 0061                       ; Exit
 0062                       ;------------------------------------------------------
@@ -8420,7 +8420,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0048                       ; Get index slot
 0049                       ;------------------------------------------------------
 0050 7794 C120  34         mov   @parm1,tmp0           ; Line number in editor buffer
-     7796 A006     
+     7796 A016     
 0051               
 0052 7798 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
      779A 3310     
@@ -8428,17 +8428,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0054                                                   ; / o  outparm1 = Slot offset in SAMS page
 0055               
 0056 779C C120  34         mov   @outparm1,tmp0        ; Index offset
-     779E A018     
+     779E A024     
 0057                       ;------------------------------------------------------
 0058                       ; Prepare for index reorg
 0059                       ;------------------------------------------------------
 0060 77A0 C1A0  34         mov   @parm2,tmp2           ; Get last line to check
-     77A2 A008     
+     77A2 A014     
 0061 77A4 1303  14         jeq   idx.entry.delete.lastline
 0062                                                   ; Exit early if last line = 0
 0063               
 0064 77A6 61A0  34         s     @parm1,tmp2           ; Calculate loop
-     77A8 A006     
+     77A8 A016     
 0065 77AA 1504  14         jgt   idx.entry.delete.reorg
 0066                                                   ; Reorganize if loop counter > 0
 0067                       ;------------------------------------------------------
@@ -8454,7 +8454,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0076                       ;------------------------------------------------------
 0077               idx.entry.delete.reorg:
 0078 77B4 C1E0  34         mov   @parm2,tmp3           ; Get last line to reorganize
-     77B6 A008     
+     77B6 A014     
 0079 77B8 0287  22         ci    tmp3,2048
      77BA 0800     
 0080 77BC 120A  14         jle   idx.entry.delete.reorg.simple
@@ -8472,7 +8472,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0091                       ; Recalculate index offset in continuous memory region
 0092                       ;-------------------------------------------------------
 0093 77C2 C120  34         mov   @parm1,tmp0           ; Restore line number
-     77C4 A006     
+     77C4 A016     
 0094 77C6 0A14  18         sla   tmp0,1                ; Calculate offset
 0095               
 0096 77C8 06A0  32         bl    @_idx.entry.delete.reorg
@@ -8622,9 +8622,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0090                       ; Prepare for index reorg
 0091                       ;------------------------------------------------------
 0092 7834 C1A0  34         mov   @parm2,tmp2           ; Get last line to check
-     7836 A008     
+     7836 A014     
 0093 7838 61A0  34         s     @parm1,tmp2           ; Calculate loop
-     783A A006     
+     783A A016     
 0094 783C 130F  14         jeq   idx.entry.insert.reorg.simple
 0095                                                   ; Special treatment if last line
 0096                       ;------------------------------------------------------
@@ -8632,7 +8632,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0098                       ;------------------------------------------------------
 0099               idx.entry.insert.reorg:
 0100 783E C1E0  34         mov   @parm2,tmp3
-     7840 A008     
+     7840 A014     
 0101 7842 0287  22         ci    tmp3,2048
      7844 0800     
 0102 7846 110A  14         jlt   idx.entry.insert.reorg.simple
@@ -8648,7 +8648,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0111                                                   ; b000 - ffff (5 SAMS pages)
 0112               
 0113 784C C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
-     784E A008     
+     784E A014     
 0114 7850 0A14  18         sla   tmp0,1                ; tmp0 * 2
 0115               
 0116 7852 06A0  32         bl    @_idx.entry.insert.reorg
@@ -8667,7 +8667,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0127                       ;------------------------------------------------------
 0128               idx.entry.insert.reorg.simple:
 0129 785C C120  34         mov   @parm2,tmp0           ; Last line number in editor buffer
-     785E A008     
+     785E A014     
 0130               
 0131 7860 06A0  32         bl    @_idx.samspage.get    ; Get SAMS page for index
      7862 3310     
@@ -8675,7 +8675,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0133                                                   ; / o  outparm1 = Slot offset in SAMS page
 0134               
 0135 7864 C120  34         mov   @outparm1,tmp0        ; Index offset
-     7866 A018     
+     7866 A024     
 0136               
 0137 7868 06A0  32         bl    @_idx.entry.insert.reorg
      786A 3702     
@@ -8750,7 +8750,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0035                       ;------------------------------------------------------
 0036               edb.line.mappage.lookup:
 0037 7894 C804  38         mov   tmp0,@parm1           ; Set line number in editor buffer
-     7896 A006     
+     7896 A016     
 0038               
 0039 7898 06A0  32         bl    @idx.pointer.get      ; Get pointer to line
      789A 3644     
@@ -8759,9 +8759,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0042                                                   ; / o  outparm2 = SAMS page
 0043               
 0044 789C C120  34         mov   @outparm2,tmp0        ; SAMS page
-     789E A01A     
+     789E A022     
 0045 78A0 C160  34         mov   @outparm1,tmp1        ; Pointer to line
-     78A2 A018     
+     78A2 A024     
 0046 78A4 130B  14         jeq   edb.line.mappage.exit ; Nothing to page-in if NULL pointer
 0047                                                   ; (=empty line)
 0048                       ;------------------------------------------------------
@@ -8779,12 +8779,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0058                                                   ; / i  tmp1 = Memory address
 0059               
 0060 78B0 C820  54         mov   @outparm2,@tv.sams.c000
-     78B2 A01A     
+     78B2 A022     
      78B4 A208     
 0061                                                   ; Set page in shadow registers
 0062               
 0063 78B6 C820  54         mov   @outparm2,@edb.sams.page
-     78B8 A01A     
+     78B8 A022     
      78BA A518     
 0064                                                   ; Set current SAMS page
 0065                       ;------------------------------------------------------
@@ -8835,14 +8835,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0023                       ; Initialisation
 0024                       ;------------------------------------------------------
 0025 78D2 04E0  34         clr   @outparm1             ; Reset length
-     78D4 A018     
+     78D4 A024     
 0026 78D6 04E0  34         clr   @outparm2             ; Reset SAMS bank
-     78D8 A01A     
+     78D8 A022     
 0027                       ;------------------------------------------------------
 0028                       ; Exit if requested line beyond editor buffer
 0029                       ;------------------------------------------------------
 0030 78DA C120  34         mov   @parm1,tmp0           ; \
-     78DC A006     
+     78DC A016     
 0031 78DE 0584  14         inc   tmp0                  ; /  base 1
 0032               
 0033 78E0 8804  34         c     tmp0,@edb.lines       ; Requested line at BOT?
@@ -8854,7 +8854,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0038                       ; Map SAMS page
 0039                       ;------------------------------------------------------
 0040 78E8 C120  34 !       mov   @parm1,tmp0           ; Get line
-     78EA A006     
+     78EA A016     
 0041               
 0042 78EC 06A0  32         bl    @edb.line.mappage     ; Activate editor buffer SAMS page for line
      78EE 3796     
@@ -8863,7 +8863,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0045                                                   ; / o  outparm2 = SAMS page
 0046               
 0047 78F0 C120  34         mov   @outparm1,tmp0        ; Store pointer in tmp0
-     78F2 A018     
+     78F2 A024     
 0048 78F4 1304  14         jeq   edb.line.getlength.null
 0049                                                   ; Set length to 0 if null-pointer
 0050                       ;------------------------------------------------------
@@ -8871,14 +8871,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0052                       ;------------------------------------------------------
 0053 78F6 C154  26         mov   *tmp0,tmp1            ; Get length into tmp1
 0054 78F8 C805  38         mov   tmp1,@outparm1        ; Save length
-     78FA A018     
+     78FA A024     
 0055 78FC 1002  14         jmp   edb.line.getlength.exit
 0056                       ;------------------------------------------------------
 0057                       ; Set length to 0 if null-pointer
 0058                       ;------------------------------------------------------
 0059               edb.line.getlength.null:
 0060 78FE 04E0  34         clr   @outparm1             ; Set length to 0, was a null-pointer
-     7900 A018     
+     7900 A024     
 0061                       ;------------------------------------------------------
 0062                       ; Exit
 0063                       ;------------------------------------------------------
@@ -8929,7 +8929,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0025 791A A120  34         a     @fb.row,tmp0          ; Get current row in frame buffer
      791C A306     
 0026 791E C804  38         mov   tmp0,@parm1
-     7920 A006     
+     7920 A016     
 0027                       ;------------------------------------------------------
 0028                       ; Get length
 0029                       ;------------------------------------------------------
@@ -8940,7 +8940,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0033                                                   ; / o  @outparm2 = SAMS page
 0034               
 0035 7926 C820  54         mov   @outparm1,@fb.row.length
-     7928 A018     
+     7928 A024     
      792A A308     
 0036                                                   ; Save row length
 0037                       ;------------------------------------------------------
@@ -11012,28 +11012,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     norep............... >0000 :     
     num1................ >3030 :     
     num2................ >3020 :     
-    outparm1............ >a018 :     
-    outparm2............ >a01a :     
-    outparm3............ >a01c :     
+    outparm1............ >a024 :     
+    outparm2............ >a022 :     
+    outparm3............ >a020 :     
     outparm4............ >a01e :     
-    outparm5............ >a020 :     
-    outparm6............ >a022 :     
-    outparm7............ >a024 :     
+    outparm5............ >a01c :     
+    outparm6............ >a01a :     
+    outparm7............ >a018 :     
     palon............... >201c :     
     pane.botrow......... >003b :     
     pane.focus.cmdb..... >0001 :     
     pane.focus.fb....... >0000 :     
     pane.topline.oneshot.clearmsg >3898 :     
     pane.topline.oneshot.clearmsg.exit >38b0 :     
-    parm1............... >a006 :     
-    parm2............... >a008 :     
-    parm3............... >a00a :     
-    parm4............... >a00c :     
+    parm1............... >a016 :     
+    parm2............... >a014 :     
+    parm3............... >a012 :     
+    parm4............... >a010 :     
     parm5............... >a00e :     
-    parm6............... >a010 :     
-    parm7............... >a012 :     
-    parm8............... >a014 :     
-    parm9............... >a016 :     
+    parm6............... >a00c :     
+    parm7............... >a00a :     
+    parm8............... >a008 :     
+    parm9............... >a006 :     
     pctadr.............. >12c0 :     
     popr0............... >2230 :     
     popr1............... >222e :     

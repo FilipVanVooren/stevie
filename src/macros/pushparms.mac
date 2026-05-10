@@ -1,0 +1,42 @@
+; 
+; Push parameters on stack
+; #1 = Highest parameter to push (1-9)
+; Allocation size = parameters * 2
+;
+********|*****|*********************|**************************
+ .defm pushregs
+        ai    stack,-(#1 * 2)       ; Make room on stack for parameters
+        mov   tmp0,@macvar1         ; Backup tmp0 in macro variable
+        li    tmp0,parm1 - ((#1 - 1) * 2) 
+                                    ; Calculate address of highest paramter to push
+
+    .ifgt #1, 9
+        mov   *tmp0+,*stack+        ; Push parm9
+    .endif
+    .ifge #1, 8
+        mov   *tmp0+,*stack+        ; Push parm8    
+    .endif        
+    .ifge #1, 7
+        mov   *tmp0+,*stack+        ; Push parm7
+    .endif        
+    .ifge #1, 6
+        mov   *tmp0+,*stack+        ; Push parm6
+    .endif        
+    .ifge #1, 5
+        mov   *tmp0+,*stack+        ; Push parm5
+    .endif        
+    .ifge #1, 4
+        mov   *tmp0+,*stack+        ; Push parm4
+    .endif        
+    .ifge #1, 3
+        mov   *tmp0+,*stack+        ; Push parm3        
+    .endif        
+    .ifge #1, 2
+        mov   *tmp0+,*stack+        ; Push parm2
+    .endif        
+    .ifge #1, 1
+        mov   *tmp0+,*stack+        ; Push parm1        
+    .endif
+        ai    stack,-(#1 * 2)       ; Set stack pointer back to original position
+        mov   @macvar1,tmp0         ; Restore tmp0
+ .endm 

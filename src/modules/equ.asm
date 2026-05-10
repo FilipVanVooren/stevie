@@ -104,18 +104,18 @@ id.special.basic          equ  3       ; TI Basic program
 ; Stevie core 1 RAM                    @>a000-a0ff                   (256 bytes)
 ;-------------------------------------------------------------------------------
 core1.top         equ  >a000           ; Structure begin
-free1             equ  core1.top + 0   ; **free**
-free2             equ  core1.top + 2   ; **free**
-free3             equ  core1.top + 4   ; **free**
-parm1             equ  core1.top + 6   ; Function parameter 1
-parm2             equ  core1.top + 8   ; Function parameter 2
-parm3             equ  core1.top + 10  ; Function parameter 3
-parm4             equ  core1.top + 12  ; Function parameter 4
+macvar1           equ  core1.top + 0   ; Macro temporary variable 1
+macvar2           equ  core1.top + 2   ; Macro temporary variable 2
+free3             equ  core1.top + 4   ; 
+parm9             equ  core1.top + 6   ; Function parameter 9
+parm8             equ  core1.top + 8   ; Function parameter 8
+parm7             equ  core1.top + 10  ; Function parameter 7
+parm6             equ  core1.top + 12  ; Function parameter 6
 parm5             equ  core1.top + 14  ; Function parameter 5
-parm6             equ  core1.top + 16  ; Function parameter 6
-parm7             equ  core1.top + 18  ; Function parameter 7
-parm8             equ  core1.top + 20  ; Function parameter 8
-parm9             equ  core1.top + 22  ; Function parameter 9
+parm4             equ  core1.top + 16  ; Function parameter 4
+parm3             equ  core1.top + 18  ; Function parameter 3
+parm2             equ  core1.top + 20  ; Function parameter 2
+parm1             equ  core1.top + 22  ; Function parameter 1
 outparm1          equ  core1.top + 24  ; Function output parameter 1
 outparm2          equ  core1.top + 26  ; Function output parameter 2
 outparm3          equ  core1.top + 28  ; Function output parameter 3

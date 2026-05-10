@@ -49,5 +49,5 @@ edb.lock.exit:
         .popregs 0                  ; Pop registers and return to caller        
 
 txt.locked:
-        stri "Editor locked"        ; Text for locked message
+        stri "Editor locked ", >1d  ; Text for editor locked message
         even

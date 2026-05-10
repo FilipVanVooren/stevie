@@ -19,21 +19,11 @@
 ********|*****|*********************|**************************
 fb.vdpdump:
         .pushregs 2                 ; Push return address and registers on stack
-        ;------------------------------------------------------
-        ; Assert
-        ;------------------------------------------------------ 
         mov   @parm1,tmp1
-        ci    tmp1,80*30
-        jle   ! 
-        ;------------------------------------------------------
-        ; Crash the system
-        ;------------------------------------------------------
-        mov   r11,@>ffce            ; \ Save caller address        
-        bl    @cpu.crash            ; / Crash and halt system
         ;------------------------------------------------------
         ; Setup start position in VDP memory
         ;------------------------------------------------------        
-!       li    tmp0,vdp.fb.toprow.sit 
+        li    tmp0,vdp.fb.toprow.sit 
                                     ; VDP target address (Xth line on screen!)
         mov   @tv.ruler.visible,tmp2
                                     ; Is ruler visible on screen?
