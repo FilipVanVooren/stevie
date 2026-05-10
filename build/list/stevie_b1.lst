@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260510-1837270
+0002               * BUILD: 260510-1918010
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -291,9 +291,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0104               ; Stevie core 1 RAM                    @>a000-a0ff                   (256 bytes)
 0105               ;-------------------------------------------------------------------------------
 0106      A000     core1.top         equ  >a000           ; Structure begin
-0107      A000     free1             equ  core1.top + 0   ; **free**
-0108      A002     free2             equ  core1.top + 2   ; **free**
-0109      A004     free3             equ  core1.top + 4   ; **free**
+0107      A000     macvar1           equ  core1.top + 0   ; Macro temporary variable 1
+0108      A002     macvar2           equ  core1.top + 2   ; Macro temporary variable 2
+0109      A004     free3             equ  core1.top + 4   ;
 0110      A006     parm9             equ  core1.top + 6   ; Function parameter 9
 0111      A008     parm8             equ  core1.top + 8   ; Function parameter 8
 0112      A00A     parm7             equ  core1.top + 10  ; Function parameter 7
@@ -303,13 +303,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0116      A012     parm3             equ  core1.top + 18  ; Function parameter 3
 0117      A014     parm2             equ  core1.top + 20  ; Function parameter 2
 0118      A016     parm1             equ  core1.top + 22  ; Function parameter 1
-0119      A018     outparm7          equ  core1.top + 24  ; Function output parameter 7
-0120      A01A     outparm6          equ  core1.top + 26  ; Function output parameter 6
-0121      A01C     outparm5          equ  core1.top + 28  ; Function output parameter 5
+0119      A018     outparm1          equ  core1.top + 24  ; Function output parameter 1
+0120      A01A     outparm2          equ  core1.top + 26  ; Function output parameter 2
+0121      A01C     outparm3          equ  core1.top + 28  ; Function output parameter 3
 0122      A01E     outparm4          equ  core1.top + 30  ; Function output parameter 4
-0123      A020     outparm3          equ  core1.top + 32  ; Function output parameter 3
-0124      A022     outparm2          equ  core1.top + 34  ; Function output parameter 2
-0125      A024     outparm1          equ  core1.top + 36  ; Function output parameter 1
+0123      A020     outparm5          equ  core1.top + 32  ; Function output parameter 5
+0124      A022     outparm6          equ  core1.top + 34  ; Function output parameter 6
+0125      A024     outparm7          equ  core1.top + 36  ; Function output parameter 7
 0126      A026     kbflags           equ  core1.top + 38  ; Keyboard control flags
 0127      A028     keycode1          equ  core1.top + 40  ; Current key scanned
 0128      A02A     keycode2          equ  core1.top + 42  ; Previous key scanned
@@ -6617,12 +6617,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0019               fb.init:
 0020                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3188 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 3188 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      318A FFFA     
 0012 318C CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 318E CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3190 C64B  30         mov   r11,*stack            ; Push return address
-0018 3192 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 3192 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      3194 FFFC     
                    < fb.asm
 0021                       ;------------------------------------------------------
@@ -6712,11 +6712,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0023               fb.row2line:
 0024                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 31E4 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 31E4 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      31E6 FFFC     
 0015 31E8 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 31EA C64B  30         mov   r11,*stack            ; Push return address
-0018 31EC 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 31EC 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      31EE FFFE     
                    < fb.row2line.asm
 0025                       ;------------------------------------------------------
@@ -6727,7 +6727,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029 31F4 A120  34         a     @fb.topline,tmp0
      31F6 A304     
 0030 31F8 C804  38         mov   tmp0,@outparm1
-     31FA A024     
+     31FA A018     
 0031                       ;------------------------------------------------------
 0032                       ; Exit
 0033                       ;------------------------------------------------------
@@ -6769,12 +6769,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0026               fb.calc.pointer:
 0027                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3202 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 3202 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      3204 FFFA     
 0012 3206 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 3208 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 320A C64B  30         mov   r11,*stack            ; Push return address
-0018 320C 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 320C 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      320E FFFC     
                    < fb.calc.pointer.asm
 0028                       ;------------------------------------------------------
@@ -6928,11 +6928,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0050               idx.init:
 0051                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 325C 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 325C 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      325E FFFC     
 0015 3260 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3262 C64B  30         mov   r11,*stack            ; Push return address
-0018 3264 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 3264 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      3266 FFFE     
                    < idx.asm
 0052                       ;------------------------------------------------------
@@ -7145,7 +7145,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0214               
 0215 332A 0A16  18         sla   tmp2,1                ; line number * 2
 0216 332C C806  38         mov   tmp2,@outparm1        ; Offset index entry
-     332E A024     
+     332E A018     
 0217               
 0218 3330 A160  34         a     @idx.sams.lopage,tmp1 ; Add SAMS page base
      3332 A602     
@@ -7217,11 +7217,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0021               edb.init:
 0022                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3360 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 3360 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      3362 FFFC     
 0015 3364 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3366 C64B  30         mov   r11,*stack            ; Push return address
-0018 3368 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 3368 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      336A FFFE     
                    < edb.asm
 0023                       ;------------------------------------------------------
@@ -7303,12 +7303,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0021               cmdb.init:
 0022                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 33B0 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 33B0 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      33B2 FFFA     
 0012 33B4 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 33B6 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 33B8 C64B  30         mov   r11,*stack            ; Push return address
-0018 33BA 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 33BA 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      33BC FFFC     
                    < cmdb.asm
 0023                       ;------------------------------------------------------
@@ -7396,13 +7396,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0021               errpane.init:
 0022                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 340E 0229  22         ai    stack,-(2 * 2 + 4)    ; Make room on stack for registers
+0001 340E 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
      3410 FFF8     
 0009 3412 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 3414 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 3416 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3418 C64B  30         mov   r11,*stack            ; Push return address
-0018 341A 0229  22         ai    stack,-(2 * 2 + 2)    ; Set stack pointer back to original position
+0018 341A 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
      341C FFFA     
                    < errpane.asm
 0023                       ;------------------------------------------------------
@@ -7458,13 +7458,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0021               tv.init:
 0022                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 343E 0229  22         ai    stack,-(2 * 2 + 4)    ; Make room on stack for registers
+0001 343E 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
      3440 FFF8     
 0009 3442 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 3444 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 3446 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3448 C64B  30         mov   r11,*stack            ; Push return address
-0018 344A 0229  22         ai    stack,-(2 * 2 + 2)    ; Set stack pointer back to original position
+0018 344A 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
      344C FFFA     
                    < tv.asm
 0023                       ;------------------------------------------------------
@@ -7603,14 +7603,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0023               tv.uint16.pack:
 0024                       .pushregs 3                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 34B4 0229  22         ai    stack,-(3 * 2 + 4)    ; Make room on stack for registers
+0001 34B4 0229  22         ai    stack,-(3 * 2 + 4)   ; Make room on stack for registers
      34B6 FFF6     
 0006 34B8 CE47  34         mov   tmp3,*stack+          ; Push tmp3
 0009 34BA CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 34BC CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 34BE CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 34C0 C64B  30         mov   r11,*stack            ; Push return address
-0018 34C2 0229  22         ai    stack,-(3 * 2 + 2)    ; Set stack pointer back to original position
+0018 34C2 0229  22         ai    stack,-(3 * 2 + 2)   ; Set stack pointer back to original position
      34C4 FFF8     
                    < tv.uint16.pack.asm
 0025 34C6 0649  14         dect  stack
@@ -7624,9 +7624,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      34D0 A016     
 0033 34D2 04C5  14         clr   tmp1                  ; Termination character >00
 0034 34D4 04E0  34         clr   @outparm1             ; Reset output parameters
-     34D6 A024     
+     34D6 A018     
 0035 34D8 04E0  34         clr   @outparm2             ; Reset output parameters
-     34DA A022     
+     34DA A01A     
 0036                       ;------------------------------------------------------
 0037                       ; Get string length
 0038                       ;------------------------------------------------------
@@ -7702,15 +7702,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0098                       ;------------------------------------------------------
 0099               tv.uint16.pack.error:
 0100 3524 04E0  34         clr   @outparm1             ; Empty uint16
-     3526 A024     
+     3526 A018     
 0101 3528 0720  34         seto  @outparm2             ; Invalid input string
-     352A A022     
+     352A A01A     
 0102                       ;-------------------------------------------------------
 0103                       ; Save final uint16
 0104                       ;-------------------------------------------------------
 0105               tv.uint16.pack.done:
 0106 352C C807  38         mov   tmp3,@outparm1
-     352E A024     
+     352E A018     
 0107                       ;-------------------------------------------------------
 0108                       ; Exit
 0109                       ;-------------------------------------------------------
@@ -7759,11 +7759,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020               tv.uint16.unpack:
 0021                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 354A 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 354A 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      354C FFFC     
 0015 354E CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3550 C64B  30         mov   r11,*stack            ; Push return address
-0018 3552 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 3552 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      3554 FFFE     
                    < tv.uint16.unpack.asm
 0022                       ;------------------------------------------------------
@@ -7831,14 +7831,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029               tv.pad.string:
 0030                       .pushregs 3                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 357A 0229  22         ai    stack,-(3 * 2 + 4)    ; Make room on stack for registers
+0001 357A 0229  22         ai    stack,-(3 * 2 + 4)   ; Make room on stack for registers
      357C FFF6     
 0006 357E CE47  34         mov   tmp3,*stack+          ; Push tmp3
 0009 3580 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 3582 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 3584 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3586 C64B  30         mov   r11,*stack            ; Push return address
-0018 3588 0229  22         ai    stack,-(3 * 2 + 2)    ; Set stack pointer back to original position
+0018 3588 0229  22         ai    stack,-(3 * 2 + 2)   ; Set stack pointer back to original position
      358A FFF8     
                    < tv.pad.string.asm
 0031                       ;------------------------------------------------------
@@ -7904,7 +7904,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0082               
 0083 35D4 C820  54         mov   @parm4,@outparm1      ; Set pointer to padded string
      35D6 A010     
-     35D8 A024     
+     35D8 A018     
 0084 35DA 1004  14         jmp   tv.pad.string.exit    ; Exit
 0085                       ;-----------------------------------------------------------------------
 0086                       ; CPU crash
@@ -7956,12 +7956,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0021               idx.entry.update:
 0022                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 35F0 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 35F0 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      35F2 FFFA     
 0012 35F4 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 35F6 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 35F8 C64B  30         mov   r11,*stack            ; Push return address
-0018 35FA 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 35FA 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      35FC FFFC     
                    < idx.update.asm
 0023                       ;------------------------------------------------------
@@ -7999,11 +7999,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0048                                                   ; / o  outparm1 = Slot offset in SAMS page
 0049               
 0050 361E C120  34         mov   @outparm1,tmp0        ; \ Update index slot
-     3620 A024     
+     3620 A018     
 0051 3622 C905  38         mov   tmp1,@idx.top(tmp0)   ; /
      3624 B000     
 0052 3626 C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
-     3628 A024     
+     3628 A018     
 0053 362A 1008  14         jmp   idx.entry.update.exit
 0054                       ;------------------------------------------------------
 0055                       ; Special handling for "null"-pointer
@@ -8015,11 +8015,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0060                                                   ; / o  outparm1 = Slot offset in SAMS page
 0061               
 0062 3630 C120  34         mov   @outparm1,tmp0        ; \ Clear index slot
-     3632 A024     
+     3632 A018     
 0063 3634 04E4  34         clr   @idx.top(tmp0)        ; /
      3636 B000     
 0064 3638 C804  38         mov   tmp0,@outparm1        ; Pointer to updated index entry
-     363A A024     
+     363A A018     
 0065                       ;------------------------------------------------------
 0066                       ; Exit
 0067                       ;------------------------------------------------------
@@ -8056,13 +8056,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020               idx.pointer.get:
 0021                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3644 0229  22         ai    stack,-(2 * 2 + 4)    ; Make room on stack for registers
+0001 3644 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
      3646 FFF8     
 0009 3648 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 364A CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 364C CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 364E C64B  30         mov   r11,*stack            ; Push return address
-0018 3650 0229  22         ai    stack,-(2 * 2 + 2)    ; Set stack pointer back to original position
+0018 3650 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
      3652 FFFA     
                    < idx.pointer.asm
 0022                       ;------------------------------------------------------
@@ -8077,7 +8077,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029                                                   ; / o  outparm1 = Slot offset in SAMS page
 0030               
 0031 365C C120  34         mov   @outparm1,tmp0        ; \ Get slot entry
-     365E A024     
+     365E A018     
 0032 3660 C164  34         mov   @idx.top(tmp0),tmp1   ; /
      3662 B000     
 0033               
@@ -8101,18 +8101,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0049                       ;------------------------------------------------------
 0050               idx.pointer.get.parm:
 0051 3674 C805  38         mov   tmp1,@outparm1        ; Index slot -> Pointer
-     3676 A024     
+     3676 A018     
 0052 3678 C806  38         mov   tmp2,@outparm2        ; Index slot -> SAMS page
-     367A A022     
+     367A A01A     
 0053 367C 1004  14         jmp   idx.pointer.get.exit
 0054                       ;------------------------------------------------------
 0055                       ; Special handling for "null"-pointer
 0056                       ;------------------------------------------------------
 0057               idx.pointer.get.parm.null:
 0058 367E 04E0  34         clr   @outparm1
-     3680 A024     
+     3680 A018     
 0059 3682 04E0  34         clr   @outparm2
-     3684 A022     
+     3684 A01A     
 0060                       ;------------------------------------------------------
 0061                       ; Exit
 0062                       ;------------------------------------------------------
@@ -8176,14 +8176,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0045               idx.entry.delete:
 0046                       .pushregs 3                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 36A0 0229  22         ai    stack,-(3 * 2 + 4)    ; Make room on stack for registers
+0001 36A0 0229  22         ai    stack,-(3 * 2 + 4)   ; Make room on stack for registers
      36A2 FFF6     
 0006 36A4 CE47  34         mov   tmp3,*stack+          ; Push tmp3
 0009 36A6 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 36A8 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 36AA CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 36AC C64B  30         mov   r11,*stack            ; Push return address
-0018 36AE 0229  22         ai    stack,-(3 * 2 + 2)    ; Set stack pointer back to original position
+0018 36AE 0229  22         ai    stack,-(3 * 2 + 2)   ; Set stack pointer back to original position
      36B0 FFF8     
                    < idx.delete.asm
 0047                       ;------------------------------------------------------
@@ -8198,7 +8198,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0054                                                   ; / o  outparm1 = Slot offset in SAMS page
 0055               
 0056 36BA C120  34         mov   @outparm1,tmp0        ; Index offset
-     36BC A024     
+     36BC A018     
 0057                       ;------------------------------------------------------
 0058                       ; Prepare for index reorg
 0059                       ;------------------------------------------------------
@@ -8378,14 +8378,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0087               idx.entry.insert:
 0088                       .pushregs 3                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3740 0229  22         ai    stack,-(3 * 2 + 4)    ; Make room on stack for registers
+0001 3740 0229  22         ai    stack,-(3 * 2 + 4)   ; Make room on stack for registers
      3742 FFF6     
 0006 3744 CE47  34         mov   tmp3,*stack+          ; Push tmp3
 0009 3746 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 3748 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 374A CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 374C C64B  30         mov   r11,*stack            ; Push return address
-0018 374E 0229  22         ai    stack,-(3 * 2 + 2)    ; Set stack pointer back to original position
+0018 374E 0229  22         ai    stack,-(3 * 2 + 2)   ; Set stack pointer back to original position
      3750 FFF8     
                    < idx.insert.asm
 0089                       ;------------------------------------------------------
@@ -8445,7 +8445,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0133                                                   ; / o  outparm1 = Slot offset in SAMS page
 0134               
 0135 3782 C120  34         mov   @outparm1,tmp0        ; Index offset
-     3784 A024     
+     3784 A018     
 0136               
 0137 3786 06A0  32         bl    @_idx.entry.insert.reorg
      3788 3702     
@@ -8493,12 +8493,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020               edb.line.mappage:
 0021                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3796 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 3796 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      3798 FFFA     
 0012 379A CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 379C CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 379E C64B  30         mov   r11,*stack            ; Push return address
-0018 37A0 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 37A0 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      37A2 FFFC     
                    < edb.line.mappage.asm
 0022                       ;------------------------------------------------------
@@ -8529,9 +8529,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0042                                                   ; / o  outparm2 = SAMS page
 0043               
 0044 37BA C120  34         mov   @outparm2,tmp0        ; SAMS page
-     37BC A022     
+     37BC A01A     
 0045 37BE C160  34         mov   @outparm1,tmp1        ; Pointer to line
-     37C0 A024     
+     37C0 A018     
 0046 37C2 130B  14         jeq   edb.line.mappage.exit ; Nothing to page-in if NULL pointer
 0047                                                   ; (=empty line)
 0048                       ;------------------------------------------------------
@@ -8549,12 +8549,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0058                                                   ; / i  tmp1 = Memory address
 0059               
 0060 37CE C820  54         mov   @outparm2,@tv.sams.c000
-     37D0 A022     
+     37D0 A01A     
      37D2 A208     
 0061                                                   ; Set page in shadow registers
 0062               
 0063 37D4 C820  54         mov   @outparm2,@edb.sams.page
-     37D6 A022     
+     37D6 A01A     
      37D8 A518     
 0064                                                   ; Set current SAMS page
 0065                       ;------------------------------------------------------
@@ -8593,21 +8593,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020               edb.line.getlength:
 0021                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 37E2 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 37E2 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      37E4 FFFA     
 0012 37E6 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 37E8 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 37EA C64B  30         mov   r11,*stack            ; Push return address
-0018 37EC 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 37EC 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      37EE FFFC     
                    < edb.line.getlength.asm
 0022                       ;------------------------------------------------------
 0023                       ; Initialisation
 0024                       ;------------------------------------------------------
 0025 37F0 04E0  34         clr   @outparm1             ; Reset length
-     37F2 A024     
+     37F2 A018     
 0026 37F4 04E0  34         clr   @outparm2             ; Reset SAMS bank
-     37F6 A022     
+     37F6 A01A     
 0027                       ;------------------------------------------------------
 0028                       ; Exit if requested line beyond editor buffer
 0029                       ;------------------------------------------------------
@@ -8633,7 +8633,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0045                                                   ; / o  outparm2 = SAMS page
 0046               
 0047 380E C120  34         mov   @outparm1,tmp0        ; Store pointer in tmp0
-     3810 A024     
+     3810 A018     
 0048 3812 1304  14         jeq   edb.line.getlength.null
 0049                                                   ; Set length to 0 if null-pointer
 0050                       ;------------------------------------------------------
@@ -8641,14 +8641,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0052                       ;------------------------------------------------------
 0053 3814 C154  26         mov   *tmp0,tmp1            ; Get length into tmp1
 0054 3816 C805  38         mov   tmp1,@outparm1        ; Save length
-     3818 A024     
+     3818 A018     
 0055 381A 1002  14         jmp   edb.line.getlength.exit
 0056                       ;------------------------------------------------------
 0057                       ; Set length to 0 if null-pointer
 0058                       ;------------------------------------------------------
 0059               edb.line.getlength.null:
 0060 381C 04E0  34         clr   @outparm1             ; Set length to 0, was a null-pointer
-     381E A024     
+     381E A018     
 0061                       ;------------------------------------------------------
 0062                       ; Exit
 0063                       ;------------------------------------------------------
@@ -8684,11 +8684,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0019               edb.line.getlength2:
 0020                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3828 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 3828 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      382A FFFC     
 0015 382C CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 382E C64B  30         mov   r11,*stack            ; Push return address
-0018 3830 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 3830 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      3832 FFFE     
                    < edb.line.getlength2.asm
 0021                       ;------------------------------------------------------
@@ -8710,7 +8710,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0033                                                   ; / o  @outparm2 = SAMS page
 0034               
 0035 3844 C820  54         mov   @outparm1,@fb.row.length
-     3846 A024     
+     3846 A018     
      3848 A308     
 0036                                                   ; Save row length
 0037                       ;------------------------------------------------------
@@ -8747,12 +8747,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0019               edb.hipage.alloc:
 0020                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 3850 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 3850 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      3852 FFFA     
 0012 3854 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 3856 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 3858 C64B  30         mov   r11,*stack            ; Push return address
-0018 385A 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 385A 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      385C FFFC     
                    < edb.hipage.alloc.asm
 0021                       ;------------------------------------------------------
@@ -10123,12 +10123,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.key.process:
 0008                       .pushregs 1                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6150 0229  22         ai    stack,-(1 * 2 + 4)    ; Make room on stack for registers
+0001 6150 0229  22         ai    stack,-(1 * 2 + 4)   ; Make room on stack for registers
      6152 FFFA     
 0012 6154 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 6156 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6158 C64B  30         mov   r11,*stack            ; Push return address
-0018 615A 0229  22         ai    stack,-(1 * 2 + 2)    ; Set stack pointer back to original position
+0018 615A 0229  22         ai    stack,-(1 * 2 + 2)   ; Set stack pointer back to original position
      615C FFFC     
                    < edkey.key.process.asm
 0009               
@@ -11690,7 +11690,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0082                                                   ; / o  @outparm2 = Char on matching column
 0083               
 0084 6704 C120  34         mov   @outparm1,tmp0
-     6706 A024     
+     6706 A018     
 0085 6708 C804  38         mov   tmp0,@fb.column
      670A A30C     
 0086 670C 06A0  32         bl    @xsetx                ; Set Column=tmp0 (VDP cursor)
@@ -12062,7 +12062,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0083                                                   ; / o  @outparm1 = >ffff if success
 0084               
 0085 6846 8820  50         c     @outparm1,@w$0000     ; Copy skipped?
-     6848 A024     
+     6848 A018     
      684A 2000     
 0086 684C 1305  14         jeq   edkey.action.block.copy.exit
 0087                                                   ; If yes, exit early
@@ -12124,7 +12124,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0133                       ; Reposition in frame buffer
 0134                       ;-------------------------------------------------------
 0135 6882 8820  50         c     @outparm1,@w$0000     ; Delete skipped?
-     6884 A024     
+     6884 A018     
      6886 2000     
 0136 6888 1309  14         jeq   edkey.action.block.delete.exit
 0137                                                   ; If yes, exit early
@@ -12199,7 +12199,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0193                       ; Reposition in frame buffer
 0194                       ;-------------------------------------------------------
 0195 68CE 8820  50         c     @outparm1,@w$0000     ; Delete skipped?
-     68D0 A024     
+     68D0 A018     
      68D2 2000     
 0196 68D4 13E3  14         jeq   edkey.action.block.delete.exit
 0197                                                   ; If yes, exit early
@@ -12448,13 +12448,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0019               edk.fb.char:
 0020                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 698C 0229  22         ai    stack,-(2 * 2 + 4)    ; Make room on stack for registers
+0001 698C 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
      698E FFF8     
 0009 6990 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 6992 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 6994 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6996 C64B  30         mov   r11,*stack            ; Push return address
-0018 6998 0229  22         ai    stack,-(2 * 2 + 2)    ; Set stack pointer back to original position
+0018 6998 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
      699A FFFA     
                    < edk.fb.char.asm
 0021                       ;-------------------------------------------------------
@@ -12579,7 +12579,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0040                                                   ; / o   @outparm1 = Length of prompt
 0041               
 0042 6A06 C120  34         mov   @outparm1,tmp0        ;
-     6A08 A024     
+     6A08 A018     
 0043 6A0A 8120  34         c     @cmdb.column,tmp0     ; Right boundary reached?
      6A0C A718     
 0044 6A0E 1506  14         jgt   !                     ; yes. exot
@@ -12745,7 +12745,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0083                                                   ; / o  @outparm1 = Length of command
 0084               
 0085 6A8A C120  34         mov   @outparm1,tmp0        ; Get command line
-     6A8C A024     
+     6A8C A018     
 0086 6A8E 0A84  32         sla   tmp0,8                ; Move to MSB
 0087 6A90 D804  38         movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string
      6A92 A732     
@@ -12810,11 +12810,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.action.cmdb.cfg.clip:
 0008                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6ABC 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 6ABC 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      6ABE FFFC     
 0015 6AC0 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6AC2 C64B  30         mov   r11,*stack            ; Push return address
-0018 6AC4 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 6AC4 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      6AC6 FFFE     
                    < edkey.cmdb.cfg.clip.asm
 0009                       ;-------------------------------------------------------
@@ -12859,11 +12859,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0010                       ;-------------------------------------------------------
 0011                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6AE4 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 6AE4 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      6AE6 FFFC     
 0015 6AE8 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6AEA C64B  30         mov   r11,*stack            ; Push return address
-0018 6AEC 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 6AEC 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      6AEE FFFE     
                    < edkey.cmdb.file.new.asm
 0012                       ;-------------------------------------------------------
@@ -12904,11 +12904,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.action.cmdb.load:
 0008                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6B0E 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 6B0E 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      6B10 FFFC     
 0015 6B12 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6B14 C64B  30         mov   r11,*stack            ; Push return address
-0018 6B16 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 6B16 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      6B18 FFFE     
                    < edkey.cmdb.file.load.asm
 0009                       ;-------------------------------------------------------
@@ -12952,7 +12952,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0040 6B40 06A0  32         bl    @cmdb.cmd.getlength            ; Get length of current command
      6B42 77D4     
 0041 6B44 C120  34         mov   @outparm1,tmp0                 ; Length == 0 ?
-     6B46 A024     
+     6B46 A018     
 0042 6B48 1314  14         jeq   edkey.action.cmdb.load.exit    ; Yes, exit early
 0043                       ;-------------------------------------------------------
 0044                       ; Get filename
@@ -13059,7 +13059,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0049 6BB0 06A0  32         bl    @cmdb.cmd.getlength              ; Get length of current command
      6BB2 77D4     
 0050 6BB4 C120  34         mov   @outparm1,tmp0                   ; Length == 0 ?
-     6BB6 A024     
+     6BB6 A018     
 0051 6BB8 132B  14         jeq   edkey.action.cmdb.insert.exit    ; Yes, exit early
 0052                       ;-------------------------------------------------------
 0053                       ; Get filename
@@ -13101,7 +13101,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0079                                                   ; / o @outparm1   = Matching line in EB
 0080               
 0081 6BE0 C820  54         mov   @outparm1,@parm2      ; \ Line to insert file at is the editor
-     6BE2 A024     
+     6BE2 A018     
      6BE4 A014     
 0082 6BE6 05A0  34         inc   @parm2                ; / line where the cursor is at +1
      6BE8 A014     
@@ -13213,7 +13213,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0043 6C4E 06A0  32         bl    @cmdb.cmd.getlength            ; Get length of current command
      6C50 77D4     
 0044 6C52 C120  34         mov   @outparm1,tmp0                 ; Length == 0 ?
-     6C54 A024     
+     6C54 A018     
 0045 6C56 1324  14         jeq   edkey.action.cmdb.append.exit  ; Yes, exit early
 0046                       ;-------------------------------------------------------
 0047                       ; Get filename
@@ -13379,7 +13379,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0017 6CFC 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
      6CFE 77D4     
 0018 6D00 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
-     6D02 A024     
+     6D02 A018     
 0019 6D04 1607  14         jne   !                     ; No, prepare for save
 0020                       ;-------------------------------------------------------
 0021                       ; No filename specified
@@ -13505,7 +13505,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0017 6D7C 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
      6D7E 77D4     
 0018 6D80 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
-     6D82 A024     
+     6D82 A018     
 0019 6D84 1607  14         jne   !                     ; No, prepare for print
 0020                       ;-------------------------------------------------------
 0021                       ; No filename specified
@@ -13619,11 +13619,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.action.cmdb.file.delete:
 0008                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6DEE 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 6DEE 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      6DF0 FFFC     
 0015 6DF2 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6DF4 C64B  30         mov   r11,*stack            ; Push return address
-0018 6DF6 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 6DF6 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      6DF8 FFFE     
                    < edkey.cmdb.file.delete.asm
 0009                       ;-------------------------------------------------------
@@ -13668,7 +13668,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0041 6E20 06A0  32         bl    @cmdb.cmd.getlength             ; Get length of current command
      6E22 77D4     
 0042 6E24 C120  34         mov   @outparm1,tmp0                  ; Length == 0 ?
-     6E26 A024     
+     6E26 A018     
 0043 6E28 1310  14         jeq   edkey.action.cmdb.file.delete.exit ; Yes, exit early
 0044                       ;-------------------------------------------------------
 0045                       ; Get filename
@@ -13864,11 +13864,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0099               edkey.action.cmdb.file.directory:
 0100                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6F26 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 6F26 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      6F28 FFFC     
 0015 6F2A CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6F2C C64B  30         mov   r11,*stack            ; Push return address
-0018 6F2E 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 6F2E 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      6F30 FFFE     
                    < edkey.cmdb.file.dir.asm
 0101                       ;-------------------------------------------------------
@@ -13914,11 +13914,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.action.cmdb.file.run:
 0008                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 6F4C 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 6F4C 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      6F4E FFFC     
 0015 6F50 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 6F52 C64B  30         mov   r11,*stack            ; Push return address
-0018 6F54 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 6F54 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      6F56 FFFE     
                    < edkey.cmdb.file.run.asm
 0009                       ;-------------------------------------------------------
@@ -13963,7 +13963,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0041 6F7E 06A0  32         bl    @cmdb.cmd.getlength             ; Get length of current command
      6F80 77D4     
 0042 6F82 C120  34         mov   @outparm1,tmp0                  ; Length == 0 ?
-     6F84 A024     
+     6F84 A018     
 0043 6F86 1310  14         jeq   edkey.action.cmdb.file.run.exit ; Yes, exit early
 0044                       ;-------------------------------------------------------
 0045                       ; Get filename
@@ -14028,7 +14028,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6FB2 7650     
 0020               
 0021 6FB4 0760  38         abs   @outparm1             ; Skipped flag set?
-     6FB6 A024     
+     6FB6 A018     
 0022 6FB8 160D  14         jne   edkey.action.cmdb.pick.prev.exit
 0023                                                   ; Yes, exit early
 0024               
@@ -14082,7 +14082,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0019 6FD8 06A0  32         bl    @fm.browse.fname.next ; Next file in catalog filename list
      6FDA 765A     
 0020 6FDC 0760  38         abs   @outparm1             ; Skipped flag set?
-     6FDE A024     
+     6FDE A018     
 0021 6FE0 160D  14         jne   edkey.action.cmdb.pick.next.exit
 0022                                                   ; Yes, exit early
 0023               
@@ -14142,7 +14142,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                                                   ; /                 >ffff if dir changed
 0025               
 0026 7008 C120  34         mov   @outparm1,tmp0        ; Get functional call result
-     700A A024     
+     700A A018     
 0027 700C 131F  14         jeq   edkey.action.cmdb.updir.exit
 0028                       ;-------------------------------------------------------
 0029                       ; Catalog drive/directory
@@ -14399,11 +14399,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.action.cmdb.autoinsert:
 0008                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 70BA 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 70BA 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      70BC FFFC     
 0015 70BE CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 70C0 C64B  30         mov   r11,*stack            ; Push return address
-0018 70C2 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 70C2 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      70C4 FFFE     
                    < edkey.cmdb.autoinsert.asm
 0009                       ;-------------------------------------------------------
@@ -14475,7 +14475,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0011 70F4 06A0  32         bl    @cmdb.cmd.getlength   ; Get length of current command
      70F6 77D4     
 0012 70F8 C120  34         mov   @outparm1,tmp0        ; Length == 0 ?
-     70FA A024     
+     70FA A018     
 0013 70FC 1321  14         jeq   edkey.action.cmdb.goto.exit
 0014                                                   ; Yes, exit
 0015                       ;-------------------------------------------------------
@@ -14499,7 +14499,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030                       ; Assert - Line number could not be parsed
 0031                       ;-------------------------------------------------------
 0032 710A 8820  50         c     @outparm2,@w$ffff     ; Invalid number?
-     710C A022     
+     710C A01A     
      710E 2022     
 0033 7110 1317  14         jeq   edkey.action.cmdb.goto.exit
 0034                                                   ; Yes, exit
@@ -14509,7 +14509,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0038               edkey.action.cmdb.goto.prepare:
 0039 7112 0649  14         dect  stack
 0040 7114 C660  46         mov   @outparm1,*stack      ; Push @outparm1
-     7116 A024     
+     7116 A018     
 0041               
 0042 7118 06A0  32         bl    @cmdb.dialog.close    ; Close dialog
      711A 731A     
@@ -14601,11 +14601,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               edkey.action.cmdb.clock:
 0008                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 715A 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 715A 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      715C FFFC     
 0015 715E CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 7160 C64B  30         mov   r11,*stack            ; Push return address
-0018 7162 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 7162 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      7164 FFFE     
                    < edkey.cmdb.clock.asm
 0009                       ;-------------------------------------------------------
@@ -14633,11 +14633,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0004               edkey.action.filebrowser.prevcol:
 0005                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 7176 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 7176 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      7178 FFFC     
 0015 717A CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 717C C64B  30         mov   r11,*stack            ; Push return address
-0018 717E 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 717E 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      7180 FFFE     
                    < edkey.cmdb.filebrowser.prevcol.asm
 0006                       ;-------------------------------------------------------
@@ -14718,11 +14718,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0004               edkey.action.filebrowser.nextcol:
 0005                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 71C0 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 71C0 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      71C2 FFFC     
 0015 71C4 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 71C6 C64B  30         mov   r11,*stack            ; Push return address
-0018 71C8 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 71C8 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      71CA FFFE     
                    < edkey.cmdb.filebrowser.nextcol.asm
 0006                       ;-------------------------------------------------------
@@ -14903,11 +14903,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0004               edkey.action.filebrowser.nextpage:
 0005                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 726E 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 726E 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      7270 FFFC     
 0015 7272 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 7274 C64B  30         mov   r11,*stack            ; Push return address
-0018 7276 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 7276 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      7278 FFFE     
                    < edkey.cmdb.filebrowser.nextpage.asm
 0006                       ;-------------------------------------------------------
@@ -15157,14 +15157,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0026               edb.line.pack.fb:
 0027                       .pushregs 3                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 732E 0229  22         ai    stack,-(3 * 2 + 4)    ; Make room on stack for registers
+0001 732E 0229  22         ai    stack,-(3 * 2 + 4)   ; Make room on stack for registers
      7330 FFF6     
 0006 7332 CE47  34         mov   tmp3,*stack+          ; Push tmp3
 0009 7334 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 7336 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 7338 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 733A C64B  30         mov   r11,*stack            ; Push return address
-0018 733C 0229  22         ai    stack,-(3 * 2 + 2)    ; Set stack pointer back to original position
+0018 733C 0229  22         ai    stack,-(3 * 2 + 2)   ; Set stack pointer back to original position
      733E FFF8     
                    < edb.line.pack.fb.asm
 0028                       ;------------------------------------------------------
@@ -15385,13 +15385,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029               edb.line.unpack.fb:
 0030                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 73FE 0229  22         ai    stack,-(2 * 2 + 4)    ; Make room on stack for registers
+0001 73FE 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
      7400 FFF8     
 0009 7402 CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 7404 CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 7406 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 7408 C64B  30         mov   r11,*stack            ; Push return address
-0018 740A 0229  22         ai    stack,-(2 * 2 + 2)    ; Set stack pointer back to original position
+0018 740A 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
      740C FFFA     
                    < edb.line.unpack.fb.asm
 0031                       ;------------------------------------------------------
@@ -15443,7 +15443,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0062                       ; Handle empty line
 0063                       ;------------------------------------------------------
 0064 7448 C120  34         mov   @outparm1,tmp0        ; Get pointer to line
-     744A A024     
+     744A A018     
 0065 744C 1603  14         jne   edb.line.unpack.fb.getlen
 0066                                                   ; Only continue if pointer is set
 0067               
@@ -15480,7 +15480,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0092 746A C1A0  34         mov   @rambuf+10,tmp2       ; Get Line length
      746C A10A     
 0093 746E C806  38         mov   tmp2,@outparm1        ; Store in output parameter
-     7470 A024     
+     7470 A018     
 0094 7472 1313  14         jeq   edb.line.unpack.fb.exit
 0095                                                   ; Exit if length = 0
 0096               
@@ -15606,13 +15606,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0016               tv.clock.start:
 0017                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 74C6 0229  22         ai    stack,-(2 * 2 + 4)    ; Make room on stack for registers
+0001 74C6 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
      74C8 FFF8     
 0009 74CA CE46  34         mov   tmp2,*stack+          ; Push tmp2
 0012 74CC CE45  34         mov   tmp1,*stack+          ; Push tmp1
 0015 74CE CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 74D0 C64B  30         mov   r11,*stack            ; Push return address
-0018 74D2 0229  22         ai    stack,-(2 * 2 + 2)    ; Set stack pointer back to original position
+0018 74D2 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
      74D4 FFFA     
                    < tv.clock.start.asm
 0018                       ;------------------------------------------------------
@@ -15755,11 +15755,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0023               pane.vdpdump:
 0024                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 7518 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 7518 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      751A FFFC     
 0015 751C CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 751E C64B  30         mov   r11,*stack            ; Push return address
-0018 7520 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 7520 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      7522 FFFE     
                    < pane.vdpdump.asm
 0025 7524 0649  14         dect  stack
@@ -15958,11 +15958,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0008               fm.loadfile:
 0009                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 75E2 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 75E2 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      75E4 FFFC     
 0015 75E6 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 75E8 C64B  30         mov   r11,*stack            ; Push return address
-0018 75EA 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 75EA 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      75EC FFFE     
                    < rom.stubs.bank1.asm
 0010                       ;------------------------------------------------------
@@ -15977,7 +15977,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0018                       ; Show "Unsaved changes" dialog if editor buffer dirty
 0019                       ;------------------------------------------------------
 0020 75F8 C120  34         mov   @outparm1,tmp0
-     75FA A024     
+     75FA A018     
 0021 75FC 1304  14         jeq   fm.loadfile.exit
 0022               
 0023 75FE C139  30         mov   *stack+,tmp0          ; Pop tmp0
@@ -16003,11 +16003,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0037               fm.insertfile:
 0038                       .pushregs 0                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 760C 0229  22         ai    stack,-(0 * 2 + 4)    ; Make room on stack for registers
+0001 760C 0229  22         ai    stack,-(0 * 2 + 4)   ; Make room on stack for registers
      760E FFFC     
 0015 7610 CE44  34         mov   tmp0,*stack+          ; Push tmp0
 0017 7612 C64B  30         mov   r11,*stack            ; Push return address
-0018 7614 0229  22         ai    stack,-(0 * 2 + 2)    ; Set stack pointer back to original position
+0018 7614 0229  22         ai    stack,-(0 * 2 + 2)   ; Set stack pointer back to original position
      7616 FFFE     
                    < rom.stubs.bank1.asm
 0039                       ;------------------------------------------------------
@@ -19558,8 +19558,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     free.ac00........... >ac00 :     
     free.ad00........... >ad00 :     
     free.size........... >0600 :     
-    free1............... >a000 :     
-    free2............... >a002 :     
     free3............... >a004 :     
     graph1.............. >21f2 :     
     grmra............... >9802 :     
@@ -19873,6 +19871,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     ldfnt3.............. >23c6 :     
     ldfnt4.............. >23da :     
     loadmc.............. >221a :     
+    macvar1............. >a000 :     
+    macvar2............. >a002 :     
     main................ >6000 :     
     main.continue....... >6012 :     
     main.stevie......... >6004 :     
@@ -19910,13 +19910,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     norep............... >0000 :     
     num1................ >3030 :     
     num2................ >3020 :     
-    outparm1............ >a024 :     
-    outparm2............ >a022 :     
-    outparm3............ >a020 :     
+    outparm1............ >a018 :     
+    outparm2............ >a01a :     
+    outparm3............ >a01c :     
     outparm4............ >a01e :     
-    outparm5............ >a01c :     
-    outparm6............ >a01a :     
-    outparm7............ >a018 :     
+    outparm5............ >a020 :     
+    outparm6............ >a022 :     
+    outparm7............ >a024 :     
     palon............... >201c :     
     pane.botline........ >7944 :     
     pane.botline.vector. >794c :     
