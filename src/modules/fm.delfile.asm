@@ -21,14 +21,7 @@
 ********|*****|*********************|**************************
 fm.delfile:
         .pushregs 2                 ; Push return address and registers on stack
-        dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3
-        dect  stack
-        mov   @parm4,*stack         ; Push @parm4
+        .pushparms 4                ; Push parameters p1-p4 on stack
         ;-------------------------------------------------------
         ; Delete file
         ;-------------------------------------------------------
@@ -78,8 +71,5 @@ fm.delfile.refreshdir:
 * Exit
 *--------------------------------------------------------------
 fm.delfile.exit:
-        mov   *stack+,@parm4        ; Pop @parm4
-        mov   *stack+,@parm3        ; Pop @parm3
-        mov   *stack+,@parm2        ; Pop @parm2
-        mov   *stack+,@parm1        ; Pop @parm1
+        .popparms 4                 ; Pop parameters p4-p1 from stack
         .popregs 2                  ; Pop registers and return to caller                

@@ -29,7 +29,8 @@
 * Remarks
 * File content processing expected to be handled in callback.
 * It is possible to stop further processing file by setting the 
-* circuit-breaker flag "fh.circbreaker" from within the callback in @parm3
+* circuit-breaker flag "fh.circbreaker" from within the callback 
+* in @parm3
 *
 * Might replace "fh.file.read.edb" someday, with SAMS and editor
 * buffer handling purely done in callback code.
@@ -51,7 +52,7 @@ fh.file.read.mem:
         mov   tmp0,@fh.fopmode      ; Set file operations mode
 
         mov   @parm1,@fh.fname.ptr  ; Pointer to file descriptor
-        mov   @parm2,@fh.callback1  ; Callback function "Open file"
+        mov   @parm2,@fh.callback1  ; Callback function "Before open file"
         mov   @parm3,@fh.callback2  ; Callback function "Read line from file"
         mov   @parm4,@fh.callback3  ; Callback function "Close file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
@@ -167,7 +168,9 @@ fh.file.read.mem.pabheader:
         coc   @wbit2,tmp2           ; Equal bit set?
         jne   fh.file.read.mem.record        
                                     ; No, proceed to read records
-
+        ;------------------------------------------------------
+        ; File error
+        ;------------------------------------------------------
         b     @fh.file.read.mem.error  
                                     ; Yes, IO error occured                                    
         ;------------------------------------------------------

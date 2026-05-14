@@ -47,12 +47,7 @@ fm.run.ea5:
         ;-------------------------------------------------------
         ; Reload colorscheme
         ;-------------------------------------------------------
-        dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3
+        .pushparms 3                ; Push parameters p1-p3 on stack
 
         seto  @parm1                ; \ Do not turn screen off while reloading
                                     ; / color scheme
@@ -70,9 +65,7 @@ fm.run.ea5:
                                     ; | i  @parm3 = Only colorize CMDB pane 
                                     ; /             if >FFFF
 
-        mov   *stack+,@parm3        ; Pop @parm3
-        mov   *stack+,@parm2        ; Pop @parm2
-        mov   *stack+,@parm1        ; Pop @parm1
+        .popparms 3                 ; Pop parameters p3-p1 from stack
         ;-------------------------------------------------------
         ; Reset editor
         ;-------------------------------------------------------
