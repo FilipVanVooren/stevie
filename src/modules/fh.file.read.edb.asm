@@ -14,8 +14,8 @@
 * parm4 = Pointer to callback function "Close file"
 * parm5 = Pointer to callback function "File I/O error"
 * parm6 = Pointer to callback function "Memory full"
-* parm7 = Line number to insert file at or >FFFF if new file.
-* parm8 = Work mode
+* @fh.line = Line number to insert file at or >FFFF if new file.
+* @fh.workmode = Work mode (used in callbacks)
 *
 * Callbacks can be skipped by passing >0000 as pointer.
 *--------------------------------------------------------------
@@ -30,40 +30,14 @@
 *              >0000 if inserting file at line in editor buffer
 ********|*****|*********************|**************************
 fh.file.read.edb:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3      
+        .pushregs 3                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------  
         clr   @fh.records           ; Reset records counter
         clr   @fh.counter           ; Clear internal counter
         clr   @fh.pabstat           ; Clear copy of VDP PAB status byte
-        clr   @fh.ioresult          ; Clear status register contents
-       
-        mov   @edb.top.ptr,tmp0
-        bl    @xsams.page.get       ; Get SAMS page
-                                    ; \ i  tmp0  = Memory address
-                                    ; | o  waux1 = SAMS page number
-                                    ; / o  waux2 = Address of SAMS register
-                                    
-        mov   @edb.sams.hipage,tmp0 ; \
-        mov   tmp0,@fh.sams.hipage  ; | Set current SAMS page to highest page 
-                                    ; / used by Editor Buffer
-
-        mov   tmp0,@tv.sams.c000    ; Sync SAMS window. Important!                                    
-
-        mov   @edb.top.ptr,tmp1
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address                                    
+        clr   @fh.ioresult          ; Clear status register contents     
         ;------------------------------------------------------
         ; Save parameters / callback functions
         ;------------------------------------------------------
@@ -77,28 +51,6 @@ fh.file.read.edb:
         mov   @parm4,@fh.callback3  ; Callback function "Close file"
         mov   @parm5,@fh.callback4  ; Callback function "File I/O error"
         mov   @parm6,@fh.callback5  ; Callback function "Memory full error"
-        mov   @parm8,@fh.workmode   ; Work mode (used in callbacks)
-        ;------------------------------------------------------
-        ; Determine if inserting file or loading new file
-        ;------------------------------------------------------
-        mov   @parm7,tmp0
-        ci    tmp0,>ffff            ; Load file?
-        jeq   fh.file.read.edb.newfile
-
-        clr   @fh.temp1             ; Set flag "insert file"
-        clr   @fh.temp2             ; Not used
-        clr   @fh.temp3             ; Not used
-
-        mov   tmp0,@fh.line         ; Line to insert file at
-        jmp   fh.file.read.edb.assert1
-        ;------------------------------------------------------
-        ; Loading new file into editor buffer
-        ;------------------------------------------------------
-fh.file.read.edb.newfile:
-        clr   @fh.line              ; New file 
-        seto  @fh.temp1             ; Set flag "load file"
-        clr   @fh.temp2             ; Not used
-        clr   @fh.temp3             ; Not used
         ;------------------------------------------------------
         ; Asserts
         ;------------------------------------------------------
@@ -153,9 +105,9 @@ fh.file.read.crash:
         mov   r11,@>ffce            ; \ Save caller address        
         bl    @cpu.crash            ; / Crash and halt system        
         ;------------------------------------------------------
-        ; Callback "Before Open file"
+        ; Call callback "Before Open file"
         ;------------------------------------------------------
-fh.file.read.edb.load1:        
+fh.file.read.edb.load1:   
         mov   @fh.callback1,tmp0
         jeq   fh.file.read.edb.pabheader
                                     ; Skip callback

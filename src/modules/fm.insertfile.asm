@@ -30,8 +30,8 @@ fm.insertfile:
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
-        mov   @parm2,@parm7         ; Get line number
-        mov   @parm3,@parm8         ; Work mode
+        mov   @parm2,@fh.line       ; Get line number
+        mov   @parm3,@fh.workmode   ; Work mode
 
         li    tmp0,fm.loadsave.cb.indicator1
         mov   tmp0,@parm2           ; Register callback 1
@@ -61,9 +61,7 @@ fm.insertfile:
                                     ; |             "File I/O error"
                                     ; | i  @parm6 = Pointer to callback
                                     ; |             "Memory full error"
-                                    ; | i  @parm7 = Line to insert file at
-                                    ; |             or >ffff for new file 
-                                    ; / i  @parm8 = Work mode                                                                          
+                                    ; /                                                                        
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------

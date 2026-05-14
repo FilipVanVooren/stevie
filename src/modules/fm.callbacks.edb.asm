@@ -18,8 +18,54 @@ fm.loadsave.cb.indicator1:
         dect  stack        
         mov   @parm1,*stack         ; Push @parm1
         ;------------------------------------------------------
+        ; Check if reading or writing file
+        ;------------------------------------------------------
+        mov   @fh.fopmode,tmp0      ; Check file operation mode
+        ci    tmp0,fh.fopmode.readfile 
+        jne   fm.loadsave.cb.indicator1.check.mode
+                                    ; Not reading file, check other modes
+        ;------------------------------------------------------
+        ; Check if inserting into existing file or loading new
+        ;------------------------------------------------------
+        mov   @fh.line,tmp0
+        ci    tmp0,>ffff            ; Loading file into clean editor buffer?
+        jeq   fm.loadsave.cb.indicator1.newfile
+                                    ; Yes, reset flags
+        clr   @fh.temp1             ; Set flag "insert file"
+        jmp   fm.loadsave.cb.indicator1.sams
+        ;------------------------------------------------------
+        ; Prepare flags
+        ;------------------------------------------------------
+fm.loadsave.cb.indicator1.newfile:
+        clr   @fh.line              ; New file 
+        seto  @fh.temp1             ; Set flag "load file"
+fm.loadsave.cb.indicator1.sams:        
+        clr   @fh.temp2             ; Not used
+        clr   @fh.temp3             ; Not used
+        ;------------------------------------------------------
+        ; Switch to highest SAMS page used by editor buffer
+        ;------------------------------------------------------        
+        mov   @edb.top.ptr,tmp0
+        bl    @xsams.page.get       ; Get SAMS page
+                                    ; \ i  tmp0  = Memory address
+                                    ; | o  waux1 = SAMS page number
+                                    ; / o  waux2 = Address of SAMS register
+                                    
+        mov   @edb.sams.hipage,tmp0 ; \
+        mov   tmp0,@fh.sams.hipage  ; | Set current SAMS page to highest page 
+                                    ; / used by Editor Buffer
+  
+        mov   tmp0,@tv.sams.c000    ; Sync SAMS window. Important!                                    
+  
+        mov   @edb.top.ptr,tmp1
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address      
+                                    ; / i  tmp1 = Memory address        
+        ;------------------------------------------------------
         ; Check file operation mode
         ;------------------------------------------------------
+fm.loadsave.cb.indicator1.check.mode:        
         bl    @hchar
               byte 0,0,32,80        ; Remove any left-over junk on top line
               data eol    

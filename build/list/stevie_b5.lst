@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260514-1737200
+0002               * BUILD: 260514-1926050
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       ;-----------------------------------------------------------------------
@@ -128,23 +128,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0004               ***************************** F18a/PICO9918 24x80 ******************************
 0008               
 0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
-0021                   copy 'equ.vdp.6080.asm' ; Character cursor
-     **** ****     > equ.vdp.6080.asm
-0001               * FILE......: equ.vdp.6080.asm
-0002               * Purpose...: PICO9918 60x80 mode
+0011                   copy 'equ.vdp.3080.asm' ; Character cursor
+     **** ****     > equ.vdp.3080.asm
+0001               * FILE......: equ.vdp.3080.asm
+0002               * Purpose...: F18a/PICO9918 30x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 48x80
+0007               * Video mode configuration (stevie) - Graphics mode 30x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
+0010      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
+0012      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -153,8 +149,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
-0022      003B     pane.botrow               equ  59      ; Bottom row on screen
+0021      0007     cmdb.rows                 equ  7       ; Number of rows in command buffer
+0022      001D     pane.botrow               equ  29      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -182,6 +178,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b5.asm
 0031                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -6661,7 +6661,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      31B4 A310     
 0033               
 0034 31B6 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B8 003A     
+     31B8 001C     
 0035 31BA C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BC A320     
 0036               
@@ -7336,7 +7336,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029 33C6 04E0  34         clr   @cmdb.visible         ; Hide command buffer
      33C8 A702     
 0030 33CA 0204  20         li    tmp0,cmdb.rows
-     33CC 000C     
+     33CC 0007     
 0031 33CE C804  38         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
      33D0 A706     
 0032 33D2 C804  38         mov   tmp0,@cmdb.default    ; Set default command buffer size
@@ -7354,7 +7354,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0039                       ; Calculate VDP address of CMDB top row (TAT!)
 0040                       ;------------------------------------------------------
 0041 33E6 0204  20         li    tmp0,pane.botrow      ; \
-     33E8 003B     
+     33E8 001D     
 0042 33EA 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33EC A706     
 0043 33EE 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -10676,7 +10676,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      632A 2832     
 0061 632C 0032                   byte 0,50,32,20           ; Remove markers
      632E 2014     
-0062 6330 3B00                   byte pane.botrow,0,32,55  ; Remove block shortcuts
+0062 6330 1D00                   byte pane.botrow,0,32,55  ; Remove block shortcuts
      6332 2037     
 0063 6334 FFFF                   data eol
 0064                       ;------------------------------------------------------
@@ -10764,13 +10764,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0055               
 0056 6372 06A0  32         bl    @hchar
      6374 2832     
-0057 6376 3B00                   byte pane.botrow,0,32,55
+0057 6376 1D00                   byte pane.botrow,0,32,55
      6378 2037     
 0058 637A FFFF                   data eol              ; Remove markers and block shortcuts
 0059               
 0060 637C 06A0  32         bl    @putat
      637E 2442     
-0061 6380 3B00                   byte pane.botrow,0
+0061 6380 1D00                   byte pane.botrow,0
 0062 6382 397A                   data txt.block.del    ; Display "Deleting block...."
 0063                       ;------------------------------------------------------
 0064                       ; Prepare for delete
@@ -10974,7 +10974,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0082               
 0083 6452 06A0  32         bl    @hchar
      6454 2832     
-0084 6456 3B00                   byte pane.botrow,0,32,55
+0084 6456 1D00                   byte pane.botrow,0,32,55
      6458 2037     
 0085 645A FFFF                   data eol              ; Remove markers and block shortcuts
 0086                       ;------------------------------------------------------
@@ -10986,14 +10986,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0092               
 0093 6460 06A0  32         bl    @putat
      6462 2442     
-0094 6464 3B00                   byte pane.botrow,0
+0094 6464 1D00                   byte pane.botrow,0
 0095 6466 398E                   data txt.block.copy   ; Display "Copying block...."
 0096 6468 1004  14         jmp   edb.block.copy.prep
 0097               
 0098               edb.block.copy.msg2:
 0099 646A 06A0  32         bl    @putat
      646C 2442     
-0100 646E 3B00                   byte pane.botrow,0
+0100 646E 1D00                   byte pane.botrow,0
 0101 6470 39A0                   data txt.block.move   ; Display "Moving block...."
 0102                       ;------------------------------------------------------
 0103                       ; Prepare for copy
@@ -11616,12 +11616,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0068               
 0069 66AA 06A0  32         bl    @putat
      66AC 2442     
-0070 66AE 3B00                   byte pane.botrow,0
+0070 66AE 1D00                   byte pane.botrow,0
 0071 66B0 395A                   data txt.searching    ; Show "Searching..."
 0072               
 0073 66B2 06A0  32         bl    @putat
      66B4 2442     
-0074 66B6 3B0D                   byte pane.botrow,13
+0074 66B6 1D0D                   byte pane.botrow,13
 0075 66B8 A576                   data edb.srch.str     ; Show search string
 0076               
 0077               
@@ -11770,7 +11770,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0186               edb.find.scan.show:
 0187 675C 06A0  32         bl    @putnum
      675E 2AD4     
-0188 6760 3B48                   byte pane.botrow,72   ; Show lines processed
+0188 6760 1D48                   byte pane.botrow,72   ; Show lines processed
 0189 6762 A43C                   data fh.records,rambuf,>3020
      6764 A100     
      6766 3020     
@@ -11984,13 +11984,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0061               pane.clock.time.only:
 0062 6840 06A0  32         bl    @cpym2v                     ; \ Display vertical line
      6842 24E6     
-0063 6844 12A0                   data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
+0063 6844 0940                   data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
 0064 6846 689C                   data txt.vtline             ; | i  p2 = Source RAM address
 0065 6848 0002                   data 2                      ; / i  p3 = Number of bytes to copy
 0066               
 0067 684A 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
      684C 24E6     
-0068 684E 12A2                   data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
+0068 684E 0942                   data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
 0069 6850 A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
 0070 6852 0005                   data 5                      ; / i  p3 = Number of bytes to copy
 0071               
@@ -12001,7 +12001,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0076               pane.clock.time.date:
 0077 6856 06A0  32         bl    @cpym2v                     ; \ Display vertical line
      6858 24E6     
-0078 685A 12A8                   data pane.botrow * 80 + 56  ; | i  p1 = Destination VDP address
+0078 685A 0948                   data pane.botrow * 80 + 56  ; | i  p1 = Destination VDP address
 0079 685C 689C                   data txt.vtline             ; | i  p2 = Source RAM address
 0080 685E 0002                   data 2                      ; / i  p3 = Number of bytes to copy
 0081                       ;------------------------------------------------------
@@ -12018,7 +12018,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6870 689E     
 0089               
 0090 6872 0204  20         li    tmp0,pane.botrow * 80 + 58  ; Destination VDP address
-     6874 12AA     
+     6874 094A     
 0091 6876 0206  20         li    tmp2,3                      ; Number of bytes to copy
      6878 0003     
 0092 687A 06A0  32         bl    @xpym2v                     ; \ Copy day of week to VDP memory
@@ -12031,7 +12031,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0098                       ;------------------------------------------------------
 0099 687E 06A0  32         bl    @cpym2v                     ; \ Copy date to VDP memory
      6880 24E6     
-0100 6882 12AE                   data pane.botrow * 80 + 62  ; | i  p1 = Destination VDP address
+0100 6882 094E                   data pane.botrow * 80 + 62  ; | i  p1 = Destination VDP address
 0101 6884 A4CA                   data fh.clock.datetime + 4  ; | i  p2 = Source RAM address
 0102 6886 0008                   data 8                      ; / i  p3 = Number of bytes to copy
 0103                       ;------------------------------------------------------
@@ -12039,7 +12039,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0105                       ;------------------------------------------------------
 0106 6888 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
      688A 24E6     
-0107 688C 12B7                   data pane.botrow * 80 + 71  ; | i  p1 = Destination VDP address
+0107 688C 0957                   data pane.botrow * 80 + 71  ; | i  p1 = Destination VDP address
 0108 688E A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
 0109 6890 0005                   data 5                      ; / i  p3 = Number of bytes to copy
 0110                       ;------------------------------------------------------
@@ -12794,7 +12794,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0051 7F50 0C              byte   >0c
+0045 7F50 04              byte   >04
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -13105,7 +13105,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     cmdb.pankeys........ >a72e :     
     cmdb.panmarkers..... >a72c :     
     cmdb.prevcursor..... >a710 :     
-    cmdb.rows........... >000c :     
+    cmdb.rows........... >0007 :     
     cmdb.scrrows........ >a706 :     
     cmdb.size........... >0100 :     
     cmdb.struct......... >a700 :     
@@ -13845,7 +13845,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     palon............... >201c :     
     pane.botline.busy.off >6a48 :     
     pane.botline.busy.on >6a36 :     
-    pane.botrow......... >003b :     
+    pane.botrow......... >001d :     
     pane.clock.time..... >67fa :     
     pane.clock.time.date >6856 :     
     pane.clock.time.exit >6892 :     
@@ -14281,15 +14281,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     vdp.fb.toprow.tat... >1310 :     
     vdp.pdt.base........ >2800 :     
     vdp.sit.base........ >0000 :     
-    vdp.sit.size........ >12c0 :     
+    vdp.sit.size........ >0960 :     
     vdp.tat.base........ >12c0 :     
-    vdp.tat.size........ >12c0 :     
+    vdp.tat.size........ >0960 :     
     vdpa................ >8c02 :     
     vdpla1.............. >2910 :     
     vdpla2.............. >2916 :     
     vdpla3.............. >2926 :     
     vdplay.............. >28f8 :     
-    vdpmode............. >17c0 :     
+    vdpmode............. >0c08 :     
     vdpr................ >8800 :     
     vdpr0............... >831c :     
     vdpr01.............. >000e :     
