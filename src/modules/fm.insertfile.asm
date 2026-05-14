@@ -21,12 +21,7 @@
 ********|*****|*********************|**************************
 fm.insertfile:
         .pushregs 2                 ; Push return address and registers on stack
-        dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3
+        .pushparms 3                ; Push parameters p1-p3 on stack
         ;-------------------------------------------------------
         ; Read DV80 file and display
         ;-------------------------------------------------------
@@ -61,12 +56,12 @@ fm.insertfile:
                                     ; |             "File I/O error"
                                     ; | i  @parm6 = Pointer to callback
                                     ; |             "Memory full error"
+                                    ; | i  @fh.line = Line number to insert file at or >FFFF
+                                    ; | i  @fh.workmode = Work mode (used in callbacks)
                                     ; /                                                                        
 *--------------------------------------------------------------
 * Exit
 *--------------------------------------------------------------
 fm.insertfile.exit:
-        mov   *stack+,@parm3        ; Pop @parm3
-        mov   *stack+,@parm2        ; Pop @parm2
-        mov   *stack+,@parm1        ; Pop @parm1
+        .popparms 3                 ; Pop parameters p3-p1 from stack
         .popregs 2                  ; Pop registers and return to caller                        

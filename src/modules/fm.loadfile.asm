@@ -107,7 +107,6 @@ fm.loadfile:
         mov   tmp0,@parm6           ; Register callback 5
 
         seto  @fh.line              ; Loading new file
-
         li    tmp0,id.file.loadfile
         mov   tmp0,@fh.workmode     ; Work mode 
 
@@ -124,6 +123,8 @@ fm.loadfile:
                                     ; |             "File I/O error"
                                     ; | i  @parm6 = Pointer to callback
                                     ; |             "Memory full error"
+                                    ; | i  @fh.line = Line number to insert file at or >FFFF
+                                    ; | i  @fh.workmode = Work mode (used in callbacks)
                                     ; /                         
 
         clr   @edb.dirty            ; Editor buffer content replaced, not
@@ -143,5 +144,5 @@ fm.loadfile:
 * Exit
 *--------------------------------------------------------------
 fm.loadfile.exit:
-        .popparms 8                 ; Pop parameters p1-p8 from stack
+        .popparms 8                 ; Pop parameters p8-p1 from stack
         .popregs 2                  ; Pop registers and return to caller                
