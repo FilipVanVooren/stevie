@@ -143,7 +143,7 @@ main:
         clr   @bank1.ram            ; Activate bank 1 "James" RAM
         .endif
 
-        b     @kickstart.code2      ; Jump to entry routine >6046
+        b     @kickstart.code2      ; Jump to entry routine
         ;------------------------------------------------------
         ; Memory full check
         ;------------------------------------------------------

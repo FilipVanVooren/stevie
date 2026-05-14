@@ -43,6 +43,14 @@
 bankid  equ   bank7.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
+        copy  "rom.header.asm"      ; Include cartridge header!        
+***************************************************************
+* Step 1: Switch to bank 0
+********|*****|*********************|**************************
+        aorg  kickstart.code1 - 4   ;  
+        clr   @bank0.rom            ; Switch to bank 0 "Jill"
+        aorg  kickstart.code1       ; 
+        jmp   $ - 4                 ; Trigger bank switching
 ***************************************************************
 * Step 1: Satisfy assembler, must know relocated code
 ********|*****|*********************|**************************
@@ -63,7 +71,7 @@ bankid  equ   bank7.rom             ; Set bank identifier to current bank
 * Step 2: Include main editor modules
 ********|*****|*********************|**************************
 main:
-        aorg  kickstart.code2       ; >6000
+        aorg  kickstart.code1 + 2   ; 
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
         ; SAMS support routines and utilities
