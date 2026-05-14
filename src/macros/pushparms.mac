@@ -4,13 +4,17 @@
 ; Allocation size = parameters * 2
 ;
 ********|*****|*********************|**************************
- .defm pushregs
-        ai    stack,-(#1 * 2)       ; Make room on stack for parameters
+ .defm pushparms
+        ;
+        ; Make room on stack for parameters
+        ;
+        ai    stack,-(#1 * 2)       
         mov   tmp0,@macvar1         ; Backup tmp0 in macro variable
-        li    tmp0,parm1 - ((#1 - 1) * 2) 
-                                    ; Calculate address of highest paramter to push
-
-    .ifgt #1, 9
+        ;        
+        ; Calculate address of highest paramter to push
+        ;
+        li    tmp0,parm1 - ((#1 - 1) * 2)                                     
+    .ifge #1, 9
         mov   *tmp0+,*stack+        ; Push parm9
     .endif
     .ifge #1, 8

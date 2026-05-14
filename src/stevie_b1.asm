@@ -34,8 +34,10 @@
         ;-----------------------------------------------------------------------
         ; Macros 
         ;-----------------------------------------------------------------------    
-        copy  "macros/pushregs.mac" ; Push registers macro
-        copy  "macros/popregs.mac"  ; Pop registers macro
+        copy  "macros/pushregs.mac"  ; Push registers macro
+        copy  "macros/popregs.mac"   ; Pop registers macro
+        copy  "macros/pushparms.mac" ; Push parameters macro
+        copy  "macros/popparms.mac"  ; Pop parameters macro
 ***************************************************************
 * BANK 1
 ********|*****|*********************|**************************

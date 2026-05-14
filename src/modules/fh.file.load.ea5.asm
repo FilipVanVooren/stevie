@@ -22,20 +22,7 @@
 ********|*****|*********************|**************************
 fh.file.load.ea5:
         .pushregs 3                 ; Push return address and registers on stack
-        dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3    
-        dect  stack
-        mov   @parm4,*stack         ; Push @parm4    
-        dect  stack        
-        mov   @parm5,*stack         ; Push @parm5
-        dect  stack
-        mov   @parm6,*stack         ; Push @parm6
-        dect  stack
-        mov   @parm7,*stack         ; Push @parm7
+        .pushparms 7                ; Push parameters p1-p7 on stack
         ;------------------------------------------------------
         ; Initialisation
         ;------------------------------------------------------ 
@@ -179,11 +166,5 @@ fh.file.load.ea5.next:
 * Exit
 *--------------------------------------------------------------
 fh.file.load.ea5.exit:
-        mov   *stack+,@parm7        ; Pop @parm7
-        mov   *stack+,@parm6        ; Pop @parm6
-        mov   *stack+,@parm5        ; Pop @parm5
-        mov   *stack+,@parm4        ; Pop @parm4
-        mov   *stack+,@parm3        ; Pop @parm3
-        mov   *stack+,@parm2        ; Pop @parm2
-        mov   *stack+,@parm1        ; Pop @parm1
+        .popparms 7                 ; Pop parameters p7-p1 from stack
         .popregs 3                  ; Pop registers and return to caller                        

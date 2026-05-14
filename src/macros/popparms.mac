@@ -5,8 +5,10 @@
 ********|*****|*********************|**************************
  .defm popparms
         mov   tmp0,@macvar1         ; Backup tmp0 in macro variable
-        li    tmp0,parm1 - ((#1 - 1) * 2) 
-                                    ; Calculate address of highest paramter to pop
+        ;
+        ; Calculate address of highest paramter to pop
+        ;
+        li    tmp0,parm1 - ((#1 - 1) * 2)                                     
     .ifge #1, 9
         mov   *stack+,*tmp0+        ; Pop parm9
     .endif

@@ -19,24 +19,7 @@
 ********|*****|*********************|**************************
 fm.clock.read:
         .pushregs 0                 ; Push return address on stack
-        dect  stack
-        mov   @parm1,*stack         ; Push @parm1
-        dect  stack
-        mov   @parm2,*stack         ; Push @parm2
-        dect  stack
-        mov   @parm3,*stack         ; Push @parm3
-        dect  stack
-        mov   @parm4,*stack         ; Push @parm4
-        dect  stack
-        mov   @parm5,*stack         ; Push @parm5
-        dect  stack
-        mov   @parm6,*stack         ; Push @parm6
-        dect  stack
-        mov   @parm7,*stack         ; Push @parm7
-        dect  stack
-        mov   @parm8,*stack         ; Push @parm8     
-        dect  stack
-        mov   @parm9,*stack         ; Push @parm9
+        .pushparms 9                ; Push parameters p1-p9 on stack
         ;-------------------------------------------------------
         ; Read clock data into memory
         ;-------------------------------------------------------
@@ -93,13 +76,5 @@ fm.clock.read:
 * Exit
 *--------------------------------------------------------------
 fm.readclock.exit:
-        mov   *stack+,@parm9        ; Pop @parm9
-        mov   *stack+,@parm8        ; Pop @parm8
-        mov   *stack+,@parm7        ; Pop @parm7
-        mov   *stack+,@parm6        ; Pop @parm6
-        mov   *stack+,@parm5        ; Pop @parm5
-        mov   *stack+,@parm4        ; Pop @parm4
-        mov   *stack+,@parm3        ; Pop @parm3
-        mov   *stack+,@parm2        ; Pop @parm2
-        mov   *stack+,@parm1        ; Pop @parm1
+        .popparms 9                 ; Pop parameters p9-p1 from stack
         .popregs 0                  ; Pop registers and return to caller                
