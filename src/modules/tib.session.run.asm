@@ -128,6 +128,16 @@ tib.run.init.basic2:
         ; New TI Basic session 3
         ;-------------------------------------------------------
 tib.run.init.basic3:
+
+        ;------------------------------------------------------
+        ; Call function in bank 8
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank8.rom        ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        
+
         mov   @tib.status3,tmp1     ; Resume TI Basic session?
         jgt   tib.run.resume.basic3 ; yes, do resume
 

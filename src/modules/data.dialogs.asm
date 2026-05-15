@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 2480         ; F18a/PICO9918 24x80
-            text '  Stevie 2.0.2   '
+            text '  Stevie 2.0.3   '
             even
         .endif
 
         .ifeq vdpmode, 3080         ; F18a/PICO9918 30x80
-            text '  Stevie 2.0.2   '
+            text '  Stevie 2.0.3   '
             even
         .endif
 
         .ifeq vdpmode, 4880         ; PICO9918 48x80
-            text '  Stevie 2.0.2   '  
+            text '  Stevie 2.0.3   '  
             even
         .endif
 
         .ifeq vdpmode, 6080         ; PICO9918 60x80
-            text '  Stevie 2.0.2   '  
+            text '  Stevie 2.0.3   '  
             even
         .endif
 
@@ -177,7 +177,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 2.0.2 - (c)2018-2026 Filip Van Vooren '
+                   text ' - Stevie 2.0.3 - (c)2018-2026 Filip Van Vooren '
                    even
 
 ;--------------------------------------------------------------
@@ -233,12 +233,12 @@ txt.keys.cart.fg99   stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
                      even
 
 ;--------------------------------------------------------------
-; Dialog "TI Basic"
+; Dialog "Basic"
 ;--------------------------------------------------------------
-txt.head.basic     byte 12,4,1
-                   text ' TI Basic '
-txt.info.basic     stri 'Session:  1   2   3  '
-pos.info.basic     byte 10,14,18,>ff
+txt.head.basic     byte 9,4,1
+                   text ' Basic '
+txt.info.basic     stri 'Session:  1=TI Basic   2=TI Basic   3=Jackalope Basic'
+pos.info.basic     byte 10,23,36,>ff
 txt.hint.basic2    stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
 txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'

@@ -4,78 +4,71 @@
 *--------------------------------------------------------------
 * ROM 8: Vectors 1-32
 *--------------------------------------------------------------        
-        aorg  bankx.vectab
-vec.1   data  cpu.crash             ;
-vec.2   data  cpu.crash             ;
-vec.3   data  cpu.crash             ;
-vec.4   data  cpu.crash             ;
-vec.5   data  cpu.crash             ;
-vec.6   data  cpu.crash             ;
-vec.7   data  cpu.crash             ;
-vec.8   data  cpu.crash             ;
-vec.9   data  cpu.crash             ;
-vec.10  data  cpu.crash             ;
-vec.11  data  cpu.crash             ;
-vec.12  data  cpu.crash             ;
-vec.13  data  cpu.crash             ;
-vec.14  data  cpu.crash             ;
-vec.15  data  cpu.crash             ;
-vec.16  data  cpu.crash             ;
-vec.17  data  cpu.crash             ;
-vec.18  data  cpu.crash             ;
-vec.19  data  cpu.crash             ;
-vec.20  data  cpu.crash             ;
-vec.21  data  cpu.crash             ;
-vec.22  data  cpu.crash             ;
-vec.23  data  cpu.crash             ;
-vec.24  data  cpu.crash             ;
-vec.25  data  cpu.crash             ;
-vec.26  data  cpu.crash             ;
-vec.27  data  cpu.crash             ;
-vec.28  data  cpu.crash             ;
-vec.29  data  cpu.crash             ;
-vec.30  data  cpu.crash             ;
-vec.31  data  cpu.crash             ;
-vec.32  data  cpu.crash             ;
+        aorg  >7f70
+vec.1   data  init          ;
+vec.2   data  0             ;
+vec.3   data  0             ;
+vec.4   data  0             ;
+vec.5   data  0             ;
+vec.6   data  0             ;
+vec.7   data  0             ;
+vec.8   data  0             ;
+vec.9   data  0             ;
+vec.10  data  0             ;
+vec.11  data  0             ;
+vec.12  data  0             ;
+vec.13  data  0             ;
+vec.14  data  0             ;
+vec.15  data  0             ;
+vec.16  data  0             ;
+vec.17  data  0             ;
+vec.18  data  0             ;
+vec.19  data  0             ;
+vec.20  data  0             ;
+vec.21  data  0             ;
+vec.22  data  0             ;
+vec.23  data  0             ;
+vec.24  data  0             ;
+vec.25  data  0             ;
+vec.26  data  0             ;
+vec.27  data  0             ;
+vec.28  data  0             ;
+vec.29  data  0             ;
+vec.30  data  0             ;
+vec.31  data  0             ;
+vec.32  data  0             ;
 *--------------------------------------------------------------
 * ROM 8: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
 *--------------------------------------------------------------
-vec.33  data  cpu.crash             ;
-vec.34  data  cpu.crash             ;
-vec.35  data  cpu.crash             ;
-vec.36  data  cpu.crash             ;
-vec.37  data  cpu.crash             ;
-vec.38  data  cpu.crash             ;
-vec.39  data  cpu.crash             ;
-vec.40  data  cpu.crash             ;
-vec.41  data  cpu.crash             ;
-vec.42  data  cpu.crash             ;
-vec.43  data  cpu.crash             ;
-vec.44  data  cpu.crash             ;
-vec.45  data  cpu.crash             ;
-vec.46  data  cpu.crash             ;
-vec.47  data  cpu.crash             ;
-vec.48  data  cpu.crash             ;
-vec.49  data  cpu.crash             ;
-vec.50  data  cpu.crash             ;
-vec.51  data  cpu.crash             ;
-vec.52  data  cpu.crash             ;
-vec.53  data  cpu.crash             ;
-vec.54  data  cpu.crash             ;
-vec.55  data  cpu.crash             ;
-vec.56  data  cpu.crash             ;
-vec.57  data  cpu.crash             ;
-vec.58  data  cpu.crash             ;
-vec.59  data  cpu.crash             ;
-vec.60  data  cpu.crash             ;
-vec.61  data  cpu.crash             ;
-vec.62  data  cpu.crash             ;
-vec.63  data  cpu.crash             ;
-vec.64  data  cpu.crash             ;
-
-*--------------------------------------------------------------
-* ROM identification string for CPU crash
-*--------------------------------------------------------------
-cpu.crash.showbank.bankstr:
-        aorg >7fea
-        stri 'ROM#8'
+vec.33  data  0             ;
+vec.34  data  0             ;
+vec.35  data  0             ;
+vec.36  data  0             ;
+vec.37  data  0             ;
+vec.38  data  0             ;
+vec.39  data  0             ;
+vec.40  data  0             ;
+vec.41  data  0             ;
+vec.42  data  0             ;
+vec.43  data  0             ;
+vec.44  data  0             ;
+vec.45  data  0             ;
+vec.46  data  0             ;
+vec.47  data  0             ;
+vec.48  data  0             ;
+vec.49  data  0             ;
+vec.50  data  0             ;
+vec.51  data  0             ;
+vec.52  data  0             ;
+vec.53  data  0             ;
+vec.54  data  0             ;
+vec.55  data  0             ;
+vec.56  data  0             ;
+vec.57  data  0             ;
+vec.58  data  0             ;
+vec.59  data  0             ;
+vec.60  data  0             ;
+vec.61  data  0             ;
+vec.62  data  0             ;
+vec.63  data  0             ;
+vec.64  data  0             ;

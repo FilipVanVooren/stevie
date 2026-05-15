@@ -13,7 +13,7 @@ vec.5   data  mem.sams.set.basic1   ;
 vec.6   data  mem.sams.set.basic2   ;
 vec.7   data  mem.sams.set.basic3   ;
 vec.8   data  cpu.crash             ;
-vec.9   data  cpu.crash             ;
+vec.9   data  tib.run.return        ;
 vec.10  data  tib.run               ;
 vec.11  data  tib.uncrunch          ;
 vec.12  data  mem.run.ea5           ; Run EA5 binary image in memory

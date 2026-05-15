@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260514-2130370
+0002               * BUILD: 260515-2125550
 0003               ***************************************************************
                    < stevie_be.asm
 0025                       ;-----------------------------------------------------------------------
@@ -92,7 +92,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0012      600A     bank5.rom                 equ  >600a   ; Jumbo
 0013      600C     bank6.rom                 equ  >600c   ; Jenifer
 0014      600E     bank7.rom                 equ  >600e   ; Jonas
-0015      6010     bank8.rom                 equ  >6010   ; Q
+0015      6010     bank8.rom                 equ  >6010   ; Jackalope
 0016      6012     bank9.rom                 equ  >6012   ; free
 0017      6014     banka.rom                 equ  >6014   ; free
 0018      6016     bankb.rom                 equ  >6016   ; free
@@ -111,7 +111,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0031      680A     bank5.ram                 equ  >680a   ; Jumbo
 0032      680C     bank6.ram                 equ  >680c   ; Jenifer
 0033      680E     bank7.ram                 equ  >680e   ; Jonas
-0034      6810     bank8.ram                 equ  >6810   ; Q
+0034      6810     bank8.ram                 equ  >6810   ; Jackalope
 0035      6812     bank9.ram                 equ  >6812   ; free
 0036      6814     banka.ram                 equ  >6814   ; free
 0037      6816     bankb.ram                 equ  >6816   ; free
@@ -982,13 +982,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 2.0.2-60'
+0047 6010 0F53                 stri 'STEVIE 2.0.3-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 322E     
      601A 302E     
-     601C 322D     
+     601C 332D     
      601E 3630     
                    < stevie_be.asm
 0047               ***************************************************************

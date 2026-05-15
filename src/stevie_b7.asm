@@ -135,3 +135,6 @@ main:
         ; Vector table
         ;-----------------------------------------------------------------------
         copy  "rom.vectors.bank7.asm"      ; Vector table bank 7
+
+        aorg >7ff4
+        b    @tib.run.return               ; Return from Jackalope Basic session
