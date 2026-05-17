@@ -22,7 +22,7 @@ tib.run.return:
                                     ; / mem.sams.layout.basic[1-3]
 
         lwpi  cpu.scrpad2           ; Activate Stevie workspace that got
-                                    ; paged-out in tibasic.init
+                                    ; paged-out in tib.run.init
 
         movb  @w$ffff,@>8375        ; Reset keycode
 

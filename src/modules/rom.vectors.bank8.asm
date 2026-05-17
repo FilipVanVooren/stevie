@@ -5,7 +5,7 @@
 * ROM 8: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  >7f70
-vec.1   data  init          ;
+vec.1   data  jbasic.start  ; Start Jackalope Basic intepreter
 vec.2   data  0             ;
 vec.3   data  0             ;
 vec.4   data  0             ;
@@ -72,3 +72,10 @@ vec.61  data  0             ;
 vec.62  data  0             ;
 vec.63  data  0             ;
 vec.64  data  0             ;
+
+*--------------------------------------------------------------
+* ROM identification string for CPU crash
+*--------------------------------------------------------------
+cpu.crash.showbank.bankstr:
+        aorg >7fea
+        stri 'ROM#8'

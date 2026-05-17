@@ -73,7 +73,7 @@ mem.sams.layout.external:
 
 ***************************************************************
 * SAMS legacy page layout table 
-* While running external program
+* While running external program or Basic session
 * Addr:  2..  3..  A..  B..  C..  D..  E..  F..
 * Page:  >02  >03  >0a  >0b  >0c  >0d  >0e  >0f
 *--------------------------------------------------------------

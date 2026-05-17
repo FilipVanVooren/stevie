@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260515-2125550
+0002               * BUILD: 260517-1930200
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       ;-----------------------------------------------------------------------
@@ -11449,7 +11449,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      661A A720     
 0028               
 0029 661C 0204  20         li    tmp0,txt.head.config
-     661E 7C16     
+     661E 7C22     
 0030 6620 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6622 A724     
 0031                       ;-------------------------------------------------------
@@ -11462,12 +11462,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0037                       ; Reduced options
 0038                       ;-------------------------------------------------------
 0039 662A 0204  20         li    tmp0,txt.info.conflock
-     662C 7C5E     
+     662C 7C6A     
 0040 662E C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      6630 A726     
 0041               
 0042 6632 0204  20         li    tmp0,pos.info.conflock
-     6634 7C85     
+     6634 7C91     
 0043 6636 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      6638 A72C     
 0044 663A 1008  14         jmp   dialog.opt.keylist
@@ -11475,12 +11475,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0046                       ; All options
 0047                       ;-------------------------------------------------------
 0048 663C 0204  20 !       li    tmp0,txt.info.config
-     663E 7C22     
+     663E 7C2E     
 0049 6640 C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      6642 A726     
 0050               
 0051 6644 0204  20         li    tmp0,pos.info.config
-     6646 7C57     
+     6646 7C63     
 0052 6648 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      664A A72C     
 0053                       ;-------------------------------------------------------
@@ -11493,7 +11493,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6652 A72A     
 0059               
 0060 6654 0204  20         li    tmp0,txt.keys.config
-     6656 7C8A     
+     6656 7C96     
 0061 6658 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      665A A72E     
 0062               
@@ -11551,7 +11551,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6678 A720     
 0028               
 0029 667A 0204  20         li    tmp0,txt.head.clipdev
-     667C 7CA4     
+     667C 7CB0     
 0030 667E C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6680 A724     
 0031               
@@ -11561,14 +11561,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6688 A72C     
 0034               
 0035 668A 0204  20         li    tmp0,txt.hint.clipdev
-     668C 7CBC     
+     668C 7CC8     
 0036 668E C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
      6690 A728     
 0037 6692 04E0  34         clr   @cmdb.panhint2        ; No extra hint to display
      6694 A72A     
 0038               
 0039 6696 0204  20         li    tmp0,txt.keys.clipdev
-     6698 7CF5     
+     6698 7D01     
 0040 669A C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      669C A72E     
 0041                       ;-------------------------------------------------------
@@ -11641,24 +11641,24 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      66C6 A720     
 0029               
 0030 66C8 0204  20         li    tmp0,txt.head.font
-     66CA 7D08     
+     66CA 7D14     
 0031 66CC C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      66CE A724     
 0032               
 0033 66D0 0204  20         li    tmp0,pos.info.font
-     66D2 7D28     
+     66D2 7D34     
 0034 66D4 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      66D6 A72C     
 0035                       ;------------------------------------------------------
 0036                       ; Other panel strings
 0037                       ;------------------------------------------------------
 0038 66D8 0204  20         li    tmp0,txt.hint.font
-     66DA 7D2B     
+     66DA 7D37     
 0039 66DC C804  38         mov   tmp0,@cmdb.panhint    ; Hint line in dialog
      66DE A728     
 0040               
 0041 66E0 0204  20         li    tmp0,txt.info.font
-     66E2 7D1B     
+     66E2 7D27     
 0042 66E4 C804  38         mov   tmp0,@cmdb.paninfo    ; Show info message
      66E6 A726     
 0043                       ;-------------------------------------------------------
@@ -11666,7 +11666,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0045                       ;-------------------------------------------------------
 0046               dialog.font.keylist:
 0047 66E8 0204  20         li    tmp0,txt.keys.font
-     66EA 7D42     
+     66EA 7D4E     
 0048 66EC C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      66EE A72E     
 0049               
@@ -11953,19 +11953,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      67F8 A726     
 0034               
 0035 67FA 0204  20         li    tmp0,pos.info.basic
-     67FC 7B3A     
+     67FC 7B48     
 0036 67FE C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      6800 A72C     
 0037               
 0038 6802 0204  20         li    tmp0,txt.hint.basic2
-     6804 7B3E     
+     6804 7B4D     
 0039 6806 C804  38         mov   tmp0,@cmdb.panhint2   ; Hint in bottom second line
      6808 A72A     
 0040               
 0041 680A 04E0  34         clr   @cmdb.panhint         ; Clear hint for bottom line
      680C A728     
 0042 680E 0204  20         li    tmp0,txt.keys.basic3  ; Default keylist, adjust later
-     6810 7C0D     
+     6810 7C19     
 0043 6812 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      6814 A72E     
 0044                       ;-------------------------------------------------------
@@ -11985,7 +11985,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0056                       ;-------------------------------------------------------
 0057 6822 06A0  32         bl    @cpym2m               ; Copy hint string to RAM
      6824 253A     
-0058 6826 7B83                   data txt.hint.basic,ram.msg1,70
+0058 6826 7B8F                   data txt.hint.basic,ram.msg1,70
      6828 F750     
      682A 0046     
 0059               
@@ -12057,7 +12057,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0106                       ; Flag is on
 0107                       ;-------------------------------------------------------
 0108 6884 0204  20         li    tmp0,txt.keys.basic2
-     6886 7BF5     
+     6886 7C01     
 0109 6888 1008  14         jmp   dialog.basic.done
 0110                       ;-------------------------------------------------------
 0111                       ; Flag is off
@@ -12074,7 +12074,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0120                       ;-------------------------------------------------------
 0121               dialog.basic.amonly:
 0122 6896 0204  20         li    tmp0,txt.keys.basic   ; Only AutoUnpack
-     6898 7BC8     
+     6898 7BD4     
 0123                       ;-------------------------------------------------------
 0124                       ; Show dialog
 0125                       ;-------------------------------------------------------
@@ -12135,17 +12135,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      68BA A720     
 0028               
 0029 68BC 0204  20         li    tmp0,txt.head.shortcuts
-     68BE 7D5C     
+     68BE 7D68     
 0030 68C0 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      68C2 A724     
 0031               
 0032 68C4 0204  20         li    tmp0,txt.info.shortcuts
-     68C6 7D6A     
+     68C6 7D76     
 0033 68C8 C804  38         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
      68CA A726     
 0034               
 0035 68CC 0204  20         li    tmp0,pos.info.shortcuts
-     68CE 7D92     
+     68CE 7D9E     
 0036 68D0 C804  38         mov   tmp0,@cmdb.panmarkers ; Show letter markers
      68D2 A72C     
 0037               
@@ -12155,12 +12155,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      68DA A72A     
 0040               
 0041 68DC 0204  20         li    tmp0,txt.hint.shortcuts
-     68DE 7D9A     
+     68DE 7DA6     
 0042 68E0 C804  38         mov   tmp0,@cmdb.panhint    ; Empty hint
      68E2 A728     
 0043               
 0044 68E4 0204  20         li    tmp0,txt.keys.shortcuts
-     68E6 7D9C     
+     68E6 7DA8     
 0045 68E8 C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      68EA A72E     
 0046               
@@ -12310,7 +12310,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6960 A720     
 0028               
 0029 6962 0204  20         li    tmp0,txt.head.find
-     6964 7DB6     
+     6964 7DC2     
 0030 6966 C804  38         mov   tmp0,@cmdb.panhead    ; Header for dialog
      6968 A724     
 0031               
@@ -12322,17 +12322,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6974 A72A     
 0035               
 0036 6976 0204  20         li    tmp0,txt.hint.find
-     6978 7DBF     
+     6978 7DCB     
 0037 697A C804  38         mov   tmp0,@cmdb.panhint    ; Show 'Enter search string.'
      697C A728     
 0038               
 0039 697E 0204  20         li    tmp0,txt.hint.find2
-     6980 7DC2     
+     6980 7DCE     
 0040 6982 C804  38         mov   tmp0,@cmdb.panhint2   ; Show toggle
      6984 A72A     
 0041               
 0042 6986 0204  20         li    tmp0,txt.keys.find
-     6988 7DD8     
+     6988 7DE4     
 0043 698A C804  38         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      698C A72E     
 0044               
@@ -13701,7 +13701,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020                       ; Initialize
 0021                       ;-------------------------------------------------------
 0022 6EE4 0204  20         li    tmp0,cmdb.cmd.preset.data
-     6EE6 7DFC     
+     6EE6 7E08     
 0023                                                   ; Load table
 0024 6EE8 C1A0  34         mov   @keycode1,tmp2        ; Get keyboard code
      6EEA A028     
@@ -14424,11 +14424,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      7188 A0C0     
 0029 718A 1303  14         jeq   tibasic.am.off
 0030 718C 0204  20         li    tmp0,txt.keys.basic2
-     718E 7BF5     
+     718E 7C01     
 0031 7190 1002  14         jmp   !
 0032               tibasic.am.off:
 0033 7192 0204  20         li    tmp0,txt.keys.basic
-     7194 7BC8     
+     7194 7BD4     
 0034 7196 C804  38 !       mov   tmp0,@cmdb.pankeys    ; Keylist in status line
      7198 A72E     
 0035                       ;------------------------------------------------------
@@ -15735,13 +15735,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      7830 20       
 0179                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 7831   32                        text '260515-2125550'
+0001 7831   32                        text '260517-1930200'
      7832 3630     
      7834 3531     
-     7836 352D     
-     7838 3231     
-     783A 3235     
-     783C 3535     
+     7836 372D     
+     7838 3139     
+     783A 3330     
+     783C 3230     
      783E 30       
                    < data.dialogs.asm
 0180 783F   20                        text ' - Stevie 2.0.3 - (c)2018-2026 Filip Van Vooren '
@@ -16139,433 +16139,440 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      7AFE 4261     
      7B00 7369     
      7B02 6320     
-0240 7B04 3553     txt.info.basic     stri 'Session:  1=TI Basic   2=TI Basic   3=Jackalope Basic'
+0240 7B04 4353     txt.info.basic     stri 'Session:  TI Basic #1   TI Basic #2   TI Basic #3   Jackalope Basic'
      7B06 6573     
      7B08 7369     
      7B0A 6F6E     
      7B0C 3A20     
-     7B0E 2031     
-     7B10 3D54     
-     7B12 4920     
-     7B14 4261     
-     7B16 7369     
-     7B18 6320     
+     7B0E 2054     
+     7B10 4920     
+     7B12 4261     
+     7B14 7369     
+     7B16 6320     
+     7B18 2331     
      7B1A 2020     
-     7B1C 323D     
-     7B1E 5449     
-     7B20 2042     
-     7B22 6173     
-     7B24 6963     
-     7B26 2020     
-     7B28 2033     
-     7B2A 3D4A     
-     7B2C 6163     
-     7B2E 6B61     
-     7B30 6C6F     
-     7B32 7065     
-     7B34 2042     
-     7B36 6173     
-     7B38 6963     
-0241 7B3A 0A17     pos.info.basic     byte 10,23,36,>ff
-     7B3C 24FF     
-0242 7B3E 4450     txt.hint.basic2    stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
-     7B40 6963     
-     7B42 6B20     
-     7B44 7365     
-     7B46 7373     
-     7B48 696F     
-     7B4A 6E20     
-     7B4C 312D     
-     7B4E 332E     
-     7B50 2050     
-     7B52 7265     
-     7B54 7373     
-     7B56 2046     
-     7B58 3920     
-     7B5A 286F     
-     7B5C 7220     
-     7B5E 7479     
-     7B60 7065     
-     7B62 2045     
-     7B64 4E44     
-     7B66 2920     
-     7B68 696E     
-     7B6A 2054     
-     7B6C 4920     
-     7B6E 4261     
-     7B70 7369     
-     7B72 6320     
-     7B74 746F     
-     7B76 2072     
-     7B78 6574     
-     7B7A 7572     
-     7B7C 6E20     
-     7B7E 6865     
-     7B80 7265     
-     7B82 2E       
-0243 7B83   44     txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
-     7B84 5072     
-     7B86 6573     
-     7B88 7320     
-     7B8A 5350     
-     7B8C 4143     
-     7B8E 4520     
-     7B90 746F     
-     7B92 2075     
-     7B94 6E70     
-     7B96 6163     
-     7B98 6B20     
-     7B9A 7072     
-     7B9C 6F67     
-     7B9E 7261     
-     7BA0 6D20     
-     7BA2 6672     
-     7BA4 6F6D     
-     7BA6 2054     
-     7BA8 4920     
-     7BAA 4261     
-     7BAC 7369     
-     7BAE 6320     
-     7BB0 7365     
-     7BB2 7373     
-     7BB4 696F     
-     7BB6 6E20     
-     7BB8 233F     
-     7BBA 2074     
-     7BBC 6F20     
-     7BBE 6C69     
-     7BC0 6E65     
-     7BC2 2020     
-     7BC4 2020     
-     7BC6 2020     
-0244 7BC8 2C46     txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
-     7BCA 392D     
-     7BCC 4261     
-     7BCE 636B     
+     7B1C 2054     
+     7B1E 4920     
+     7B20 4261     
+     7B22 7369     
+     7B24 6320     
+     7B26 2332     
+     7B28 2020     
+     7B2A 2054     
+     7B2C 4920     
+     7B2E 4261     
+     7B30 7369     
+     7B32 6320     
+     7B34 2333     
+     7B36 2020     
+     7B38 204A     
+     7B3A 6163     
+     7B3C 6B61     
+     7B3E 6C6F     
+     7B40 7065     
+     7B42 2042     
+     7B44 6173     
+     7B46 6963     
+0241 7B48 1422     pos.info.basic     byte 20,34,48,52,>ff
+     7B4A 3034     
+     7B4C FF       
+0242 7B4D   41     txt.hint.basic2    stri 'Pick a session. Press F9 (or type END) in session to return here.'
+     7B4E 5069     
+     7B50 636B     
+     7B52 2061     
+     7B54 2073     
+     7B56 6573     
+     7B58 7369     
+     7B5A 6F6E     
+     7B5C 2E20     
+     7B5E 5072     
+     7B60 6573     
+     7B62 7320     
+     7B64 4639     
+     7B66 2028     
+     7B68 6F72     
+     7B6A 2074     
+     7B6C 7970     
+     7B6E 6520     
+     7B70 454E     
+     7B72 4429     
+     7B74 2069     
+     7B76 6E20     
+     7B78 7365     
+     7B7A 7373     
+     7B7C 696F     
+     7B7E 6E20     
+     7B80 746F     
+     7B82 2072     
+     7B84 6574     
+     7B86 7572     
+     7B88 6E20     
+     7B8A 6865     
+     7B8C 7265     
+     7B8E 2E       
+0243 7B8F   44     txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
+     7B90 5072     
+     7B92 6573     
+     7B94 7320     
+     7B96 5350     
+     7B98 4143     
+     7B9A 4520     
+     7B9C 746F     
+     7B9E 2075     
+     7BA0 6E70     
+     7BA2 6163     
+     7BA4 6B20     
+     7BA6 7072     
+     7BA8 6F67     
+     7BAA 7261     
+     7BAC 6D20     
+     7BAE 6672     
+     7BB0 6F6D     
+     7BB2 2054     
+     7BB4 4920     
+     7BB6 4261     
+     7BB8 7369     
+     7BBA 6320     
+     7BBC 7365     
+     7BBE 7373     
+     7BC0 696F     
+     7BC2 6E20     
+     7BC4 233F     
+     7BC6 2074     
+     7BC8 6F20     
+     7BCA 6C69     
+     7BCC 6E65     
+     7BCE 2020     
      7BD0 2020     
-     7BD2 4635     
-     7BD4 2D41     
-     7BD6 7574     
-     7BD8 6F55     
-     7BDA 6E70     
-     7BDC 6163     
-     7BDE 6B20     
-     7BE0 2053     
-     7BE2 5041     
-     7BE4 4345     
-     7BE6 2D55     
-     7BE8 6E70     
-     7BEA 6163     
-     7BEC 6B20     
-     7BEE 7072     
-     7BF0 6F67     
-     7BF2 7261     
-     7BF4 6D       
-0245 7BF5   17     txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
-     7BF6 4639     
-     7BF8 2D42     
-     7BFA 6163     
-     7BFC 6B20     
-     7BFE 202A     
-     7C00 4635     
-     7C02 2D41     
-     7C04 7574     
-     7C06 6F55     
-     7C08 6E70     
-     7C0A 6163     
-     7C0C 6B       
-0246 7C0D   07     txt.keys.basic3    stri 'F9-Back'
-     7C0E 4639     
-     7C10 2D42     
-     7C12 6163     
-     7C14 6B       
+     7BD2 2020     
+0244 7BD4 2C46     txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
+     7BD6 392D     
+     7BD8 4261     
+     7BDA 636B     
+     7BDC 2020     
+     7BDE 4635     
+     7BE0 2D41     
+     7BE2 7574     
+     7BE4 6F55     
+     7BE6 6E70     
+     7BE8 6163     
+     7BEA 6B20     
+     7BEC 2053     
+     7BEE 5041     
+     7BF0 4345     
+     7BF2 2D55     
+     7BF4 6E70     
+     7BF6 6163     
+     7BF8 6B20     
+     7BFA 7072     
+     7BFC 6F67     
+     7BFE 7261     
+     7C00 6D       
+0245 7C01   17     txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'
+     7C02 4639     
+     7C04 2D42     
+     7C06 6163     
+     7C08 6B20     
+     7C0A 202A     
+     7C0C 4635     
+     7C0E 2D41     
+     7C10 7574     
+     7C12 6F55     
+     7C14 6E70     
+     7C16 6163     
+     7C18 6B       
+0246 7C19   07     txt.keys.basic3    stri 'F9-Back'
+     7C1A 4639     
+     7C1C 2D42     
+     7C1E 6163     
+     7C20 6B       
 0247                                  even
 0248               
 0249               ;--------------------------------------------------------------
 0250               ; Dialog "Options"
 0251               ;--------------------------------------------------------------
-0252 7C16 0B04     txt.head.config    byte 11,4,1
-     7C18 01       
-0253 7C19   20                        text ' Options '
-     7C1A 4F70     
-     7C1C 7469     
-     7C1E 6F6E     
-     7C20 7320     
-0254 7C22 3441     txt.info.config    stri 'Auto-Insert   Clipboard   Clock   Font   Line-Length'
-     7C24 7574     
-     7C26 6F2D     
-     7C28 496E     
-     7C2A 7365     
-     7C2C 7274     
-     7C2E 2020     
-     7C30 2043     
-     7C32 6C69     
-     7C34 7062     
-     7C36 6F61     
-     7C38 7264     
+0252 7C22 0B04     txt.head.config    byte 11,4,1
+     7C24 01       
+0253 7C25   20                        text ' Options '
+     7C26 4F70     
+     7C28 7469     
+     7C2A 6F6E     
+     7C2C 7320     
+0254 7C2E 3441     txt.info.config    stri 'Auto-Insert   Clipboard   Clock   Font   Line-Length'
+     7C30 7574     
+     7C32 6F2D     
+     7C34 496E     
+     7C36 7365     
+     7C38 7274     
      7C3A 2020     
      7C3C 2043     
-     7C3E 6C6F     
-     7C40 636B     
-     7C42 2020     
-     7C44 2046     
-     7C46 6F6E     
-     7C48 7420     
-     7C4A 2020     
-     7C4C 4C69     
-     7C4E 6E65     
-     7C50 2D4C     
-     7C52 656E     
-     7C54 6774     
-     7C56 68       
-0255 7C57   00     pos.info.config    byte 0,14,28,34,41,>ff
-     7C58 0E1C     
-     7C5A 2229     
-     7C5C FF       
+     7C3E 6C69     
+     7C40 7062     
+     7C42 6F61     
+     7C44 7264     
+     7C46 2020     
+     7C48 2043     
+     7C4A 6C6F     
+     7C4C 636B     
+     7C4E 2020     
+     7C50 2046     
+     7C52 6F6E     
+     7C54 7420     
+     7C56 2020     
+     7C58 4C69     
+     7C5A 6E65     
+     7C5C 2D4C     
+     7C5E 656E     
+     7C60 6774     
+     7C62 68       
+0255 7C63   00     pos.info.config    byte 0,14,28,34,41,>ff
+     7C64 0E1C     
+     7C66 2229     
+     7C68 FF       
 0256                                  even
-0257 7C5E 2643     txt.info.conflock  stri 'Clipboard   Clock   Font   Line-Length'
-     7C60 6C69     
-     7C62 7062     
-     7C64 6F61     
-     7C66 7264     
-     7C68 2020     
-     7C6A 2043     
-     7C6C 6C6F     
-     7C6E 636B     
-     7C70 2020     
-     7C72 2046     
-     7C74 6F6E     
-     7C76 7420     
-     7C78 2020     
-     7C7A 4C69     
-     7C7C 6E65     
-     7C7E 2D4C     
-     7C80 656E     
-     7C82 6774     
-     7C84 68       
-0258 7C85   00     pos.info.conflock  byte 0,14,20,27,>ff
-     7C86 0E14     
-     7C88 1BFF     
+0257 7C6A 2643     txt.info.conflock  stri 'Clipboard   Clock   Font   Line-Length'
+     7C6C 6C69     
+     7C6E 7062     
+     7C70 6F61     
+     7C72 7264     
+     7C74 2020     
+     7C76 2043     
+     7C78 6C6F     
+     7C7A 636B     
+     7C7C 2020     
+     7C7E 2046     
+     7C80 6F6E     
+     7C82 7420     
+     7C84 2020     
+     7C86 4C69     
+     7C88 6E65     
+     7C8A 2D4C     
+     7C8C 656E     
+     7C8E 6774     
+     7C90 68       
+0258 7C91   00     pos.info.conflock  byte 0,14,20,27,>ff
+     7C92 0E14     
+     7C94 1BFF     
 0259                                  even
-0260 7C8A 1946     txt.keys.config    stri 'F9-Back  SPACE-Close menu'
-     7C8C 392D     
-     7C8E 4261     
-     7C90 636B     
-     7C92 2020     
-     7C94 5350     
-     7C96 4143     
-     7C98 452D     
-     7C9A 436C     
-     7C9C 6F73     
-     7C9E 6520     
-     7CA0 6D65     
-     7CA2 6E75     
+0260 7C96 1946     txt.keys.config    stri 'F9-Back  SPACE-Close menu'
+     7C98 392D     
+     7C9A 4261     
+     7C9C 636B     
+     7C9E 2020     
+     7CA0 5350     
+     7CA2 4143     
+     7CA4 452D     
+     7CA6 436C     
+     7CA8 6F73     
+     7CAA 6520     
+     7CAC 6D65     
+     7CAE 6E75     
 0261                                  even
 0262               
 0263               ;--------------------------------------------------------------
 0264               ; Dialog "Configure clipboard"
 0265               ;--------------------------------------------------------------
-0266 7CA4 1704     txt.head.clipdev   byte 23,4,1
-     7CA6 01       
-0267 7CA7   20                        text ' Configure clipboard '
-     7CA8 436F     
-     7CAA 6E66     
-     7CAC 6967     
-     7CAE 7572     
-     7CB0 6520     
-     7CB2 636C     
-     7CB4 6970     
-     7CB6 626F     
-     7CB8 6172     
-     7CBA 6420     
-0268 7CBC 3847     txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
-     7CBE 6976     
-     7CC0 6520     
-     7CC2 6465     
-     7CC4 7669     
-     7CC6 6365     
-     7CC8 2C20     
-     7CCA 7061     
-     7CCC 7468     
-     7CCE 2061     
-     7CD0 6E64     
-     7CD2 2066     
-     7CD4 696C     
-     7CD6 656E     
-     7CD8 616D     
-     7CDA 6520     
-     7CDC 7072     
-     7CDE 6566     
-     7CE0 6978     
-     7CE2 206F     
-     7CE4 6620     
-     7CE6 636C     
-     7CE8 6970     
-     7CEA 626F     
-     7CEC 6172     
-     7CEE 6420     
-     7CF0 6669     
-     7CF2 6C65     
-     7CF4 2E       
-0269 7CF5   11     txt.keys.clipdev   stri 'F9-Back  F3-Clear'
-     7CF6 4639     
-     7CF8 2D42     
-     7CFA 6163     
-     7CFC 6B20     
-     7CFE 2046     
-     7D00 332D     
-     7D02 436C     
-     7D04 6561     
-     7D06 72       
+0266 7CB0 1704     txt.head.clipdev   byte 23,4,1
+     7CB2 01       
+0267 7CB3   20                        text ' Configure clipboard '
+     7CB4 436F     
+     7CB6 6E66     
+     7CB8 6967     
+     7CBA 7572     
+     7CBC 6520     
+     7CBE 636C     
+     7CC0 6970     
+     7CC2 626F     
+     7CC4 6172     
+     7CC6 6420     
+0268 7CC8 3847     txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
+     7CCA 6976     
+     7CCC 6520     
+     7CCE 6465     
+     7CD0 7669     
+     7CD2 6365     
+     7CD4 2C20     
+     7CD6 7061     
+     7CD8 7468     
+     7CDA 2061     
+     7CDC 6E64     
+     7CDE 2066     
+     7CE0 696C     
+     7CE2 656E     
+     7CE4 616D     
+     7CE6 6520     
+     7CE8 7072     
+     7CEA 6566     
+     7CEC 6978     
+     7CEE 206F     
+     7CF0 6620     
+     7CF2 636C     
+     7CF4 6970     
+     7CF6 626F     
+     7CF8 6172     
+     7CFA 6420     
+     7CFC 6669     
+     7CFE 6C65     
+     7D00 2E       
+0269 7D01   11     txt.keys.clipdev   stri 'F9-Back  F3-Clear'
+     7D02 4639     
+     7D04 2D42     
+     7D06 6163     
+     7D08 6B20     
+     7D0A 2046     
+     7D0C 332D     
+     7D0E 436C     
+     7D10 6561     
+     7D12 72       
 0270                                  even
 0271               
 0272               ;--------------------------------------------------------------
 0273               ; Dialog "Configure font"
 0274               ;--------------------------------------------------------------
-0275 7D08 1204     txt.head.font      byte 18,4,1
-     7D0A 01       
-0276 7D0B   20                        text ' Configure font '
-     7D0C 436F     
-     7D0E 6E66     
-     7D10 6967     
-     7D12 7572     
-     7D14 6520     
-     7D16 666F     
-     7D18 6E74     
-     7D1A 20       
-0277 7D1B   0C     txt.info.font      stri 'Font:  1   2'
-     7D1C 466F     
-     7D1E 6E74     
-     7D20 3A20     
-     7D22 2031     
-     7D24 2020     
-     7D26 2032     
-0278 7D28 070B     pos.info.font      byte 7,11,>ff
-     7D2A FF       
+0275 7D14 1204     txt.head.font      byte 18,4,1
+     7D16 01       
+0276 7D17   20                        text ' Configure font '
+     7D18 436F     
+     7D1A 6E66     
+     7D1C 6967     
+     7D1E 7572     
+     7D20 6520     
+     7D22 666F     
+     7D24 6E74     
+     7D26 20       
+0277 7D27   0C     txt.info.font      stri 'Font:  1   2'
+     7D28 466F     
+     7D2A 6E74     
+     7D2C 3A20     
+     7D2E 2031     
+     7D30 2020     
+     7D32 2032     
+0278 7D34 070B     pos.info.font      byte 7,11,>ff
+     7D36 FF       
 0279               
-0280 7D2B   16     txt.hint.font      stri 'Pick desired font 1-2.'
-     7D2C 5069     
-     7D2E 636B     
-     7D30 2064     
-     7D32 6573     
-     7D34 6972     
-     7D36 6564     
-     7D38 2066     
-     7D3A 6F6E     
-     7D3C 7420     
-     7D3E 312D     
-     7D40 322E     
-0281 7D42 1946     txt.keys.font      stri 'F9-Back  SPACE-Close menu'
-     7D44 392D     
-     7D46 4261     
-     7D48 636B     
-     7D4A 2020     
-     7D4C 5350     
-     7D4E 4143     
-     7D50 452D     
-     7D52 436C     
-     7D54 6F73     
-     7D56 6520     
-     7D58 6D65     
-     7D5A 6E75     
+0280 7D37   16     txt.hint.font      stri 'Pick desired font 1-2.'
+     7D38 5069     
+     7D3A 636B     
+     7D3C 2064     
+     7D3E 6573     
+     7D40 6972     
+     7D42 6564     
+     7D44 2066     
+     7D46 6F6E     
+     7D48 7420     
+     7D4A 312D     
+     7D4C 322E     
+0281 7D4E 1946     txt.keys.font      stri 'F9-Back  SPACE-Close menu'
+     7D50 392D     
+     7D52 4261     
+     7D54 636B     
+     7D56 2020     
+     7D58 5350     
+     7D5A 4143     
+     7D5C 452D     
+     7D5E 436C     
+     7D60 6F73     
+     7D62 6520     
+     7D64 6D65     
+     7D66 6E75     
 0282                                  even
 0283               
 0284               ;--------------------------------------------------------------
 0285               ; Dialog "Shortcuts"
 0286               ;--------------------------------------------------------------
-0287 7D5C 0D04     txt.head.shortcuts byte 13,4,1
-     7D5E 01       
-0288 7D5F   20                        text ' Shortcuts '
-     7D60 5368     
-     7D62 6F72     
-     7D64 7463     
-     7D66 7574     
-     7D68 7320     
-0289 7D6A 2643     txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   M1   M2'
-     7D6C 6F6C     
+0287 7D68 0D04     txt.head.shortcuts byte 13,4,1
+     7D6A 01       
+0288 7D6B   20                        text ' Shortcuts '
+     7D6C 5368     
      7D6E 6F72     
-     7D70 7320     
-     7D72 2020     
-     7D74 4669     
-     7D76 6E64     
-     7D78 2020     
-     7D7A 2047     
-     7D7C 6F74     
-     7D7E 6F20     
-     7D80 2020     
-     7D82 5275     
-     7D84 6C65     
-     7D86 7220     
-     7D88 2020     
-     7D8A 4D31     
+     7D70 7463     
+     7D72 7574     
+     7D74 7320     
+0289 7D76 2643     txt.info.shortcuts stri 'Colors   Find   Goto   Ruler   M1   M2'
+     7D78 6F6C     
+     7D7A 6F72     
+     7D7C 7320     
+     7D7E 2020     
+     7D80 4669     
+     7D82 6E64     
+     7D84 2020     
+     7D86 2047     
+     7D88 6F74     
+     7D8A 6F20     
      7D8C 2020     
-     7D8E 204D     
-     7D90 32       
+     7D8E 5275     
+     7D90 6C65     
+     7D92 7220     
+     7D94 2020     
+     7D96 4D31     
+     7D98 2020     
+     7D9A 204D     
+     7D9C 32       
 0290                                  even
-0291 7D92 0009     pos.info.shortcuts byte 0,9,16,23,32,37,>ff
-     7D94 1017     
-     7D96 2025     
-     7D98 FF       
+0291 7D9E 0009     pos.info.shortcuts byte 0,9,16,23,32,37,>ff
+     7DA0 1017     
+     7DA2 2025     
+     7DA4 FF       
 0292                                  even
-0293 7D9A 0120     txt.hint.shortcuts stri ' '
+0293 7DA6 0120     txt.hint.shortcuts stri ' '
 0294                                  even
-0295 7D9C 1946     txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
-     7D9E 392D     
-     7DA0 4261     
-     7DA2 636B     
-     7DA4 2020     
-     7DA6 5350     
-     7DA8 4143     
-     7DAA 452D     
-     7DAC 436C     
-     7DAE 6F73     
-     7DB0 6520     
-     7DB2 6D65     
-     7DB4 6E75     
+0295 7DA8 1946     txt.keys.shortcuts stri 'F9-Back  SPACE-Close menu'
+     7DAA 392D     
+     7DAC 4261     
+     7DAE 636B     
+     7DB0 2020     
+     7DB2 5350     
+     7DB4 4143     
+     7DB6 452D     
+     7DB8 436C     
+     7DBA 6F73     
+     7DBC 6520     
+     7DBE 6D65     
+     7DC0 6E75     
 0296                                  even
 0297               
 0298               ;--------------------------------------------------------------
 0299               ; Dialog "Find"
 0300               ;--------------------------------------------------------------
-0301 7DB6 0804     txt.head.find      byte 8,4,1
-     7DB8 01       
-0302 7DB9   20                        text ' Find '
-     7DBA 4669     
-     7DBC 6E64     
-     7DBE 20       
-0303 7DBF   01     txt.hint.find      stri ''
-     7DC0 00       
+0301 7DC2 0804     txt.head.find      byte 8,4,1
+     7DC4 01       
+0302 7DC5   20                        text ' Find '
+     7DC6 4669     
+     7DC8 6E64     
+     7DCA 20       
+0303 7DCB   01     txt.hint.find      stri ''
+     7DCC 00       
 0304                                  even
-0305 7DC2 1445     txt.hint.find2     stri 'Enter search string.'
-     7DC4 6E74     
-     7DC6 6572     
-     7DC8 2073     
-     7DCA 6561     
-     7DCC 7263     
-     7DCE 6820     
-     7DD0 7374     
-     7DD2 7269     
-     7DD4 6E67     
-     7DD6 2E       
+0305 7DCE 1445     txt.hint.find2     stri 'Enter search string.'
+     7DD0 6E74     
+     7DD2 6572     
+     7DD4 2073     
+     7DD6 6561     
+     7DD8 7263     
+     7DDA 6820     
+     7DDC 7374     
+     7DDE 7269     
+     7DE0 6E67     
+     7DE2 2E       
 0306                                  even
-0307 7DD8 2246     txt.keys.find      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
-     7DDA 392D     
-     7DDC 4261     
-     7DDE 636B     
-     7DE0 2020     
-     7DE2 4633     
-     7DE4 2D43     
-     7DE6 6C65     
-     7DE8 6172     
-     7DEA 2020     
-     7DEC 4648     
-     7DEE 2D48     
-     7DF0 6F6D     
-     7DF2 6520     
-     7DF4 2046     
-     7DF6 4C2D     
-     7DF8 454F     
-     7DFA 4C       
+0307 7DE4 2246     txt.keys.find      stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
+     7DE6 392D     
+     7DE8 4261     
+     7DEA 636B     
+     7DEC 2020     
+     7DEE 4633     
+     7DF0 2D43     
+     7DF2 6C65     
+     7DF4 6172     
+     7DF6 2020     
+     7DF8 4648     
+     7DFA 2D48     
+     7DFC 6F6D     
+     7DFE 6520     
+     7E00 2046     
+     7E02 4C2D     
+     7E04 454F     
+     7E06 4C       
 0308                                  even
                    < stevie_b3.asm
 0124                       copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
@@ -16580,16 +16587,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0008                       ;-------------------------------------------------------
 0009                       ; Dialog "Configure clipboard"
 0010                       ;-------------------------------------------------------
-0011 7DFC 0014             data  id.dialog.opt.clip, key.ctrl.a, def.clip.fname.a
-     7DFE 0081     
-     7E00 3D9B     
-0012 7E02 0014             data  id.dialog.opt.clip, key.ctrl.b, def.clip.fname.b
-     7E04 0082     
-     7E06 3DA6     
+0011 7E08 0014             data  id.dialog.opt.clip, key.ctrl.a, def.clip.fname.a
+     7E0A 0081     
+     7E0C 3D9B     
+0012 7E0E 0014             data  id.dialog.opt.clip, key.ctrl.b, def.clip.fname.b
+     7E10 0082     
+     7E12 3DA6     
 0013                       ;-------------------------------------------------------
 0014                       ; End of list
 0015                       ;-------------------------------------------------------
-0016 7E08 FFFF             data  EOL                   ; EOL
+0016 7E14 FFFF             data  EOL                   ; EOL
                    < stevie_b3.asm
 0125                       ;-----------------------------------------------------------------------
 0126                       ; Bank full check
@@ -16957,7 +16964,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     cmdb.cmd.getlength.. >6e4c :     
     cmdb.cmd.getlength.exit >6e5e :     
     cmdb.cmd.preset..... >6ed4 :     
-    cmdb.cmd.preset.data >7dfc :     
+    cmdb.cmd.preset.data >7e08 :     
     cmdb.cmd.preset.exit >6f10 :     
     cmdb.cmd.preset.loop >6eec :     
     cmdb.cmd.preset.next >6f04 :     
@@ -17817,16 +17824,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     popr2............... >222c :     
     popr3............... >222a :     
     poprt............... >2232 :     
-    pos.info.basic...... >7b3a :     
+    pos.info.basic...... >7b48 :     
     pos.info.cart.type.. >7a05 :     
-    pos.info.config..... >7c57 :     
-    pos.info.conflock... >7c85 :     
+    pos.info.config..... >7c63 :     
+    pos.info.conflock... >7c91 :     
     pos.info.file....... >798a :     
     pos.info.filelock... >79c7 :     
-    pos.info.font....... >7d28 :     
+    pos.info.font....... >7d34 :     
     pos.info.menu....... >78c2 :     
     pos.info.menulock... >7912 :     
-    pos.info.shortcuts.. >7d92 :     
+    pos.info.shortcuts.. >7d9e :     
     prefix.............. >2a4a :     
     putat............... >2442 :     
     puthex.............. >2a4c :     
@@ -18192,13 +18199,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.head.cart.fg99.. >7a48 :     
     txt.head.cart.type.. >79ea :     
     txt.head.clipboard.. >762e :     
-    txt.head.clipdev.... >7ca4 :     
-    txt.head.config..... >7c16 :     
+    txt.head.clipdev.... >7cb0 :     
+    txt.head.config..... >7c22 :     
     txt.head.delete..... >752c :     
     txt.head.dir........ >75ea :     
     txt.head.file....... >793e :     
-    txt.head.find....... >7db6 :     
-    txt.head.font....... >7d08 :     
+    txt.head.find....... >7dc2 :     
+    txt.head.font....... >7d14 :     
     txt.head.goto....... >76a6 :     
     txt.head.insert..... >7514 :     
     txt.head.menu....... >7870 :     
@@ -18208,28 +18215,28 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.head.run........ >7588 :     
     txt.head.save....... >7464 :     
     txt.head.save2...... >7472 :     
-    txt.head.shortcuts.. >7d5c :     
+    txt.head.shortcuts.. >7d68 :     
     txt.head.unsaved.... >7714 :     
     txt.hint.about...... >77d8 :     
     txt.hint.about2..... >77b3 :     
     txt.hint.append..... >73e6 :     
     txt.hint.append2.... >743a :     
-    txt.hint.basic...... >7b83 :     
-    txt.hint.basic2..... >7b3e :     
+    txt.hint.basic...... >7b8f :     
+    txt.hint.basic2..... >7b4d :     
     txt.hint.cart.fg99.. >7a59 :     
     txt.hint.cart.fg992. >7a8e :     
     txt.hint.cart.type.. >7a2c :     
     txt.hint.cart.type2. >7a07 :     
     txt.hint.clipboard.. >765a :     
-    txt.hint.clipdev.... >7cbc :     
+    txt.hint.clipdev.... >7cc8 :     
     txt.hint.delete..... >73e6 :     
     txt.hint.delete2.... >743a :     
     txt.hint.dir........ >73e6 :     
     txt.hint.dir2....... >75f6 :     
     txt.hint.filepicker. >73e6 :     
-    txt.hint.find....... >7dbf :     
-    txt.hint.find2...... >7dc2 :     
-    txt.hint.font....... >7d2b :     
+    txt.hint.find....... >7dcb :     
+    txt.hint.find2...... >7dce :     
+    txt.hint.font....... >7d37 :     
     txt.hint.goto....... >76b4 :     
     txt.hint.insert..... >73e6 :     
     txt.hint.insert2.... >743a :     
@@ -18243,21 +18250,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.hint.run2....... >75bf :     
     txt.hint.sams....... >73ac :     
     txt.hint.save....... >7489 :     
-    txt.hint.shortcuts.. >7d9a :     
+    txt.hint.shortcuts.. >7da6 :     
     txt.hint.unsaved.... >774a :     
     txt.info.about...... >77b1 :     
     txt.info.basic...... >7b04 :     
     txt.info.cart.type.. >79f8 :     
     txt.info.clipboard.. >7649 :     
-    txt.info.config..... >7c22 :     
-    txt.info.conflock... >7c5e :     
+    txt.info.config..... >7c2e :     
+    txt.info.conflock... >7c6a :     
     txt.info.file....... >7947 :     
     txt.info.filelock... >7994 :     
-    txt.info.font....... >7d1b :     
+    txt.info.font....... >7d27 :     
     txt.info.menu....... >787e :     
     txt.info.menulock... >78cc :     
     txt.info.run........ >75a4 :     
-    txt.info.shortcuts.. >7d6a :     
+    txt.info.shortcuts.. >7d76 :     
     txt.info.unsaved.... >7728 :     
     txt.io.nofile....... >3cf6 :     
     txt.ioerr.break..... >3d48 :     
@@ -18271,17 +18278,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.keymarker....... >3c54 :     
     txt.keys.about...... >7801 :     
     txt.keys.append..... >7362 :     
-    txt.keys.basic...... >7bc8 :     
+    txt.keys.basic...... >7bd4 :     
     txt.keys.basic1..... >3c20 :     
-    txt.keys.basic2..... >7bf5 :     
-    txt.keys.basic3..... >7c0d :     
+    txt.keys.basic2..... >7c01 :     
+    txt.keys.basic3..... >7c19 :     
     txt.keys.block...... >3bbc :     
     txt.keys.blocklock.. >3bf8 :     
     txt.keys.cart.fg99.. >7ad6 :     
     txt.keys.cart.type.. >7a2e :     
     txt.keys.clipboard.. >7690 :     
-    txt.keys.clipdev.... >7cf5 :     
-    txt.keys.config..... >7c8a :     
+    txt.keys.clipdev.... >7d01 :     
+    txt.keys.config..... >7c96 :     
     txt.keys.default.... >3b28 :     
     txt.keys.default1... >7362 :     
     txt.keys.defaultb... >3b3a :     
@@ -18290,8 +18297,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.keys.delete..... >7362 :     
     txt.keys.dir........ >7362 :     
     txt.keys.file....... >79d0 :     
-    txt.keys.find....... >7dd8 :     
-    txt.keys.font....... >7d42 :     
+    txt.keys.find....... >7de4 :     
+    txt.keys.font....... >7d4e :     
     txt.keys.goto....... >76f1 :     
     txt.keys.insert..... >7362 :     
     txt.keys.menu....... >791e :     
@@ -18302,7 +18309,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.keys.run........ >7362 :     
     txt.keys.save1...... >7499 :     
     txt.keys.save2...... >74ce :     
-    txt.keys.shortcuts.. >7d9c :     
+    txt.keys.shortcuts.. >7da8 :     
     txt.keys.unsaved.... >7782 :     
     txt.linelen.off..... >7168 :     
     txt.linelen.on...... >7158 :     

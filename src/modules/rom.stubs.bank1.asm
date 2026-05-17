@@ -1382,3 +1382,26 @@ cart.fg99.mgr:
 cart.fg99.mgr.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* Stub for "jbasic.start"
+* bank8 vec.1
+********|*****|*********************|**************************
+jbasic.start:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call routine in specified bank
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank8.rom        ; | i  p0 = bank address
+              data vec.1            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+jbasic.start.exit:
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller

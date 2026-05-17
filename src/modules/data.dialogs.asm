@@ -237,9 +237,9 @@ txt.keys.cart.fg99   stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
 ;--------------------------------------------------------------
 txt.head.basic     byte 9,4,1
                    text ' Basic '
-txt.info.basic     stri 'Session:  1=TI Basic   2=TI Basic   3=Jackalope Basic'
-pos.info.basic     byte 10,23,36,>ff
-txt.hint.basic2    stri 'Pick session 1-3. Press F9 (or type END) in TI Basic to return here.'
+txt.info.basic     stri 'Session:  TI Basic #1   TI Basic #2   TI Basic #3   Jackalope Basic'
+pos.info.basic     byte 20,34,48,52,>ff
+txt.hint.basic2    stri 'Pick a session. Press F9 (or type END) in session to return here.'
 txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'

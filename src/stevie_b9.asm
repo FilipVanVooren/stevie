@@ -18,78 +18,20 @@
 ********************************************************************************
 * File: stevie_b9.asm
 *
-* Bank 9 "Q"
-* Empty bank for future expansion
+* Bank 9 "Jackalope Basic"
+* Jackalope Basic by Alex Johnson (compuwiz@gmail.com)
 ********************************************************************************
-        copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
-        ;-----------------------------------------------------------------------
-        ; Equates
-        ;-----------------------------------------------------------------------           
-        copy  "equ.rom.build.asm"   ; Cartridge build options
-        copy  "equ.romseq.asm"      ; ROM bank order "non-inverted"
-        copy  "equ.vdp.asm"         ; VDP configuration (F18a/9938/...)
-        copy  "equ.asm"             ; Stevie main configuration
-        copy  "equ.c99.asm"         ; Classic99 emulator configuration
-        copy  "equ.tib.asm"         ; Equates related to TI Basic session
-        copy  "equ.keys.asm"        ; Equates for keyboard mapping
-        ;-----------------------------------------------------------------------
-        ; Macros 
-        ;-----------------------------------------------------------------------    
-        copy  "macros/pushregs.mac" ; Push registers macro
-        copy  "macros/popregs.mac"  ; Pop registers macro               
-***************************************************************
-* BANK 9
-********|*****|*********************|**************************
-bankid  equ   bank9.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
-***************************************************************
-* Step 1: Satisfy assembler, must know relocated code
-********|*****|*********************|**************************
-        aorg  >2000                 ; Relocate to >2000
-        copy  "runlib.asm"
-        copy  "ram.resident.asm"
-        ;------------------------------------------------------
-        ; Activate bank 1
-        ;------------------------------------------------------
-        clr   @bank1.rom            ; Activate bank 1 "James" ROM
 
-        .ifeq device.fg99.mode.adv,1
-        clr   @bank1.ram            ; Activate bank 1 "James" RAM
-        .endif
+        aorg  >600a
+        b     @INIT                 ; Start Jackalope Basic
+        aorg  >600e
+        clr   @bank8.rom            ; Return to Jackalope integration layer
+********************************************************************
 
-        b     @kickstart.code2      ; Jump to entry routine
 ***************************************************************
-* Step 2: Include main editor modules
+* Step 1: Include Jackalope Basic
 ********|*****|*********************|**************************
-main:
-        aorg  kickstart.code2       ; >6000
-        bl    @cpu.crash            ; Should never get here
-        ;-----------------------------------------------------------------------
-        ; Stubs
-        ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank9.asm" ; Bank specific stubs
-        copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
-        ;-----------------------------------------------------------------------
-        ; Program data
-        ;-----------------------------------------------------------------------
-        ; copy  "data.bank9.asm"    ; Data for bank 9        
-        ;-----------------------------------------------------------------------
-        ; Bank full check
-        ;-----------------------------------------------------------------------
-        .ifge $, >7f50
-              .error 'Aborted. Bank 9 cartridge program too large!'
-        .endif
-        ;-----------------------------------------------------------------------
-        ; Show ROM bank in CPU crash screen
-        ;-----------------------------------------------------------------------
-        copy  "rom.crash.asm"
-        ;-----------------------------------------------------------------------
-        ; Table for VDP modes
-        ;-----------------------------------------------------------------------
-        copy  "data.vdpmodes.asm"   ; Table for VDP modes        
-        ;-----------------------------------------------------------------------
-        ; Vector table
-        ;-----------------------------------------------------------------------
-        copy  "rom.vectors.bank9.asm"
-                                    ; Vector table bank 9
+        copy  "equ.romseq.asm"      ; Get ROM bank order
+        copy  "jbasic.asm"          ; Jackalope Basic by Alex Johnson
