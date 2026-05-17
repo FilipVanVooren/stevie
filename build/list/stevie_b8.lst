@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260517-2010420
+0002               * BUILD: 260517-2016040
 0003               ***************************************************************
                    < stevie_b8.asm
 0025                       ;-----------------------------------------------------------------------
@@ -9839,9 +9839,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0053 6018 1D01  16         sbo   1                     ; | sams layout table
 0054                                                   ; /
 0055               
-0056               
-0057                      aorg  kickstart.code1 - 6   ; >6030 - 6
-0058 602A 04E0  34        clr   @bank0.rom            ; Activate bank 1 "James" ROM
+0056                       aorg  kickstart.code1 - 6   ; >6030 - 6
+0057 602A 04E0  34         clr   @bank0.rom            ; Activate bank 1 "James" ROM
      602C 6000     
                    < stevie_b8.asm
 0070                       ;-----------------------------------------------------------------------

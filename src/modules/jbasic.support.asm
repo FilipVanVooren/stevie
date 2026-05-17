@@ -53,6 +53,5 @@ jbasic.return:
         sbo   1                     ; | sams layout table
                                     ; / 
 
-       
-       aorg  kickstart.code1 - 6   ; >6030 - 6
-       clr   @bank0.rom            ; Activate bank 1 "James" ROM
+        aorg  kickstart.code1 - 6   ; >6030 - 6
+        clr   @bank0.rom            ; Activate bank 1 "James" ROM
