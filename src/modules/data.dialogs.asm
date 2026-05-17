@@ -239,7 +239,7 @@ txt.head.basic     byte 9,4,1
                    text ' Basic '
 txt.info.basic     stri 'Session:  TI Basic #1   TI Basic #2   TI Basic #3   Jackalope Basic'
 pos.info.basic     byte 20,34,48,52,>ff
-txt.hint.basic2    stri 'Pick a session. Press F9 (or type END) in session to return here.'
+txt.hint.basic2    stri 'To return type END (F9) in TI Basic or SYS 24590 in Jackalope Basic.'
 txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'

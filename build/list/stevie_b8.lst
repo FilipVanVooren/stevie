@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260517-1930200
+0002               * BUILD: 260517-2003440
 0003               ***************************************************************
                    < stevie_b8.asm
 0025                       ;-----------------------------------------------------------------------
@@ -128,23 +128,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0004               ***************************** F18a/PICO9918 24x80 ******************************
 0008               
 0009               ***************************** F18a/PICO9918 30x80 ******************************
-0013               
-0014               ******************************* PICO9918 48x80 *********************************
-0018               
-0019               ******************************* PICO9918 60x80 *********************************
-0021                   copy 'equ.vdp.6080.asm' ; Character cursor
-     **** ****     > equ.vdp.6080.asm
-0001               * FILE......: equ.vdp.6080.asm
-0002               * Purpose...: PICO9918 60x80 mode
+0011                   copy 'equ.vdp.3080.asm' ; Character cursor
+     **** ****     > equ.vdp.3080.asm
+0001               * FILE......: equ.vdp.3080.asm
+0002               * Purpose...: F18a/PICO9918 30x80 mode
 0003               
 0005               
 0006               *--------------------------------------------------------------
-0007               * Video mode configuration (stevie) - Graphics mode 48x80
+0007               * Video mode configuration (stevie) - Graphics mode 30x80
 0008               *--------------------------------------------------------------
 0009      0000     vdp.sit.base              equ  >0000   ; VDP SIT base address
-0010      12C0     vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
+0010      0960     vdp.sit.size              equ  30*80   ; VDP SIT size 80 columns, 48 rows
 0011      12C0     vdp.tat.base              equ  >12c0   ; VDP TAT base address
-0012      12C0     vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
+0012      0960     vdp.tat.size              equ  30*80   ; VDP TAT size 80 columns, 60 rows
 0013      2800     vdp.pdt.base              equ  >2800   ; VDP PDT base address
 0014               
 0015      0050     vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
@@ -153,8 +149,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0018               *--------------------------------------------------------------
 0019               * Video mode configuration (stevie)
 0020               *--------------------------------------------------------------
-0021      000C     cmdb.rows                 equ  12      ; Number of rows in command buffer
-0022      003B     pane.botrow               equ  59      ; Bottom row on screen
+0021      0007     cmdb.rows                 equ  7       ; Number of rows in command buffer
+0022      001D     pane.botrow               equ  29      ; Bottom row on screen
 0023      0050     colrow                    equ  80      ; Columns per row
 0024      0001     device.f18a               equ  1       ; F18a/PICO9918 on
 0025               
@@ -182,6 +178,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0047      2800     sprpdt  equ   >2800                 ; VDP sprite pattern table
 0048               
                    < equ.vdp.asm
+0013               
+0014               ******************************* PICO9918 48x80 *********************************
+0018               
+0019               ******************************* PICO9918 60x80 *********************************
                    < stevie_b8.asm
 0031                       copy  "equ.asm"             ; Stevie main configuration
      **** ****     > equ.asm
@@ -6661,7 +6661,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      31B4 A310     
 0033               
 0034 31B6 0204  20         li    tmp0,pane.botrow-1    ; \ Framebuffer
-     31B8 003A     
+     31B8 001C     
 0035 31BA C804  38         mov   tmp0,@fb.scrrows.max  ; / Maximum number of physical rows for fb
      31BC A320     
 0036               
@@ -7336,7 +7336,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029 33C6 04E0  34         clr   @cmdb.visible         ; Hide command buffer
      33C8 A702     
 0030 33CA 0204  20         li    tmp0,cmdb.rows
-     33CC 000C     
+     33CC 0007     
 0031 33CE C804  38         mov   tmp0,@cmdb.scrrows    ; Set current command buffer size
      33D0 A706     
 0032 33D2 C804  38         mov   tmp0,@cmdb.default    ; Set default command buffer size
@@ -7354,7 +7354,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0039                       ; Calculate VDP address of CMDB top row (TAT!)
 0040                       ;------------------------------------------------------
 0041 33E6 0204  20         li    tmp0,pane.botrow      ; \
-     33E8 003B     
+     33E8 001D     
 0042 33EA 6120  34         s     @cmdb.scrrows,tmp0    ; | pos = Y * (columns per row)
      33EC A706     
 0043 33EE 3920  70         mpy   @wcolmn,tmp0          ; | result is in tmp1
@@ -9815,7 +9815,34 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030                             ; Returning from Jackalope Basic
 0031                             ;------------------------------------------------------
 0032                             aorg  >6012                 ; We get here from SYS 24590 in bank 9
-0033 6012 10FF  14               jmp  $
+0033 6012 1000  14               jmp  jbasic.return          ; Return to Stevie
+0034               
+0035               
+0036               ***************************************************************
+0037               * jbasic.return
+0038               * Return from Jackalope Basic to Stevie
+0039               ***************************************************************
+0040               * jmp   jbasic.return
+0041               *--------------------------------------------------------------
+0042               * OUTPUT
+0043               * none
+0044               *--------------------------------------------------------------
+0045               * Register usage
+0046               * none
+0047               *--------------------------------------------------------------
+0048               * REMARKS
+0049               * We return here from SYS 24590 (>600e) in bank 9
+0050               ********|*****|*********************|**************************
+0051               jbasic.return:
+0052 6014 020C  20         li    r12,>1e00             ; \ Enable SAMS mapper again with
+     6016 1E00     
+0053 6018 1D01  16         sbo   1                     ; | sams layout table
+0054                                                   ; /
+0055               
+0056               
+0057                      aorg  kickstart.code1 - 6   ; >6030 - 6
+0058 602A 04E0  34        clr   @bank0.rom            ; Activate bank 1 "James" ROM
+     602C 6000     
                    < stevie_b8.asm
 0070                       ;-----------------------------------------------------------------------
 0071                       ; Stubs
@@ -9837,21 +9864,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0009               * bank1 vec.1
 0010               ********|*****|*********************|**************************
 0011               mem.sams.setup.stevie:
-0012 6014 0649  14         dect  stack
-0013 6016 C64B  30         mov   r11,*stack            ; Save return address
+0012 602E 0649  14         dect  stack
+0013 6030 C64B  30         mov   r11,*stack            ; Save return address
 0014                       ;------------------------------------------------------
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
-0017 6018 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     601A 30D8     
-0018 601C 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 601E 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0020 6020 6014                   data bankid           ; / i  p2 = Source ROM bank for return
+0017 6032 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6034 30D8     
+0018 6036 6002                   data bank1.rom        ; | i  p0 = bank address
+0019 6038 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0020 603A 6014                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
-0024 6022 C2F9  30         mov   *stack+,r11           ; Pop r11
-0025 6024 045B  20         b     *r11                  ; Return to caller
+0024 603C C2F9  30         mov   *stack+,r11           ; Pop r11
+0025 603E 045B  20         b     *r11                  ; Return to caller
 0027               
 0028               
 0031               
@@ -9860,21 +9887,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 6026 0649  14         dect  stack
-0038 6028 C64B  30         mov   r11,*stack            ; Save return address
+0037 6040 0649  14         dect  stack
+0038 6042 C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 602A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     602C 30D8     
-0043 602E 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 6030 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0045 6032 6014                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 6044 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6046 30D8     
+0043 6048 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 604A 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0045 604C 6014                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 6034 C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 6036 045B  20         b     *r11                  ; Return to caller
+0049 604E C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 6050 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -9883,21 +9910,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 6038 0649  14         dect  stack
-0060 603A C64B  30         mov   r11,*stack            ; Save return address
+0059 6052 0649  14         dect  stack
+0060 6054 C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 603C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     603E 30D8     
-0065 6040 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 6042 7F72                   data vec.2            ; | i  p1 = Vector with target address
-0067 6044 6014                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 6056 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6058 30D8     
+0065 605A 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 605C 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0067 605E 6014                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 6046 C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 6048 045B  20         b     *r11                  ; Return to caller
+0071 6060 C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 6062 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -9905,21 +9932,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 604A 0649  14         dect  stack
-0081 604C C64B  30         mov   r11,*stack            ; Save return address
+0080 6064 0649  14         dect  stack
+0081 6066 C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 604E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6050 30D8     
-0086 6052 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 6054 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0088 6056 6014                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 6068 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     606A 30D8     
+0086 606C 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 606E 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0088 6070 6014                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 6058 C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 605A 045B  20         b     *r11                  ; Return to caller
+0092 6072 C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 6074 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b8.asm
 0075                       ;-----------------------------------------------------------------------
@@ -9996,7 +10023,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0051 7F50 0C              byte   >0c
+0045 7F50 04              byte   >04
 0053                      ; VDP#1 - VDP#7
 0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
      7F52 004B     
@@ -10306,7 +10333,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     cmdb.pankeys........ >a72e :     
     cmdb.panmarkers..... >a72c :     
     cmdb.prevcursor..... >a710 :     
-    cmdb.rows........... >000c :     
+    cmdb.rows........... >0007 :     
     cmdb.scrrows........ >a706 :     
     cmdb.size........... >0100 :     
     cmdb.struct......... >a700 :     
@@ -10761,6 +10788,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     io.seq.upd.dis.var.. >0010 :     
     io.seq.upd.int.fix.. >0008 :     
     io.seq.upd.int.var.. >0018 :     
+    jbasic.return....... >6014 :     
     jbasic.start........ >6000 :     
     kbf.kbclear......... >0001 :     
     kbflags............. >a026 :     
@@ -10937,10 +10965,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     mccode.............. >2210 :     
     mcloop.............. >8320 :     
     mcsprd.............. >8322 :     
-    mem.sams.set.boot... >6038 :     
-    mem.sams.set.legacy. >6026 :     
-    mem.sams.set.stevie. >604a :     
-    mem.sams.setup.stevie >6014 :     
+    mem.sams.set.boot... >6052 :     
+    mem.sams.set.legacy. >6040 :     
+    mem.sams.set.stevie. >6064 :     
+    mem.sams.setup.stevie >602e :     
     mkhex............... >29c8 :     
     mkhex1.............. >29e0 :     
     mkhex1.digit09...... >29f6 :     
@@ -10975,7 +11003,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     outparm6............ >a022 :     
     outparm7............ >a024 :     
     palon............... >201c :     
-    pane.botrow......... >003b :     
+    pane.botrow......... >001d :     
     pane.focus.cmdb..... >0001 :     
     pane.focus.fb....... >0000 :     
     pane.topline.oneshot.clearmsg >3898 :     
@@ -11390,15 +11418,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     vdp.fb.toprow.tat... >1310 :     
     vdp.pdt.base........ >2800 :     
     vdp.sit.base........ >0000 :     
-    vdp.sit.size........ >12c0 :     
+    vdp.sit.size........ >0960 :     
     vdp.tat.base........ >12c0 :     
-    vdp.tat.size........ >12c0 :     
+    vdp.tat.size........ >0960 :     
     vdpa................ >8c02 :     
     vdpla1.............. >2910 :     
     vdpla2.............. >2916 :     
     vdpla3.............. >2926 :     
     vdplay.............. >28f8 :     
-    vdpmode............. >17c0 :     
+    vdpmode............. >0c08 :     
     vdpr................ >8800 :     
     vdpr0............... >831c :     
     vdpr01.............. >000e :     
