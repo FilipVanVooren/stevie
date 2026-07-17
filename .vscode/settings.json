@@ -6,11 +6,83 @@
   },
   
   // Turn off AI code suggestions
-  "github.copilot.enable": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
 
   "editor.suggestOnTriggerCharacters": false,
   "editor.wordBasedSuggestions": "off",
   "editor.parameterHints.enabled": false,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment.line.semicolon.tms9900, comment.line.asterisk.tms9900",
+        "settings": {
+          "foreground": "#5CCB73",
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "string.quoted.single.tms9900, string.quoted.double.tms9900, constant.character.escape.tms9900",
+        "settings": {
+          "foreground": "#5FD1FF"
+        }
+      },
+      {
+        "scope": "entity.name.label.tms9900",
+        "settings": {
+          "foreground": "#7FC8FF",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "storage.type.directive.tms9900",
+        "settings": {
+          "foreground": "#C084FC"
+        }
+      },
+      {
+        "scope": "keyword.operator.mnemonic.tms9900",
+        "settings": {
+          "foreground": "#FFB454",
+          "fontStyle": "bold"
+        }
+      },
+      {
+        "scope": "variable.language.register.gp.tms9900",
+        "settings": {
+          "foreground": "#A78BFA"
+        }
+      },
+      {
+        "scope": "variable.language.register.work.tms9900",
+        "settings": {
+          "foreground": "#38BDF8"
+        }
+      },
+      {
+        "scope": "variable.language.register.special.tms9900",
+        "settings": {
+          "foreground": "#F59E0B"
+        }
+      },
+      {
+        "scope": "constant.numeric.tms9900",
+        "settings": {
+          "foreground": "#FFD166"
+        }
+      },
+      {
+        "scope": "punctuation.definition.operator.tms9900",
+        "settings": {
+          "foreground": "#67E8F9"
+        }
+      }
+    ]
+  },
     
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#0080ff",

@@ -19,6 +19,12 @@
       "include": "#mnemonics"
     },
     {
+      "include": "#jmpOperands"
+    },
+    {
+      "include": "#labelOperands"
+    },
+    {
       "include": "#registers"
     },
     {
@@ -76,6 +82,48 @@
               "name": "entity.name.label.tms9900"
             }
           }
+        },
+        {
+          "match": "(?<![A-Za-z0-9_.$@-])(@[A-Za-z_.$][A-Za-z0-9_.$@-]*)(?![A-Za-z0-9_.$@-])",
+          "name": "entity.name.label.tms9900"
+        }
+      ]
+    },
+    "jmpOperands": {
+      "patterns": [
+        {
+          "match": "(?i)(\\b(?:jmp|jeq|jne|jgt|jh|jl|jhe|jle|jlt|jlow|jnc|joc|jno|jop|jz)\\b)(?:\\s+)(?![+-]?(?:0x[0-9a-f]+|[0-9]+d|[0-9]+|>[0-9a-f]+|%[01]+))([A-Za-z_.$][A-Za-z0-9_.$@-]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.mnemonic.tms9900"
+            },
+            "2": {
+              "name": "entity.name.label.tms9900"
+            }
+          }
+        },
+        {
+          "match": "(?i)(\\b(?:jmp|jeq|jne|jgt|jh|jl|jhe|jle|jlt|jlow|jnc|joc|jno|jop|jz)\\b)(?:\\s+)([+-]?(?:0|[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-5]))(?![A-Za-z0-9_.$@-])",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.mnemonic.tms9900"
+            },
+            "2": {
+              "name": "constant.numeric.tms9900"
+            }
+          }
+        }
+      ]
+    },
+    "labelOperands": {
+      "patterns": [
+        {
+          "match": "(?i)(?:,\\s*)(?![0-9%>])([A-Za-z_.$][A-Za-z0-9_.$@-]*)",
+          "captures": {
+            "1": {
+              "name": "entity.name.label.tms9900"
+            }
+          }
         }
       ]
     },
@@ -90,7 +138,7 @@
     "mnemonics": {
       "patterns": [
         {
-          "match": "(?i)\\b(?:a|ab|ai|andi|b|bl|blwp|clr|clrc|clro|cmp|div|idle|inc|inv|jeq|jgt|jhe|jle|jlt|jlow|jnc|jne|joc|jno|jop|jz|l|lac|li|limi|lwpi|mov|mpy|neg|nop|ori|s|sb|sbo|sbz|seto|srl|stst|swpb|szc|szcb|t|tb|x|xor|xop|rtwp|ckof|ckon|rset|rto|rdpm|zip)\\b",
+          "match": "(?i)\\b(?:a|ab|ai|andi|b|bl|blwp|clr|clrc|clro|cmp|div|idle|inc|inv|jeq|jgt|jh|jhe|jl|jle|jlt|jlow|jmp|jnc|jne|joc|jno|jop|jz|l|lac|li|limi|lwpi|mov|mpy|neg|nop|ori|s|sb|sbo|sbz|seto|srl|stst|swpb|soc|szc|szcb|t|tb|x|xor|xop|rtwp|ckof|ckon|rset|rto|rdpm|zip)\\b",
           "name": "keyword.operator.mnemonic.tms9900"
         }
       ]
@@ -98,23 +146,35 @@
     "registers": {
       "patterns": [
         {
-          "match": "(?i)\\b(?:r[0-9]|r1[0-5]|wr[0-9])\\b",
-          "name": "variable.language.register.tms9900"
+          "match": "(?i)(?<![A-Za-z0-9_.$@-])(?:r[0-9]|r1[0-5])(?![A-Za-z0-9_.$@-])",
+          "name": "variable.language.register.gp.tms9900"
+        },
+        {
+          "match": "(?i)(?<![A-Za-z0-9_.$@-])(?:wr[0-9]|wr1[0-5])(?![A-Za-z0-9_.$@-])",
+          "name": "variable.language.register.work.tms9900"
+        },
+        {
+          "match": "(?i)(?<![A-Za-z0-9_.$@-])(?:st|pc|sp|wp|status)(?![A-Za-z0-9_.$@-])",
+          "name": "variable.language.register.special.tms9900"
         }
       ]
     },
     "numbers": {
       "patterns": [
         {
-          "match": "(?i)\\b(?:0x[0-9a-f]+|[0-9]+d|[0-9]+|>[0-9a-f]+|%[01]+)\\b",
-          "name": "constant.numeric.tms9900"
+          "match": "(?i)(?<![A-Za-z0-9_.$@-])([+-]?(?:0x[0-9a-f]+|[0-9]+d|[0-9]+|>[0-9a-f]+|%[01]+))(?![A-Za-z0-9_.$@-])",
+          "captures": {
+            "1": {
+              "name": "constant.numeric.tms9900"
+            }
+          }
         }
       ]
     },
     "operators": {
       "patterns": [
         {
-          "match": "[+\\-*/=,()\\[\\]#@<>]",
+          "match": "[+\\-*/=,()\\[\\]#<>]",
           "name": "punctuation.definition.operator.tms9900"
         }
       ]
