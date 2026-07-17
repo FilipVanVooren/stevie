@@ -95,19 +95,13 @@ cmdb.cmd.getlength.exit:
 * Register usage
 * tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------
+* Made by copilot. Model
+* MAI-Code-1-Flash
+*--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
 cmdb.cmd.insert:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3
         ;-------------------------------------------------------
         ; Get current command length and stop if maxed out
         ;-------------------------------------------------------
@@ -167,12 +161,7 @@ cmdb.cmd.insert.append:
         ; Exit
         ;-------------------------------------------------------
 cmdb.cmd.insert.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        .popregs 3
 
 
 
@@ -191,19 +180,13 @@ cmdb.cmd.insert.exit:
 * Register usage
 * tmp0,tmp1,tmp2,tmp3
 *--------------------------------------------------------------
+* Made by copilot. Model
+* MAI-Code-1-Flash
+*--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
 cmdb.cmd.delete:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        dect  stack
-        mov   tmp0,*stack           ; Push tmp0
-        dect  stack
-        mov   tmp1,*stack           ; Push tmp1
-        dect  stack
-        mov   tmp2,*stack           ; Push tmp2
-        dect  stack
-        mov   tmp3,*stack           ; Push tmp3
+        .pushregs 3
         ;-------------------------------------------------------
         ; Get current command length and abort if empty/EOL
         ;-------------------------------------------------------
@@ -213,6 +196,13 @@ cmdb.cmd.delete:
         c     @cmdb.column,tmp3     ; At EOL or beyond?
         jhe   cmdb.cmd.delete.exit  ; Yes, nothing to delete
         ;-------------------------------------------------------
+        ; Boundary case: deleting the only remaining character
+        ;-------------------------------------------------------
+        mov   tmp3,tmp2             ; tmp2 = current length
+        s     @cmdb.column,tmp2     ; tmp2 = length - column
+        ci    tmp2,1                ; One character left to delete?
+        jeq   cmdb.cmd.delete.tail  ; Yes, collapse to empty string directly
+        ;-------------------------------------------------------
         ; Shift trailing text left by one position
         ;-------------------------------------------------------
         li    tmp0,cmdb.cmd
@@ -220,8 +210,6 @@ cmdb.cmd.delete:
         li    tmp1,cmdb.cmd
         a     @cmdb.column,tmp1     ; tmp1 = current deletion point
         inc   tmp1                  ; tmp1 = next char to shift left
-        mov   tmp3,tmp2             ; tmp2 = current length
-        s     @cmdb.column,tmp2     ; tmp2 = length - column
         dec   tmp2                  ; Remove one character to delete
 cmdb.cmd.delete.shift:
         movb  *tmp1+,*tmp0+         ; Shift tail one character to the left
@@ -238,16 +226,23 @@ cmdb.cmd.delete.shift:
         dec   tmp3                  ; New length = old length - 1
         sla   tmp3,8                ; Move to MSB 
         movb  tmp3,@cmdb.cmdlen     ; Update command buffer length prefix
+        jmp   cmdb.cmd.delete.exit
+        ;-------------------------------------------------------
+        ; Boundary case: deleting only remaining character
+        ;-------------------------------------------------------
+cmdb.cmd.delete.tail:
+        li    tmp0,cmdb.cmd
+        a     @cmdb.column,tmp0     ; tmp0 = current deletion point
+        clr   tmp1                  ; tmp1 = zero terminator
+        movb  tmp1,*tmp0            ; Terminate updated command string
+        dec   tmp3                  ; New length = old length - 1
+        sla   tmp3,8                ; Move to MSB 
+        movb  tmp3,@cmdb.cmdlen     ; Update command buffer length prefix
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 cmdb.cmd.delete.exit:
-        mov   *stack+,tmp3          ; Pop tmp3
-        mov   *stack+,tmp2          ; Pop tmp2
-        mov   *stack+,tmp1          ; Pop tmp1
-        mov   *stack+,tmp0          ; Pop tmp0
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        .popregs 3
 
 
 
