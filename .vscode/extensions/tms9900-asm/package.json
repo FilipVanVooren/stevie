@@ -1,0 +1,27 @@
+{
+  "name": "tms9900-asm",
+  "displayName": "TMS9900 Assembly",
+  "description": "VS Code extension for TI TMS9900-style assembly source used by the Stevie repository.",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "tms9900-asm",
+        "aliases": ["TMS9900 Assembly", "tms9900-asm"],
+        "extensions": [".asm"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tms9900-asm",
+        "scopeName": "source.tms9900.asm",
+        "path": "./syntaxes/tms9900-asm.tmLanguage.json"
+      }
+    ]
+  }
+}

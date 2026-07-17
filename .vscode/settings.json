@@ -19,6 +19,10 @@
 
   "search.exclude": {
     "build/**": true
+  },
+
+  "files.associations": {
+    "*.asm": "tms9900-asm"
   }
 
 }

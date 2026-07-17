@@ -1,0 +1,123 @@
+{
+  "name": "TMS9900 Assembly",
+  "scopeName": "source.tms9900.asm",
+  "fileTypes": ["asm"],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#labels"
+    },
+    {
+      "include": "#directives"
+    },
+    {
+      "include": "#mnemonics"
+    },
+    {
+      "include": "#registers"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#operators"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "match": "(;.*$)",
+          "name": "comment.line.semicolon.tms9900"
+        },
+        {
+          "match": "(^\\s*\\*.*$)",
+          "name": "comment.line.asterisk.tms9900"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "'",
+          "end": "'",
+          "name": "string.quoted.single.tms9900",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.tms9900"
+            }
+          ]
+        },
+        {
+          "begin": "\"",
+          "end": "\"",
+          "name": "string.quoted.double.tms9900",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.tms9900"
+            }
+          ]
+        }
+      ]
+    },
+    "labels": {
+      "patterns": [
+        {
+          "match": "^\\s*([A-Za-z_.$][A-Za-z0-9_.$@-]*):",
+          "captures": {
+            "1": {
+              "name": "entity.name.label.tms9900"
+            }
+          }
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "match": "(?i)^\\s*(?:copy|data|byte|text|stri|even|equ|end|macro|endm|ifdef|ifndef|if|endif|include|title|list|nolist|idnt|set|extern|public|org|ref|defs|bss|proc|endp)\\b",
+          "name": "storage.type.directive.tms9900"
+        }
+      ]
+    },
+    "mnemonics": {
+      "patterns": [
+        {
+          "match": "(?i)\\b(?:a|ab|ai|andi|b|bl|blwp|clr|clrc|clro|cmp|div|idle|inc|inv|jeq|jgt|jhe|jle|jlt|jlow|jnc|jne|joc|jno|jop|jz|l|lac|li|limi|lwpi|mov|mpy|neg|nop|ori|s|sb|sbo|sbz|seto|srl|stst|swpb|szc|szcb|t|tb|x|xor|xop|rtwp|ckof|ckon|rset|rto|rdpm|zip)\\b",
+          "name": "keyword.operator.mnemonic.tms9900"
+        }
+      ]
+    },
+    "registers": {
+      "patterns": [
+        {
+          "match": "(?i)\\b(?:r[0-9]|r1[0-5]|wr[0-9])\\b",
+          "name": "variable.language.register.tms9900"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "match": "(?i)\\b(?:0x[0-9a-f]+|[0-9]+d|[0-9]+|>[0-9a-f]+|%[01]+)\\b",
+          "name": "constant.numeric.tms9900"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "match": "[+\\-*/=,()\\[\\]#@<>]",
+          "name": "punctuation.definition.operator.tms9900"
+        }
+      ]
+    }
+  }
+}
