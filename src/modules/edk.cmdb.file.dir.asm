@@ -1,0 +1,126 @@
+* FILE......: edk.cmdb.file.dir.asm
+* Purpose...: Drive/Directory listing
+
+*---------------------------------------------------------------
+* Drive/Directory presets
+*---------------------------------------------------------------
+edkey.action.cmdb.file.directory.1:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        clr   @parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.2:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.1,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.3:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.2,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.4:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.3,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.5:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.4,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.6:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.5,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.7:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.6,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.8:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.7,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.9:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.8,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+
+edkey.action.cmdb.file.directory.tipi:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.9,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.scs1:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.10,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.scs2:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.11,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.scs3:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.12,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.ide1:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.13,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.ide2:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.14,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.ide3:
+        clr   @parm1                ; Skip parameter 1. Will use @device.list
+        mov   @const.15,@parm2
+        jmp   edkey.action.cmdb.file.directory
+
+edkey.action.cmdb.file.directory.device:
+        bl    @cpym2m
+              data cmdb.cmdall,tv.devpath,80
+                                    ; Copy filename from command line to buffer
+        li    tmp0,tv.devpath
+        mov   tmp0,@parm1
+        clr   @parm2
+
+*---------------------------------------------------------------
+* Drive/Directory listing
+*---------------------------------------------------------------
+edkey.action.cmdb.file.directory:
+        .pushregs 0                 ; Push return address and registers on stack
+        ;-------------------------------------------------------
+        ; Skip if not in file dialog mode
+        ;-------------------------------------------------------
+        mov   @cmdb.dialog,tmp0     ; Get current dialog ID
+        ci    tmp0,30               ; in file dialog range?
+        jgt   edkey.action.cmdb.file.catalog.exit 
+                                    ; No, exit
+        ;-------------------------------------------------------
+        ; Catalog drive/directory
+        ;-------------------------------------------------------
+        clr   @parm3                ; Show filebrowser after reading directory
+        bl    @fm.directory         ; Read device directory
+                                    ; \ @parm1 = Pointer to length-prefixed 
+                                    ; |          string containing device
+                                    ; |          or >0000 if using parm2
+                                    ; | @parm2 = Index in device list
+                                    ; |          (ignored if parm1 set)
+                                    ; / @parm3 = Skip filebrowser flag
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+edkey.action.cmdb.file.catalog.exit:
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop R11        
+        b     @edkey.keyscan.hook.debounce
+                                    ; Back to editor main

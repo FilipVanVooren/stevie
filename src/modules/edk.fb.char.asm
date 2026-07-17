@@ -1,4 +1,4 @@
-* FILE......: edk.fb.char
+* FILE......: edk.fb.char.asm
 * Purpose...: Add character 
 
 ***************************************************************

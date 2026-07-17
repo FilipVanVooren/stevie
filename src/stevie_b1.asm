@@ -77,66 +77,66 @@ main:
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
-        copy  "edkey.key.hook.asm"          ; SP2 user hook: keyboard scanning
-        copy  "edkey.key.process.asm"       ; Process keyboard actions
+        copy  "edk.key.hook.asm"          ; SP2 user hook: keyboard scanning
+        copy  "edk.key.process.asm"       ; Process keyboard actions
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Framebuffer (1)
         ;-----------------------------------------------------------------------
-        copy  "edkey.fb.mov.leftright.asm"  ; Move left / right / home / end
-        copy  "edkey.fb.mov.word.asm"       ; Move previous / next word
-        copy  "edkey.fb.mov.hscroll.asm"    ; Scroll left / right
-        copy  "edkey.fb.mov.paging.asm"     ; Move page up / down
-        copy  "edkey.fb.mov.topbot.asm"     ; Move file top / bottom
-        copy  "edkey.fb.goto.asm"           ; Goto line in editor buffer
-        copy  "edkey.fb.del.asm"            ; Delete characters or lines
-        copy  "edkey.fb.ins.asm"            ; Insert characters or lines
-        copy  "edkey.fb.mod.asm"            ; Actions for modifier keys
-        copy  "edkey.fb.ruler.asm"          ; Toggle ruler on/off
-        copy  "edkey.fb.misc.asm"           ; Miscelanneous actions
-        copy  "edkey.fb.file.load.asm"      ; Load file into editor
-        copy  "edkey.fb.block.asm"          ; Actions block move/copy/delete...
-        copy  "edkey.fb.tabs.asm"           ; tab-key related actions
-        copy  "edkey.fb.clip.asm"           ; Clipboard actions
-        copy  "edkey.fb.mov.match.asm"      ; Goto search matches
-        copy  "edkey.fb.find.reset.asm"     ; Reset results of find operation
+        copy  "edk.fb.mov.leftright.asm"  ; Move left / right / home / end
+        copy  "edk.fb.mov.word.asm"       ; Move previous / next word
+        copy  "edk.fb.mov.hscroll.asm"    ; Scroll left / right
+        copy  "edk.fb.mov.paging.asm"     ; Move page up / down
+        copy  "edk.fb.mov.topbot.asm"     ; Move file top / bottom
+        copy  "edk.fb.goto.asm"           ; Goto line in editor buffer
+        copy  "edk.fb.del.asm"            ; Delete characters or lines
+        copy  "edk.fb.ins.asm"            ; Insert characters or lines
+        copy  "edk.fb.mod.asm"            ; Actions for modifier keys
+        copy  "edk.fb.ruler.asm"          ; Toggle ruler on/off
+        copy  "edk.fb.misc.asm"           ; Miscelanneous actions
+        copy  "edk.fb.file.load.asm"      ; Load file into editor
+        copy  "edk.fb.block.asm"          ; Actions block move/copy/delete...
+        copy  "edk.fb.tabs.asm"           ; tab-key related actions
+        copy  "edk.fb.clip.asm"           ; Clipboard actions
+        copy  "edk.fb.mov.match.asm"      ; Goto search matches
+        copy  "edk.fb.find.reset.asm"     ; Reset results of find operation
         copy  "edk.fb.char.asm"             ; Process character
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer
         ;-----------------------------------------------------------------------
-        copy  "edkey.cmdb.mov.asm"          ; Actions for movement keys
-        copy  "edkey.cmdb.mod.asm"          ; Actions for modifier keys
-        copy  "edkey.cmdb.misc.asm"         ; Miscelanneous actions
-        copy  "edkey.cmdb.cfg.clip.asm"     ; Configure clipboard
-        copy  "edkey.cmdb.file.new.asm"     ; New file
-        copy  "edkey.cmdb.file.load.asm"    ; Open file
-        copy  "edkey.cmdb.file.insert.asm"  ; Insert file
-        copy  "edkey.cmdb.file.append.asm"  ; Append file
-        copy  "edkey.cmdb.file.clip.asm"    ; Copy clipboard to line
-        copy  "edkey.cmdb.file.save.asm"    ; Save file
-        copy  "edkey.cmdb.file.print.asm"   ; Print file
-        copy  "edkey.cmdb.file.delete.asm"  ; Delete file
-        copy  "edkey.cmdb.file.dir.asm"     ; Drive/Directory listing
-        copy  "edkey.cmdb.file.run.asm"     ; Run program image (EA5)
-        copy  "edkey.cmdb.pick.prev.asm"    ; Pick previous file in catalog
-        copy  "edkey.cmdb.pick.next.asm"    ; Pick next file in catalog
-        copy  "edkey.cmdb.updir.asm"        ; Go up one directory level
-        copy  "edkey.cmdb.dialog.asm"       ; Dialog specific actions
-        copy  "edkey.cmdb.autoinsert.asm"   ; Auto insert toggle
-        copy  "edkey.cmdb.linelen.asm"      ; Line length display toggle
-        copy  "edkey.cmdb.goto.asm"         ; Goto line
-        copy  "edkey.cmdb.font.asm"         ; Set font
-        copy  "edkey.cmdb.clock.asm"        ; Show clock
-        copy  "edkey.cmdb.filebrowser.prevcol.asm"
+        copy  "edk.cmdb.mov.asm"          ; Actions for movement keys
+        copy  "edk.cmdb.mod.asm"          ; Actions for modifier keys
+        copy  "edk.cmdb.misc.asm"         ; Miscelanneous actions
+        copy  "edk.cmdb.cfg.clip.asm"     ; Configure clipboard
+        copy  "edk.cmdb.file.new.asm"     ; New file
+        copy  "edk.cmdb.file.load.asm"    ; Open file
+        copy  "edk.cmdb.file.insert.asm"  ; Insert file
+        copy  "edk.cmdb.file.append.asm"  ; Append file
+        copy  "edk.cmdb.file.clip.asm"    ; Copy clipboard to line
+        copy  "edk.cmdb.file.save.asm"    ; Save file
+        copy  "edk.cmdb.file.print.asm"   ; Print file
+        copy  "edk.cmdb.file.delete.asm"  ; Delete file
+        copy  "edk.cmdb.file.dir.asm"     ; Drive/Directory listing
+        copy  "edk.cmdb.file.run.asm"     ; Run program image (EA5)
+        copy  "edk.cmdb.pick.prev.asm"    ; Pick previous file in catalog
+        copy  "edk.cmdb.pick.next.asm"    ; Pick next file in catalog
+        copy  "edk.cmdb.updir.asm"        ; Go up one directory level
+        copy  "edk.cmdb.dialog.asm"       ; Dialog specific actions
+        copy  "edk.cmdb.autoinsert.asm"   ; Auto insert toggle
+        copy  "edk.cmdb.linelen.asm"      ; Line length display toggle
+        copy  "edk.cmdb.goto.asm"         ; Goto line
+        copy  "edk.cmdb.font.asm"         ; Set font
+        copy  "edk.cmdb.clock.asm"        ; Show clock
+        copy  "edk.cmdb.filebrowser.prevcol.asm"
                                             ; Previous column in filebrowser
-        copy  "edkey.cmdb.filebrowser.nextcol.asm"
+        copy  "edk.cmdb.filebrowser.nextcol.asm"
                                             ; Next column in filebrowser
-        copy  "edkey.cmdb.filebrowser.prevpage.asm"
+        copy  "edk.cmdb.filebrowser.prevpage.asm"
                                             ; Previous page in filebrowser
-        copy  "edkey.cmdb.filebrowser.nextpage.asm"
+        copy  "edk.cmdb.filebrowser.nextpage.asm"
                                             ; Next page in filebrowser
-        copy  "edkey.cmdb.find.search.asm"  ; Search operation for find dialog
-        copy  "edkey.cmdb.lock.asm"         ; Lock editor buffer
-        copy  "edkey.cmdb.unlock.asm"       ; Unlock editor buffer
+        copy  "edk.cmdb.find.search.asm"  ; Search operation for find dialog
+        copy  "edk.cmdb.lock.asm"         ; Lock editor buffer
+        copy  "edk.cmdb.unlock.asm"       ; Unlock editor buffer
         copy  "cmdb.dialog.close.asm"       ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
