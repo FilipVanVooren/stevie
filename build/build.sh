@@ -57,8 +57,12 @@ banks+=" stevie_b4 stevie_b5 stevie_b6 stevie_b7"
 banks+=" stevie_b8 stevie_b9 stevie_ba stevie_bb"
 banks+=" stevie_bc stevie_bd stevie_be stevie_bf"
 
-# VDP mode
-vdpmode="$1"
+# VDP mode(s)
+if [ "$#" -eq 0 ]; then
+    vdpmodes=(3080)
+else
+    vdpmodes=("$@")
+fi
 
 # Directories
 workdir="/workspace/stevie/src"
@@ -66,25 +70,29 @@ include="../../spectra2/src/equates,../../spectra2/src/modules,"
 include+="../../spectra2/src,../src/modules/,../src,../build/.buildinfo,"
 include+="../src/assets/"
 
-# Set name of output binary
-setbin "$vdpmode"
+for vdpmode in "${vdpmodes[@]}"; do
+    # Set name of output binary
+    setbin "$vdpmode"
 
-# Call xas99 wrapper
-log "Building stevie binary for vdp mode $vdpmode"
-export workdir="$workdir"
-export include="$include"
-export xas99_options="-D vdpmode=$vdpmode"
-bash assemble.sh $banks
+    # Call xas99 wrapper
+    log "Building stevie binary for vdp mode $vdpmode"
+    export workdir="$workdir"
+    export include="$include"
+    export xas99_options="-D vdpmode=$vdpmode"
 
-# Concatenate banks to binary
-if [ "$?" -eq "0" ]; then
-    bash concat.sh "bin/$binary" $banks
-else
-    log "**** Error **** Error during assembly process. Terminated."
-fi
+    if bash assemble.sh $banks; then
+        # Concatenate banks to binary
+        bash concat.sh "bin/$binary" $banks
+    else
+        log "**** Error **** Error during assembly process for mode $vdpmode. Skipping to next mode."
+        continue
+    fi
 
-# Copy final binary to output directory
-if [ -f "bin/$binary" ]; then
-   cp "bin/$binary" /Volumes/FINALGROM
-    log "Final binary copied to /Volumes/FINALGROM/$binary"
-fi
+    # Copy final binary to output directory when available
+    if [ -f "bin/$binary" ] && [ -d "/Volumes/FINALGROM" ]; then
+        cp "bin/$binary" /Volumes/FINALGROM
+        log "Final binary copied to /Volumes/FINALGROM/$binary"
+    elif [ -f "bin/$binary" ]; then
+        log "Skipping copy to /Volumes/FINALGROM: destination not available"
+    fi
+done
