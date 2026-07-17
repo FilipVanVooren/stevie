@@ -393,7 +393,7 @@ dialog.main:
         ;------------------------------------------------------
         ; Special treatment for block mode
         ;------------------------------------------------------
-        b     @edkey.action.block.reset
+        b     @edk.act.block.reset
                                     ; Reset block mode
         ;------------------------------------------------------
         ; Show dialog
@@ -452,7 +452,7 @@ _trampoline.bank3:
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------
-        b     @edkey.action.cmdb.show
+        b     @edk.act.cmdb.show
                                     ; Show dialog in CMDB pane
 
 

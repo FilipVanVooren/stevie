@@ -4,21 +4,21 @@
 *---------------------------------------------------------------
 * Copy clipboard file to line
 *---------------------------------------------------------------
-edkey.action.cmdb.clip.1
+edk.act.cmdb.clip.1
         li    tmp0,clip1
-        jmp   edkey.action.cmdb.clip
+        jmp   edk.act.cmdb.clip
 
-edkey.action.cmdb.clip.2
+edk.act.cmdb.clip.2
         li    tmp0,clip2
-        jmp   edkey.action.cmdb.clip
+        jmp   edk.act.cmdb.clip
 
-edkey.action.cmdb.clip.3
+edk.act.cmdb.clip.3
         li    tmp0,clip3
-        jmp   edkey.action.cmdb.clip
+        jmp   edk.act.cmdb.clip
 
 
 
-edkey.action.cmdb.clip:
+edk.act.cmdb.clip:
         mov   tmp0,@parm1           ; Get clipboard suffix 0-9
 
         bl    @film
@@ -36,5 +36,5 @@ edkey.action.cmdb.clip:
         inc   tmp0                  ; Consider length-prefix byte
         movb  @parm1,*tmp0          ; Append suffix 
 
-        b     @edkey.action.cmdb.insert
+        b     @edk.act.cmdb.insert
                                     ; Insert file

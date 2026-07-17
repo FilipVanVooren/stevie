@@ -69,11 +69,11 @@ main:
         ;-----------------------------------------------------------------------
         ; Include files
         ;-----------------------------------------------------------------------
-        copy  "main.asm"                    ; Main file (entrypoint)
+        copy  "main.asm"                  ; Main file (entrypoint)
         ;-----------------------------------------------------------------------
         ; Low-level modules
         ;-----------------------------------------------------------------------
-        copy  "mem.sams.setup.asm"          ; SAMS memory setup for Stevie
+        copy  "mem.sams.setup.asm"        ; SAMS memory setup for Stevie
         ;-----------------------------------------------------------------------
         ; Keyboard actions
         ;-----------------------------------------------------------------------
@@ -99,7 +99,7 @@ main:
         copy  "edk.fb.clip.asm"           ; Clipboard actions
         copy  "edk.fb.mov.match.asm"      ; Goto search matches
         copy  "edk.fb.find.reset.asm"     ; Reset results of find operation
-        copy  "edk.fb.char.asm"             ; Process character
+        copy  "edk.fb.char.asm"           ; Process character
         ;-----------------------------------------------------------------------
         ; Keyboard actions - Command Buffer
         ;-----------------------------------------------------------------------
@@ -127,17 +127,17 @@ main:
         copy  "edk.cmdb.font.asm"         ; Set font
         copy  "edk.cmdb.clock.asm"        ; Show clock
         copy  "edk.cmdb.filebrowser.prevcol.asm"
-                                            ; Previous column in filebrowser
+                                          ; Previous column in filebrowser
         copy  "edk.cmdb.filebrowser.nextcol.asm"
-                                            ; Next column in filebrowser
+                                          ; Next column in filebrowser
         copy  "edk.cmdb.filebrowser.prevpage.asm"
-                                            ; Previous page in filebrowser
+                                          ; Previous page in filebrowser
         copy  "edk.cmdb.filebrowser.nextpage.asm"
-                                            ; Next page in filebrowser
+                                          ; Next page in filebrowser
         copy  "edk.cmdb.find.search.asm"  ; Search operation for find dialog
         copy  "edk.cmdb.lock.asm"         ; Lock editor buffer
         copy  "edk.cmdb.unlock.asm"       ; Unlock editor buffer
-        copy  "cmdb.dialog.close.asm"       ; Close dialog
+        copy  "cmdb.dialog.close.asm"     ; Close dialog
         ;-----------------------------------------------------------------------
         ; Logic for Editor Buffer
         ;-----------------------------------------------------------------------

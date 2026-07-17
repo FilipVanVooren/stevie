@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Quit stevie
 *---------------------------------------------------------------
-edkey.action.quit:
+edk.act.quit:
         ;-------------------------------------------------------
         ; Show dialog "unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
@@ -20,9 +20,9 @@ edkey.action.quit:
 *---------------------------------------------------------------
 * Copy code block or open "Insert from clipboard" dialog
 *---------------------------------------------------------------
-edkey.action.copyblock_or_clipboard:
+edk.act.copyblock_or_clipboard:
         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
         jeq   !
-        b     @edkey.action.block.copy
+        b     @edk.act.block.copy
                                     ; Copy code block
 !       b     @dialog.clipboard     ; Open "Insert from clipboard" dialog

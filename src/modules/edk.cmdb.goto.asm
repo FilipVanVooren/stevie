@@ -4,13 +4,13 @@
 *---------------------------------------------------------------
 * Goto line
 *---------------------------------------------------------------
-edkey.action.cmdb.goto:
+edk.act.cmdb.goto:
         ;-------------------------------------------------------        
         ; Exit on empty input string
         ;-------------------------------------------------------
         bl    @cmdb.cmd.getlength   ; Get length of current command
         mov   @outparm1,tmp0        ; Length == 0 ?
-        jeq   edkey.action.cmdb.goto.exit
+        jeq   edk.act.cmdb.goto.exit
                                     ; Yes, exit
         ;-------------------------------------------------------        
         ; Scan input line number and pack as uint16
@@ -30,12 +30,12 @@ edkey.action.cmdb.goto:
         ; Assert - Line number could not be parsed
         ;-------------------------------------------------------
         c     @outparm2,@w$ffff     ; Invalid number?
-        jeq   edkey.action.cmdb.goto.exit
+        jeq   edk.act.cmdb.goto.exit
                                     ; Yes, exit
         ;-------------------------------------------------------        
         ; Prepare for goto
         ;-------------------------------------------------------
-edkey.action.cmdb.goto.prepare:
+edk.act.cmdb.goto.prepare:
         dect  stack
         mov   @outparm1,*stack      ; Push @outparm1
 
@@ -44,7 +44,7 @@ edkey.action.cmdb.goto.prepare:
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.cmdb.goto.line
+        jne   edk.act.cmdb.goto.line
 
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
                                     ; \ i   @fb.top      = Address top row in FB
@@ -56,7 +56,7 @@ edkey.action.cmdb.goto.prepare:
         ;-------------------------------------------------------
         ; Goto line
         ;-------------------------------------------------------
-edkey.action.cmdb.goto.line:        
+edk.act.cmdb.goto.line:        
         mov   *stack+,@parm1        ; Pop @outparm1 as @parm1
         dec   @parm1                ; Base 0 offset in editor buffer
 
@@ -70,6 +70,6 @@ edkey.action.cmdb.goto.line:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------        
-edkey.action.cmdb.goto.exit:        
+edk.act.cmdb.goto.exit:        
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

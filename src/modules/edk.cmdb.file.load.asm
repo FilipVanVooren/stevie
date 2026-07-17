@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Load file
 *---------------------------------------------------------------
-edkey.action.cmdb.load:
+edk.act.cmdb.load:
         .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Read directory if last character is '.'
@@ -15,7 +15,7 @@ edkey.action.cmdb.load:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jne   edkey.action.cmdb.load.checklen
+        jne   edk.act.cmdb.load.checklen
                                     ; No, check filename length
         ;-------------------------------------------------------
         ; Read directory and exit
@@ -32,14 +32,14 @@ edkey.action.cmdb.load:
                                     ; |          (ignored if parm1 set)
                                     ; / @parm3 = Skip filebrowser flag
 
-        jmp   edkey.action.cmdb.load.exit
+        jmp   edk.act.cmdb.load.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
-edkey.action.cmdb.load.checklen:        
+edk.act.cmdb.load.checklen:        
         bl    @cmdb.cmd.getlength            ; Get length of current command
         mov   @outparm1,tmp0                 ; Length == 0 ?
-        jeq   edkey.action.cmdb.load.exit    ; Yes, exit early
+        jeq   edk.act.cmdb.load.exit    ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -54,7 +54,7 @@ edkey.action.cmdb.load.checklen:
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-edkey.action.cmdb.load.file:       
+edk.act.cmdb.load.file:       
         clr   @edb.special.file     ; Reset special file flag
         clr   @tv.specmsg.ptr       ; Reset special message
 
@@ -67,7 +67,7 @@ edkey.action.cmdb.load.file:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.load.exit:
+edk.act.cmdb.load.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11        
-        b     @edkey.action.top     ; Goto 1st line in editor buffer 
+        b     @edk.act.top     ; Goto 1st line in editor buffer 

@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Pick previous file from catalog
 *---------------------------------------------------------------
-* b   @edkey.action.cmdb.pick.prev
+* b   @edk.act.cmdb.pick.prev
 *--------------------------------------------------------------- 
 * INPUT
 * none
@@ -12,21 +12,21 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-edkey.action.cmdb.pick.prev:
+edk.act.cmdb.pick.prev:
         ;------------------------------------------------------
         ; Adjust filename
         ;------------------------------------------------------
         bl    @fm.browse.fname.prev ; Previous file in catalog filename list
 
         abs   @outparm1             ; Skipped flag set?
-        jne   edkey.action.cmdb.pick.prev.exit
+        jne   edk.act.cmdb.pick.prev.exit
                                     ; Yes, exit early
 
         bl    @pane.filebrowser.hilight                                    
         ;------------------------------------------------------
         ; Previous file
         ;------------------------------------------------------
-edkey.action.cmdb.pick.prev.setfile:
+edk.act.cmdb.pick.prev.setfile:
         bl    @cpym2m
               data cat.fullfname,cmdb.cmdall,80
                                     ; Copy full filename to command line
@@ -37,6 +37,6 @@ edkey.action.cmdb.pick.prev.setfile:
         ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------
-edkey.action.cmdb.pick.prev.exit:
+edk.act.cmdb.pick.prev.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

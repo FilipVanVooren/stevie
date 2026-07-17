@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Toggle editor line length display
 *---------------------------------------------------------------
-edkey.action.cmdb.linelen:
+edk.act.cmdb.linelen:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -17,7 +17,7 @@ edkey.action.cmdb.linelen:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.linelen.exit:
+edk.act.cmdb.linelen.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     @edkey.keyscan.hook.debounce

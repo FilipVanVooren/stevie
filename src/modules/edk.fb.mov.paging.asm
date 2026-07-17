@@ -4,13 +4,13 @@
 *---------------------------------------------------------------
 * Previous page
 *---------------------------------------------------------------
-edkey.action.ppage:
+edk.act.ppage:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.ppage.sanity
+        jne   edk.act.ppage.sanity
 
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
                                     ; \ i   @fb.top      = Address top row in FB
@@ -22,25 +22,25 @@ edkey.action.ppage:
         ;-------------------------------------------------------
         ; Assert
         ;-------------------------------------------------------
-edkey.action.ppage.sanity:        
+edk.act.ppage.sanity:        
         mov   @fb.topline,tmp0      ; Exit if already on line 1 
-        jeq   edkey.action.ppage.exit
+        jeq   edk.act.ppage.exit
         ;-------------------------------------------------------
         ; Special treatment top page
         ;-------------------------------------------------------
         c     tmp0,@fb.scrrows      ; topline > rows on screen?
-        jgt   edkey.action.ppage.topline 
+        jgt   edk.act.ppage.topline 
         clr   @fb.topline           ; topline = 0
-        jmp   edkey.action.ppage.refresh
+        jmp   edk.act.ppage.refresh
         ;-------------------------------------------------------
         ; Adjust topline
         ;-------------------------------------------------------
-edkey.action.ppage.topline:
+edk.act.ppage.topline:
         s     @fb.scrrows,@fb.topline         
         ;-------------------------------------------------------
         ; Refresh page
         ;-------------------------------------------------------
-edkey.action.ppage.refresh:
+edk.act.ppage.refresh:
         mov   @fb.topline,@parm1
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
@@ -52,7 +52,7 @@ edkey.action.ppage.refresh:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ppage.exit:
+edk.act.ppage.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
 
@@ -62,13 +62,13 @@ edkey.action.ppage.exit:
 *---------------------------------------------------------------
 * Next page
 *---------------------------------------------------------------
-edkey.action.npage:
+edk.act.npage:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current row if dirty 
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.npage.sanity
+        jne   edk.act.npage.sanity
 
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
                                     ; \ i   @fb.top      = Address top row in FB
@@ -80,21 +80,21 @@ edkey.action.npage:
         ;-------------------------------------------------------
         ; Assert
         ;-------------------------------------------------------
-edkey.action.npage.sanity:        
+edk.act.npage.sanity:        
         mov   @fb.topline,tmp0
         a     @fb.scrrows,tmp0
         inc   tmp0                  ; Base 1 offset !
         c     tmp0,@edb.lines       ; Exit if on last page
-        jgt   edkey.action.npage.exit
+        jgt   edk.act.npage.exit
         ;-------------------------------------------------------
         ; Adjust topline
         ;-------------------------------------------------------
-edkey.action.npage.topline:
+edk.act.npage.topline:
         a     @fb.scrrows,@fb.topline         
         ;-------------------------------------------------------
         ; Refresh page
         ;-------------------------------------------------------
-edkey.action.npage.refresh:        
+edk.act.npage.refresh:        
         mov   @fb.topline,@parm1
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)        
 
@@ -106,6 +106,6 @@ edkey.action.npage.refresh:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.npage.exit:
+edk.act.npage.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

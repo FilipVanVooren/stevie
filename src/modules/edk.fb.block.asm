@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Mark line M1 or M2
 ********|*****|*********************|**************************
-edkey.action.block.mark:
+edk.act.block.mark:
         bl    @edb.block.mark       ; Set M1/M2 marker
         ;-------------------------------------------------------
         ; Exit
@@ -15,29 +15,29 @@ edkey.action.block.mark:
 *---------------------------------------------------------------
 * Mark line M1
 ********|*****|*********************|**************************
-edkey.action.block.m1:
+edk.act.block.m1:
         bl    @edb.block.mark.m1    ; Set M1 marker
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.action.cmdb.close.dialog ; Close dialog
+        b     @edk.act.cmdb.close.dialog ; Close dialog
 
 
 *---------------------------------------------------------------
 * Mark line M2
 ********|*****|*********************|**************************
-edkey.action.block.m2:
+edk.act.block.m2:
         bl    @edb.block.mark.m2    ; Set M2 marker
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-        b     @edkey.action.cmdb.close.dialog ; Close dialog
+        b     @edk.act.cmdb.close.dialog ; Close dialog
 
 
 *---------------------------------------------------------------
 * Reset block markers M1/M2
 ********|*****|*********************|**************************
-edkey.action.block.reset:
+edk.act.block.reset:
         bl    @pane.errline.hide    ; Hide error line if visible
         bl    @edb.block.reset      ; Reset block markers M1/M2
         ;-------------------------------------------------------
@@ -49,7 +49,7 @@ edkey.action.block.reset:
 *---------------------------------------------------------------
 * Copy code block
 ********|*****|*********************|**************************
-edkey.action.block.copy:
+edk.act.block.copy:
         dect  stack
         mov   r11,*stack            ; Push return address
         dect  stack
@@ -58,13 +58,13 @@ edkey.action.block.copy:
         ; Exit early if editor buffer locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.block.copy.exit
+        jne   edk.act.block.copy.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Exit early if nothing to do
         ;-------------------------------------------------------
         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-        jeq   edkey.action.block.copy.exit
+        jeq   edk.act.block.copy.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Init
@@ -83,7 +83,7 @@ edkey.action.block.copy:
                                     ; / o  @outparm1 = >ffff if success
 
         c     @outparm1,@w$0000     ; Copy skipped?
-        jeq   edkey.action.block.copy.exit
+        jeq   edk.act.block.copy.exit
                                     ; If yes, exit early
 
         mov   @fb.yxsave,@parm1
@@ -93,7 +93,7 @@ edkey.action.block.copy:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.copy.exit:
+edk.act.block.copy.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     @edkey.keyscan.hook.debounce ; Back to editor main
@@ -104,7 +104,7 @@ edkey.action.block.copy.exit:
 *---------------------------------------------------------------
 * Delete code block
 ********|*****|*********************|**************************
-edkey.action.block.delete:
+edk.act.block.delete:
         dect  stack
         mov   r11,*stack            ; Push return address
         dect  stack
@@ -113,13 +113,13 @@ edkey.action.block.delete:
         ; Exit early if editor buffer locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.block.delete.exit
+        jne   edk.act.block.delete.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Exit early if nothing to do
         ;-------------------------------------------------------
         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-        jeq   edkey.action.block.delete.exit
+        jeq   edk.act.block.delete.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Delete
@@ -133,7 +133,7 @@ edkey.action.block.delete:
         ; Reposition in frame buffer
         ;-------------------------------------------------------
         c     @outparm1,@w$0000     ; Delete skipped?
-        jeq   edkey.action.block.delete.exit
+        jeq   edk.act.block.delete.exit
                                     ; If yes, exit early
 
         mov   @fb.topline,@parm1
@@ -149,7 +149,7 @@ edkey.action.block.delete:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.delete.exit:
+edk.act.block.delete.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     @edkey.keyscan.hook.debounce ; Back to editor main
@@ -158,7 +158,7 @@ edkey.action.block.delete.exit:
 *---------------------------------------------------------------
 * Move code block
 ********|*****|*********************|**************************
-edkey.action.block.move:
+edk.act.block.move:
         dect  stack
         mov   r11,*stack            ; Push return address
         dect  stack
@@ -167,13 +167,13 @@ edkey.action.block.move:
         ; Exit early if editor buffer locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.block.move.exit
+        jne   edk.act.block.move.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Exit early if nothing to do
         ;-------------------------------------------------------
         c     @edb.block.m2,@w$ffff ; Marker M2 unset?
-        jeq   edkey.action.block.move.exit
+        jeq   edk.act.block.move.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Delete
@@ -193,7 +193,7 @@ edkey.action.block.move:
         ; Reposition in frame buffer
         ;-------------------------------------------------------
         c     @outparm1,@w$0000     ; Delete skipped?
-        jeq   edkey.action.block.delete.exit
+        jeq   edk.act.block.delete.exit
                                     ; If yes, exit early
 
         mov   @fb.topline,@parm1
@@ -209,7 +209,7 @@ edkey.action.block.move:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.move.exit:
+edk.act.block.move.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop r11
         b     @edkey.keyscan.hook.debounce ; Back to editor main
@@ -218,9 +218,9 @@ edkey.action.block.move.exit:
 *---------------------------------------------------------------
 * Goto marker M1
 ********|*****|*********************|**************************
-edkey.action.block.goto.m1:
+edk.act.block.goto.m1:
         c     @edb.block.m1,@w$ffff ; Marker M1 unset?
-        jeq   edkey.action.block.goto.m1.exit
+        jeq   edk.act.block.goto.m1.exit
                                     ; Yes, exit early
         ;-------------------------------------------------------
         ; Goto marker M1
@@ -228,11 +228,11 @@ edkey.action.block.goto.m1:
         mov   @edb.block.m1,@parm1
         dec   @parm1                ; Base 0 offset
 
-        b     @edkey.action.goto    ; Goto specified line in editor bufer
+        b     @edk.act.goto    ; Goto specified line in editor bufer
                                     ; \ i @parm1 = Target line in EB
                                     ; /
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.block.goto.m1.exit:
+edk.act.block.goto.m1.exit:
         b     @edkey.keyscan.hook.debounce ; Back to editor main

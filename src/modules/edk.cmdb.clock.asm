@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Toggle clock display in editor
 *---------------------------------------------------------------
-edkey.action.cmdb.clock:
+edk.act.cmdb.clock:
         .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Toggle clock display
@@ -14,7 +14,7 @@ edkey.action.cmdb.clock:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.clock.exit:
+edk.act.cmdb.clock.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
         b     @edkey.keyscan.hook.debounce

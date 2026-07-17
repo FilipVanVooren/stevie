@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Scroll left
 *---------------------------------------------------------------
-edkey.action.scroll.left: 
+edk.act.scroll.left: 
         mov   @fb.vwco,tmp0
         ci    tmp0,16
         jgt   !
@@ -13,7 +13,7 @@ edkey.action.scroll.left:
         ;-------------------------------------------------------
         clr   tmp0                  ; Reset view window column offset
         clr   @parm1        
-        jmp   _edkey.action.scroll  ; Scroll
+        jmp   _edk.act.scroll  ; Scroll
         ;-------------------------------------------------------
         ; Scroll left
         ;-------------------------------------------------------
@@ -22,20 +22,20 @@ edkey.action.scroll.left:
 
         li    tmp0,16               ; Temporary constant
         c     @fb.column,@w$0040    ; column > 64 ?
-        jlt   _edkey.action.scroll
+        jlt   _edk.act.scroll
         ;-------------------------------------------------------
         ; Update cursor X position
         ;-------------------------------------------------------
         a     tmp0,@fb.column       ; Column in screen buffer
         a     tmp0,@wyx             ; VDP Cursor
         a     tmp0,@fb.current
-        jmp   _edkey.action.scroll  ; Call internal scroll method
+        jmp   _edk.act.scroll  ; Call internal scroll method
 
 
 *---------------------------------------------------------------
 * Scroll right
 *---------------------------------------------------------------
-edkey.action.scroll.right:
+edk.act.scroll.right:
         mov   @fb.vwco,tmp0
         ci    tmp0,175
         jlt   !
@@ -44,7 +44,7 @@ edkey.action.scroll.right:
         ;-------------------------------------------------------
         clr   tmp0                  ; Reset view window column offset
         clr   @parm1
-        jmp   _edkey.action.scroll  ; Scroll
+        jmp   _edk.act.scroll  ; Scroll
         ;-------------------------------------------------------
         ; Scroll right
         ;-------------------------------------------------------
@@ -53,7 +53,7 @@ edkey.action.scroll.right:
 
         li    tmp0,16               ; Temporary constant
         c     @fb.column,tmp0
-        jlt   _edkey.action.scroll
+        jlt   _edk.act.scroll
         ;-------------------------------------------------------
         ; Update cursor X position
         ;-------------------------------------------------------
@@ -64,7 +64,7 @@ edkey.action.scroll.right:
 *---------------------------------------------------------------
 * Internal scroll method
 *---------------------------------------------------------------
-_edkey.action.scroll:
+_edk.act.scroll:
         ;-------------------------------------------------------
         ; Scroll
         ;-------------------------------------------------------
@@ -73,6 +73,6 @@ _edkey.action.scroll:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-_edkey.action.scroll.exit:
+_edk.act.scroll.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

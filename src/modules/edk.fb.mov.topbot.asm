@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Goto top of file
 *---------------------------------------------------------------
-edkey.action.top:
+edk.act.top:
         bl    @fb.cursor.top        ; Goto top of file
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -12,7 +12,7 @@ edkey.action.top:
 *---------------------------------------------------------------
 * Goto top of screen
 *---------------------------------------------------------------
-edkey.action.topscr:
+edk.act.topscr:
         bl    @fb.cursor.topscr     ; Goto top of screen
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -20,7 +20,7 @@ edkey.action.topscr:
 *---------------------------------------------------------------
 * Goto bottom of file
 *---------------------------------------------------------------
-edkey.action.bot:
+edk.act.bot:
         bl    @fb.cursor.bot        ; Goto bottom of file
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -28,7 +28,7 @@ edkey.action.bot:
 *---------------------------------------------------------------
 * Goto bottom of screen
 *---------------------------------------------------------------
-edkey.action.botscr:
+edk.act.botscr:
         bl    @fb.cursor.botscr     ; Goto bottom of screen
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -36,7 +36,7 @@ edkey.action.botscr:
 *---------------------------------------------------------------
 * Cursor up
 *---------------------------------------------------------------
-edkey.action.up: 
+edk.act.up: 
         bl    @fb.cursor.up         ; Move cursor up
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -44,7 +44,7 @@ edkey.action.up:
 *---------------------------------------------------------------
 * Cursor down
 *---------------------------------------------------------------
-edkey.action.down:
+edk.act.down:
         bl    @fb.cursor.down       ; Move cursor down
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

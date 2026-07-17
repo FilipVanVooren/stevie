@@ -84,12 +84,12 @@ edkey.fb.goto.line:
 *---------------------------------------------------------------
 * Goto specified line (@parm1) in editor buffer
 *---------------------------------------------------------------
-edkey.action.goto:
+edk.act.goto:
         ;-------------------------------------------------------
         ; Crunch current row if dirty
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.goto.refresh
+        jne   edk.act.goto.refresh
 
         dect  stack
         mov   @parm1,*stack         ; Push parm1
@@ -105,7 +105,7 @@ edkey.action.goto:
         ;-------------------------------------------------------
         ; Refresh page
         ;-------------------------------------------------------
-edkey.action.goto.refresh:
+edk.act.goto.refresh:
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
 
         clr   @parm2                ; No row offset in frame buffer

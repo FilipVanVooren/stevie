@@ -2,16 +2,16 @@
 * Purpose...: Load file into editor
 
 ***************************************************************
-* edkey.action.fb.load.file
+* edk.act.fb.load.file
 * Load file directly into editor (without CMDB "Open File")
 ***************************************************************
-* b  @edkey.action.fb.load.file
+* b  @edk.act.fb.load.file
 *--------------------------------------------------------------
 * INPUT
 * @parm1 = Pointer to filename string
 * @parm2 = Type of special file to load
 ********|*****|*********************|**************************
-edkey.action.fb.load.file:
+edk.act.fb.load.file:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -37,31 +37,31 @@ edkey.action.fb.load.file:
                                     ; \ i  @parm1 = Pointer to error message
                                     ; /
 
-        jmp   edkey.action.fb.load.file.exit2
+        jmp   edk.act.fb.load.file.exit2
         ;------------------------------------------------------
         ; Show dialog "Unsaved changed" if editor buffer dirty
         ;------------------------------------------------------
 !       mov   @edb.dirty,tmp0       ; Editor buffer dirty?
-        jeq   edkey.action.fb.load.loadfile
+        jeq   edk.act.fb.load.loadfile
                                     ; No, continue processing
-        jmp   edkey.action.fb.load.file.exit3
+        jmp   edk.act.fb.load.file.exit3
                                     ; Dirty, exit
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-edkey.action.fb.load.loadfile:        
+edk.act.fb.load.loadfile:        
         bl    @fm.loadfile          ; Load DV80 file
                                     ; \ i  @parm1 = Pointer to length-prefixed
                                     ; /             device/filename string
         ;-------------------------------------------------------
         ; Handle special files
         ;-------------------------------------------------------
-        jmp   edkey.action.fb.load.file.exit2
+        jmp   edk.act.fb.load.file.exit2
                                     ; Skip goto line
         ;-------------------------------------------------------
         ; Goto line in file and exit
         ;-------------------------------------------------------
-edkey.action.fb.load.file.exit1:        
+edk.act.fb.load.file.exit1:        
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11 
@@ -75,15 +75,15 @@ edkey.action.fb.load.file.exit1:
         ;-------------------------------------------------------
         ; Goto top of file (TOF) and exit
         ;-------------------------------------------------------
-edkey.action.fb.load.file.exit2:
+edk.act.fb.load.file.exit2:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11        
-        b     @edkey.action.top     ; Goto 1st line in editor buffer 
+        b     @edk.act.top     ; Goto 1st line in editor buffer 
         ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" and exit
         ;-------------------------------------------------------
-edkey.action.fb.load.file.exit3:
+edk.act.fb.load.file.exit3:
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11        

@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Insert file
 *---------------------------------------------------------------
-edkey.action.cmdb.insert:
+edk.act.cmdb.insert:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
@@ -13,7 +13,7 @@ edkey.action.cmdb.insert:
         ; Exit if editor is locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0               ; Locked?
-        jne   edkey.action.cmdb.insert.exit  ; Yes, exit early
+        jne   edk.act.cmdb.insert.exit  ; Yes, exit early
         ;-------------------------------------------------------
         ; Read directory if last character is '.'
         ;-------------------------------------------------------
@@ -23,7 +23,7 @@ edkey.action.cmdb.insert:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jne   edkey.action.cmdb.insert.checklen
+        jne   edk.act.cmdb.insert.checklen
                                     ; No, check filename length
         ;-------------------------------------------------------
         ; Read directory and exit
@@ -41,14 +41,14 @@ edkey.action.cmdb.insert:
                                     ; |          (ignored if parm1 set)
                                     ; / @parm3 = Skip filebrowser flag
 
-        jmp   edkey.action.cmdb.insert.exit
+        jmp   edk.act.cmdb.insert.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
-edkey.action.cmdb.insert.checklen:        
+edk.act.cmdb.insert.checklen:        
         bl    @cmdb.cmd.getlength              ; Get length of current command
         mov   @outparm1,tmp0                   ; Length == 0 ?
-        jeq   edkey.action.cmdb.insert.exit    ; Yes, exit early
+        jeq   edk.act.cmdb.insert.exit    ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -68,7 +68,7 @@ edkey.action.cmdb.insert.checklen:
         ;-------------------------------------------------------
         ; Insert file at line
         ;-------------------------------------------------------
-edkey.action.cmdb.insert.file:
+edk.act.cmdb.insert.file:
         ;-------------------------------------------------------
         ; Get line
         ;-------------------------------------------------------
@@ -110,7 +110,7 @@ edkey.action.cmdb.insert.file:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.insert.exit:
+edk.act.cmdb.insert.exit:
         mov   *stack+,@parm1        ; Pop top row
         mov   *stack+,tmp0          ; Pop tmp0
 

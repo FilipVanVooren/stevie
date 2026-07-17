@@ -4,13 +4,13 @@
 *---------------------------------------------------------------
 * Enter
 *---------------------------------------------------------------
-edkey.action.enter:
+edk.act.enter:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
         ;-------------------------------------------------------
         ; Crunch current line if dirty
         ;-------------------------------------------------------
         c     @fb.row.dirty,@w$ffff
-        jne   edkey.action.enter.newline
+        jne   edk.act.enter.newline
         seto  @edb.dirty            ; Editor buffer dirty (text changed!)
 
         bl    @edb.line.pack.fb     ; Copy line to editor buffer
@@ -23,13 +23,13 @@ edkey.action.enter:
         ;-------------------------------------------------------
         ; Insert a new line if insert mode is on
         ;-------------------------------------------------------
-edkey.action.enter.newline:
+edk.act.enter.newline:
         mov   @edb.insmode,tmp0     ; Insert mode or overwrite mode?
-        jeq   edkey.action.enter.upd_counter
+        jeq   edk.act.enter.upd_counter
                                     ; Overwrite mode, skip insert
 
         mov   @edb.autoinsert,tmp0  ; Autoinsert on?
-        jeq   edkey.action.enter.upd_counter
+        jeq   edk.act.enter.upd_counter
                                     ; Autoinsert off, skip insert
 
         seto  @parm1                ; Insert line on following line
@@ -40,24 +40,24 @@ edkey.action.enter.newline:
         ;-------------------------------------------------------
         ; Update line counter
         ;-------------------------------------------------------
-edkey.action.enter.upd_counter:
+edk.act.enter.upd_counter:
         mov   @fb.topline,tmp0
         a     @fb.row,tmp0
         inc   tmp0
         c     tmp0,@edb.lines       ; Last line in editor buffer?
-        jlt   edkey.action.newline  ; No, continue newline
+        jlt   edk.act.newline  ; No, continue newline
         inc   @edb.lines            ; Total lines++
         ;-------------------------------------------------------
         ; Process newline
         ;-------------------------------------------------------
-edkey.action.newline:
+edk.act.newline:
         ;-------------------------------------------------------
         ; Scroll 1 line if cursor at bottom row of screen
         ;-------------------------------------------------------
         mov   @fb.scrrows,tmp0
         dec   tmp0
         c     @fb.row,tmp0
-        jlt   edkey.action.newline.down
+        jlt   edk.act.newline.down
         ;-------------------------------------------------------
         ; Scroll
         ;-------------------------------------------------------
@@ -66,17 +66,17 @@ edkey.action.newline:
         inc   @parm1
         bl    @fb.refresh
         seto  @fb.colorize          ; Colorize M1/M2 marked lines (if present)
-        jmp   edkey.action.newline.rest
+        jmp   edk.act.newline.rest
         ;-------------------------------------------------------
         ; Move cursor down a row, there are still rows left
         ;-------------------------------------------------------
-edkey.action.newline.down:
+edk.act.newline.down:
         inc   @fb.row               ; Row++ in screen buffer
         bl    @down                 ; Row++ VDP cursor
         ;-------------------------------------------------------
         ; Set VDP cursor and save variables
         ;-------------------------------------------------------
-edkey.action.newline.rest:
+edk.act.newline.rest:
         bl    @fb.get.nonblank      ; \ Get column of first nonblank character
                                     ; | o  @outparm1 = Matching column
                                     ; / o  @outparm2 = Char on matching column
@@ -104,7 +104,7 @@ edkey.action.newline.rest:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.newline.exit:
+edk.act.newline.exit:
         b     @edkey.keyscan.hook.debounce; Back to editor main
 
 
@@ -113,7 +113,7 @@ edkey.action.newline.exit:
 *---------------------------------------------------------------
 * Toggle insert/overwrite mode
 *---------------------------------------------------------------
-edkey.action.ins_onoff:
+edk.act.ins_onoff:
         dect  stack
         mov   r11,*stack            ; Save return address
 
@@ -122,6 +122,6 @@ edkey.action.ins_onoff:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_onoff.exit:
+edk.act.ins_onoff.exit:
         mov   *stack+,r11           ; Pop r11
         b     @edkey.keyscan.hook.debounce; Back to editor main

@@ -6,12 +6,12 @@
 *
 * @parm1 = high byte has character to insert
 *---------------------------------------------------------------
-edkey.action.ins_char.ws:
+edk.act.ins_char.ws:
         ;-------------------------------------------------------
         ; Skip if editor buffer is locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.ins_char.ws.exit
+        jne   edk.act.ins_char.ws.exit
                                     ; Yes, exit
         ;-------------------------------------------------------
         ; Insert character
@@ -26,7 +26,7 @@ edkey.action.ins_char.ws:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_char.ws.exit:
+edk.act.ins_char.ws.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
 edkey.actions.ins.char.ws.data:   
@@ -35,12 +35,12 @@ edkey.actions.ins.char.ws.data:
 *---------------------------------------------------------------
 * Insert new line on current line
 *---------------------------------------------------------------
-edkey.action.ins_line:
+edk.act.ins_line:
         ;-------------------------------------------------------
         ; Skip if editor buffer is locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.ins_line.exit
+        jne   edk.act.ins_line.exit
                                     ; Yes, exit
         ;-------------------------------------------------------
         ; Insert line
@@ -53,7 +53,7 @@ edkey.action.ins_line:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_line.exit:
+edk.act.ins_line.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
 
@@ -61,12 +61,12 @@ edkey.action.ins_line.exit:
 *---------------------------------------------------------------
 * Insert new line on following line
 *---------------------------------------------------------------
-edkey.action.ins_line_after:
+edk.act.ins_line_after:
         ;-------------------------------------------------------
         ; Skip if editor buffer is locked
         ;-------------------------------------------------------
         mov   @edb.locked,tmp0      ; Is editor buffer locked?
-        jne   edkey.action.ins_line_after.exit
+        jne   edk.act.ins_line_after.exit
                                     ; Yes, exit
         ;-------------------------------------------------------
         ; Insert line on following line
@@ -79,6 +79,6 @@ edkey.action.ins_line_after:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.ins_line_after.exit:
+edk.act.ins_line_after.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

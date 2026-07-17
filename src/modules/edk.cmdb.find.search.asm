@@ -4,19 +4,19 @@
 *---------------------------------------------------------------
 * Refresh index with search results
 ********|*****|*********************|**************************
-edkey.action.cmdb.find.search:
+edk.act.cmdb.find.search:
         bl    @edb.find.search      ; Perform search operation
         abs   @edb.srch.matches     ; Any search matches found?
-        jgt   edkey.action.cmdb.find.search.exit
+        jgt   edk.act.cmdb.find.search.exit
                                     ; Yes, exit
         ;-------------------------------------------------------
         ; No search matches, jump to 1st line in file
         ;-------------------------------------------------------
         clr   @parm1                ; 1st line in file
-        b     @edkey.action.goto    ; Goto specified line        
+        b     @edk.act.goto    ; Goto specified line        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.find.search.exit:
+edk.act.cmdb.find.search.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

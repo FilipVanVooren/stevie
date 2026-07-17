@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Append file
 *---------------------------------------------------------------
-edkey.action.cmdb.append:
+edk.act.cmdb.append:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
@@ -18,7 +18,7 @@ edkey.action.cmdb.append:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jne   edkey.action.cmdb.append.checklen
+        jne   edk.act.cmdb.append.checklen
                                     ; No, check filename length
         ;-------------------------------------------------------
         ; Read directory and exit
@@ -35,14 +35,14 @@ edkey.action.cmdb.append:
                                     ; | @parm2 = Index in device list
                                     ; |          (ignored if parm1 set)
                                     ; / @parm3 = Skip filebrowser flag
-        jmp   edkey.action.cmdb.append.exit
+        jmp   edk.act.cmdb.append.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
-edkey.action.cmdb.append.checklen:        
+edk.act.cmdb.append.checklen:        
         bl    @cmdb.cmd.getlength            ; Get length of current command
         mov   @outparm1,tmp0                 ; Length == 0 ?
-        jeq   edkey.action.cmdb.append.exit  ; Yes, exit early
+        jeq   edk.act.cmdb.append.exit  ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -62,7 +62,7 @@ edkey.action.cmdb.append.checklen:
         ;-------------------------------------------------------
         ; Append file
         ;-------------------------------------------------------
-edkey.action.cmdb.append.file:
+edk.act.cmdb.append.file:
         mov   @edb.lines,@parm2     ; \ Append file after last line in
                                     ; / editor buffer (base 0 offset)
         ;-------------------------------------------------------
@@ -95,7 +95,7 @@ edkey.action.cmdb.append.file:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.append.exit:
+edk.act.cmdb.append.exit:
         mov   *stack+,@parm1        ; Pop top row
         mov   *stack+,tmp0          ; Pop tmp0
 

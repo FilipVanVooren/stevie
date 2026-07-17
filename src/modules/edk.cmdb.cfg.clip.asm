@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Configure clipboard
 *---------------------------------------------------------------
-edkey.action.cmdb.cfg.clip:
+edk.act.cmdb.cfg.clip:
         .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Set filename
@@ -23,7 +23,7 @@ edkey.action.cmdb.cfg.clip:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.cfg.clip.exit:
+edk.act.cmdb.cfg.clip.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     @edkey.action.top     ; Goto 1st line in editor buffer 
+        b     @edk.act.top     ; Goto 1st line in editor buffer 

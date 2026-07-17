@@ -2,10 +2,10 @@
 * Purpose...: Actions for modifier keys in command buffer pane.
 
 ***************************************************************
-* edkey.action.cmdb.clear
+* edk.act.cmdb.clear
 * Clear current command
 ***************************************************************
-* b  @edkey.action.cmdb.clear
+* b  @edk.act.cmdb.clear
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -18,7 +18,7 @@
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-edkey.action.cmdb.clear:
+edk.act.cmdb.clear:
         ;-------------------------------------------------------
         ; Clear current command
         ;-------------------------------------------------------
@@ -27,16 +27,16 @@ edkey.action.cmdb.clear:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.clear.exit:
-        b     @edkey.action.cmdb.home
+edk.act.cmdb.clear.exit:
+        b     @edk.act.cmdb.home
                                     ; Reposition cursor
         
 
 ***************************************************************
-* edkey.action.cmdb.char
+* edk.act.cmdb.char
 * Add character to command line
 ***************************************************************
-* b  @edkey.action.cmdb.char
+* b  @edk.act.cmdb.char
 *--------------------------------------------------------------
 * INPUT
 * tmp1 
@@ -49,7 +49,7 @@ edkey.action.cmdb.clear.exit:
 *--------------------------------------------------------------
 * Notes
 ********|*****|*********************|**************************
-edkey.action.cmdb.char:
+edk.act.cmdb.char:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
@@ -59,11 +59,11 @@ edkey.action.cmdb.char:
         ;-------------------------------------------------------
         mov   @keycode1,tmp0        ; Get keycode
         ci    tmp0,32               ; Keycode < ASCII 32 ?
-        jlt   edkey.action.cmdb.char.exit
+        jlt   edk.act.cmdb.char.exit
                                     ; Yes, skip
 
         ci    tmp0,126              ; Keycode > ASCII 126 ?
-        jgt   edkey.action.cmdb.char.exit
+        jgt   edk.act.cmdb.char.exit
                                     ; Yes, skip
 
         ;-------------------------------------------------------
@@ -91,7 +91,7 @@ edkey.action.cmdb.char:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.char.exit:
+edk.act.cmdb.char.exit:
         mov   *stack+,tmp1          ; Pop tmp1        
         mov   *stack+,tmp0          ; Pop tmp0                
         b     @edkey.keyscan.hook.debounce

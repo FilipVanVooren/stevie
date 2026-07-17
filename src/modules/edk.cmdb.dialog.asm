@@ -2,10 +2,10 @@
 * Purpose...: Dialog specific actions in command buffer pane.
 
 ***************************************************************
-* edkey.action.cmdb.proceed
+* edk.act.cmdb.proceed
 * Proceed with action
 ***************************************************************
-* b   @edkey.action.cmdb.proceed
+* b   @edk.act.cmdb.proceed
 *--------------------------------------------------------------
 * INPUT
 * @cmdb.action.ptr = Pointer to keyboard action to perform
@@ -13,7 +13,7 @@
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.proceed:
+edk.act.cmdb.proceed:
         ;-------------------------------------------------------
         ; Intialisation
         ;-------------------------------------------------------
@@ -41,16 +41,16 @@ edkey.action.cmdb.proceed:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.proceed.exit:
+edk.act.cmdb.proceed.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
 
 
 ***************************************************************
-* edkey.action.cmdb.lineterm.toggle
+* edk.act.cmdb.lineterm.toggle
 * Toggle line termination on/off
 ***************************************************************
-* b   @edkey.action.cmdb.lineterm.toggle
+* b   @edk.act.cmdb.lineterm.toggle
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -58,7 +58,7 @@ edkey.action.cmdb.proceed.exit:
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.lineterm.toggle:
+edk.act.cmdb.lineterm.toggle:
        bl    @fm.lineterm           ; Toggle line termination mode
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
        b     @edkey.keyscan.hook.debounce
@@ -66,10 +66,10 @@ edkey.action.cmdb.lineterm.toggle:
 
 
 ***************************************************************
-* edkey.action.cmdb.am.toggle
+* edk.act.cmdb.am.toggle
 * Toggle 'AutoUnpack' on/off
 ***************************************************************
-* b   @edkey.action.cmdb.am.toggle
+* b   @edk.act.cmdb.am.toggle
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -77,7 +77,7 @@ edkey.action.cmdb.lineterm.toggle:
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.am.toggle:
+edk.act.cmdb.am.toggle:
        bl    @tibasic.am.toggle     ; Toggle AutoUnpack
        seto  @cmdb.dirty            ; Command buffer dirty (text changed!)
        b     @edkey.keyscan.hook.debounce
@@ -86,10 +86,10 @@ edkey.action.cmdb.am.toggle:
 
 
 ***************************************************************
-* edkey.action.cmdb.preset
+* edk.act.cmdb.preset
 * Set command value to preset
 ***************************************************************
-* b   @edkey.action.cmdb.preset
+* b   @edk.act.cmdb.preset
 *--------------------------------------------------------------
 * INPUT
 * none
@@ -97,7 +97,7 @@ edkey.action.cmdb.am.toggle:
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.preset:
+edk.act.cmdb.preset:
        bl    @cmdb.cmd.preset       ; Set preset
        b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main
@@ -108,7 +108,7 @@ edkey.action.cmdb.preset:
 * dialog.close
 * Close dialog "Help"
 ***************************************************************
-* b   @edkey.action.cmdb.close.about
+* b   @edk.act.cmdb.close.about
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -116,7 +116,7 @@ edkey.action.cmdb.preset:
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.close.about:
+edk.act.cmdb.close.about:
         clr   @cmdb.dialog.var      ; Reset to Help page 1
         ;------------------------------------------------------
         ; Erase header line
@@ -135,10 +135,10 @@ edkey.action.cmdb.close.about:
 
 
 ***************************************************************
-* edkey.action.cmdb.close.dialog
+* edk.act.cmdb.close.dialog
 * Close dialog
 ***************************************************************
-* b   @edkey.action.cmdb.close.dialog
+* b   @edk.act.cmdb.close.dialog
 *--------------------------------------------------------------
 * OUTPUT
 * none
@@ -146,11 +146,11 @@ edkey.action.cmdb.close.about:
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.cmdb.close.dialog:
+edk.act.cmdb.close.dialog:
         bl    @cmdb.dialog.close    ; Close dialog
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.close.dialog.exit:
+edk.act.cmdb.close.dialog.exit:
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

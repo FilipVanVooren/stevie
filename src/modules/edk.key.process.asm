@@ -64,7 +64,7 @@ edkey.key.process.special:
         mov   *stack+,r12           ; Pop r12
         mov   *stack+,tmp1          ; Pop tmp1
         mov   *stack+,tmp0          ; Pop tmp0
-        b     @edkey.action.block.mark
+        b     @edk.act.block.mark
                                     ; Set block M1/M2 marker
         ;-------------------------------------------------------
         ; Postprocessing <ctrl> + space check
@@ -179,7 +179,7 @@ edkey.key.process.addbuffer:
         ;-------------------------------------------------------
         ; Add character to CMDB
         ;-------------------------------------------------------
-        b     @edkey.action.cmdb.char
+        b     @edk.act.cmdb.char
                                     ; Add character to CMDB buffer
         ;-------------------------------------------------------
         ; Crash
@@ -194,7 +194,7 @@ edkey.key.process.enter:
         mov   @keycode1,tmp0        ; Get key
         ci    tmp0,key.space        ; SPACE ?
         jne   edkey.key.process.exit
-        b     @edkey.action.cmdb.close.dialog
+        b     @edk.act.cmdb.close.dialog
         ;-------------------------------------------------------
         ; Flash screen if editor is locked
         ;-------------------------------------------------------        

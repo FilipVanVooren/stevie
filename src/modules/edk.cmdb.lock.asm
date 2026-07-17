@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Lock the editor buffer
 *---------------------------------------------------------------
-edkey.action.cmdb.lock:
+edk.act.cmdb.lock:
         dect  stack
         mov   r11,*stack            ; Save return address
         dect  stack
@@ -17,12 +17,12 @@ edkey.action.cmdb.lock:
         ; Close dialog if visible
         ;-------------------------------------------------------
         mov   @cmdb.visible,tmp0
-        jeq   edkey.action.cmdb.lock.exit
+        jeq   edk.act.cmdb.lock.exit
         bl    @cmdb.dialog.close    ; Close dialog        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.lock.exit:
+edk.act.cmdb.lock.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11  
-        b     @edkey.action.top     ; Goto top of file
+        b     @edk.act.top     ; Goto top of file

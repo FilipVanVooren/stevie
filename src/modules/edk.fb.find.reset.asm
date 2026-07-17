@@ -14,7 +14,7 @@
 * Register usage
 * none
 ********|*****|*********************|**************************
-edkey.action.find.reset:
+edk.act.find.reset:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
@@ -26,7 +26,7 @@ edkey.action.find.reset:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.find.reset.exit:
+edk.act.find.reset.exit:
         mov   *stack+,r11           ; Pop R11    
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main        

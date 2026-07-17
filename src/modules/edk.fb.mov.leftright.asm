@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Cursor left
 *---------------------------------------------------------------
-edkey.action.left:
+edk.act.left:
         mov   @fb.column,tmp0
         jeq   !                     ; column=0 ? Skip further processing
         ;-------------------------------------------------------
@@ -26,7 +26,7 @@ edkey.action.left:
 *---------------------------------------------------------------
 * Cursor right
 *---------------------------------------------------------------
-edkey.action.right:
+edk.act.right:
         c     @fb.column,@fb.row.length
         jhe   !                     ; column > length line ? Skip processing
         ;-------------------------------------------------------
@@ -48,7 +48,7 @@ edkey.action.right:
 *---------------------------------------------------------------
 * Cursor beginning of line
 *---------------------------------------------------------------
-edkey.action.home:
+edk.act.home:
         bl    @fb.cursor.home       ; Move cursor to beginning of line
         ;-------------------------------------------------------
         ; Exit
@@ -60,7 +60,7 @@ edkey.action.home:
 *---------------------------------------------------------------
 * Cursor end of line
 *---------------------------------------------------------------
-edkey.action.end:
+edk.act.end:
         seto  @fb.status.dirty      ; Trigger refresh of status lines
         mov   @fb.row.length,tmp0   ; \ Get row length
         ci    tmp0,80               ; | Adjust if necessary, normally cursor

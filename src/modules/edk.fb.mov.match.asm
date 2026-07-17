@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Cursor on previous match
 *---------------------------------------------------------------
-edkey.action.goto.pmatch:
+edk.act.goto.pmatch:
         abs   @edb.srch.matches            ; Any search matches?
         jeq   !                            ; No, exit early
         bl    @fb.goto.prevmatch           ; Goto previous match 
@@ -14,7 +14,7 @@ edkey.action.goto.pmatch:
 *---------------------------------------------------------------
 * Cursor on next match
 *---------------------------------------------------------------
-edkey.action.goto.nmatch:
+edk.act.goto.nmatch:
         abs   @edb.srch.matches            ; Any search matches?
         jeq   !                            ; No, goto line 1
         bl    @fb.goto.nextmatch           ; Goto next match

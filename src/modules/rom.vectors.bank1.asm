@@ -19,7 +19,7 @@ vec.11  data  edb.line.unpack.fb    ;
 vec.12  data  edb.clear.sams        ;
 vec.13  data  edb.lock              ;
 vec.14  data  edb.unlock            ;
-vec.15  data  edkey.action.cmdb.show
+vec.15  data  edk.act.cmdb.show
 vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cmdb.dialog.close     ;

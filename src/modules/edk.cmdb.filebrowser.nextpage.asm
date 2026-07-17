@@ -1,19 +1,19 @@
 * FILE......: edk.cmdb.filebrowser.nextpage.asm
 * Purpose...: Next page in filebrowser
 
-edkey.action.filebrowser.nextpage:
+edk.act.filebrowser.nextpage:
         .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Check page boundaries
         ;-------------------------------------------------------
         c     @cat.currentpage,@cat.totalpages
-        jlt   edkey.action.filebrowser.nextpage.page
+        jlt   edk.act.filebrowser.nextpage.page
         mov   @cat.totalpages,@cat.currentpage
-        jmp   edkey.action.filebrowser.nextpage.checkdialog
+        jmp   edk.act.filebrowser.nextpage.checkdialog
         ;-------------------------------------------------------
         ; Next page
         ;-------------------------------------------------------
-edkey.action.filebrowser.nextpage.page:        
+edk.act.filebrowser.nextpage.page:        
         a     @cat.nofilespage,@cat.fpicker.idx
                                     ; Calculate 1st filename on page
 
@@ -24,20 +24,20 @@ edkey.action.filebrowser.nextpage.page:
         ;-------------------------------------------------------
         ; Check if on supported dialog for filename display
         ;-------------------------------------------------------
-edkey.action.filebrowser.nextpage.checkdialog:
+edk.act.filebrowser.nextpage.checkdialog:
         mov   @cmdb.dialog,tmp0     ; Get current dialog ID
 
         ci    tmp0,id.dialog.open   ; \ First supported dialog
-        jlt   edkey.action.filebrowser.nextpage.exit
+        jlt   edk.act.filebrowser.nextpage.exit
                                     ; / Not in supported dialog range. Skip 
 
         ci    tmp0,id.dialog.run    ; \ Last supported dialog
-        jgt   edkey.action.filebrowser.nextpage.exit
+        jgt   edk.act.filebrowser.nextpage.exit
                                     ; / Not in supported dialog range. Skip
         ;-------------------------------------------------------
         ; Display device and filename
         ;-------------------------------------------------------
-edkey.action.filebrowser.nextpage.page.display:                
+edk.act.filebrowser.nextpage.page.display:                
         bl    @fm.browse.fname.set  ; Create string with device & filename
                                     ; \ i  @tv.devpath = Current device name
                                     ; | i  @cat.shortcut.idx = Index in catalog 
@@ -55,7 +55,7 @@ edkey.action.filebrowser.nextpage.page.display:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.filebrowser.nextpage.exit:
+edk.act.filebrowser.nextpage.exit:
         mov   *stack+,tmp0          ; Pop tmp0 
         mov   *stack+,r11           ; Pop R11        
         b     @edkey.keyscan.hook.debounce

@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Save file
 *---------------------------------------------------------------
-edkey.action.cmdb.save:
+edk.act.cmdb.save:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         dect  stack
@@ -27,7 +27,7 @@ edkey.action.cmdb.save:
                                     ; \ i  @parm1 = Pointer to error message
                                     ; /
 
-        jmp   edkey.action.cmdb.save.exit
+        jmp   edk.act.cmdb.save.exit
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -46,7 +46,7 @@ edkey.action.cmdb.save:
         ; Save all lines in editor buffer?
         ;-------------------------------------------------------
         c     @edb.block.m2,@w$ffff ; Marker M2 unset?        
-        jeq   edkey.action.cmdb.save.all
+        jeq   edk.act.cmdb.save.all
                                     ; Yes, so save all lines in editor buffer
         ;-------------------------------------------------------
         ; Only save code block M1-M2
@@ -57,11 +57,11 @@ edkey.action.cmdb.save:
         mov   @edb.block.m2,@parm3  ; Last line to save (base 0) + 1
 
         li    tmp0,id.file.saveblock
-        jmp   edkey.action.cmdb.save.file
+        jmp   edk.act.cmdb.save.file
         ;-------------------------------------------------------
         ; Save all lines in editor buffer
         ;-------------------------------------------------------
-edkey.action.cmdb.save.all:
+edk.act.cmdb.save.all:
         clr   @parm2                ; First line to save
         mov   @edb.lines,@parm3     ; Last line to save
 
@@ -69,7 +69,7 @@ edkey.action.cmdb.save.all:
         ;-------------------------------------------------------
         ; Save file
         ;-------------------------------------------------------
-edkey.action.cmdb.save.file:
+edk.act.cmdb.save.file:
         mov   tmp0,@parm4           ; Set work mode
 
         bl    @fm.savefile          ; Save DV80 file
@@ -82,7 +82,7 @@ edkey.action.cmdb.save.file:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.save.exit:
+edk.act.cmdb.save.exit:
         mov   *stack+,@parm1        ; Pop top row
         mov   *stack+,tmp0          ; Pop tmp0
 

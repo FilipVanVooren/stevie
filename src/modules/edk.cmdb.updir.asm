@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Go up one directory level
 *---------------------------------------------------------------
-* b   @edkey.action.cmdb.updir
+* b   @edk.act.cmdb.updir
 *--------------------------------------------------------------- 
 * INPUT
 * none
@@ -12,7 +12,7 @@
 * Register usage
 * tmp0
 ********|*****|*********************|**************************
-edkey.action.cmdb.updir:
+edk.act.cmdb.updir:
         dect  stack
         mov   tmp0,*stack           ; Push tmp0
         ;------------------------------------------------------
@@ -24,7 +24,7 @@ edkey.action.cmdb.updir:
                                     ; /                 >ffff if dir changed
 
         mov   @outparm1,tmp0        ; Get functional call result
-        jeq   edkey.action.cmdb.updir.exit
+        jeq   edk.act.cmdb.updir.exit
         ;-------------------------------------------------------
         ; Catalog drive/directory
         ;-------------------------------------------------------
@@ -46,7 +46,7 @@ edkey.action.cmdb.updir:
         ;-------------------------------------------------------
         li    tmp0,id.dialog.cat    ;
         c     @cmdb.dialog,tmp0     ; Is catalog dialog active?
-        jne   edkey.action.cmdb.updir.exit
+        jne   edk.act.cmdb.updir.exit
                                     ; No, exit
 
         bl    @cpym2m
@@ -66,7 +66,7 @@ edkey.action.cmdb.updir:
         ;------------------------------------------------------        
         ; Exit
         ;------------------------------------------------------
-edkey.action.cmdb.updir.exit:
+edk.act.cmdb.updir.exit:
         mov   *stack+,tmp0          ; Pop tmp0 
         b     @edkey.keyscan.hook.debounce
                                     ; Back to editor main

@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * New file
 *---------------------------------------------------------------
-edkey.action.cmdb.file.new:
+edk.act.cmdb.file.new:
         ;-------------------------------------------------------
         ; New file
         ;-------------------------------------------------------
@@ -26,7 +26,7 @@ edkey.action.cmdb.file.new:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.file.new.exit:
+edk.act.cmdb.file.new.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11
-        b     @edkey.action.top     ; Goto 1st line in editor buffer
+        b     @edk.act.top     ; Goto 1st line in editor buffer

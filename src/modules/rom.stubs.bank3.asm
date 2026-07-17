@@ -43,10 +43,10 @@ edb.line.pack:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "edkey.action.cmdb.show"
+* Stub for "edk.act.cmdb.show"
 * bank1 vec.15
 ********|*****|*********************|**************************
-edkey.action.cmdb.show:
+edk.act.cmdb.show:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------

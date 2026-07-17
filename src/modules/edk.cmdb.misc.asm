@@ -4,24 +4,24 @@
 *---------------------------------------------------------------
 * Show/Hide command buffer pane
 ********|*****|*********************|**************************
-edkey.action.cmdb.toggle:
+edk.act.cmdb.toggle:
         mov   @cmdb.visible,tmp0
-        jne   edkey.action.cmdb.hide
+        jne   edk.act.cmdb.hide
         ;-------------------------------------------------------
         ; Show pane
         ;-------------------------------------------------------
-edkey.action.cmdb.show:  
+edk.act.cmdb.show:  
         clr   @cmdb.column          ; Column = 0      
         bl    @pane.cmdb.show       ; Show command buffer pane
-        jmp   edkey.action.cmdb.toggle.exit
+        jmp   edk.act.cmdb.toggle.exit
         ;-------------------------------------------------------
         ; Hide pane
         ;-------------------------------------------------------
-edkey.action.cmdb.hide:
+edk.act.cmdb.hide:
         bl    @pane.cmdb.hide       ; Hide command buffer pane
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.toggle.exit:
+edk.act.cmdb.toggle.exit:
         b     @edkey.keyscan.hook.debounce; Back to editor main
         

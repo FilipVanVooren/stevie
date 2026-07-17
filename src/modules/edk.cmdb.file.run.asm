@@ -4,7 +4,7 @@
 *---------------------------------------------------------------
 * Run EA5 program image
 ********|*****|*********************|**************************
-edkey.action.cmdb.file.run:
+edk.act.cmdb.file.run:
         .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
         ; Read directory if last character is '.'
@@ -15,7 +15,7 @@ edkey.action.cmdb.file.run:
         movb  *tmp0,tmp0            ; Get character into MSB
         srl   tmp0,8                ; MSB to LSB
         ci    tmp0,46               ; Is it a '.' ?
-        jne   edkey.action.cmdb.file.run.checklen
+        jne   edk.act.cmdb.file.run.checklen
                                     ; No, check filename length
         ;-------------------------------------------------------
         ; Read directory and exit
@@ -33,14 +33,14 @@ edkey.action.cmdb.file.run:
                                     ; |          (ignored if parm1 set)
                                     ; / @parm3 = Skip filebrowser flag
 
-        jmp   edkey.action.cmdb.file.run.exit
+        jmp   edk.act.cmdb.file.run.exit
         ;-------------------------------------------------------
         ; Check filename length
         ;-------------------------------------------------------
-edkey.action.cmdb.file.run.checklen:        
+edk.act.cmdb.file.run.checklen:        
         bl    @cmdb.cmd.getlength             ; Get length of current command
         mov   @outparm1,tmp0                  ; Length == 0 ?
-        jeq   edkey.action.cmdb.file.run.exit ; Yes, exit early
+        jeq   edk.act.cmdb.file.run.exit ; Yes, exit early
         ;-------------------------------------------------------
         ; Get filename
         ;-------------------------------------------------------
@@ -55,7 +55,7 @@ edkey.action.cmdb.file.run.checklen:
         ;-------------------------------------------------------
         ; Load file
         ;-------------------------------------------------------
-edkey.action.cmdb.file.run.ea5:       
+edk.act.cmdb.file.run.ea5:       
         li    tmp0,heap.top         ; Pass filename as parm1
         mov   tmp0,@parm1           ; (1st line in heap)
 
@@ -65,7 +65,7 @@ edkey.action.cmdb.file.run.ea5:
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
-edkey.action.cmdb.file.run.exit:
+edk.act.cmdb.file.run.exit:
         mov   *stack+,tmp0          ; Pop tmp0
         mov   *stack+,r11           ; Pop R11    
         b     @edkey.keyscan.hook.debounce 
