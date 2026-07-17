@@ -80,6 +80,178 @@ cmdb.cmd.getlength.exit:
 
 
 ***************************************************************
+* cmdb.cmd.insert
+* Insert character at current cursor position
+***************************************************************
+* bl @cmdb.cmd.insert
+*--------------------------------------------------------------
+* INPUT
+* @cmdb.column = Current column in command buffer
+* @parm1       = MSB character to insert
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1,tmp2,tmp3
+*--------------------------------------------------------------
+* Notes
+********|*****|*********************|**************************
+cmdb.cmd.insert:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        ;-------------------------------------------------------
+        ; Get current command length and stop if maxed out
+        ;-------------------------------------------------------
+        bl    @cmdb.cmd.getlength   ; Get line length
+        mov   @outparm1,tmp3        ; tmp3 = original length
+        ci    tmp3,80               ; Command buffer full?
+        jeq   cmdb.cmd.insert.exit  ; Yes, exit without changing anything
+        ;-------------------------------------------------------
+        ; At end-of-line, append character
+        ;-------------------------------------------------------
+        c     @cmdb.column,tmp3     ; Current column == EOL?
+        jeq   cmdb.cmd.insert.append ; Yes, append at end of line
+        ;-------------------------------------------------------
+        ; Shift trailing text right by one position
+        ;-------------------------------------------------------
+        mov   tmp3,tmp2             ; tmp2 = original length
+        s     @cmdb.column,tmp2     ; tmp2 = length - column
+        li    tmp0,cmdb.cmd
+        a     tmp3,tmp0             ; tmp0 = command + length
+        dec   tmp0                  ; tmp0 = command + length - 1
+        li    tmp1,cmdb.cmd
+        a     tmp3,tmp1             ; tmp1 = command + length
+cmdb.cmd.insert.shift:
+        movb  *tmp0,*tmp1           ; Shift tail one character to the right
+        dec   tmp0                  ; Source--
+        dec   tmp1                  ; Target--
+        dec   tmp2                  ; Counter--
+        jne   cmdb.cmd.insert.shift ; Keep shifting until old terminator is moved
+        ;-------------------------------------------------------
+        ; Insert new character at current column
+        ;-------------------------------------------------------
+        li    tmp0,cmdb.cmd
+        a     @cmdb.column,tmp0     ; tmp0 = current insertion point
+        movb  @parm1,*tmp0          ; Write new character into command buffer
+        ;-------------------------------------------------------
+        ; Update length prefix and cursor position
+        ;-------------------------------------------------------
+        inc   tmp3                  ; New length = old length + 1
+        sla   tmp3,8                ; Move to MSB 
+        movb  tmp3,@cmdb.cmdlen     ; Update command buffer length prefix
+        inc   @cmdb.column          ; Cursor moves right one column
+        inc   @cmdb.cursor          ; Screen cursor moves right one column
+        jmp   cmdb.cmd.insert.exit  ; Done
+        ;-------------------------------------------------------
+        ; Append character at end of line
+        ;-------------------------------------------------------
+cmdb.cmd.insert.append:
+        li    tmp0,cmdb.cmd
+        a     @cmdb.column,tmp0     ; tmp0 = end of command buffer
+        movb  @parm1,*tmp0          ; Append character
+        inc   tmp3                  ; New length = old length + 1
+        sla   tmp3,8                ; Move to MSB 
+        movb  tmp3,@cmdb.cmdlen     ; Update command buffer length prefix
+        inc   @cmdb.column          ; Cursor moves right one column
+        inc   @cmdb.cursor          ; Screen cursor moves right one column
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+cmdb.cmd.insert.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* cmdb.cmd.delete
+* Delete character at current cursor position
+***************************************************************
+* bl @cmdb.cmd.delete
+*--------------------------------------------------------------
+* INPUT
+* @cmdb.column = Current column in command buffer
+*--------------------------------------------------------------
+* OUTPUT
+* none
+*--------------------------------------------------------------
+* Register usage
+* tmp0,tmp1,tmp2,tmp3
+*--------------------------------------------------------------
+* Notes
+********|*****|*********************|**************************
+cmdb.cmd.delete:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        dect  stack
+        mov   tmp1,*stack           ; Push tmp1
+        dect  stack
+        mov   tmp2,*stack           ; Push tmp2
+        dect  stack
+        mov   tmp3,*stack           ; Push tmp3
+        ;-------------------------------------------------------
+        ; Get current command length and abort if empty/EOL
+        ;-------------------------------------------------------
+        bl    @cmdb.cmd.getlength   ; Get line length
+        mov   @outparm1,tmp3        ; tmp3 = current length
+        jeq   cmdb.cmd.delete.exit  ; Empty line, nothing to delete
+        c     @cmdb.column,tmp3     ; At EOL or beyond?
+        jhe   cmdb.cmd.delete.exit  ; Yes, nothing to delete
+        ;-------------------------------------------------------
+        ; Shift trailing text left by one position
+        ;-------------------------------------------------------
+        li    tmp0,cmdb.cmd
+        a     @cmdb.column,tmp0     ; tmp0 = current deletion point
+        li    tmp1,cmdb.cmd
+        a     @cmdb.column,tmp1     ; tmp1 = current deletion point
+        inc   tmp1                  ; tmp1 = next char to shift left
+        mov   tmp3,tmp2             ; tmp2 = current length
+        s     @cmdb.column,tmp2     ; tmp2 = length - column
+        dec   tmp2                  ; Remove one character to delete
+cmdb.cmd.delete.shift:
+        movb  *tmp1+,*tmp0+         ; Shift tail one character to the left
+        dec   tmp2                  ; Counter--
+        jne   cmdb.cmd.delete.shift ; Keep shifting until tail is collapsed
+        ;-------------------------------------------------------
+        ; Write zero terminator at the new end of string
+        ;-------------------------------------------------------
+        clr   tmp1                  ; tmp1 = zero terminator
+        movb  tmp1,*tmp0            ; Terminate updated command string
+        ;-------------------------------------------------------
+        ; Update command length prefix
+        ;-------------------------------------------------------
+        dec   tmp3                  ; New length = old length - 1
+        sla   tmp3,8                ; Move to MSB 
+        movb  tmp3,@cmdb.cmdlen     ; Update command buffer length prefix
+        ;-------------------------------------------------------
+        ; Exit
+        ;-------------------------------------------------------
+cmdb.cmd.delete.exit:
+        mov   *stack+,tmp3          ; Pop tmp3
+        mov   *stack+,tmp2          ; Pop tmp2
+        mov   *stack+,tmp1          ; Pop tmp1
+        mov   *stack+,tmp0          ; Pop tmp0
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+
+***************************************************************
 * cmdb.cmd.cursor_eol
 * Set cursor at end of line
 ***************************************************************

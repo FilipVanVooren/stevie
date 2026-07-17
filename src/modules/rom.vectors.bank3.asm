@@ -45,8 +45,8 @@ vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print
 vec.35  data  tv.autoinsert.toggle  ; Toggle auto insert mode for editor buffer
 vec.36  data  tv.clock.toggle       ; Toggle clock display on/off
 vec.37  data  tv.linelen.toggle     ; Toggle line length display on/off
-vec.38  data  cpu.crash             ;
-vec.39  data  cpu.crash             ;
+vec.38  data  cmdb.cmd.insert       ; Insert character in CMDB command line
+vec.39  data  cmdb.cmd.delete       ; Delete character in CMDB command line
 vec.40  data  cpu.crash             ;
 vec.41  data  cpu.crash             ;
 vec.42  data  dialog                ; Dialog initialisation code

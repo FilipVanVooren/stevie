@@ -551,6 +551,9 @@ keymap_actions.cmdb:
         ;-------------------------------------------------------
         ; Modifier keys
         ;-------------------------------------------------------
+        byte  key.fctn.1, pane.focus.cmdb
+        data  edk.act.cmdb.del_char
+
         byte  key.fctn.3, pane.focus.cmdb
         data  edk.act.cmdb.clear
         ;-------------------------------------------------------

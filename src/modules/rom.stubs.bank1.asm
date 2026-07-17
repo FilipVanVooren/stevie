@@ -567,6 +567,28 @@ cmdb.cmd.cursor_eol.vector:
 
 
 ***************************************************************
+* Stub for "cmdb.cmd.insert"
+* bank3 vec.38
+********|*****|*********************|**************************
+cmdb.cmd.insert:
+        mov   @cmdb.cmd.insert.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+cmdb.cmd.insert.vector:
+        data  vec.38
+
+
+***************************************************************
+* Stub for "cmdb.cmd.delete"
+* bank3 vec.39
+********|*****|*********************|**************************
+cmdb.cmd.delete:
+        mov   @cmdb.cmd.delete.vector,@trmpvector
+        jmp   _trampoline.bank3.ret ; Longjump
+cmdb.cmd.delete.vector:
+        data  vec.39
+
+
+***************************************************************
 * Stub for "tibasic.am.toggle"
 * bank3 vec.31
 ********|*****|*********************|**************************
