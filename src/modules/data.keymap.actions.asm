@@ -480,9 +480,6 @@ keymap_actions.cmdb:
         byte  key.num.3, id.dialog.basic
         data  tibasic3
 
-        byte  key.uc.j, id.dialog.basic
-        data  jbasic.start
-
         byte  key.fctn.5, id.dialog.basic
         data  edk.act.cmdb.am.toggle
 

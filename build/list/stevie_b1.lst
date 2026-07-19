@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260717-2000230
+0002               * BUILD: 260719-1849190
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -89,7 +89,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0012      600A     bank5.rom                 equ  >600a   ; Jumbo
 0013      600C     bank6.rom                 equ  >600c   ; Jenifer
 0014      600E     bank7.rom                 equ  >600e   ; Jonas
-0015      6010     bank8.rom                 equ  >6010   ; Jackalope
+0015      6010     bank8.rom                 equ  >6010   ; free
 0016      6012     bank9.rom                 equ  >6012   ; free
 0017      6014     banka.rom                 equ  >6014   ; free
 0018      6016     bankb.rom                 equ  >6016   ; free
@@ -108,7 +108,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0031      680A     bank5.ram                 equ  >680a   ; Jumbo
 0032      680C     bank6.ram                 equ  >680c   ; Jenifer
 0033      680E     bank7.ram                 equ  >680e   ; Jonas
-0034      6810     bank8.ram                 equ  >6810   ; Jackalope
+0034      6810     bank8.ram                 equ  >6810   ; free
 0035      6812     bank9.ram                 equ  >6812   ; free
 0036      6814     banka.ram                 equ  >6814   ; free
 0037      6816     bankb.ram                 equ  >6816   ; free
@@ -10024,7 +10024,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020                       ; Set SAMS standard layout
 0021                       ;------------------------------------------------------
 0022 60EA 06A0  32         bl    @mem.sams.set.boot    ; Set SAMS banks in boot for Stevie
-     60EC 7B6C     
+     60EC 7B5A     
 0023               
 0024 60EE 06A0  32         bl    @sams.layout.copy
      60F0 269E     
@@ -10232,14 +10232,14 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0078                       ;-------------------------------------------------------
 0079               edkey.key.process.loadmap.editor:
 0080 61C0 0206  20         li    tmp2,keymap_actions.editor
-     61C2 7B90     
+     61C2 7B7E     
 0081 61C4 1002  14         jmp   edkey.key.check.next
 0082                       ;-------------------------------------------------------
 0083                       ; (4) Load CMDB keyboard map
 0084                       ;-------------------------------------------------------
 0085               edkey.key.process.loadmap.cmdb:
 0086 61C6 0206  20         li    tmp2,keymap_actions.cmdb
-     61C8 7C72     
+     61C8 7C60     
 0087                       ;-------------------------------------------------------
 0088                       ; (5) Iterate over keyboard map for matching action key
 0089                       ;-------------------------------------------------------
@@ -17700,30 +17700,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 1404               cart.fg99.mgr.exit:
 1405 7B44 C2F9  30         mov   *stack+,r11           ; Pop r11
 1406 7B46 045B  20         b     *r11                  ; Return to caller
-1407               
-1408               
-1409               
-1410               ***************************************************************
-1411               * Stub for "jbasic.start"
-1412               * bank8 vec.1
-1413               ********|*****|*********************|**************************
-1414               jbasic.start:
-1415 7B48 0649  14         dect  stack
-1416 7B4A C64B  30         mov   r11,*stack            ; Save return address
-1417                       ;------------------------------------------------------
-1418                       ; Call routine in specified bank
-1419                       ;------------------------------------------------------
-1420 7B4C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B4E 30D8     
-1421 7B50 6010                   data bank8.rom        ; | i  p0 = bank address
-1422 7B52 7F70                   data vec.1            ; | i  p1 = Vector with target address
-1423 7B54 6002                   data bankid           ; / i  p2 = Source ROM bank for return
-1424                       ;------------------------------------------------------
-1425                       ; Exit
-1426                       ;------------------------------------------------------
-1427               jbasic.start.exit:
-1428 7B56 C2F9  30         mov   *stack+,r11           ; Pop r11
-1429 7B58 045B  20         b     *r11                  ; Return to caller
                    < stevie_b1.asm
 0165                       copy  "rom.stubs.bankx.asm"         ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
@@ -17739,21 +17715,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 7B5A 0649  14         dect  stack
-0038 7B5C C64B  30         mov   r11,*stack            ; Save return address
+0037 7B48 0649  14         dect  stack
+0038 7B4A C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 7B5E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B60 30D8     
-0043 7B62 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 7B64 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0045 7B66 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 7B4C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B4E 30D8     
+0043 7B50 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 7B52 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0045 7B54 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 7B68 C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 7B6A 045B  20         b     *r11                  ; Return to caller
+0049 7B56 C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 7B58 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -17762,21 +17738,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 7B6C 0649  14         dect  stack
-0060 7B6E C64B  30         mov   r11,*stack            ; Save return address
+0059 7B5A 0649  14         dect  stack
+0060 7B5C C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 7B70 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B72 30D8     
-0065 7B74 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 7B76 7F72                   data vec.2            ; | i  p1 = Vector with target address
-0067 7B78 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 7B5E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B60 30D8     
+0065 7B62 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 7B64 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0067 7B66 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 7B7A C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 7B7C 045B  20         b     *r11                  ; Return to caller
+0071 7B68 C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 7B6A 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -17784,21 +17760,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 7B7E 0649  14         dect  stack
-0081 7B80 C64B  30         mov   r11,*stack            ; Save return address
+0080 7B6C 0649  14         dect  stack
+0081 7B6E C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 7B82 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B84 30D8     
-0086 7B86 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 7B88 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0088 7B8A 6002                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 7B70 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B72 30D8     
+0086 7B74 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 7B76 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0088 7B78 6002                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 7B8C C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 7B8E 045B  20         b     *r11                  ; Return to caller
+0092 7B7A C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 7B7C 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b1.asm
 0166                       ;-----------------------------------------------------------------------
@@ -17816,193 +17792,193 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0008                       ;-------------------------------------------------------
 0009                       ; Movement keys
 0010                       ;-------------------------------------------------------
-0011 7B90 0D00             byte  key.enter, pane.focus.fb
-0012 7B92 6694             data  edk.act.enter
+0011 7B7E 0D00             byte  key.enter, pane.focus.fb
+0012 7B80 6694             data  edk.act.enter
 0013               
-0014 7B94 0800             byte  key.fctn.s, pane.focus.fb
-0015 7B96 6268             data  edk.act.left
+0014 7B82 0800             byte  key.fctn.s, pane.focus.fb
+0015 7B84 6268             data  edk.act.left
 0016               
-0017 7B98 0900             byte  key.fctn.d, pane.focus.fb
-0018 7B9A 628A             data  edk.act.right
+0017 7B86 0900             byte  key.fctn.d, pane.focus.fb
+0018 7B88 628A             data  edk.act.right
 0019               
-0020 7B9C 0B00             byte  key.fctn.e, pane.focus.fb
-0021 7B9E 64A8             data  edk.act.up
+0020 7B8A 0B00             byte  key.fctn.e, pane.focus.fb
+0021 7B8C 64A8             data  edk.act.up
 0022               
-0023 7BA0 0A00             byte  key.fctn.x, pane.focus.fb
-0024 7BA2 64B0             data  edk.act.down
+0023 7B8E 0A00             byte  key.fctn.x, pane.focus.fb
+0024 7B90 64B0             data  edk.act.down
 0025               
-0026 7BA4 BF00             byte  key.fctn.h, pane.focus.fb
-0027 7BA6 62AE             data  edk.act.home
+0026 7B92 BF00             byte  key.fctn.h, pane.focus.fb
+0027 7B94 62AE             data  edk.act.home
 0028               
-0029 7BA8 C000             byte  key.fctn.j, pane.focus.fb
-0030 7BAA 62D8             data  edk.act.pword
+0029 7B96 C000             byte  key.fctn.j, pane.focus.fb
+0030 7B98 62D8             data  edk.act.pword
 0031               
-0032 7BAC C100             byte  key.fctn.k, pane.focus.fb
-0033 7BAE 6332             data  edk.act.nword
+0032 7B9A C100             byte  key.fctn.k, pane.focus.fb
+0033 7B9C 6332             data  edk.act.nword
 0034               
-0035 7BB0 C200             byte  key.fctn.l, pane.focus.fb
-0036 7BB2 62B6             data  edk.act.end
+0035 7B9E C200             byte  key.fctn.l, pane.focus.fb
+0036 7BA0 62B6             data  edk.act.end
 0037               
-0038 7BB4 0200             byte  key.fctn.4, pane.focus.fb
-0039 7BB6 6448             data  edk.act.npage
+0038 7BA2 0200             byte  key.fctn.4, pane.focus.fb
+0039 7BA4 6448             data  edk.act.npage
 0040               
-0041 7BB8 0E00             byte  key.fctn.5, pane.focus.fb
-0042 7BBA 63CE             data  edk.act.scroll.right
+0041 7BA6 0E00             byte  key.fctn.5, pane.focus.fb
+0042 7BA8 63CE             data  edk.act.scroll.right
 0043               
-0044 7BBC 0C00             byte  key.fctn.6, pane.focus.fb
-0045 7BBE 6406             data  edk.act.ppage
+0044 7BAA 0C00             byte  key.fctn.6, pane.focus.fb
+0045 7BAC 6406             data  edk.act.ppage
 0046               
-0047 7BC0 B700             byte  key.ctrl.7, pane.focus.fb
-0048 7BC2 690A             data  edk.act.fb.tab.prev
+0047 7BAE B700             byte  key.ctrl.7, pane.focus.fb
+0048 7BB0 690A             data  edk.act.fb.tab.prev
 0049               
-0050 7BC4 0100             byte  key.fctn.7, pane.focus.fb
-0051 7BC6 6918             data  edk.act.fb.tab.next
+0050 7BB2 0100             byte  key.fctn.7, pane.focus.fb
+0051 7BB4 6918             data  edk.act.fb.tab.next
 0052               
-0053 7BC8 8500             byte  key.ctrl.e, pane.focus.fb
-0054 7BCA 6406             data  edk.act.ppage
+0053 7BB6 8500             byte  key.ctrl.e, pane.focus.fb
+0054 7BB8 6406             data  edk.act.ppage
 0055               
-0056 7BCC 8700             byte  key.ctrl.g, pane.focus.fb
-0057 7BCE 7760             data  dialog.goto
+0056 7BBA 8700             byte  key.ctrl.g, pane.focus.fb
+0057 7BBC 7760             data  dialog.goto
 0058               
-0059 7BD0 9800             byte  key.ctrl.x, pane.focus.fb
-0060 7BD2 6448             data  edk.act.npage
+0059 7BBE 9800             byte  key.ctrl.x, pane.focus.fb
+0060 7BC0 6448             data  edk.act.npage
 0061               
-0062 7BD4 7F00             byte  key.fctn.v, pane.focus.fb
-0063 7BD6 6490             data  edk.act.topscr
+0062 7BC2 7F00             byte  key.fctn.v, pane.focus.fb
+0063 7BC4 6490             data  edk.act.topscr
 0064               
-0065 7BD8 BE00             byte  key.fctn.b, pane.focus.fb
-0066 7BDA 64A0             data  edk.act.botscr
+0065 7BC6 BE00             byte  key.fctn.b, pane.focus.fb
+0066 7BC8 64A0             data  edk.act.botscr
 0067               
-0068 7BDC 9600             byte  key.ctrl.v, pane.focus.fb
-0069 7BDE 6488             data  edk.act.top
+0068 7BCA 9600             byte  key.ctrl.v, pane.focus.fb
+0069 7BCC 6488             data  edk.act.top
 0070               
-0071 7BE0 8200             byte  key.ctrl.b, pane.focus.fb
-0072 7BE2 6498             data  edk.act.bot
+0071 7BCE 8200             byte  key.ctrl.b, pane.focus.fb
+0072 7BD0 6498             data  edk.act.bot
 0073               
-0074 7BE4 8000             byte  key.ctrl.comma, pane.focus.fb
-0075 7BE6 695A             data  edk.act.goto.pmatch
+0074 7BD2 8000             byte  key.ctrl.comma, pane.focus.fb
+0075 7BD4 695A             data  edk.act.goto.pmatch
 0076               
-0077 7BE8 9B00             byte  key.ctrl.dot, pane.focus.fb
-0078 7BEA 6968             data  edk.act.goto.nmatch
+0077 7BD6 9B00             byte  key.ctrl.dot, pane.focus.fb
+0078 7BD8 6968             data  edk.act.goto.nmatch
 0079                       ;-------------------------------------------------------
 0080                       ; Modifier keys - Delete
 0081                       ;-------------------------------------------------------
-0082 7BEC 0300             byte  key.fctn.1, pane.focus.fb
-0083 7BEE 6530             data  edk.act.del_char
+0082 7BDA 0300             byte  key.fctn.1, pane.focus.fb
+0083 7BDC 6530             data  edk.act.del_char
 0084               
-0085 7BF0 0700             byte  key.fctn.3, pane.focus.fb
-0086 7BF2 65EE             data  edk.act.del_line
+0085 7BDE 0700             byte  key.fctn.3, pane.focus.fb
+0086 7BE0 65EE             data  edk.act.del_line
 0087               
-0088 7BF4 8C00             byte  key.ctrl.l, pane.focus.fb
-0089 7BF6 65B4             data  edk.act.del_eol
+0088 7BE2 8C00             byte  key.ctrl.l, pane.focus.fb
+0089 7BE4 65B4             data  edk.act.del_eol
 0090                       ;-------------------------------------------------------
 0091                       ; Modifier keys - Insert
 0092                       ;-------------------------------------------------------
-0093 7BF8 0400             byte  key.fctn.2, pane.focus.fb
-0094 7BFA 665A             data  edk.act.ins_char.ws
+0093 7BE6 0400             byte  key.fctn.2, pane.focus.fb
+0094 7BE8 665A             data  edk.act.ins_char.ws
 0095               
-0096 7BFC B900             byte  key.fctn.dot, pane.focus.fb
-0097 7BFE 6724             data  edk.act.ins_onoff
+0096 7BEA B900             byte  key.fctn.dot, pane.focus.fb
+0097 7BEC 6724             data  edk.act.ins_onoff
 0098               
-0099 7C00 0600             byte  key.fctn.8, pane.focus.fb
-0100 7C02 6670             data  edk.act.ins_line
+0099 7BEE 0600             byte  key.fctn.8, pane.focus.fb
+0100 7BF0 6670             data  edk.act.ins_line
 0101                       ;-------------------------------------------------------
 0102                       ; Block marking/modifier
 0103                       ;-------------------------------------------------------
-0104 7C04 F000             byte  key.ctrl.space, pane.focus.fb
-0105 7C06 67F4             data  edk.act.block.mark
+0104 7BF2 F000             byte  key.ctrl.space, pane.focus.fb
+0105 7BF4 67F4             data  edk.act.block.mark
 0106               
-0107 7C08 8300             byte  key.ctrl.c, pane.focus.fb
-0108 7C0A 6784             data  edk.act.copyblock_or_clipboard
+0107 7BF6 8300             byte  key.ctrl.c, pane.focus.fb
+0108 7BF8 6784             data  edk.act.copyblock_or_clipboard
 0109               
-0110 7C0C 8D00             byte  key.ctrl.m, pane.focus.fb
-0111 7C0E 68A4             data  edk.act.block.move
+0110 7BFA 8D00             byte  key.ctrl.m, pane.focus.fb
+0111 7BFC 68A4             data  edk.act.block.move
 0112               
-0113 7C10 8700             byte  key.ctrl.g, pane.focus.fb
-0114 7C12 68F0             data  edk.act.block.goto.m1
+0113 7BFE 8700             byte  key.ctrl.g, pane.focus.fb
+0114 7C00 68F0             data  edk.act.block.goto.m1
 0115                       ;-------------------------------------------------------
 0116                       ; Clipboards
 0117                       ;-------------------------------------------------------
-0118 7C14 B100             byte  key.ctrl.1, pane.focus.fb
-0119 7C16 6926             data  edk.act.fb.clip.save.1
+0118 7C02 B100             byte  key.ctrl.1, pane.focus.fb
+0119 7C04 6926             data  edk.act.fb.clip.save.1
 0120               
-0121 7C18 B200             byte  key.ctrl.2, pane.focus.fb
-0122 7C1A 6930             data  edk.act.fb.clip.save.2
+0121 7C06 B200             byte  key.ctrl.2, pane.focus.fb
+0122 7C08 6930             data  edk.act.fb.clip.save.2
 0123               
-0124 7C1C B300             byte  key.ctrl.3, pane.focus.fb
-0125 7C1E 693A             data  edk.act.fb.clip.save.3
+0124 7C0A B300             byte  key.ctrl.3, pane.focus.fb
+0125 7C0C 693A             data  edk.act.fb.clip.save.3
 0126                       ;-------------------------------------------------------
 0127                       ; Other action keys
 0128                       ;-------------------------------------------------------
-0129 7C20 0500             byte  key.fctn.plus, pane.focus.fb
-0130 7C22 6776             data  edk.act.quit
+0129 7C0E 0500             byte  key.fctn.plus, pane.focus.fb
+0130 7C10 6776             data  edk.act.quit
 0131               
-0132 7C24 B500             byte  key.ctrl.5, pane.focus.fb
-0133 7C26 639A             data  edk.act.scroll.left
+0132 7C12 B500             byte  key.ctrl.5, pane.focus.fb
+0133 7C14 639A             data  edk.act.scroll.left
 0134               
-0135 7C28 9100             byte  key.ctrl.q, pane.focus.fb
-0136 7C2A 6776             data  edk.act.quit
+0135 7C16 9100             byte  key.ctrl.q, pane.focus.fb
+0136 7C18 6776             data  edk.act.quit
 0137               
-0138 7C2C 9A00             byte  key.ctrl.z, pane.focus.fb
-0139 7C2E 79AC             data  pane.colorscheme.cycle
+0138 7C1A 9A00             byte  key.ctrl.z, pane.focus.fb
+0139 7C1C 79AC             data  pane.colorscheme.cycle
 0140               
-0141 7C30 BC00             byte  key.fctn.0, pane.focus.fb
-0142 7C32 7ADE             data  tibasic
+0141 7C1E BC00             byte  key.fctn.0, pane.focus.fb
+0142 7C20 7ADE             data  tibasic
 0143               
-0144 7C34 B000             byte  key.ctrl.0, pane.focus.fb
-0145 7C36 7742             data  dialog.basic
+0144 7C22 B000             byte  key.ctrl.0, pane.focus.fb
+0145 7C24 7742             data  dialog.basic
 0146               
-0147 7C38 B400             byte  key.ctrl.4, pane.focus.fb
-0148 7C3A 6976             data  edk.act.find.reset
+0147 7C26 B400             byte  key.ctrl.4, pane.focus.fb
+0148 7C28 6976             data  edk.act.find.reset
 0149               
-0150 7C3C BB00             byte  key.ctrl.slash, pane.focus.fb
-0151 7C3E 774C             data  dialog.shortcuts
+0150 7C2A BB00             byte  key.ctrl.slash, pane.focus.fb
+0151 7C2C 774C             data  dialog.shortcuts
 0152                       ;-------------------------------------------------------
 0153                       ; Dialog keys
 0154                       ;-------------------------------------------------------
-0155 7C40 8100             byte  key.ctrl.a, pane.focus.fb
-0156 7C42 772E             data  dialog.append
+0155 7C2E 8100             byte  key.ctrl.a, pane.focus.fb
+0156 7C30 772E             data  dialog.append
 0157               
-0158 7C44 8400             byte  key.ctrl.d, pane.focus.fb
-0159 7C46 779E             data  dialog.delete
+0158 7C32 8400             byte  key.ctrl.d, pane.focus.fb
+0159 7C34 779E             data  dialog.delete
 0160               
-0161 7C48 8800             byte  key.ctrl.h, pane.focus.fb
-0162 7C4A 76C6             data  dialog.help
+0161 7C36 8800             byte  key.ctrl.h, pane.focus.fb
+0162 7C38 76C6             data  dialog.help
 0163               
-0164 7C4C 8600             byte  key.ctrl.f, pane.focus.fb
-0165 7C4E 7794             data  dialog.find
+0164 7C3A 8600             byte  key.ctrl.f, pane.focus.fb
+0165 7C3C 7794             data  dialog.find
 0166               
-0167 7C50 8900             byte  key.ctrl.i, pane.focus.fb
-0168 7C52 76E4             data  dialog.insert
+0167 7C3E 8900             byte  key.ctrl.i, pane.focus.fb
+0168 7C40 76E4             data  dialog.insert
 0169               
-0170 7C54 8C00             byte  key.ctrl.l, pane.focus.fb
-0171 7C56 730A             data  edk.act.cmdb.lock
+0170 7C42 8C00             byte  key.ctrl.l, pane.focus.fb
+0171 7C44 730A             data  edk.act.cmdb.lock
 0172               
-0173 7C58 9300             byte  key.ctrl.s, pane.focus.fb
-0174 7C5A 76DA             data  dialog.save
+0173 7C46 9300             byte  key.ctrl.s, pane.focus.fb
+0174 7C48 76DA             data  dialog.save
 0175               
-0176 7C5C 8F00             byte  key.ctrl.o, pane.focus.fb
-0177 7C5E 76D0             data  dialog.open
+0176 7C4A 8F00             byte  key.ctrl.o, pane.focus.fb
+0177 7C4C 76D0             data  dialog.open
 0178               
-0179 7C60 9500             byte  key.ctrl.u, pane.focus.fb
-0180 7C62 7328             data  edk.act.cmdb.unlock
+0179 7C4E 9500             byte  key.ctrl.u, pane.focus.fb
+0180 7C50 7328             data  edk.act.cmdb.unlock
 0181               
-0182 7C64 9000             byte  key.ctrl.p, pane.focus.fb
-0183 7C66 76EE             data  dialog.print
+0182 7C52 9000             byte  key.ctrl.p, pane.focus.fb
+0183 7C54 76EE             data  dialog.print
 0184               
-0185 7C68 9200             byte  key.ctrl.r, pane.focus.fb
-0186 7C6A 7774             data  dialog.run
+0185 7C56 9200             byte  key.ctrl.r, pane.focus.fb
+0186 7C58 7774             data  dialog.run
 0187               
 0188                       ;
 0189                       ; FCTN-9 has multiple purposes, if block mode is on
 0190                       ; reset block, otherwise show dialog "Main Menu".
 0191                       ;
-0192 7C6C 0F00             byte  key.fctn.9, pane.focus.fb
-0193 7C6E 777E             data  dialog.main
+0192 7C5A 0F00             byte  key.fctn.9, pane.focus.fb
+0193 7C5C 777E             data  dialog.main
 0194                       ;-------------------------------------------------------
 0195                       ; End of list
 0196                       ;-------------------------------------------------------
-0197 7C70 FFFF             data  EOL                           ; EOL
+0197 7C5E FFFF             data  EOL                           ; EOL
 0198               
 0199               
 0200               *---------------------------------------------------------------
@@ -18012,433 +17988,430 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0204                       ;-------------------------------------------------------
 0205                       ; Dialog: Main Menu
 0206                       ;-------------------------------------------------------
-0207 7C72 4664             byte  key.uc.f, id.dialog.main
-0208 7C74 76F8             data  dialog.file
+0207 7C60 4664             byte  key.uc.f, id.dialog.main
+0208 7C62 76F8             data  dialog.file
 0209               
-0210 7C76 4264             byte  key.uc.b, id.dialog.main
-0211 7C78 7742             data  dialog.basic
+0210 7C64 4264             byte  key.uc.b, id.dialog.main
+0211 7C66 7742             data  dialog.basic
 0212               
-0213 7C7A 4364             byte  key.uc.c, id.dialog.main
-0214 7C7C 7738             data  dialog.cartridge
+0213 7C68 4364             byte  key.uc.c, id.dialog.main
+0214 7C6A 7738             data  dialog.cartridge
 0215               
-0216 7C7E 4F64             byte  key.uc.o, id.dialog.main
-0217 7C80 7724             data  dialog.config
+0216 7C6C 4F64             byte  key.uc.o, id.dialog.main
+0217 7C6E 7724             data  dialog.config
 0218               
-0219 7C82 5364             byte  key.uc.s, id.dialog.main
-0220 7C84 774C             data  dialog.shortcuts
+0219 7C70 5364             byte  key.uc.s, id.dialog.main
+0220 7C72 774C             data  dialog.shortcuts
 0221               
-0222 7C86 4864             byte  key.uc.h, id.dialog.main
-0223 7C88 76C6             data  dialog.help
+0222 7C74 4864             byte  key.uc.h, id.dialog.main
+0223 7C76 76C6             data  dialog.help
 0224               
-0225 7C8A 5164             byte  key.uc.q, id.dialog.main
-0226 7C8C 6776             data  edk.act.quit
+0225 7C78 5164             byte  key.uc.q, id.dialog.main
+0226 7C7A 6776             data  edk.act.quit
 0227               
-0228 7C8E 4C64             byte  key.uc.l, id.dialog.main
-0229 7C90 730A             data  edk.act.cmdb.lock
+0228 7C7C 4C64             byte  key.uc.l, id.dialog.main
+0229 7C7E 730A             data  edk.act.cmdb.lock
 0230               
-0231 7C92 5564             byte  key.uc.u, id.dialog.main
-0232 7C94 7328             data  edk.act.cmdb.unlock
+0231 7C80 5564             byte  key.uc.u, id.dialog.main
+0232 7C82 7328             data  edk.act.cmdb.unlock
 0233               
-0234 7C96 0F64             byte  key.fctn.9, id.dialog.main
-0235 7C98 70DE             data  edk.act.cmdb.close.dialog
+0234 7C84 0F64             byte  key.fctn.9, id.dialog.main
+0235 7C86 70DE             data  edk.act.cmdb.close.dialog
 0236                       ;-------------------------------------------------------
 0237                       ; Dialog: File
 0238                       ;-------------------------------------------------------
-0239 7C9A 4E69             byte  key.uc.n, id.dialog.file
-0240 7C9C 6B10             data  edk.act.cmdb.file.new
+0239 7C88 4E69             byte  key.uc.n, id.dialog.file
+0240 7C8A 6B10             data  edk.act.cmdb.file.new
 0241               
-0242 7C9E 4F69             byte  key.uc.o, id.dialog.file
-0243 7CA0 76D0             data  dialog.open
+0242 7C8C 4F69             byte  key.uc.o, id.dialog.file
+0243 7C8E 76D0             data  dialog.open
 0244               
-0245 7CA2 5369             byte  key.uc.s, id.dialog.file
-0246 7CA4 76DA             data  dialog.save
+0245 7C90 5369             byte  key.uc.s, id.dialog.file
+0246 7C92 76DA             data  dialog.save
 0247               
-0248 7CA6 4969             byte  key.uc.i, id.dialog.file
-0249 7CA8 76E4             data  dialog.insert
+0248 7C94 4969             byte  key.uc.i, id.dialog.file
+0249 7C96 76E4             data  dialog.insert
 0250               
-0251 7CAA 4169             byte  key.uc.a, id.dialog.file
-0252 7CAC 772E             data  dialog.append
+0251 7C98 4169             byte  key.uc.a, id.dialog.file
+0252 7C9A 772E             data  dialog.append
 0253               
-0254 7CAE 4469             byte  key.uc.d, id.dialog.file
-0255 7CB0 779E             data  dialog.delete
+0254 7C9C 4469             byte  key.uc.d, id.dialog.file
+0255 7C9E 779E             data  dialog.delete
 0256               
-0257 7CB2 4369             byte  key.uc.c, id.dialog.file
-0258 7CB4 7756             data  dialog.cat
+0257 7CA0 4369             byte  key.uc.c, id.dialog.file
+0258 7CA2 7756             data  dialog.cat
 0259               
-0260 7CB6 5069             byte  key.uc.p, id.dialog.file
-0261 7CB8 76EE             data  dialog.print
+0260 7CA4 5069             byte  key.uc.p, id.dialog.file
+0261 7CA6 76EE             data  dialog.print
 0262               
-0263 7CBA 5269             byte  key.uc.r, id.dialog.file
-0264 7CBC 7774             data  dialog.run
+0263 7CA8 5269             byte  key.uc.r, id.dialog.file
+0264 7CAA 7774             data  dialog.run
 0265                       ;-------------------------------------------------------
 0266                       ; Dialog: Open file
 0267                       ;-------------------------------------------------------
-0268 7CBE 0D0A             byte  key.enter, id.dialog.open
-0269 7CC0 6B3A             data  edk.act.cmdb.load
+0268 7CAC 0D0A             byte  key.enter, id.dialog.open
+0269 7CAE 6B3A             data  edk.act.cmdb.load
 0270               
-0271 7CC2 0B0A             byte  key.fctn.e, id.dialog.open
-0272 7CC4 6FDC             data  edk.act.cmdb.pick.prev
+0271 7CB0 0B0A             byte  key.fctn.e, id.dialog.open
+0272 7CB2 6FDC             data  edk.act.cmdb.pick.prev
 0273               
-0274 7CC6 0A0A             byte  key.fctn.x, id.dialog.open
-0275 7CC8 7004             data  edk.act.cmdb.pick.next
+0274 7CB4 0A0A             byte  key.fctn.x, id.dialog.open
+0275 7CB6 7004             data  edk.act.cmdb.pick.next
 0276               
-0277 7CCA 200A             byte  key.space, id.dialog.open
-0278 7CCC 702C             data  edk.act.cmdb.updir
+0277 7CB8 200A             byte  key.space, id.dialog.open
+0278 7CBA 702C             data  edk.act.cmdb.updir
 0279               
-0280 7CCE 920A             byte  key.ctrl.r, id.dialog.open
-0281 7CD0 7774             data  dialog.run
+0280 7CBC 920A             byte  key.ctrl.r, id.dialog.open
+0281 7CBE 7774             data  dialog.run
 0282                       ;-------------------------------------------------------
 0283                       ; Dialog: Insert file at line ...
 0284                       ;-------------------------------------------------------
-0285 7CD2 0D0B             byte  key.enter, id.dialog.insert
-0286 7CD4 6BA6             data  edk.act.cmdb.insert
+0285 7CC0 0D0B             byte  key.enter, id.dialog.insert
+0286 7CC2 6BA6             data  edk.act.cmdb.insert
 0287               
-0288 7CD6 0B0B             byte  key.fctn.e, id.dialog.insert
-0289 7CD8 6FDC             data  edk.act.cmdb.pick.prev
+0288 7CC4 0B0B             byte  key.fctn.e, id.dialog.insert
+0289 7CC6 6FDC             data  edk.act.cmdb.pick.prev
 0290               
-0291 7CDA 0A0B             byte  key.fctn.x, id.dialog.insert
-0292 7CDC 7004             data  edk.act.cmdb.pick.next
+0291 7CC8 0A0B             byte  key.fctn.x, id.dialog.insert
+0292 7CCA 7004             data  edk.act.cmdb.pick.next
 0293               
-0294 7CDE 200B             byte  key.space, id.dialog.insert
-0295 7CE0 702C             data  edk.act.cmdb.updir
+0294 7CCC 200B             byte  key.space, id.dialog.insert
+0295 7CCE 702C             data  edk.act.cmdb.updir
 0296                       ;-------------------------------------------------------
 0297                       ; Dialog: Append file
 0298                       ;-------------------------------------------------------
-0299 7CE2 0D0C             byte  key.enter, id.dialog.append
-0300 7CE4 6C4A             data  edk.act.cmdb.append
+0299 7CD0 0D0C             byte  key.enter, id.dialog.append
+0300 7CD2 6C4A             data  edk.act.cmdb.append
 0301               
-0302 7CE6 0B0C             byte  key.fctn.e, id.dialog.append
-0303 7CE8 6FDC             data  edk.act.cmdb.pick.prev
+0302 7CD4 0B0C             byte  key.fctn.e, id.dialog.append
+0303 7CD6 6FDC             data  edk.act.cmdb.pick.prev
 0304               
-0305 7CEA 0A0C             byte  key.fctn.x, id.dialog.append
-0306 7CEC 7004             data  edk.act.cmdb.pick.next
+0305 7CD8 0A0C             byte  key.fctn.x, id.dialog.append
+0306 7CDA 7004             data  edk.act.cmdb.pick.next
 0307               
-0308 7CEE 200C             byte  key.space, id.dialog.append
-0309 7CF0 702C             data  edk.act.cmdb.updir
+0308 7CDC 200C             byte  key.space, id.dialog.append
+0309 7CDE 702C             data  edk.act.cmdb.updir
 0310                       ;-------------------------------------------------------
 0311                       ; Dialog: Run program image (EA5)
 0312                       ;-------------------------------------------------------
-0313 7CF2 0D1E             byte  key.enter, id.dialog.run
-0314 7CF4 6F78             data  edk.act.cmdb.file.run
+0313 7CE0 0D1E             byte  key.enter, id.dialog.run
+0314 7CE2 6F78             data  edk.act.cmdb.file.run
 0315               
-0316 7CF6 0B1E             byte  key.fctn.e, id.dialog.run
-0317 7CF8 6FDC             data  edk.act.cmdb.pick.prev
+0316 7CE4 0B1E             byte  key.fctn.e, id.dialog.run
+0317 7CE6 6FDC             data  edk.act.cmdb.pick.prev
 0318               
-0319 7CFA 0A1E             byte  key.fctn.x, id.dialog.run
-0320 7CFC 7004             data  edk.act.cmdb.pick.next
+0319 7CE8 0A1E             byte  key.fctn.x, id.dialog.run
+0320 7CEA 7004             data  edk.act.cmdb.pick.next
 0321               
-0322 7CFE 201E             byte  key.space, id.dialog.run
-0323 7D00 702C             data  edk.act.cmdb.updir
+0322 7CEC 201E             byte  key.space, id.dialog.run
+0323 7CEE 702C             data  edk.act.cmdb.updir
 0324               
-0325 7D02 8F1E             byte  key.ctrl.o, id.dialog.run
-0326 7D04 76D0             data  dialog.open
+0325 7CF0 8F1E             byte  key.ctrl.o, id.dialog.run
+0326 7CF2 76D0             data  dialog.open
 0327                       ;-------------------------------------------------------
 0328                       ; Dialog: Copy clipboard to line ...
 0329                       ;-------------------------------------------------------
-0330 7D06 0167             byte  key.fctn.7, id.dialog.clipboard
-0331 7D08 771A             data  dialog.clipdev
+0330 7CF4 0167             byte  key.fctn.7, id.dialog.clipboard
+0331 7CF6 771A             data  dialog.clipdev
 0332               
-0333 7D0A 3167             byte  key.num.1, id.dialog.clipboard
-0334 7D0C 6CDA             data  edk.act.cmdb.clip.1
+0333 7CF8 3167             byte  key.num.1, id.dialog.clipboard
+0334 7CFA 6CDA             data  edk.act.cmdb.clip.1
 0335               
-0336 7D0E 3267             byte  key.num.2, id.dialog.clipboard
-0337 7D10 6CE0             data  edk.act.cmdb.clip.2
+0336 7CFC 3267             byte  key.num.2, id.dialog.clipboard
+0337 7CFE 6CE0             data  edk.act.cmdb.clip.2
 0338               
-0339 7D12 3367             byte  key.num.3, id.dialog.clipboard
-0340 7D14 6CE6             data  edk.act.cmdb.clip.3
+0339 7D00 3367             byte  key.num.3, id.dialog.clipboard
+0340 7D02 6CE6             data  edk.act.cmdb.clip.3
 0341                       ;-------------------------------------------------------
 0342                       ; Dialog: Catalog drive/directory
 0343                       ;-------------------------------------------------------
-0344 7D16 0D19             byte  key.enter, id.dialog.cat
-0345 7D18 6B3A             data  edk.act.cmdb.load
+0344 7D04 0D19             byte  key.enter, id.dialog.cat
+0345 7D06 6B3A             data  edk.act.cmdb.load
 0346               
-0347 7D1A 0B19             byte  key.fctn.e, id.dialog.cat
-0348 7D1C 6FDC             data  edk.act.cmdb.pick.prev
+0347 7D08 0B19             byte  key.fctn.e, id.dialog.cat
+0348 7D0A 6FDC             data  edk.act.cmdb.pick.prev
 0349               
-0350 7D1E 0A19             byte  key.fctn.x, id.dialog.cat
-0351 7D20 7004             data  edk.act.cmdb.pick.next
+0350 7D0C 0A19             byte  key.fctn.x, id.dialog.cat
+0351 7D0E 7004             data  edk.act.cmdb.pick.next
 0352               
-0353 7D22 2019             byte  key.space, id.dialog.cat
-0354 7D24 702C             data  edk.act.cmdb.updir
+0353 7D10 2019             byte  key.space, id.dialog.cat
+0354 7D12 702C             data  edk.act.cmdb.updir
 0355               
-0356 7D26 0D19             byte  key.enter, id.dialog.cat
-0357 7D28 6F3C             data  edk.act.cmdb.file.directory.device
+0356 7D14 0D19             byte  key.enter, id.dialog.cat
+0357 7D16 6F3C             data  edk.act.cmdb.file.directory.device
 0358                       ;-------------------------------------------------------
 0359                       ; Dialog: Options
 0360                       ;-------------------------------------------------------
-0361 7D2A 416C             byte  key.uc.a, id.dialog.opt
-0362 7D2C 70E6             data  edk.act.cmdb.autoinsert
+0361 7D18 416C             byte  key.uc.a, id.dialog.opt
+0362 7D1A 70E6             data  edk.act.cmdb.autoinsert
 0363               
-0364 7D2E 436C             byte  key.uc.c, id.dialog.opt
-0365 7D30 771A             data  dialog.clipdev
+0364 7D1C 436C             byte  key.uc.c, id.dialog.opt
+0365 7D1E 771A             data  dialog.clipdev
 0366               
-0367 7D32 4F6C             byte  key.uc.o, id.dialog.opt
-0368 7D34 7186             data  edk.act.cmdb.clock
+0367 7D20 4F6C             byte  key.uc.o, id.dialog.opt
+0368 7D22 7186             data  edk.act.cmdb.clock
 0369               
-0370 7D36 466C             byte  key.uc.f, id.dialog.opt
-0371 7D38 776A             data  dialog.font
+0370 7D24 466C             byte  key.uc.f, id.dialog.opt
+0371 7D26 776A             data  dialog.font
 0372               
-0373 7D3A 4C6C             byte  key.uc.l, id.dialog.opt
-0374 7D3C 7108             data  edk.act.cmdb.linelen
+0373 7D28 4C6C             byte  key.uc.l, id.dialog.opt
+0374 7D2A 7108             data  edk.act.cmdb.linelen
 0375                       ;-------------------------------------------------------
 0376                       ; Dialog: Configure clipboard
 0377                       ;-------------------------------------------------------
-0378 7D3E 0D14             byte  key.enter, id.dialog.opt.clip
-0379 7D40 6AE8             data  edk.act.cmdb.cfg.clip
+0378 7D2C 0D14             byte  key.enter, id.dialog.opt.clip
+0379 7D2E 6AE8             data  edk.act.cmdb.cfg.clip
 0380                       ;-------------------------------------------------------
 0381                       ; Dialog: Configure font
 0382                       ;-------------------------------------------------------
-0383 7D42 316E             byte  key.num.1, id.dialog.font
-0384 7D44 7170             data  edk.act.cmdb.font1
+0383 7D30 316E             byte  key.num.1, id.dialog.font
+0384 7D32 7170             data  edk.act.cmdb.font1
 0385               
-0386 7D46 326E             byte  key.num.2, id.dialog.font
-0387 7D48 7174             data  edk.act.cmdb.font2
+0386 7D34 326E             byte  key.num.2, id.dialog.font
+0387 7D36 7174             data  edk.act.cmdb.font2
 0388                       ;-------------------------------------------------------
 0389                       ; Dialog: Save file
 0390                       ;-------------------------------------------------------
-0391 7D4A 0B0D             byte  key.fctn.e, id.dialog.save
-0392 7D4C 6FDC             data  edk.act.cmdb.pick.prev
+0391 7D38 0B0D             byte  key.fctn.e, id.dialog.save
+0392 7D3A 6FDC             data  edk.act.cmdb.pick.prev
 0393               
-0394 7D4E 0A0D             byte  key.fctn.x, id.dialog.save
-0395 7D50 7004             data  edk.act.cmdb.pick.next
+0394 7D3C 0A0D             byte  key.fctn.x, id.dialog.save
+0395 7D3E 7004             data  edk.act.cmdb.pick.next
 0396               
-0397 7D52 200D             byte  key.space, id.dialog.save
-0398 7D54 702C             data  edk.act.cmdb.updir
+0397 7D40 200D             byte  key.space, id.dialog.save
+0398 7D42 702C             data  edk.act.cmdb.updir
 0399               
-0400 7D56 0D0D             byte  key.enter, id.dialog.save
-0401 7D58 6D1A             data  edk.act.cmdb.save
+0400 7D44 0D0D             byte  key.enter, id.dialog.save
+0401 7D46 6D1A             data  edk.act.cmdb.save
 0402               
-0403 7D5A 0C0D             byte  key.fctn.6, id.dialog.save
-0404 7D5C 70A8             data  edk.act.cmdb.lineterm.toggle
+0403 7D48 0C0D             byte  key.fctn.6, id.dialog.save
+0404 7D4A 70A8             data  edk.act.cmdb.lineterm.toggle
 0405                       ;-------------------------------------------------------
 0406                       ; Dialog: Save block to file
 0407                       ;-------------------------------------------------------
-0408 7D5E 0B0E             byte  key.fctn.e, id.dialog.saveblock
-0409 7D60 6FDC             data  edk.act.cmdb.pick.prev
+0408 7D4C 0B0E             byte  key.fctn.e, id.dialog.saveblock
+0409 7D4E 6FDC             data  edk.act.cmdb.pick.prev
 0410               
-0411 7D62 0A0E             byte  key.fctn.x, id.dialog.saveblock
-0412 7D64 7004             data  edk.act.cmdb.pick.next
+0411 7D50 0A0E             byte  key.fctn.x, id.dialog.saveblock
+0412 7D52 7004             data  edk.act.cmdb.pick.next
 0413               
-0414 7D66 200E             byte  key.space, id.dialog.saveblock
-0415 7D68 702C             data  edk.act.cmdb.updir
+0414 7D54 200E             byte  key.space, id.dialog.saveblock
+0415 7D56 702C             data  edk.act.cmdb.updir
 0416               
-0417 7D6A 0D0E             byte  key.enter, id.dialog.saveblock
-0418 7D6C 6D1A             data  edk.act.cmdb.save
+0417 7D58 0D0E             byte  key.enter, id.dialog.saveblock
+0418 7D5A 6D1A             data  edk.act.cmdb.save
 0419               
-0420 7D6E 0C0E             byte  key.fctn.6, id.dialog.saveblock
-0421 7D70 70A8             data  edk.act.cmdb.lineterm.toggle
+0420 7D5C 0C0E             byte  key.fctn.6, id.dialog.saveblock
+0421 7D5E 70A8             data  edk.act.cmdb.lineterm.toggle
 0422                       ;-------------------------------------------------------
 0423                       ; Dialog: Print file
 0424                       ;-------------------------------------------------------
-0425 7D72 0D28             byte  key.enter, id.dialog.print
-0426 7D74 6D9A             data  edk.act.cmdb.print
+0425 7D60 0D28             byte  key.enter, id.dialog.print
+0426 7D62 6D9A             data  edk.act.cmdb.print
 0427               
-0428 7D76 0D32             byte  key.enter, id.dialog.printblock
-0429 7D78 6D9A             data  edk.act.cmdb.print
+0428 7D64 0D32             byte  key.enter, id.dialog.printblock
+0429 7D66 6D9A             data  edk.act.cmdb.print
 0430               
-0431 7D7A 0C28             byte  key.fctn.6, id.dialog.print
-0432 7D7C 70A8             data  edk.act.cmdb.lineterm.toggle
+0431 7D68 0C28             byte  key.fctn.6, id.dialog.print
+0432 7D6A 70A8             data  edk.act.cmdb.lineterm.toggle
 0433               
-0434 7D7E 0C32             byte  key.fctn.6, id.dialog.printblock
-0435 7D80 70A8             data  edk.act.cmdb.lineterm.toggle
+0434 7D6C 0C32             byte  key.fctn.6, id.dialog.printblock
+0435 7D6E 70A8             data  edk.act.cmdb.lineterm.toggle
 0436                       ;-------------------------------------------------------
 0437                       ; Dialog: Delete file
 0438                       ;-------------------------------------------------------
-0439 7D82 0D0F             byte  key.enter, id.dialog.delete
-0440 7D84 6E1A             data  edk.act.cmdb.file.delete
+0439 7D70 0D0F             byte  key.enter, id.dialog.delete
+0440 7D72 6E1A             data  edk.act.cmdb.file.delete
 0441               
-0442 7D86 0B0F             byte  key.fctn.e, id.dialog.delete
-0443 7D88 6FDC             data  edk.act.cmdb.pick.prev
+0442 7D74 0B0F             byte  key.fctn.e, id.dialog.delete
+0443 7D76 6FDC             data  edk.act.cmdb.pick.prev
 0444               
-0445 7D8A 0A0F             byte  key.fctn.x, id.dialog.delete
-0446 7D8C 7004             data  edk.act.cmdb.pick.next
+0445 7D78 0A0F             byte  key.fctn.x, id.dialog.delete
+0446 7D7A 7004             data  edk.act.cmdb.pick.next
 0447               
-0448 7D8E 200F             byte  key.space, id.dialog.delete
-0449 7D90 702C             data  edk.act.cmdb.updir
+0448 7D7C 200F             byte  key.space, id.dialog.delete
+0449 7D7E 702C             data  edk.act.cmdb.updir
 0450                       ;-------------------------------------------------------
 0451                       ; Dialog: Unsaved changes
 0452                       ;-------------------------------------------------------
-0453 7D92 0C65             byte  key.fctn.6, id.dialog.unsaved
-0454 7D94 707E             data  edk.act.cmdb.proceed
+0453 7D80 0C65             byte  key.fctn.6, id.dialog.unsaved
+0454 7D82 707E             data  edk.act.cmdb.proceed
 0455               
-0456 7D96 2065             byte  key.space, id.dialog.unsaved
-0457 7D98 707E             data  edk.act.cmdb.proceed
+0456 7D84 2065             byte  key.space, id.dialog.unsaved
+0457 7D86 707E             data  edk.act.cmdb.proceed
 0458               
-0459 7D9A 0D65             byte  key.enter, id.dialog.unsaved
-0460 7D9C 76DA             data  dialog.save
+0459 7D88 0D65             byte  key.enter, id.dialog.unsaved
+0460 7D8A 76DA             data  dialog.save
 0461                       ;-------------------------------------------------------
 0462                       ; Dialog: Cartridge Type
 0463                       ;-------------------------------------------------------
-0464 7D9E 466A             byte  key.uc.f, id.dialog.cart.type
-0465 7DA0 77A8             data  dialog.cart.fg99
+0464 7D8C 466A             byte  key.uc.f, id.dialog.cart.type
+0465 7D8E 77A8             data  dialog.cart.fg99
 0466                       ;-------------------------------------------------------
 0467                       ; Dialog: FinalGROM 99
 0468                       ;-------------------------------------------------------
-0469 7DA2 0D50             byte  key.enter, id.dialog.cart.fg99
-0470 7DA4 7B36             data  cart.fg99.mgr
+0469 7D90 0D50             byte  key.enter, id.dialog.cart.fg99
+0470 7D92 7B36             data  cart.fg99.mgr
 0471                       ;-------------------------------------------------------
 0472                       ; Dialog: Basic
 0473                       ;-------------------------------------------------------
-0474 7DA6 316B             byte  key.num.1, id.dialog.basic
-0475 7DA8 7AC8             data  tibasic1
+0474 7D94 316B             byte  key.num.1, id.dialog.basic
+0475 7D96 7AC8             data  tibasic1
 0476               
-0477 7DAA 326B             byte  key.num.2, id.dialog.basic
-0478 7DAC 7AD0             data  tibasic2
+0477 7D98 326B             byte  key.num.2, id.dialog.basic
+0478 7D9A 7AD0             data  tibasic2
 0479               
-0480 7DAE 336B             byte  key.num.3, id.dialog.basic
-0481 7DB0 7AD8             data  tibasic3
+0480 7D9C 336B             byte  key.num.3, id.dialog.basic
+0481 7D9E 7AD8             data  tibasic3
 0482               
-0483 7DB2 4A6B             byte  key.uc.j, id.dialog.basic
-0484 7DB4 7B48             data  jbasic.start
+0483 7DA0 0E6B             byte  key.fctn.5, id.dialog.basic
+0484 7DA2 70B4             data  edk.act.cmdb.am.toggle
 0485               
-0486 7DB6 0E6B             byte  key.fctn.5, id.dialog.basic
-0487 7DB8 70B4             data  edk.act.cmdb.am.toggle
-0488               
-0489 7DBA 206B             byte  key.space, id.dialog.basic
-0490 7DBC 7B0A             data  tibasic.uncrunch
-0491                       ;-------------------------------------------------------
-0492                       ; Dialog: Run program image (EA5)
+0486 7DA4 206B             byte  key.space, id.dialog.basic
+0487 7DA6 7B0A             data  tibasic.uncrunch
+0488                       ;-------------------------------------------------------
+0489                       ; Dialog: Run program image (EA5)
+0490                       ;-------------------------------------------------------
+0491 7DA8 0D1E             byte  key.enter, id.dialog.run
+0492 7DAA 6F78             data  edk.act.cmdb.file.run
 0493                       ;-------------------------------------------------------
-0494 7DBE 0D1E             byte  key.enter, id.dialog.run
-0495 7DC0 6F78             data  edk.act.cmdb.file.run
-0496                       ;-------------------------------------------------------
-0497                       ; Dialog: Shortcuts
-0498                       ;-------------------------------------------------------
-0499 7DC2 436F             byte  key.uc.c, id.dialog.shortcuts
-0500 7DC4 79AC             data  pane.colorscheme.cycle
+0494                       ; Dialog: Shortcuts
+0495                       ;-------------------------------------------------------
+0496 7DAC 436F             byte  key.uc.c, id.dialog.shortcuts
+0497 7DAE 79AC             data  pane.colorscheme.cycle
+0498               
+0499 7DB0 526F             byte  key.uc.r, id.dialog.shortcuts
+0500 7DB2 6736             data  edk.act.toggle.ruler
 0501               
-0502 7DC6 526F             byte  key.uc.r, id.dialog.shortcuts
-0503 7DC8 6736             data  edk.act.toggle.ruler
+0502 7DB4 316F             byte  key.num.1, id.dialog.shortcuts
+0503 7DB6 67FC             data  edk.act.block.m1
 0504               
-0505 7DCA 316F             byte  key.num.1, id.dialog.shortcuts
-0506 7DCC 67FC             data  edk.act.block.m1
+0505 7DB8 326F             byte  key.num.2, id.dialog.shortcuts
+0506 7DBA 6804             data  edk.act.block.m2
 0507               
-0508 7DCE 326F             byte  key.num.2, id.dialog.shortcuts
-0509 7DD0 6804             data  edk.act.block.m2
+0508 7DBC 466F             byte  key.uc.f, id.dialog.shortcuts
+0509 7DBE 7794             data  dialog.find
 0510               
-0511 7DD2 466F             byte  key.uc.f, id.dialog.shortcuts
-0512 7DD4 7794             data  dialog.find
-0513               
-0514 7DD6 476F             byte  key.uc.g, id.dialog.shortcuts
-0515 7DD8 7760             data  dialog.goto
-0516                       ;-------------------------------------------------------
-0517                       ; Dialog: Goto
+0511 7DC0 476F             byte  key.uc.g, id.dialog.shortcuts
+0512 7DC2 7760             data  dialog.goto
+0513                       ;-------------------------------------------------------
+0514                       ; Dialog: Goto
+0515                       ;-------------------------------------------------------
+0516 7DC4 0D3C             byte  key.enter, id.dialog.goto
+0517 7DC6 7120             data  edk.act.cmdb.goto
 0518                       ;-------------------------------------------------------
-0519 7DDA 0D3C             byte  key.enter, id.dialog.goto
-0520 7DDC 7120             data  edk.act.cmdb.goto
-0521                       ;-------------------------------------------------------
-0522                       ; Dialog: find
+0519                       ; Dialog: find
+0520                       ;-------------------------------------------------------
+0521 7DC8 0D46             byte  key.enter, id.dialog.find
+0522 7DCA 72F4             data  edk.act.cmdb.find.search
 0523                       ;-------------------------------------------------------
-0524 7DDE 0D46             byte  key.enter, id.dialog.find
-0525 7DE0 72F4             data  edk.act.cmdb.find.search
-0526                       ;-------------------------------------------------------
-0527                       ; Dialog: Help
-0528                       ;-------------------------------------------------------
-0529 7DE2 2068             byte  key.space, id.dialog.help
-0530 7DE4 76C0             data  dialog.help.next
+0524                       ; Dialog: Help
+0525                       ;-------------------------------------------------------
+0526 7DCC 2068             byte  key.space, id.dialog.help
+0527 7DCE 76C0             data  dialog.help.next
+0528               
+0529 7DD0 0F68             byte  key.fctn.9, id.dialog.help
+0530 7DD2 70C8             data  edk.act.cmdb.close.about
 0531               
-0532 7DE6 0F68             byte  key.fctn.9, id.dialog.help
-0533 7DE8 70C8             data  edk.act.cmdb.close.about
-0534               
-0535 7DEA 0D68             byte  key.enter, id.dialog.help
-0536 7DEC 70C8             data  edk.act.cmdb.close.about
-0537                       ;-------------------------------------------------------
-0538                       ; Movement keys
-0539                       ;-------------------------------------------------------
-0540 7DEE 0801             byte  key.fctn.s, pane.focus.cmdb
-0541 7DF0 69E2             data  edk.act.cmdb.left
+0532 7DD4 0D68             byte  key.enter, id.dialog.help
+0533 7DD6 70C8             data  edk.act.cmdb.close.about
+0534                       ;-------------------------------------------------------
+0535                       ; Movement keys
+0536                       ;-------------------------------------------------------
+0537 7DD8 0801             byte  key.fctn.s, pane.focus.cmdb
+0538 7DDA 69E2             data  edk.act.cmdb.left
+0539               
+0540 7DDC 0901             byte  key.fctn.d, pane.focus.cmdb
+0541 7DDE 69FE             data  edk.act.cmdb.right
 0542               
-0543 7DF2 0901             byte  key.fctn.d, pane.focus.cmdb
-0544 7DF4 69FE             data  edk.act.cmdb.right
+0543 7DE0 BF01             byte  key.fctn.h, pane.focus.cmdb
+0544 7DE2 6A22             data  edk.act.cmdb.home
 0545               
-0546 7DF6 BF01             byte  key.fctn.h, pane.focus.cmdb
-0547 7DF8 6A22             data  edk.act.cmdb.home
-0548               
-0549 7DFA C201             byte  key.fctn.l, pane.focus.cmdb
-0550 7DFC 6A40             data  edk.act.cmdb.end
-0551                       ;-------------------------------------------------------
-0552                       ; Modifier keys
-0553                       ;-------------------------------------------------------
-0554 7DFE 0301             byte  key.fctn.1, pane.focus.cmdb
-0555 7E00 6A58             data  edk.act.cmdb.del_char
-0556               
-0557 7E02 0701             byte  key.fctn.3, pane.focus.cmdb
-0558 7E04 6A4C             data  edk.act.cmdb.clear
-0559                       ;-------------------------------------------------------
-0560                       ; Other action keys
-0561                       ;-------------------------------------------------------
-0562 7E06 0F01             byte  key.fctn.9, pane.focus.cmdb
-0563 7E08 777E             data  dialog.main
+0546 7DE4 C201             byte  key.fctn.l, pane.focus.cmdb
+0547 7DE6 6A40             data  edk.act.cmdb.end
+0548                       ;-------------------------------------------------------
+0549                       ; Modifier keys
+0550                       ;-------------------------------------------------------
+0551 7DE8 0301             byte  key.fctn.1, pane.focus.cmdb
+0552 7DEA 6A58             data  edk.act.cmdb.del_char
+0553               
+0554 7DEC 0701             byte  key.fctn.3, pane.focus.cmdb
+0555 7DEE 6A4C             data  edk.act.cmdb.clear
+0556                       ;-------------------------------------------------------
+0557                       ; Other action keys
+0558                       ;-------------------------------------------------------
+0559 7DF0 0F01             byte  key.fctn.9, pane.focus.cmdb
+0560 7DF2 777E             data  dialog.main
+0561               
+0562 7DF4 0501             byte  key.fctn.plus, pane.focus.cmdb
+0563 7DF6 6776             data  edk.act.quit
 0564               
-0565 7E0A 0501             byte  key.fctn.plus, pane.focus.cmdb
-0566 7E0C 6776             data  edk.act.quit
+0565 7DF8 B001             byte  key.ctrl.0, pane.focus.cmdb
+0566 7DFA 6EE8             data  edk.act.cmdb.file.directory.tipi
 0567               
-0568 7E0E B001             byte  key.ctrl.0, pane.focus.cmdb
-0569 7E10 6EE8             data  edk.act.cmdb.file.directory.tipi
+0568 7DFC B101             byte  key.ctrl.1, pane.focus.cmdb
+0569 7DFE 6E7E             data  edk.act.cmdb.file.directory.1
 0570               
-0571 7E12 B101             byte  key.ctrl.1, pane.focus.cmdb
-0572 7E14 6E7E             data  edk.act.cmdb.file.directory.1
+0571 7E00 B201             byte  key.ctrl.2, pane.focus.cmdb
+0572 7E02 6E88             data  edk.act.cmdb.file.directory.2
 0573               
-0574 7E16 B201             byte  key.ctrl.2, pane.focus.cmdb
-0575 7E18 6E88             data  edk.act.cmdb.file.directory.2
+0574 7E04 B301             byte  key.ctrl.3, pane.focus.cmdb
+0575 7E06 6E94             data  edk.act.cmdb.file.directory.3
 0576               
-0577 7E1A B301             byte  key.ctrl.3, pane.focus.cmdb
-0578 7E1C 6E94             data  edk.act.cmdb.file.directory.3
+0577 7E08 B401             byte  key.ctrl.4, pane.focus.cmdb
+0578 7E0A 6EA0             data  edk.act.cmdb.file.directory.4
 0579               
-0580 7E1E B401             byte  key.ctrl.4, pane.focus.cmdb
-0581 7E20 6EA0             data  edk.act.cmdb.file.directory.4
+0580 7E0C B501             byte  key.ctrl.5, pane.focus.cmdb
+0581 7E0E 6EAC             data  edk.act.cmdb.file.directory.5
 0582               
-0583 7E22 B501             byte  key.ctrl.5, pane.focus.cmdb
-0584 7E24 6EAC             data  edk.act.cmdb.file.directory.5
+0583 7E10 B601             byte  key.ctrl.6, pane.focus.cmdb
+0584 7E12 6EB8             data  edk.act.cmdb.file.directory.6
 0585               
-0586 7E26 B601             byte  key.ctrl.6, pane.focus.cmdb
-0587 7E28 6EB8             data  edk.act.cmdb.file.directory.6
+0586 7E14 B701             byte  key.ctrl.7, pane.focus.cmdb
+0587 7E16 6EC4             data  edk.act.cmdb.file.directory.7
 0588               
-0589 7E2A B701             byte  key.ctrl.7, pane.focus.cmdb
-0590 7E2C 6EC4             data  edk.act.cmdb.file.directory.7
+0589 7E18 9E01             byte  key.ctrl.8, pane.focus.cmdb
+0590 7E1A 6ED0             data  edk.act.cmdb.file.directory.8
 0591               
-0592 7E2E 9E01             byte  key.ctrl.8, pane.focus.cmdb
-0593 7E30 6ED0             data  edk.act.cmdb.file.directory.8
+0592 7E1C 9F01             byte  key.ctrl.9, pane.focus.cmdb
+0593 7E1E 6EDC             data  edk.act.cmdb.file.directory.9
 0594               
-0595 7E32 9F01             byte  key.ctrl.9, pane.focus.cmdb
-0596 7E34 6EDC             data  edk.act.cmdb.file.directory.9
+0595 7E20 8101             byte  key.ctrl.a, pane.focus.cmdb
+0596 7E22 6EF4             data  edk.act.cmdb.file.directory.scs1
 0597               
-0598 7E36 8101             byte  key.ctrl.a, pane.focus.cmdb
-0599 7E38 6EF4             data  edk.act.cmdb.file.directory.scs1
+0598 7E24 8201             byte  key.ctrl.b, pane.focus.cmdb
+0599 7E26 6F00             data  edk.act.cmdb.file.directory.scs2
 0600               
-0601 7E3A 8201             byte  key.ctrl.b, pane.focus.cmdb
-0602 7E3C 6F00             data  edk.act.cmdb.file.directory.scs2
+0601 7E28 8301             byte  key.ctrl.c, pane.focus.cmdb
+0602 7E2A 6F0C             data  edk.act.cmdb.file.directory.scs3
 0603               
-0604 7E3E 8301             byte  key.ctrl.c, pane.focus.cmdb
-0605 7E40 6F0C             data  edk.act.cmdb.file.directory.scs3
+0604 7E2C 8901             byte  key.ctrl.i, pane.focus.cmdb
+0605 7E2E 6F18             data  edk.act.cmdb.file.directory.ide1
 0606               
-0607 7E42 8901             byte  key.ctrl.i, pane.focus.cmdb
-0608 7E44 6F18             data  edk.act.cmdb.file.directory.ide1
+0607 7E30 8601             byte  key.ctrl.f, pane.focus.cmdb
+0608 7E32 6F24             data  edk.act.cmdb.file.directory.ide2
 0609               
-0610 7E46 8601             byte  key.ctrl.f, pane.focus.cmdb
-0611 7E48 6F24             data  edk.act.cmdb.file.directory.ide2
+0610 7E34 8701             byte  key.ctrl.g, pane.focus.cmdb
+0611 7E36 6F30             data  edk.act.cmdb.file.directory.ide3
 0612               
-0613 7E4A 8701             byte  key.ctrl.g, pane.focus.cmdb
-0614 7E4C 6F30             data  edk.act.cmdb.file.directory.ide3
+0613 7E38 9301             byte  key.ctrl.s, pane.focus.cmdb
+0614 7E3A 71A2             data  edk.act.filebrowser.prevcol
 0615               
-0616 7E4E 9301             byte  key.ctrl.s, pane.focus.cmdb
-0617 7E50 71A2             data  edk.act.filebrowser.prevcol
+0616 7E3C 8401             byte  key.ctrl.d, pane.focus.cmdb
+0617 7E3E 71EC             data  edk.act.filebrowser.nextcol
 0618               
-0619 7E52 8401             byte  key.ctrl.d, pane.focus.cmdb
-0620 7E54 71EC             data  edk.act.filebrowser.nextcol
+0619 7E40 8501             byte  key.ctrl.e, pane.focus.cmdb
+0620 7E42 724A             data  edk.act.filebrowser.prevpage
 0621               
-0622 7E56 8501             byte  key.ctrl.e, pane.focus.cmdb
-0623 7E58 724A             data  edk.act.filebrowser.prevpage
+0622 7E44 9801             byte  key.ctrl.x, pane.focus.cmdb
+0623 7E46 729A             data  edk.act.filebrowser.nextpage
 0624               
-0625 7E5A 9801             byte  key.ctrl.x, pane.focus.cmdb
-0626 7E5C 729A             data  edk.act.filebrowser.nextpage
-0627               
-0628 7E5E 9A01             byte  key.ctrl.z, pane.focus.cmdb
-0629 7E60 79AC             data  pane.colorscheme.cycle
-0630                       ;------------------------------------------------------
-0631                       ; End of list
-0632                       ;-------------------------------------------------------
-0633 7E62 FFFF             data  EOL                           ; EOL
+0625 7E48 9A01             byte  key.ctrl.z, pane.focus.cmdb
+0626 7E4A 79AC             data  pane.colorscheme.cycle
+0627                       ;------------------------------------------------------
+0628                       ; End of list
+0629                       ;-------------------------------------------------------
+0630 7E4C FFFF             data  EOL                           ; EOL
                    < stevie_b1.asm
 0170                       copy  "data.colorscheme.asm"        ; Colorscheme data table
      **** ****     > data.colorscheme.asm
@@ -18500,71 +18473,71 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0056               tv.colorscheme.table:
 0057                       ;      0     2     4     6     8
 0058                       ;      ABCD  EFGH  IJKL  MNOP  QRST ;
-0059 7E64 F41E             data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)
-     7E66 F1F1     
-     7E68 1B1F     
-     7E6A 7111     
-     7E6C 1700     
-0060 7E6E 21F0             data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
-     7E70 21FF     
-     7E72 F112     
-     7E74 21FF     
-     7E76 1C00     
-0061 7E78 A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
-     7E7A F0FF     
-     7E7C 1F1A     
-     7E7E F1FF     
-     7E80 1A00     
-0062 7E82 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>e100 ; 4  Black on grey
-     7E84 1E11     
-     7E86 1EE1     
-     7E88 1E11     
-     7E8A E100     
-0063 7E8C F417             data  >f417,>7171,>1b1f,>7111,>1700 ; 5  White on blue with cyan (2)
-     7E8E 7171     
-     7E90 1B1F     
-     7E92 7111     
-     7E94 1700     
-0064 7E96 1313             data  >1313,>1311,>1331,>1311,>1c00 ; 6  Black on light green
-     7E98 1311     
-     7E9A 1331     
-     7E9C 1311     
-     7E9E 1C00     
-0065 7EA0 1771             data  >1771,>1011,>0171,>1711,>1f00 ; 7  Black on cyan
-     7EA2 1011     
-     7EA4 0171     
-     7EA6 1711     
-     7EA8 1F00     
-0066 7EAA 2112             data  >2112,>f0ff,>1f12,>f1f6,>1200 ; 8  Dark green on black
-     7EAC F0FF     
-     7EAE 1F12     
-     7EB0 F1F6     
-     7EB2 1200     
-0067 7EB4 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>f100 ; 9  Black on white
-     7EB6 1011     
-     7EB8 F1F1     
-     7EBA 1F11     
-     7EBC F100     
-0068 7EBE 1AF1             data  >1af1,>a111,>1f1f,>f11f,>1000 ; 10 Black on dark yellow
-     7EC0 A111     
-     7EC2 1F1F     
-     7EC4 F11F     
-     7EC6 1000     
-0069 7EC8 1919             data  >1919,>1911,>1991,>1911,>1600 ; 11 Black on light red
-     7ECA 1911     
-     7ECC 1991     
-     7ECE 1911     
-     7ED0 1600     
-0070 7ED2 F417             data  >f417,>f171,>1b1f,>7111,>1f00 ; 12 White on blue with cyan (3)
-     7ED4 F171     
-     7ED6 1B1F     
-     7ED8 7111     
-     7EDA 1F00     
-0071 7EDC 1919             data  >1919,>1919,>1919,>1919,>1919 ; 13 All yellow
-     7EDE 1919     
-     7EE0 1919     
-     7EE2 1919     
-     7EE4 1919     
+0059 7E4E F41E             data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)
+     7E50 F1F1     
+     7E52 1B1F     
+     7E54 7111     
+     7E56 1700     
+0060 7E58 21F0             data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
+     7E5A 21FF     
+     7E5C F112     
+     7E5E 21FF     
+     7E60 1C00     
+0061 7E62 A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
+     7E64 F0FF     
+     7E66 1F1A     
+     7E68 F1FF     
+     7E6A 1A00     
+0062 7E6C 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>e100 ; 4  Black on grey
+     7E6E 1E11     
+     7E70 1EE1     
+     7E72 1E11     
+     7E74 E100     
+0063 7E76 F417             data  >f417,>7171,>1b1f,>7111,>1700 ; 5  White on blue with cyan (2)
+     7E78 7171     
+     7E7A 1B1F     
+     7E7C 7111     
+     7E7E 1700     
+0064 7E80 1313             data  >1313,>1311,>1331,>1311,>1c00 ; 6  Black on light green
+     7E82 1311     
+     7E84 1331     
+     7E86 1311     
+     7E88 1C00     
+0065 7E8A 1771             data  >1771,>1011,>0171,>1711,>1f00 ; 7  Black on cyan
+     7E8C 1011     
+     7E8E 0171     
+     7E90 1711     
+     7E92 1F00     
+0066 7E94 2112             data  >2112,>f0ff,>1f12,>f1f6,>1200 ; 8  Dark green on black
+     7E96 F0FF     
+     7E98 1F12     
+     7E9A F1F6     
+     7E9C 1200     
+0067 7E9E 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>f100 ; 9  Black on white
+     7EA0 1011     
+     7EA2 F1F1     
+     7EA4 1F11     
+     7EA6 F100     
+0068 7EA8 1AF1             data  >1af1,>a111,>1f1f,>f11f,>1000 ; 10 Black on dark yellow
+     7EAA A111     
+     7EAC 1F1F     
+     7EAE F11F     
+     7EB0 1000     
+0069 7EB2 1919             data  >1919,>1911,>1991,>1911,>1600 ; 11 Black on light red
+     7EB4 1911     
+     7EB6 1991     
+     7EB8 1911     
+     7EBA 1600     
+0070 7EBC F417             data  >f417,>f171,>1b1f,>7111,>1f00 ; 12 White on blue with cyan (3)
+     7EBE F171     
+     7EC0 1B1F     
+     7EC2 7111     
+     7EC4 1F00     
+0071 7EC6 1919             data  >1919,>1919,>1919,>1919,>1919 ; 13 All yellow
+     7EC8 1919     
+     7ECA 1919     
+     7ECC 1919     
+     7ECE 1919     
 0072                       even
                    < stevie_b1.asm
 0171                       ;-----------------------------------------------------------------------
@@ -19841,8 +19814,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     io.seq.upd.dis.var.. >0010 :     
     io.seq.upd.int.fix.. >0008 :     
     io.seq.upd.int.var.. >0018 :     
-    jbasic.start........ >7b48 :     
-    jbasic.start.exit... >7b56 :     
     kbf.kbclear......... >0001 :     
     kbflags............. >a026 :     
     key.ctrl.0.......... >00b0 :     
@@ -19991,8 +19962,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     key.uc.z............ >005a :     
     keycode1............ >a028 :     
     keycode2............ >a02a :     
-    keymap_actions.cmdb. >7c72 :     
-    keymap_actions.editor >7b90 :     
+    keymap_actions.cmdb. >7c60 :     
+    keymap_actions.editor >7b7e :     
     kickstart.code1..... >6030 :     
     kickstart.code2..... >6000 :     
     kscan............... >000e :     
@@ -20022,9 +19993,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     mccode.............. >2210 :     
     mcloop.............. >8320 :     
     mcsprd.............. >8322 :     
-    mem.sams.set.boot... >7b6c :     
-    mem.sams.set.legacy. >7b5a :     
-    mem.sams.set.stevie. >7b7e :     
+    mem.sams.set.boot... >7b5a :     
+    mem.sams.set.legacy. >7b48 :     
+    mem.sams.set.stevie. >7b6c :     
     mem.sams.setup.stevie >60e6 :     
     mem.sams.setup.stevie.exit >6106 :     
     mkhex............... >29c8 :     
@@ -20407,7 +20378,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.colorize.reset... >9900 :     
     tv.colorscheme...... >a212 :     
     tv.colorscheme.entries >000c :     
-    tv.colorscheme.table >7e64 :     
+    tv.colorscheme.table >7e4e :     
     tv.curcolor......... >a216 :     
     tv.curshape......... >a214 :     
     tv.devpath.......... >a294 :     

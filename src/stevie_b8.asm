@@ -18,8 +18,8 @@
 ********************************************************************************
 * File: stevie_b8.asm
 *
-* Bank 8 "Jackalope Support"
-* Jackalope Basic integration support
+* Bank 8 "Q"
+* Empty bank for future expansion
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         ;-----------------------------------------------------------------------
@@ -40,7 +40,7 @@
 ***************************************************************
 * BANK A
 ********|*****|*********************|**************************
-bankid  equ   banka.rom             ; Set bank identifier to current bank
+bankid  equ   bank9.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
 ***************************************************************
@@ -60,17 +60,15 @@ bankid  equ   banka.rom             ; Set bank identifier to current bank
 
         b     @kickstart.code2      ; Jump to entry routine
 ***************************************************************
-* Step 2: Jackalope Basic integration layer
+* Step 2: Include main editor modules
 ********|*****|*********************|**************************
-main    aorg  kickstart.code2       ; >6000
-        ;-----------------------------------------------------------------------
-        ; Jackalope Basic integration layer
-        ;-----------------------------------------------------------------------                                    
-        copy "jbasic.support.asm"   ; Support module
+main:
+        aorg  kickstart.code2       ; >6000
+        bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
-        copy  "rom.stubs.bank8.asm" ; Bank specific stubs
+        copy  "rom.stubs.banka.asm" ; Bank specific stubs
         copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
         ;-----------------------------------------------------------------------
         ; Program data

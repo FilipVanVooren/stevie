@@ -8,22 +8,22 @@
 
 txt.stevie:
         .ifeq vdpmode, 2480         ; F18a/PICO9918 24x80
-            text '  Stevie 2.0.4   '
+            text '  Stevie 2.0.5   '
             even
         .endif
 
         .ifeq vdpmode, 3080         ; F18a/PICO9918 30x80
-            text '  Stevie 2.0.4   '
+            text '  Stevie 2.0.5   '
             even
         .endif
 
         .ifeq vdpmode, 4880         ; PICO9918 48x80
-            text '  Stevie 2.0.4   '  
+            text '  Stevie 2.0.5   '  
             even
         .endif
 
         .ifeq vdpmode, 6080         ; PICO9918 60x80
-            text '  Stevie 2.0.4   '  
+            text '  Stevie 2.0.5   '  
             even
         .endif
 
@@ -177,7 +177,7 @@ txt.keys.about     stri 'F9-Back   ENTER-Close   SPACE-Next Page'
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 2.0.4 - (c)2018-2026 Filip Van Vooren '
+                   text ' - Stevie 2.0.5 - (c)2018-2026 Filip Van Vooren '
                    even
 
 ;--------------------------------------------------------------
@@ -237,9 +237,9 @@ txt.keys.cart.fg99   stri 'F9-Back  F3-Clear  FH-Home  FL-EOL'
 ;--------------------------------------------------------------
 txt.head.basic     byte 9,4,1
                    text ' Basic '
-txt.info.basic     stri 'Session:  TI Basic #1   TI Basic #2   TI Basic #3   Jackalope Basic'
-pos.info.basic     byte 20,34,48,52,>ff
-txt.hint.basic2    stri 'To return type END (F9) in TI Basic or SYS 24590 in Jackalope Basic.'
+txt.info.basic     stri 'Session:  TI Basic #1   TI Basic #2   TI Basic #3'
+pos.info.basic     byte 20,34,48,>ff
+txt.hint.basic2    stri 'To return type END (F9) in TI Basic'
 txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
 txt.keys.basic     stri 'F9-Back  F5-AutoUnpack  SPACE-Unpack program'
 txt.keys.basic2    stri 'F9-Back  *F5-AutoUnpack'

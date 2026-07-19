@@ -137,4 +137,4 @@ main:
         copy  "rom.vectors.bank7.asm"      ; Vector table bank 7
 
         aorg >7ff4
-        b    @tib.run.return               ; Return from Jackalope Basic session
+        b    @tib.run.return               ; Return from  Basic session
