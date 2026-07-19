@@ -185,11 +185,11 @@ txt.about.build    byte 69
 ;--------------------------------------------------------------
 txt.head.menu      byte 13,4,1
                    text ' Main Menu '
-txt.info.menu      stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Lock   Quit'
-pos.info.menu      byte 0,7,15,27,39,49,56,63,>ff
+txt.info.menu      stri 'File   Basic   Cart   Shortcuts   Options   Help   Lock   Quit'
+pos.info.menu      byte 0,7,15,22,34,44,51,58,>ff
                    even
-txt.info.menulock  stri 'File   Basic   Cartridge   Shortcuts   Options   Help   Unlock   Quit'
-pos.info.menulock  byte 0,7,15,27,39,49,56,65,>ff
+txt.info.menulock  stri 'File   Basic   Cart   Shortcuts   Options   Help   Unlock   Quit'
+pos.info.menulock  byte 0,7,15,22,34,44,51,61,>ff
                    even
 txt.hint.menu      stri ''
 txt.keys.menu      stri 'F9-Close menu  SPACE-Close menu'
@@ -213,8 +213,8 @@ txt.keys.file      stri 'F9-Back  SPACE-Close menu'
 ;--------------------------------------------------------------
 ; Dialog "Cartridge Type"
 ;--------------------------------------------------------------
-txt.head.cart.type  byte 13,4,1
-                    text ' Cartridge '
+txt.head.cart.type  byte 8,4,1
+                    text ' Cart '
 txt.info.cart.type  stri 'FinalGROM 99'
 pos.info.cart.type  byte 0,>ff
 txt.hint.cart.type2 stri 'Select currently inserted cartridge.'
