@@ -37,12 +37,15 @@ dialog.cat:
 
         li    tmp0,txt.hint.dir2        
         mov   tmp0,@cmdb.panhint2   ; Extra hint to display
-        li    tmp0,txt.keys.dir     ; Key list
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
 dialog.cat.keylist:
+        li    tmp0,txt.keys.dir     ; Key list
         mov   tmp0,@cmdb.pankeys    ; Show keylist in status line
+
+        li    tmp0,col.keys.dir
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers        
         ;-------------------------------------------------------
         ; Set filename (1) 
         ;-------------------------------------------------------

@@ -1,7 +1,7 @@
 ********************************************************************************
 *   Stevie
 *   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
-*   Copyright (C) 2018-2025 / Filip van Vooren
+*   Copyright (C) 2018-2026 / Filip van Vooren
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -93,13 +93,17 @@ main:
         copy  "fb.refresh.asm"        ; Refresh framebuffer
         copy  "fb.get.nonblank.asm"   ; Get column of first non-blank char
         ;-----------------------------------------------------------------------
+        ; Command buffer handling
+        ;-----------------------------------------------------------------------
+        copy  "pane.cmdb.hide.asm"      ; Hide command buffer pane        
+        ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------        
         copy  "pane.topline.asm"      ; Top line
         copy  "pane.botline.asm"      ; Bottom line
         copy  "pane.botline.busy.asm" ; Bottom line busy indicator        
-        copy  "pane.errline.asm"      ; Error line        
-        copy  "pane.utils.hint.asm"   ; Show hint in pane
+        copy  "pane.errline.asm"      ; Error line
+        copy  "error.display.asm"     ; Show error message                        
         ;-----------------------------------------------------------------------
         ; Screen pane utilities
         ;-----------------------------------------------------------------------

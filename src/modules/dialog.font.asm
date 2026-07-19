@@ -47,6 +47,9 @@ dialog.font.keylist:
         li    tmp0,txt.keys.font
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        li    tmp0,col.keys.font
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers              
+
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

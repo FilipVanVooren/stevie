@@ -41,6 +41,10 @@ dialog.basic:
         clr   @cmdb.panhint         ; Clear hint for bottom line
         li    tmp0,txt.keys.basic3  ; Default keylist, adjust later
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.basic3
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+
         ;-------------------------------------------------------
         ; Exit early if editor buffer is locked
         ;-------------------------------------------------------

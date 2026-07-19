@@ -63,6 +63,10 @@ dialog.file.statlines:
 
         li    tmp0,txt.keys.file    ; No navigation keys
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.file
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

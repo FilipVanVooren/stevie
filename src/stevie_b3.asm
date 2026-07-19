@@ -1,7 +1,7 @@
 ********************************************************************************
 *   Stevie
 *   Modern Programming Editor for the Texas Instruments TI-99/4a Home Computer.
-*   Copyright (C) 2018-2025 / Filip van Vooren
+*   Copyright (C) 2018-2026 / Filip van Vooren
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ main:
         aorg  kickstart.code2       ; >6000
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
-        ; Dialogs (1)
+        ; Dialogs (1) - Full Do not add more dialogs to bank 3!
         ;-----------------------------------------------------------------------
         copy  "dialog.asm"              ; Dialog initialisation code
         copy  "dialog.main.asm"         ; Dialog "Stevie Menu"
@@ -93,12 +93,10 @@ main:
         ;-----------------------------------------------------------------------
         ; Command buffer handling
         ;-----------------------------------------------------------------------
-        copy  "pane.utils.hint.asm"     ; Show hint in pane
+        copy  "pane.utils.hint.asm"     ; Show hint in pane include in bank 3!)       
         copy  "pane.cmdb.show.asm"      ; Show command buffer pane
-        copy  "pane.cmdb.hide.asm"      ; Hide command buffer pane
         copy  "pane.cmdb.draw.asm"      ; Draw command buffer pane contents
         copy  "pane.cmdb.statlines.asm" ; Show status lines (Device path, SAMS free)
-        copy  "error.display.asm"       ; Show error message
         copy  "cmdb.refresh_prompt.asm" ; Refresh command line prompt
         copy  "cmdb.cmd.asm"            ; Command line handling
         copy  "cmdb.cmd.set.asm"        ; Set command line to preset value

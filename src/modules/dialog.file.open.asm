@@ -48,12 +48,15 @@ dialog.open.setup:
 
         li    tmp0,txt.hint.open2
         mov   tmp0,@cmdb.panhint2   ; Show extra hint
-        li    tmp0,txt.keys.open
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
 dialog.open.keylist:
+        li    tmp0,txt.keys.open
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.open
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers       
         ;-------------------------------------------------------
         ; Set filename (1) 
         ;-------------------------------------------------------

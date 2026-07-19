@@ -243,6 +243,7 @@ fb.scan.fname:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
+
 ***************************************************************
 * Stub for "pane.colorscheme.load"
 * bank4 vec.41
@@ -262,6 +263,50 @@ pane.colorscheme.load:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
+
+
+
+***************************************************************
+* Stub for "error.display"
+* bank4 vec.45
+********|*****|*********************|**************************
+error.display:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.45           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for "pane.cmdb.hide"
+* bank4 vec.49
+********|*****|*********************|**************************
+pane.cmdb.hide:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank 4
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.49           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
 
 ***************************************************************
 * Stub for "pane.filebrowser"

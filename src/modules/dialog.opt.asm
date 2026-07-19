@@ -60,6 +60,9 @@ dialog.opt.keylist:
         li    tmp0,txt.keys.config
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        li    tmp0,col.keys.config
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers              
+
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

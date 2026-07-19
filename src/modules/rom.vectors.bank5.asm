@@ -39,7 +39,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 5: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
+* ROM 5: Vectors 33-64 
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

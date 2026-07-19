@@ -108,18 +108,18 @@ fm.savefile:
 
 
 ***************************************************************
-* Stub for "pane.cmdb.hide"
-* bank3 vec.21
+* Stub for "fb.refresh"
+* bank4 vec.8
 ********|*****|*********************|**************************
-pane.cmdb.hide:
+fb.refresh:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 3
+        ; Call function in bank 4
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.21           ; | i  p1 = Vector with target address
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.8            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -234,10 +234,10 @@ pane.colorscheme.botline:
 
 
 ***************************************************************
-* Stub for "fb.refresh"
-* bank4 vec.8
+* Stub for "pane.cmdb.hide"
+* bank4 vec.49
 ********|*****|*********************|**************************
-fb.refresh:
+pane.cmdb.hide:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
@@ -245,7 +245,7 @@ fb.refresh:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
-              data vec.8            ; | i  p1 = Vector with target address
+              data vec.49           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

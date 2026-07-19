@@ -479,17 +479,6 @@ pane.cmdb.show.vector:
 
 
 ***************************************************************
-* Stub for "pane.cmdb.hide"
-* bank3 vec.21
-********|*****|*********************|**************************
-pane.cmdb.hide:
-        mov   @pane.cmdb.hide.vector,@trmpvector
-        jmp   _trampoline.bank3.ret ; Longjump
-pane.cmdb.hide.vector:
-        data  vec.21
-
-
-***************************************************************
 * Stub for "pane.cmdb.draw"
 * bank3 vec.22
 ********|*****|*********************|**************************
@@ -999,6 +988,17 @@ pane.colorscheme.load:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.load.vector:
         data  vec.41
+
+
+***************************************************************
+* Stub for "pane.cmdb.hide"
+* bank4 vec.49
+********|*****|*********************|**************************
+pane.cmdb.hide:
+        mov   @pane.cmdb.hide.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.cmdb.hide.vector:
+        data  vec.49
 
 
 ***************************************************************

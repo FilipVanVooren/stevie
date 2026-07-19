@@ -38,7 +38,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 4: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
+* ROM 4: Vectors 33-64 
 *--------------------------------------------------------------
 vec.33  data  pane.topline           ; Draw topline
 vec.34  data  pane.botline           ; Draw bottom line
@@ -51,12 +51,12 @@ vec.40  data  pane.colorscheme.cycle ; Cycle through color schemes
 vec.41  data  pane.colorscheme.load  ; Load color scheme
 vec.42  data  pane.colorscheme.botline
 vec.43  data  pane.colorscheme.index ; Get address of color scheme
-vec.44  data  cpu.crash              ;
-vec.45  data  cpu.crash              ;
+vec.44  data  pane.show_hintx        ; Show or hide hint (register version)
+vec.45  data  error.display          ;
 vec.46  data  cpu.crash              ;
 vec.47  data  cpu.crash              ;
 vec.48  data  cpu.crash              ;
-vec.49  data  cpu.crash              ;
+vec.49  data  pane.cmdb.hide         ;
 vec.50  data  pane.filebrowser       ; File browser
 vec.51  data  pane.filebrowser.hilight
 vec.52  data  pane.filebrowser.colbar

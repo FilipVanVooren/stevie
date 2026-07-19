@@ -39,6 +39,9 @@ dialog.goto:
 
         li    tmp0,txt.keys.goto
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.goto
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers              
         ;------------------------------------------------------
         ; Clear command
         ;------------------------------------------------------

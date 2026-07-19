@@ -74,12 +74,15 @@ dialog.clipboard.setup:
         mov   tmp0,@cmdb.panhint2   ; / 
 
         bl    @cmdb.cmd.clear       ; Clear current command
-        li    tmp0,txt.keys.clipboard
+        li    tmp0,txt.keys.clipdev
         ;-------------------------------------------------------
         ; Show dialog
         ;-------------------------------------------------------
 dialog.clipboard.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.clipboard
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers        
 
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------

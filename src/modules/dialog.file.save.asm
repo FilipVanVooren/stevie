@@ -98,6 +98,10 @@ dialog.save.header:
         ;-------------------------------------------------------
 dialog.save.cursorshape:
         mov   tmp0,@cmdb.pankeys    ; Save keylist in status line
+
+        li    tmp0,col.keys.save1
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+
         bl    @pane.cursor.blink    ; Show cursor
         ;-------------------------------------------------------
         ; Show file browser

@@ -46,6 +46,9 @@ dialog.append.setup:
         ;-------------------------------------------------------
 dialog.append.keylist:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.append
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers        
         ;-------------------------------------------------------
         ; Set command line
         ;-------------------------------------------------------

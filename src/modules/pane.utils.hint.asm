@@ -17,6 +17,9 @@
 *--------------------------------------------------------------
 * Register usage
 * tmp0,tmp1,tmp2,tmp3
+*--------------------------------------------------------------
+* Remarks
+* Must be located in same bank where data.dialogs is included!
 ********|*****|*********************|**************************
 pane.show_hintx:
         .pushregs 3                 ; Push return address and registers on stack

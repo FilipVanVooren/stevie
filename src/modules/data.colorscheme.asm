@@ -32,8 +32,8 @@
 * ; Word 4
 * ; Q  MSB  high-nibble    Foreground color bottom line
 * ; R  LSB  low-nibble     Background color bottom line
-* ; S  MSB  high-nibble   
-* ; T  LSB  low-nibble     
+* ; S  MSB  high-nibble    Forground color key marker
+* ; T  LSB  low-nibble     Background color key marker
 *
 * ; Colors
 * ; 0  Transparant
@@ -56,7 +56,7 @@
 tv.colorscheme.table:
         ;      0     2     4     6     8
         ;      ABCD  EFGH  IJKL  MNOP  QRST ; 
-        data  >f41e,>f1f1,>1b1f,>7111,>1700 ; 1 White on blue with cyan (1)        
+        data  >f41e,>f1f1,>1b1f,>7111,>178f ; 1 White on blue with cyan (1)        
         data  >21f0,>21ff,>f112,>21ff,>1c00 ; 2  Dark green on black
         data  >a11a,>f0ff,>1f1a,>f1ff,>1a00 ; 3  Dark yellow on black
         data  >1e1e,>1e11,>1ee1,>1e11,>e100 ; 4  Black on grey

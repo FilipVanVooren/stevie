@@ -50,6 +50,9 @@ dialog.cart.fg99.setup:
         li    tmp0,txt.keys.cart.fg99
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        li    tmp0,col.keys.cart.fg99
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+
         bl    @pane.cursor.blink    ; Blink cursor
 
         bl    @cmdb.cmd.clear       ; Clear current command

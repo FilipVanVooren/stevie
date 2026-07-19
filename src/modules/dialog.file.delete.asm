@@ -46,6 +46,9 @@ dialog.delete.setup:
 dialog.delete.keylist:
         li    tmp0,txt.keys.default1
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
+
+        li    tmp0,col.keys.default1
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers               
         ;-------------------------------------------------------
         ; Set filename (1) 
         ;-------------------------------------------------------

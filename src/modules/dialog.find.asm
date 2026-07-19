@@ -42,6 +42,9 @@ dialog.find:
         li    tmp0,txt.keys.find
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        li    tmp0,col.keys.find
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers              
+
         bl    @cpym2m
               data edb.srch.str,cmdb.cmdall,80
                                     ; Set input value to search string

@@ -44,6 +44,9 @@ dialog.shortcuts:
         li    tmp0,txt.keys.shortcuts
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
+        li    tmp0,col.keys.shortcuts
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+
         bl    @pane.cursor.hide     ; Hide cursor
         ;-------------------------------------------------------
         ; Exit

@@ -25,7 +25,7 @@ vec.17  data  dialog.font           ; Dialog "Configure font"
 vec.18  data  dialog.run            ; Dialog "Run program image (EA5)"
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
 vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
-vec.21  data  pane.cmdb.hide        ; Hide command buffer pane
+vec.21  data  cpu.crash             ;
 vec.22  data  pane.cmdb.draw        ; Draw content in command
 vec.23  data  cpu.crash             ;
 vec.24  data  cmdb.refresh_prompt   ; Refresh command line
@@ -38,7 +38,7 @@ vec.30  data  dialog.main           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 3: Vectors 33-64 (DEPRECATED! WILL BE REMOVED)
+* ROM 3: Vectors 33-64 
 *--------------------------------------------------------------
 vec.33  data  cmdb.cfg.fname        ; Configure filename
 vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print
@@ -55,7 +55,7 @@ vec.44  data  dialog.delete         ; Dialog "Delete file"
 vec.45  data  dialog.cart.fg99      ; Dialog "FinalGROM 99 Cartridge"
 vec.46  data  cpu.crash             ;
 vec.47  data  cpu.crash             ;
-vec.48  data  error.display         ; Show error message
+vec.48  data  cpu.crash             ;
 vec.49  data  cpu.crash             ;
 vec.50  data  cpu.crash             ;
 vec.51  data  cpu.crash             ;
