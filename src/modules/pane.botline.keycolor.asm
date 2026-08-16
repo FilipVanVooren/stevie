@@ -17,12 +17,11 @@
 * tmp0 = pointer to keycolors array
 * tmp1 = TAT byte (final color to write)
 * tmp2 = Y<<8 base
-* tmp3 = X position
+* tmp3 = X position / temp
 * tmp4 = repeat count
-* tmp5 = temporary / address calc
 ********|*****|*********************|**************************
 pane.botline.keycolor:
-        .pushregs 6                 ; Push return address and registers on stack
+        .pushregs 5                 ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Get pointer to key color array
         ;------------------------------------------------------
@@ -34,15 +33,14 @@ pane.botline.keycolor:
         ;------------------------------------------------------
         bl    @pane.colorscheme.index
         ; Compose final TAT byte from QRST: FG=S (high nibble of low byte), BG=T (low nibble)
-        mov   @outparm5,tmp5        ; tmp5 = QRST
-        andi  tmp1,>0000            ; clear tmp1
-        andi  tmp5,>00f0            ; isolate S in high nibble of low byte
-        srl   tmp5,4                ; S as low nibble
-        sla   tmp5,4                ; S<<4 in tmp5
+        mov   @outparm5,tmp3        ; tmp3 = QRST (temp)
+        andi  tmp3,>00f0            ; isolate S in high nibble
+        srl   tmp3,4                ; S as low nibble
+        sla   tmp3,4                ; S<<4 in tmp3
         mov   @outparm5,tmp1        ; tmp1 = QRST (reload)
         andi  tmp1,>000f            ; tmp1 = T (low nibble)
-        soc   tmp5,tmp1            ; tmp5 = S<<4 | T
-        mov   tmp5,tmp1            ; tmp1 = final TAT byte (ready for xvputb)
+        soc   tmp3,tmp1             ; tmp3 = S<<4 | T
+        mov   tmp3,tmp1             ; tmp1 = final TAT byte (ready for xvputb)
         ; Precompute Y<<8 base in tmp2
         li    tmp2,pane.botrow
         sla   tmp2,8
@@ -60,18 +58,16 @@ pane.botline.keycolor.loop:
         ; If repeat count is zero, skip
         ci    tmp4,0
         jeq   pane.botline.keycolor.loop
-        ; Prepare base Y<<8 in tmp1 (precomputed)
-        ; tmp1 already contains Y<<8
-        ; tmp2 contains final TAT byte
+        ; tmp2 contains Y<<8 base, tmp1 contains TAT byte
         ; Loop to write TAT to consecutive X positions
 pane.botline.keycolor.repeat_loop:
         ; Save pointer tmp0 on stack because yx2pnt returns result in tmp0
         dect  stack
         mov   tmp0,*stack
-        ; Build WYX value with Y=pane.botrow and X=tmp3
-        mov   tmp2,tmp5            ; tmp5 = working copy of Y<<8
-        a     tmp5,tmp3            ; tmp5 = (Y<<8) + Xpos
-        mov   tmp5,@wyx            ; Set global WYX
+        ; Build WYX value with Y=pane.botrow and X=tmp3 using tmp0 as temp
+        mov   tmp2,tmp0            ; tmp0 = Y<<8
+        a     tmp0,tmp3            ; tmp0 = (Y<<8) + Xpos
+        mov   tmp0,@wyx            ; Set global WYX
         bl    @yx2pnt              ; Calculate VDP address from @WYX, result in tmp0
         ai    tmp0,vdp.tat.base    ; Add TAT base
         ; tmp1 already contains TAT byte (computed earlier)
@@ -89,4 +85,4 @@ pane.botline.keycolor.done:
         ; Exit
         ;------------------------------------------------------
 pane.botline.keycolor.exit:
-        .popregs 6                 ; Pop registers and return to caller
+        .popregs 5                 ; Pop registers and return to caller
