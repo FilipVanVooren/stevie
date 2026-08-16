@@ -96,6 +96,7 @@ main:
         ; Command buffer handling
         ;-----------------------------------------------------------------------
         copy  "pane.cmdb.hide.asm"      ; Hide command buffer pane        
+        copy  "rom.stubs.bank4_extra.asm" ; Extra stubs required by bank4 (predeclares)
         copy  "pane.cmdb.show.asm"      ; Show command buffer pane
         ;-----------------------------------------------------------------------
         ; Screen panes

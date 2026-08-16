@@ -473,7 +473,7 @@ pane.show_hintx.vector:
 ********|*****|*********************|**************************
 pane.cmdb.show:
         mov   @pane.cmdb.show.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 pane.cmdb.show.vector:
         data  vec.59
 
