@@ -936,6 +936,17 @@ pane.botline.vector:
 
 
 ***************************************************************
+* Stub for "pane.botline.keycolor"
+* bank4 vec.44
+********|*****|*********************|**************************
+pane.botline.keycolor:
+        mov   @pane.botline.keycolor.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.botline.keycolor.vector:
+        data  vec.44
+
+
+***************************************************************
 * Stub for "pane.errline.show"
 * bank4 vec.35
 ********|*****|*********************|**************************
