@@ -17,7 +17,7 @@
 * tmp0,tmp1,tmp2,tmp3,tmp4
 ********|*****|*********************|**************************
 pane.botline.keycolor:
-        .pushregs 2                ; Push return address and registers on stack
+        .pushregs 5                ; Push return address and registers on stack
         ;------------------------------------------------------
         ; Get pointer to key color array
         ;------------------------------------------------------
@@ -29,11 +29,9 @@ pane.botline.keycolor:
         ;------------------------------------------------------
         bl    @pane.colorscheme.index
         ; Get key-marker default background nibble (T)
-        mov   @outparm5,tmp1        ; tmp1 = QRST
-        andi  tmp1,>00ff            ; tmp1 = LSB = QRST LSB = S,T in nibbles
-        andi  tmp2,tmp2             ; clear tmp2
-        mov   tmp1,tmp2
-        andi  tmp2,>000f            ; tmp2 = T (background nibble)
+        ; Extract T (background nibble for key markers) from outparm5 (QRST)
+        mov   @outparm5,tmp2        ; tmp2 = QRST
+        andi  tmp2,>000f            ; tmp2 = T (low nibble)
         ;------------------------------------------------------
         ; Loop through array of (X,color) pairs
         ;------------------------------------------------------
@@ -64,4 +62,4 @@ pane.botline.keycolor.done:
         ; Exit
         ;------------------------------------------------------
 pane.botline.keycolor.exit:
-        .popregs 2                 ; Pop registers and return to caller
+        .popregs 5                 ; Pop registers and return to caller
