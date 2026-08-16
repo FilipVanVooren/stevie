@@ -148,7 +148,7 @@ pane.colorscheme.botline:
 
 ***************************************************************
 * Stub for "pane.cmdb.show"
-* bank3 vec.20
+* bank4 vec.59
 ********|*****|*********************|**************************
 pane.cmdb.show:
         dect  stack
@@ -157,8 +157,8 @@ pane.cmdb.show:
         ; Call function in bank 3
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank3.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.59           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

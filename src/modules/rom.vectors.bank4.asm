@@ -51,7 +51,7 @@ vec.40  data  pane.colorscheme.cycle ; Cycle through color schemes
 vec.41  data  pane.colorscheme.load  ; Load color scheme
 vec.42  data  pane.colorscheme.botline
 vec.43  data  pane.colorscheme.index ; Get address of color scheme
-vec.44  data  pane.show_hintx        ; Show or hide hint (register version)
+vec.44  data  cpu.crash              ;
 vec.45  data  error.display          ;
 vec.46  data  cpu.crash              ;
 vec.47  data  cpu.crash              ;
@@ -66,7 +66,7 @@ vec.55  data  cpu.crash              ;
 vec.56  data  cpu.crash              ;
 vec.57  data  cpu.crash              ;
 vec.58  data  cpu.crash              ;
-vec.59  data  cpu.crash              ;
+vec.59  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
 vec.60  data  cpu.crash              ;
 vec.61  data  cpu.crash              ;
 vec.62  data  cpu.crash              ;

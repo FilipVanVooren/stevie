@@ -24,7 +24,7 @@ vec.16  data  dialog.goto           ; Dialog "Go to line"
 vec.17  data  dialog.font           ; Dialog "Configure font"
 vec.18  data  dialog.run            ; Dialog "Run program image (EA5)"
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
-vec.20  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
+vec.20  data  cpu.crash             ;
 vec.21  data  cpu.crash             ;
 vec.22  data  pane.cmdb.draw        ; Draw content in command
 vec.23  data  cpu.crash             ;

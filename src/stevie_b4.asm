@@ -96,6 +96,7 @@ main:
         ; Command buffer handling
         ;-----------------------------------------------------------------------
         copy  "pane.cmdb.hide.asm"      ; Hide command buffer pane        
+        copy  "pane.cmdb.show.asm"      ; Show command buffer pane
         ;-----------------------------------------------------------------------
         ; Screen panes
         ;-----------------------------------------------------------------------        

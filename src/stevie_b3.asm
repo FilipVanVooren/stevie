@@ -94,7 +94,6 @@ main:
         ; Command buffer handling
         ;-----------------------------------------------------------------------
         copy  "pane.utils.hint.asm"     ; Show hint in pane include in bank 3!)       
-        copy  "pane.cmdb.show.asm"      ; Show command buffer pane
         copy  "pane.cmdb.draw.asm"      ; Draw command buffer pane contents
         copy  "pane.cmdb.statlines.asm" ; Show status lines (Device path, SAMS free)
         copy  "cmdb.refresh_prompt.asm" ; Refresh command line prompt

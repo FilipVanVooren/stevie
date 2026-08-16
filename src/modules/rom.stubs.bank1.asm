@@ -469,13 +469,13 @@ pane.show_hintx.vector:
 
 ***************************************************************
 * Stub for "pane.cmdb.show"
-* bank3 vec.20
+* bank4 vec.59
 ********|*****|*********************|**************************
 pane.cmdb.show:
         mov   @pane.cmdb.show.vector,@trmpvector
-        jmp   _trampoline.bank3.ret ; Longjump
+        jmp   _trampoline.bank4.ret ; Longjump
 pane.cmdb.show.vector:
-        data  vec.20
+        data  vec.59
 
 
 ***************************************************************
