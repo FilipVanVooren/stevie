@@ -32,7 +32,7 @@ txt.stevie:
 ; Default key strings used in multiple dialogs
 ;--------------------------------------------------------------
 txt.keys.default1  stri 'F9 Back  F3 Clear  ^0 TIPI  ^1-9 DSK1-9  ^A-C SCS1-3  ^I-G IDE1-3  '
-col.keys.default1  byte 0,2,9,2,19,2,28,4,41,4,54,4,>00
+col.keys.default1  byte 0,2,9,2,19,2,28,4,41,4,54,4,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -71,11 +71,11 @@ txt.head.save2     byte 22,4,1
                    text ' Save block to file '
 txt.hint.save      stri 'Enter filename.'
 txt.keys.save1     stri 'F9 Back  F3 Clear  F6 Line term=off  FH Home  FL EOL'
-col.keys.save1     byte 0,2,9,2,19,2,37,2,46,2,>00
+col.keys.save1     byte 0,2,9,2,19,2,37,2,46,2,>ff
                    even          
 
 txt.keys.save2     stri 'F9 Back  F3 Clear  *F6 Line term=on  FH Home  FL EOL'
-col.keys.save2     byte 0,2,9,2,19,3,37,2,46,2,>00
+col.keys.save2     byte 0,2,9,2,19,3,37,2,46,2,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -156,7 +156,7 @@ txt.head.clipboard  byte 26,4,1
 txt.info.clipboard  stri 'Clipboard [1-3]?'
 txt.hint.clipboard  stri 'Press 1 to 3 to copy clipboard file, F7 to configure.'
 txt.keys.clipboard  stri 'F9 Back  F7 Configure'
-col.keys.clipboard  byte 0,2,9,2,>00
+col.keys.clipboard  byte 0,2,9,2,>ff
                     even
 
 ;--------------------------------------------------------------
@@ -166,7 +166,7 @@ txt.head.goto      byte 13,4,1
                    text ' Goto line '
 txt.hint.goto      stri 'Type destination line number (or 0 for EOF) and press ENTER.'
 txt.keys.goto      stri 'F9 Back  F3 Clear  ENTER Goto line'
-col.keys.goto      byte 0,2,9,2,19,5,>00
+col.keys.goto      byte 0,2,9,2,19,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -177,7 +177,7 @@ txt.head.unsaved   byte 19,4,1
 txt.info.unsaved   stri 'Warning! Unsaved changes in file.'
 txt.hint.unsaved   stri 'Press F6 or SPACE to proceed. Press ENTER to save file.'
 txt.keys.unsaved   stri 'F9 Back  F6/SPACE Proceed  ENTER Save'
-col.keys.unsaved   byte 0,2,9,8,27,5,>00
+col.keys.unsaved   byte 0,2,9,8,27,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -189,7 +189,7 @@ txt.info.about     stri ''
 txt.hint.about2    stri 'Report bugs and feature requests at:'
 txt.hint.about     stri 'https://github.com/FilipVanVooren/stevie'
 txt.keys.about     stri 'F9 Back   ENTER Close   SPACE Next Page'
-col.keys.about     byte 0,2,10,5,24,5,>00
+col.keys.about     byte 0,2,10,5,24,5,>ff
 
 txt.about.build    byte 69
                    text 'Build: '
@@ -210,7 +210,7 @@ pos.info.menulock  byte 0,7,15,22,34,44,51,61,>ff
                    even
 txt.hint.menu      stri ''
 txt.keys.menu      stri 'F9 Close menu  SPACE Close menu'
-col.keys.menu      byte 0,2,15,5,>00
+col.keys.menu      byte 0,2,15,5,>ff
                    even
 txt.keys.menu2     equ  txt.keys.menu
 col.keys.menu2     equ  col.keys.menu
@@ -228,7 +228,7 @@ txt.info.filelock  stri 'New   Open   Save   Delete   Print   Run   Catalog'
 pos.info.filelock  byte 0,6,13,20,29,37,43,>ff
                    even
 txt.keys.file      stri 'F9 Back  SPACE Close menu'
-col.keys.file      byte 0,2,15,5,>00
+col.keys.file      byte 0,2,15,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -241,7 +241,7 @@ pos.info.cart.type  byte 0,>ff
 txt.hint.cart.type2 stri 'Select currently inserted cartridge.'
 txt.hint.cart.type  stri ''
 txt.keys.cart.type  stri 'F9 Back  SPACE Close menu'
-col.keys.cart.type  byte 0,2,15,5,>00
+col.keys.cart.type  byte 0,2,15,5,>ff
                     even
 
 ;--------------------------------------------------------------
@@ -252,7 +252,7 @@ txt.head.cart.fg99   byte 16,4,1
 txt.hint.cart.fg99   stri 'Enter filename without .bin extension (max. 8 char).'
 txt.hint.cart.fg992  stri 'Load cartridge from SD card. Image must be in same directory as Stevie.'
 txt.keys.cart.fg99   stri 'F9 Back  F3 Clear  FH Home  FL EOL'
-col.keys.cart.fg99   byte 0,2,9,2,19,2,28,2,>00
+col.keys.cart.fg99   byte 0,2,9,2,19,2,28,2,>ff
                      even
 
 ;--------------------------------------------------------------
@@ -265,15 +265,15 @@ pos.info.basic     byte 20,34,48,>ff
 txt.hint.basic2    stri 'To return type END (F9) in TI Basic'
 txt.hint.basic     stri 'Press SPACE to unpack program from TI Basic session #? to line      '
 txt.keys.basic     stri 'F9 Back  F5 AutoUnpack  SPACE Unpack program'
-col.keys.basic     byte 0,2,9,2,24,5,>00
+col.keys.basic     byte 0,2,9,2,24,5,>ff
                    even
 
 txt.keys.basic2    stri 'F9 Back  *F5 AutoUnpack'
-col.keys.basic2    byte 0,2,9,3,>00
+col.keys.basic2    byte 0,2,9,3,>ff
                    even
 
 txt.keys.basic3    stri 'F9 Back'
-col.keys.basic3    byte 0,2,>00
+col.keys.basic3    byte 0,2,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -288,7 +288,7 @@ txt.info.conflock  stri 'Clipboard   Clock   Font   Line-Length'
 pos.info.conflock  byte 0,14,20,27,>ff
                    even
 txt.keys.config    stri 'F9 Back  SPACE Close menu'
-col.keys.config    byte 0,2,15,5,>00
+col.keys.config    byte 0,2,15,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -298,7 +298,7 @@ txt.head.clipdev   byte 23,4,1
                    text ' Configure clipboard '
 txt.hint.clipdev   stri 'Give device, path and filename prefix of clipboard file.'
 txt.keys.clipdev   stri 'F9 Back  F3 Clear'
-col.keys.clipdev   byte 0,2,9,2,>00
+col.keys.clipdev   byte 0,2,9,2,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -312,7 +312,7 @@ pos.info.font      byte 7,11,>ff
 
 txt.hint.font      stri 'Pick desired font 1-2.'
 txt.keys.font      stri 'F9 Back  SPACE Close menu'
-col.keys.font      byte 0,2,15,5,>00
+col.keys.font      byte 0,2,15,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -327,7 +327,7 @@ pos.info.shortcuts byte 0,9,16,23,32,37,>ff
 txt.hint.shortcuts stri ' '
                    even
 txt.keys.shortcuts stri 'F9 Back  SPACE Close menu'
-col.keys.shortcuts byte 0,2,15,5,>00
+col.keys.shortcuts byte 0,2,15,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -340,5 +340,5 @@ txt.hint.find      stri ''
 txt.hint.find2     stri 'Enter search string.'
                    even
 txt.keys.find      stri 'F9 Back  F3 Clear  FH Home  FL EOL'
-col.keys.find      byte 0,2,9,2,19,2,28,2,>00
+col.keys.find      byte 0,2,9,2,19,2,28,2,>ff
                    even

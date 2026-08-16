@@ -73,27 +73,27 @@ txt.m1             stri 'M1='
 txt.m2             stri 'M2='
                    even
 txt.keys.default   stri 'F9 Menu  ^H Help'
-col.keys.default   byte 0,2,9,2,>00
+col.keys.default   byte 0,2,9,2,>ff
                    even
 txt.keys.defaultb  stri 'F9 Menu  ^H Help  F0 Basic# '
-col.keys.defaultb  byte 0,2,9,2,18,2,>00
+col.keys.defaultb  byte 0,2,9,2,18,2,>ff
                    even
 txt.keys.defaultc  stri 'F9 Menu  ^H Help  ^, Prev  ^. Next  ^4 Done'
-col.keys.defaultc  byte 0,2,9,2,18,2,27,2,36,2,>00
+col.keys.defaultc  byte 0,2,9,2,18,2,27,2,36,2,>ff
                    even
 txt.keys.defaultd  stri 'F9 Menu  ^H Help  F0 Basic#   ^, Prev  ^. Next  ^4 Done'
-col.keys.defaultd  byte 0,2,9,2,18,2,30,2,39,2,48,2,>00
+col.keys.defaultd  byte 0,2,9,2,18,2,30,2,39,2,48,2,>ff
                    even
 
 txt.keys.block     stri 'F9 Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3 Clipboard'
-col.keys.block     byte 0,2,9,5,16,5,23,4,29,5,36,6,44,4,>00
+col.keys.block     byte 0,2,9,5,16,5,23,4,29,5,36,6,44,4,>ff
                    even
 txt.keys.blocklock stri 'F9 Exit  ^Save  ^Print  ^1-3 Clipboard'
-col.keys.blocklock byte 0,2,9,5,16,6,24,4,>00
+col.keys.blocklock byte 0,2,9,5,16,6,24,4,>ff
                    even
 
 txt.keys.basic1    stri 'F9 Back  F5 AutoUnpack  SPACE Unpack program'
-col.keys.basic1    byte 0,2,9,2,>00
+col.keys.basic1    byte 0,2,9,2,>ff
                    even
 txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110

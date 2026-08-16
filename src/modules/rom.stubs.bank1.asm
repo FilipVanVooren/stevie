@@ -743,7 +743,7 @@ fb.restore.vector:
 ********|*****|*********************|**************************
 fb.refresh:
         mov   @fb.refresh.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 fb.refresh.vector:
         data  vec.8
 
@@ -936,17 +936,6 @@ pane.botline.vector:
 
 
 ***************************************************************
-* Stub for "pane.botline.keycolor"
-* bank4 vec.44
-********|*****|*********************|**************************
-pane.botline.keycolor:
-        mov   @pane.botline.keycolor.vector,@trmpvector
-        jmp   _trampoline.bank4.ret ; Longjump
-pane.botline.keycolor.vector:
-        data  vec.44
-
-
-***************************************************************
 * Stub for "pane.errline.show"
 * bank4 vec.35
 ********|*****|*********************|**************************
@@ -999,6 +988,17 @@ pane.colorscheme.load:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.load.vector:
         data  vec.41
+
+
+***************************************************************
+* Stub for "pane.botline.keycolor"
+* bank4 vec.44
+********|*****|*********************|**************************
+pane.botline.keycolor:
+        mov   @pane.botline.keycolor.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.botline.keycolor.vector:
+        data  vec.44
 
 
 ***************************************************************
