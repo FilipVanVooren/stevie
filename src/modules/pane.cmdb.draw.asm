@@ -251,6 +251,8 @@ pane.cmdb.draw.keys:
                                     ; \ i  parm1 = YX position
                                     ; | i  parm2 = Pointer to string with hint
                                     ; / i  parm3 = Pad length
+
+        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors                                    
         ;------------------------------------------------------
         ; Display time & date
         ;------------------------------------------------------

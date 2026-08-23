@@ -100,7 +100,7 @@ main:
         copy  "cmdb.cmd.asm"            ; Command line handling
         copy  "cmdb.cmd.set.asm"        ; Set command line to preset value
         copy  "cmdb.cmd.preset.asm"     ; Preset shortcuts in dialogs
-        copy  "cmdb.cfg.fname.asm"      ; Configure filename
+        copy  "cmdb.cfg.fname.asm"      ; Configure filename 
         ;-----------------------------------------------------------------------
         ; Dialog toggles
         ;-----------------------------------------------------------------------

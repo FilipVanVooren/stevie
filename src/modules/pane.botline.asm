@@ -162,26 +162,26 @@ pane.botline.show_keys.default:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.defaultc  
-                                    ; Show default keys, including search keys
+                                     ; Show default keys, including search keys
 
         bl    @hchar
               byte pane.botrow,43,32,21
-              data EOL              ; Remove any leftover junk after key markers        
+              data EOL               ; Remove any leftover junk after key markers        
 
-        bl    @pane.botline.keycolor   ; Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors
         jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Default keys only
         ;------------------------------------------------------
 !       bl    @putat
               byte pane.botrow,0
-              data txt.keys.default ; Show default keys only
+              data txt.keys.default  ; Show default keys only
 
         bl    @hchar
               byte pane.botrow,16,32,32
-              data EOL              ; Remove any leftover junk after key markers
+              data EOL               ; Remove any leftover junk after key markers
 
-        bl    @pane.botline.keycolor   ; Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors
         ;------------------------------------------------------
         ; Show vertical lines
         ;------------------------------------------------------

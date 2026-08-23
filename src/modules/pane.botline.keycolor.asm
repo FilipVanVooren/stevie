@@ -33,8 +33,8 @@ pane.botline.keycolor:
         ;------------------------------------------------------
         bl    @pane.colorscheme.index ; \ Compose final TAT byte from QRST: 
                                       ; / FG=S (high nibble of low byte), BG=T (low nibble)
-        mov   @outparm5,tmp3          ; tmp3 = QRST
-        sla   tmp3,8                  ; LSB to MSB   
+        mov   @outparm5,tmp3          ; \ tmp3 = QRST
+        andi  tmp3,>00ff              ; / Only keep ST
         ;------------------------------------------------------
         ; Loop through array of (X,repeat) pairs
         ; Each entry: X pos (byte), repeat count (byte). Terminator: >ff
@@ -58,14 +58,9 @@ pane.botline.keycolor.dump.tat:
         dect  stack
         mov   tmp2,*stack           ; Push tmp2
 
-        mov   @pane.botline,tmp0    ; Get target line
-        li    tmp1,colrow           ; Columns per row (spectra2)
-        mpy   tmp0,tmp1             ; Calculate VDP address (results in tmp2!)
+        li    tmp0,vdp.botrow.tat   ; \ Get TAT address of bottom row
+        a     tmp4,tmp0             ; / Add X position
 
-        mov   tmp2,tmp0             ; Set VDP start address
-        ai    tmp0,vdp.tat.base     ; Add TAT base address
-
-        a     tmp4,tmp0             ; Add X position
         mov   tmp3,tmp1             ; Get color combination
         mov   *stack,tmp2           ; Get repeat count 
 

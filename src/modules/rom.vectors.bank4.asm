@@ -51,7 +51,7 @@ vec.40  data  pane.colorscheme.cycle ; Cycle through color schemes
 vec.41  data  pane.colorscheme.load  ; Load color scheme
 vec.42  data  pane.colorscheme.botline
 vec.43  data  pane.colorscheme.index ; Get address of color scheme
-vec.44  data  pane.botline.keycolor ; Colorize key markers
+vec.44  data  pane.botline.keycolor  ; Colorize key markers
 vec.45  data  error.display          ;
 vec.46  data  cpu.crash              ;
 vec.47  data  cpu.crash              ;

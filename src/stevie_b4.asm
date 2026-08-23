@@ -103,7 +103,8 @@ main:
         copy  "pane.topline.asm"      ; Top line
         copy  "pane.botline.asm"      ; Bottom line
         copy  "pane.botline.busy.asm" ; Bottom line busy indicator        
-        copy  "pane.botline.keycolor.asm" ; Colorize key markers for bottom line
+        copy  "pane.botline.keycolor.asm" 
+                                      ; Colorize key markers for bottom line
         copy  "pane.errline.asm"      ; Error line
         copy  "error.display.asm"     ; Show error message                        
         ;-----------------------------------------------------------------------

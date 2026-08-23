@@ -47,7 +47,7 @@ dialog.main:
         mov   tmp0,@cmdb.paninfo    ; Info message instead of input prompt
 
         li    tmp0,pos.info.menu
-        mov   tmp0,@cmdb.panmarkers ; Show letter markers
+        mov   tmp0,@cmdb.panmarkers ; Show letter markers        
         ;-------------------------------------------------------
         ; Show Status lines
         ;-------------------------------------------------------
@@ -65,6 +65,9 @@ dialog.main.statlines:
                                     ; Remove filepicker color bar
                                     ; i \  @cat.barpos = YX position color bar
                                     ;   / 
+
+        li    tmp0,col.keys.menu
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers                                    
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

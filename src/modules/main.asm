@@ -103,6 +103,9 @@ main.continue:
         clr   @parm2                ; Don't skip colorizing marked lines
         clr   @parm3                ; Colorize all panes
 
+        li    tmp0,col.keys.default
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+
         bl    @pane.colorscheme.load
                                     ; Reload color scheme
                                     ; \ i  @parm1 = Skip screen off if >FFFF

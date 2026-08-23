@@ -7,13 +7,10 @@
 * Video mode configuration (stevie) - Graphics mode 48x80
 *--------------------------------------------------------------
 vdp.sit.base              equ  >0000   ; VDP SIT base address
-vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 48 rows
+vdp.sit.size              equ  60*80   ; VDP SIT size 80 columns, 60 rows
 vdp.tat.base              equ  >12c0   ; VDP TAT base address
 vdp.tat.size              equ  60*80   ; VDP TAT size 80 columns, 60 rows
 vdp.pdt.base              equ  >2800   ; VDP PDT base address
-
-vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
-vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
 
 *--------------------------------------------------------------
 * Video mode configuration (stevie)
@@ -22,6 +19,11 @@ cmdb.rows                 equ  12      ; Number of rows in command buffer
 pane.botrow               equ  59      ; Bottom row on screen
 colrow                    equ  80      ; Columns per row
 device.f18a               equ  1       ; F18a/PICO9918 on
+
+vdp.fb.toprow.sit         equ  vdp.sit.base + >50   ; VDP SIT 1st Framebuf row
+vdp.fb.toprow.tat         equ  vdp.tat.base + >50   ; VDP TAT 1st Framebuf row
+vdp.botrow.sit            equ  vdp.sit.base + vdp.sit.size - colrow ; Bottom row TAT position
+vdp.botrow.tat            equ  vdp.tat.base + vdp.tat.size - colrow ; Bottom row TAT position
 
 *--------------------------------------------------------------
 * VDP memory setup for file handling

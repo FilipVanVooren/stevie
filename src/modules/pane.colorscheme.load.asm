@@ -95,12 +95,6 @@ pane.colorscheme.load:
         jeq   pane.colorscheme.cmdbpane
                                     ; Yes, shortcut jump to CMDB pane
         ;-------------------------------------------------------
-        ; MNOP) Write sprite color of line and column indicators to SAT
-        ;-------------------------------------------------------
-        ;
-        ; Deprecated - sprites no longer used
-        ;
-        ;-------------------------------------------------------
         ; Dump colors to VDP register 7 (text mode)
         ;-------------------------------------------------------
         mov   @tv.color,tmp0        ; Get work copy of colors ABCD

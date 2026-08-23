@@ -85,8 +85,6 @@
   },
     
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#0080ff",
-    "titleBar.activeForeground": "#000000"
   },
 
   "search.exclude": {
