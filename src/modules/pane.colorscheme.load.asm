@@ -304,7 +304,8 @@ pane.colorscheme.cursorcolor.fb:
         ; Prepare exit
         ;-------------------------------------------------------
 pane.colorscheme.load.prexit:
-        bl    @scron                ; Turn screen on
+        bl    @scron                 ; Turn screen on
+        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

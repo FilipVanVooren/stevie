@@ -19,22 +19,36 @@
 * tmp2 = Repeat count
 * tmp3 = Color combination for key marker (ST)
 * tmp4 = Copy of tmp1
+*--------------------------------------------------------------
+* Notes
+* 
 ********|*****|*********************|**************************
 pane.botline.keycolor:
         .pushregs 4                 ; Push return address and registers on stack
+        ;-------------------------------------------------------
+        ; Set SAMS page that has dialogs data
+        ;-------------------------------------------------------
+        bl    @sams.page.set        ; Set SAMS page
+              data >0002,>b000      ; \ i  p1  = SAMS page number
+                                    ; / i  p2  = Memory map address
+
+        bl    @sams.page.set        ; Set SAMS page
+              data >0003,>c000      ; \ i  p1  = SAMS page number
+                                    ; / i  p2  = Memory map address        
         ;------------------------------------------------------
         ; Get pointer to key color array
         ;------------------------------------------------------
-        mov   @cmdb.keycolors,tmp0       ; tmp0 = pointer to byte array (X,count,...,>ff)
-        jeq   pane.botline.keycolor.exit ; Exit early on null pointer
+        mov   @cmdb.keycolors,tmp0         ; tmp0 = pointer to byte array (X,count,...,>ff)
+        jeq   pane.botline.keycolor.prexit ; Exit early on null pointer
         ;------------------------------------------------------
         ; Ensure we have current color scheme data available
         ; This fills @outparm1..@outparm5 where outparm5 contains QRST
         ;------------------------------------------------------
-        bl    @pane.colorscheme.index ; \ Compose final TAT byte from QRST: 
-                                      ; / FG=S (high nibble of low byte), BG=T (low nibble)
-        mov   @outparm5,tmp3          ; \ tmp3 = QRST
-        andi  tmp3,>00ff              ; / Only keep ST
+        bl    @pane.colorscheme.index 
+                                    ; \ Compose final TAT byte from QRST: 
+                                    ; / FG=S (high nibble of low byte), BG=T (low nibble)
+        mov   @outparm5,tmp3        ; \ tmp3 = QRST
+        andi  tmp3,>00ff            ; / Only keep ST
         ;------------------------------------------------------
         ; Loop through array of (X,repeat) pairs
         ; Each entry: X pos (byte), repeat count (byte). Terminator: >ff
@@ -43,7 +57,7 @@ pane.botline.keycolor.loop:
         movb  *tmp0+,tmp1           ; Read X position (byte)
         srl   tmp1,8                ; Move to LSB
         ci    tmp1,>ff              ; Check sentinel
-        jeq   pane.botline.keycolor.exit
+        jeq   pane.botline.keycolor.prexit
         mov   tmp1,tmp4             ; Backup tmp1
         movb  *tmp0+,tmp2           ; Read repeat count (byte)
         srl   tmp2,8                ; Move to LSB (repeat count)
@@ -74,6 +88,23 @@ pane.botline.keycolor.dump.tat:
         mov   *stack+,tmp0          ; Pop tmp0
 
         jmp   pane.botline.keycolor.loop
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+pane.botline.keycolor.prexit:
+        mov   @tv.sams.b000,tmp0    ; \ Get SAMS page
+        li    tmp1,>b000            ; /
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address        
+
+        mov   @tv.sams.c000,tmp0    ; \ Get SAMS page
+        li    tmp1,>c000            ; /
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address           
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

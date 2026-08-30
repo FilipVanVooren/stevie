@@ -5,7 +5,7 @@
 * ROM E: Vectors 1-32
 *--------------------------------------------------------------        
         aorg  bankx.vectab
-vec.1   data  cpu.crash             ;
+vec.1   data  rom.dialogs2ram       ; Copy dialogs data to ram
 vec.2   data  cpu.crash             ;
 vec.3   data  cpu.crash             ;
 vec.4   data  cpu.crash             ;

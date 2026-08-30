@@ -48,6 +48,8 @@ bankid  equ   bank3.rom             ; Set bank identifier to current bank
         aorg  >2000                 ; Relocate to >2000
         copy  "runlib.asm"
         copy  "ram.resident.asm"
+        aorg  >b000
+        copy  "data.dialogs.asm"   ; Relocate to >b000
         ;------------------------------------------------------
         ; Activate bank 1
         ;------------------------------------------------------
@@ -116,15 +118,14 @@ main:
         copy  "rom.stubs.bankx.asm"     ; Stubs to include in all banks
         ;-----------------------------------------------------------------------
         ; Program data
-        ;-----------------------------------------------------------------------
-        copy  "data.dialogs.asm"        ; Dialog strings used in bank 3
+        ;-----------------------------------------------------------------------        
         copy  "data.keymap.presets.asm" ; Shortcut presets in dialogs
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifge $, >7f50
               .error 'Aborted. Bank 3 cartridge program too large!'
-        .endif
+        .endif      
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
         ;-----------------------------------------------------------------------

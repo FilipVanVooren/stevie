@@ -10,9 +10,9 @@ for exact offsets and field names.
 
 | Address    |  SAMS  | Size | Purpose                                         |
 |------------|--------|------|-------------------------------------------------|
-| >2000-2fff |  #02   | 4096 | Resident spectra2 and Stevie modules            |
+| >2000-2fff |  #00   | 4096 | Resident spectra2 and Stevie modules            |
 |------------|--------|------|-------------------------------------------------|
-| >3000-3fff |  #03   | 4096 | Resident spectra2 and Stevie modules            |
+| >3000-3fff |  #01   | 4096 | Resident spectra2 and Stevie modules            |
 |------------|--------|------|-------------------------------------------------|
 | >a000-a0ff |  #04   |  256 | Stevie core 1 RAM                               |
 |            |        |      | >a006-a016 : parm1..parm9 (input parameters)    |
@@ -24,7 +24,8 @@ for exact offsets and field names.
 |            |        |      | >a064-a0b3 : timers (80 bytes)                  |
 |            |        |      | >a0b4-a0d3 : TI-Basic session management area   |
 |            |        |      | >a0d4-a0f9 : TI-Basic temporary/free area       |
-| >a100-a1ff |  #04   |  256 | Stevie core 2 RAM (RAM workbuffer at >a100)     |
+| >a100-a1ff |  #04   |  256 | Stevie core 2 RAM                               |
+|            |        |      | >a100-xxxx : RAM workbuffer                     | 
 | >a200-a2ff |  #04   |  256 | Shared Stevie editor structure (`tv.struct`)    |
 |            |        |      | `tv.sams.*`, color scheme, cursor, pane focus,  |
 |            |        |      | pointers to font, error msg, device path, ...   |
@@ -44,14 +45,11 @@ for exact offsets and field names.
 |            |        |      | current command buffer and pane header buffers  |
 | >a800-a8ff |  #04   |  256 | Stevie value stack (SP2 stack pointer R9)       |
 |            |        |      | Stack grows down from >a8ff towards >a800       |
-| >a900-a9ff |  #04   |  256 | FREE                                            |
-| >aa00-aaff |  #04   |  256 | FREE                                            |
-| >ab00-abff |  #04   |  256 | FREE                                            |
-| >ac00-acff |  #04   |  256 | FREE                                            |
-| >ad00-adff |  #04   |  256 | FREE                                            |
+| >a900-adff |  #04   | 1280 | FREE                                            |
 | >ae00-aeff |  #04   |  256 | Paged-out scratchpad memory (maps >8300-83ff)   |
 | >af00-afff |  #04   |  256 | Far-jump / cartridge bankswitch trampoline stack|
 |------------|--------|------|-------------------------------------------------|
+| >b000-bfff |  #02   | 4096 | Dialogs (Text, Positions, Key markers, Colors)  |
 | >b000-bfff | #10-1f | 4096 | Index / bankswitched pages (EA5 image, index)   |
 |------------|--------|------|-------------------------------------------------|
 | >c000-cfff | #30-xx | 4096 | Editor buffer pages (bankswitched via SAMS)     |
@@ -129,10 +127,11 @@ Actual allocation depends on the number of rows per screen.
 | >4000-47ff | 2048 |      |            | F18a extended memory               |
 
 Notes:
+
 - Using position-based Pattern Color Table of max 4800 bytes (60 * 80) at >12c0.
-- Sprite SAT table not used in text mode, >2580-27ff used for 
+- Sprite SAT table not used in text mode, >2580-27ff used for
   file PAB and record buffer.
-- File buffer header setup by TI-Disk Controller on startup   
+- File buffer header setup by TI-Disk Controller on startup
   [Docs](https://www.unige.ch/medecine/nouspikel/ti99/disks2.htm#ROM)
 
 ### Allocation of VDP tables
@@ -148,7 +147,7 @@ Notes:
 
 #### Color table
 
-| PCT   | rows | end (+1) | Size | Hex   | gpu            | 
+| PCT   | rows | end (+1) | Size | Hex   | gpu            |
 |-------|------|----------|------|-------|----------------|
 | >12c0 | 24   | >1a40    | 1920 | >780  | f18a, pico9918 |
 | >12c0 | 30   | >1c20    | 2400 | >960  | f18a, pico9918 |

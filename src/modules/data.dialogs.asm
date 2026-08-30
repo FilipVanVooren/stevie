@@ -1,29 +1,27 @@
 * FILE......: data.dialogs.asm
 * Purpose...: Strings used in dialogs
 
-
 ***************************************************************
 *                       Strings
 ***************************************************************
-
 txt.stevie:
         .ifeq vdpmode, 2480         ; F18a/PICO9918 24x80
-            text '  Stevie 2.0.5   '
+            text '  Stevie 2.0.6   '
             even
         .endif
 
         .ifeq vdpmode, 3080         ; F18a/PICO9918 30x80
-            text '  Stevie 2.0.5   '
+            text '  Stevie 2.0.6   '
             even
         .endif
 
         .ifeq vdpmode, 4880         ; PICO9918 48x80
-            text '  Stevie 2.0.5   '  
+            text '  Stevie 2.0.6   '  
             even
         .endif
 
         .ifeq vdpmode, 6080         ; PICO9918 60x80
-            text '  Stevie 2.0.5   '  
+            text '  Stevie 2.0.6   '  
             even
         .endif
 
@@ -194,7 +192,7 @@ col.keys.about     byte 0,2,10,5,24,5,>ff
 txt.about.build    byte 69
                    text 'Build: '
                    copy "buildstr.asm"
-                   text ' - Stevie 2.0.5 - (c)2018-2026 Filip Van Vooren '
+                   text ' - Stevie 2.0.6 - (c)2018-2026 Filip Van Vooren '
                    even
 
 ;--------------------------------------------------------------

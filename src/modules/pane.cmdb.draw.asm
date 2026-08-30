@@ -23,6 +23,16 @@
 pane.cmdb.draw:
         .pushregs 2                 ; Push return address and registers on stack
         ;------------------------------------------------------
+        ; Set SAMS page that has dialogs data
+        ;------------------------------------------------------
+        bl    @sams.page.set        ; Set SAMS page
+              data >0002,>b000      ; \ i  p1  = SAMS page number
+                                    ; / i  p2  = Memory map address
+
+        bl    @sams.page.set        ; Set SAMS page
+              data >0003,>c000      ; \ i  p1  = SAMS page number
+                                    ; / i  p2  = Memory map address        
+        ;------------------------------------------------------
         ; Command buffer header line
         ;------------------------------------------------------
         mov   @cmdb.panhead,@parm1  ; Get string to display
@@ -294,6 +304,22 @@ pane.cmdb.draw.promptcmd:
         mov   @waux1,tmp0           ; Flag set?
         jne   pane.cmdb.draw.exit   ; Yes, skip command line
         bl    @cmdb.refresh_prompt  ; Refresh command line
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+        mov   @tv.sams.b000,tmp0    ; \ Get SAMS page
+        li    tmp1,>b000            ; /
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address        
+
+        mov   @tv.sams.c000,tmp0    ; \ Get SAMS page
+        li    tmp1,>c000            ; /
+
+        bl    @xsams.page.set       ; Set SAMS page
+                                    ; \ i  tmp0 = SAMS page number
+                                    ; / i  tmp1 = Memory address           
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

@@ -67,6 +67,10 @@ main:
         aorg  kickstart.code2       ; >6000
         bl    @cpu.crash            ; Should never get here
         ;-----------------------------------------------------------------------
+        ; Dialogs
+        ;-----------------------------------------------------------------------             
+        copy  "rom.dialogs2ram.asm" ; Copy dialog data from rom to ram        
+        ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
         copy  "rom.stubs.banke.asm" ; Bank specific stubs
@@ -74,7 +78,9 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-        ; copy  "data.banke.asm"    ; Data for bank E
+dialogs equ   $                     ; Start of dialog data in rom       
+        copy  "data.dialogs.asm"    ; Dialogs data for all dialogs
+enddial equ   $                     ; End of dialog data in rom
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------

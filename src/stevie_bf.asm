@@ -76,7 +76,6 @@ main:
         ;-----------------------------------------------------------------------
         ; Program data
         ;-----------------------------------------------------------------------
-
   .ifeq vdpmode, 2480
         copy  "data.help.2480.asm"  ; Help dialog content 24x80 mode version
   .endif
@@ -89,12 +88,11 @@ main:
   .ifeq vdpmode, 6080
         copy  "data.help.6080.asm"  ; Help dialog content 60x80 mode version
   .endif
-
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifge $, >7f50
-              .error 'Aborted. Bank F cartridge program too large!'
+             .error 'Aborted. Bank F cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen

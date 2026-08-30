@@ -38,6 +38,15 @@ session-, SAMS banks are configured as follows:
   |--------|-------|-------|--------|--------|-------|-------|-------|
   |   >00  |  >01  |  >04  | >20-2f | >40-ff |  >05  |  >06  |  >07  |
 
+## Dialogs mode
+
+  SAMS pages #2 (>b000) and #3 (>c000( are activated while rendering 
+  a dialog menu (Main menu, File menu, ...)
+
+  |  >2000 | >3000 | >a000 | >b000 | >c000 | >d000 | >e000 | >f000 |
+  |--------|-------|-------|-------|-------|-------|-------|-------|
+  |   >00  |  >01  |  >04  |  >02  |  >03  |  >05  |  >06  |  >07  |
+
 ## Index reorganisation
 
   During index reorganization (e.g. when inserting/removing a line),
@@ -52,7 +61,7 @@ session-, SAMS banks are configured as follows:
   |--------|-------|-------|--------|-------|-------|-------|-------|
   |   >00  |  >01  |  >04  |   >20  |  >21  |  >22  |  >23  |  >24  |
 
-```
+```assembler
         bl    @_idx.sams.mapcolumn.on
                                     ; Index in continuous memory region
                                     ; b000 - ffff (5 SAMS pages)
@@ -70,7 +79,7 @@ SAMS banks are configured as follows:
 |--------|-------|-------|-------|-------|-------|-------|-------|
 |   >00  |  >01  |  >04  |  >10  |  >11  |  >12  |  >13  |  >07  |
 
-```
+```assembler
     bl  @sams.layout
         data mem.sams.external ; Load SAMS page layout for calling an
                                ; external program.

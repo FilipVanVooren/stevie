@@ -56,7 +56,7 @@ main.continue:
         ; Initialize high memory expansion
         ;------------------------------------------------------
         bl    @film
-              data >a000,00,>4f00   ; Clear a000-eeef
+              data >a000,00,>4f00   ; Clear a000-eeef        
         ;------------------------------------------------------
         ; Setup cursor, screen, etc.
         ;------------------------------------------------------
@@ -95,7 +95,11 @@ main.continue:
                                     ; Load SAMS pages for stevie
         bl    @tv.init              ; Initialize editor configuration
         bl    @tv.reset             ; Reset editor
-        bl    @dialog               ; Setup memory for dialogs stringa
+        bl    @dialog               ; Setup memory for shared dialogs stringa
+        ;------------------------------------------------------
+        ; Load dialogs data to ram
+        ;------------------------------------------------------
+        bl    @rom.dialogs2ram      ; Load dialogs into RAM area              
         ;------------------------------------------------------
         ; Load colorscheme and turn on screen
         ;------------------------------------------------------
