@@ -69,7 +69,9 @@ main:
         ;-----------------------------------------------------------------------
         ; Dialogs
         ;-----------------------------------------------------------------------             
-        copy  "rom.dialogs2ram.asm" ; Copy dialog data from rom to ram        
+        copy  "rom.dialogs2ram.asm"      ; Copy dialog data from rom to ram
+        copy  "mem.sams.dialogs.on.asm"  ; Activate SAMS pages #2 and 3
+        copy  "mem.sams.dialogs.off.asm" ; Deactivate SAMS pages #2 and 3 
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------

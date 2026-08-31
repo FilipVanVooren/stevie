@@ -226,7 +226,7 @@ txt.info.filelock  stri 'New   Open   Save   Delete   Print   Run   Catalog'
 pos.info.filelock  byte 0,6,13,20,29,37,43,>ff
                    even
 txt.keys.file      stri 'F9 Back  SPACE Close menu'
-col.keys.file      byte 0,2,15,5,>ff
+col.keys.file      byte 0,2,9,5,>ff
                    even
 
 ;--------------------------------------------------------------

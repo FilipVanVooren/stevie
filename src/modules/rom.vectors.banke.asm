@@ -6,8 +6,8 @@
 *--------------------------------------------------------------        
         aorg  bankx.vectab
 vec.1   data  rom.dialogs2ram       ; Copy dialogs data to ram
-vec.2   data  cpu.crash             ;
-vec.3   data  cpu.crash             ;
+vec.2   data  mem.sams.dialogs.on   ; Activate SAMS pages #2 and #3
+vec.3   data  mem.sams.dialogs.off  ; Deactivate SAMS pages #2 and #3
 vec.4   data  cpu.crash             ;
 vec.5   data  cpu.crash             ;
 vec.6   data  cpu.crash             ;

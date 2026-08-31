@@ -26,15 +26,9 @@
 pane.botline.keycolor:
         .pushregs 4                 ; Push return address and registers on stack
         ;-------------------------------------------------------
-        ; Set SAMS page that has dialogs data
-        ;-------------------------------------------------------
-        bl    @sams.page.set        ; Set SAMS page
-              data >0002,>b000      ; \ i  p1  = SAMS page number
-                                    ; / i  p2  = Memory map address
-
-        bl    @sams.page.set        ; Set SAMS page
-              data >0003,>c000      ; \ i  p1  = SAMS page number
-                                    ; / i  p2  = Memory map address        
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+        bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)
         ;------------------------------------------------------
         ; Get pointer to key color array
         ;------------------------------------------------------
@@ -91,20 +85,8 @@ pane.botline.keycolor.dump.tat:
         ;------------------------------------------------------
         ; Restore current SAMS pages
         ;------------------------------------------------------
-pane.botline.keycolor.prexit:
-        mov   @tv.sams.b000,tmp0    ; \ Get SAMS page
-        li    tmp1,>b000            ; /
-
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address        
-
-        mov   @tv.sams.c000,tmp0    ; \ Get SAMS page
-        li    tmp1,>c000            ; /
-
-        bl    @xsams.page.set       ; Set SAMS page
-                                    ; \ i  tmp0 = SAMS page number
-                                    ; / i  tmp1 = Memory address           
+pane.botline.keycolor.prexit:        
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)        
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

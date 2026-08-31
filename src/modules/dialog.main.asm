@@ -19,7 +19,11 @@
 * Notes
 ********|*****|*********************|**************************
 dialog.main:
-        .pushregs 4                 ; Push return address and registers on stack
+        .pushregs 0                 ; Push return address and registers on stack
+        ;-------------------------------------------------------
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+        bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000) 
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -67,9 +71,13 @@ dialog.main.statlines:
                                     ;   / 
 
         li    tmp0,col.keys.menu
-        mov   tmp0,@cmdb.keycolors  ; Color position for key markers                                    
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------
 dialog.main.exit:
-        .popregs 4                  ; Pop registers and return to caller
+        .popregs 0                  ; Pop registers and return to caller

@@ -448,6 +448,48 @@ vdp.cursor.tat.fb:
 
 
 ***************************************************************
+* Stub for "mem.sams.dialogs.on"
+* banke vec.2
+********|*****|*********************|**************************
+mem.sams.dialogs.on:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank E
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data banke.rom        ; | i  p0 = bank address
+              data vec.2            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
+* Stub for "mem.sams.dialogs.off"
+* banke vec.3
+********|*****|*********************|**************************
+mem.sams.dialogs.off:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        ;------------------------------------------------------
+        ; Call function in bank E
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data banke.rom        ; | i  p0 = bank address
+              data vec.3            ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        mov   *stack+,r11           ; Pop r11
+        b     *r11                  ; Return to caller
+
+
+***************************************************************
 * Stub for "dialog.help.content"
 * bankf vec.1
 ********|*****|*********************|**************************
