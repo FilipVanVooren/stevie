@@ -49,7 +49,6 @@ pane.botline.keycolor:
         ; Fill RAMBUF with normal bottom-line color combination
         ;------------------------------------------------------
         li    tmp0,rambuf           ; Address of RAM work buffer
-        mov   tmp4,tmp1             ; Fill byte = default bottom-line color
         li    tmp2,80               ; Bottom line is 80 chars wide
         bl    @xfilm                ; Fill RAM buffer with normal color
                                     ; i \  tmp0 = RAM start address
