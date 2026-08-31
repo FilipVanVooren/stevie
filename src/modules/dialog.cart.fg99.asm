@@ -21,13 +21,17 @@
 dialog.cart.fg99:
         .pushregs 0                 ; Push return address and registers on stack
         ;-------------------------------------------------------
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+        bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)         
+        ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp0        ; Editor dirty?
         jeq   dialog.cart.fg99.setup ; No, skip "Unsaved changes"
 
-        bl    @dialog.unsaved       ; Show dialog
-        jmp   dialog.cart.fg99.exit ; Exit early
+        bl    @dialog.unsaved         ; Show dialog
+        jmp   dialog.cart.fg99.prexit ; Exit early
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -61,6 +65,11 @@ dialog.cart.fg99.setup:
         ;-------------------------------------------------------
         bl    @cpym2m
               data def.fg99.fname,cmdb.cmdall,6
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+dialog.cart.fg99.prexit:
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)                   
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -21,6 +21,10 @@
 dialog.find:
         .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+        bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)         
+        ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------        
         li    tmp0,id.dialog.find
@@ -50,6 +54,10 @@ dialog.find:
                                     ; Set input value to search string
 
         bl    @pane.cursor.blink    ; Show cursor
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)        
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

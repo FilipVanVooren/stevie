@@ -8,6 +8,10 @@ dialog.help:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+        bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)         
+        ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
         li    tmp0,id.dialog.help
@@ -31,7 +35,11 @@ dialog.help:
         mov   tmp0,@cmdb.pankeys    ; Keylist in status line
 
         li    tmp0,col.keys.about
-        mov   tmp0,@cmdb.keycolors  ; Color position for key markers              
+        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)                      
         ;------------------------------------------------------
         ; Exit
         ;------------------------------------------------------

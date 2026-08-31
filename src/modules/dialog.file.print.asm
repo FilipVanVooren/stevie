@@ -28,9 +28,13 @@ dialog.print:
         bl    @edb.line.pack        ; Copy line to editor buffer
         clr   @fb.row.dirty         ; Current row no longer dirty
         ;-------------------------------------------------------
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+!       bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)            
+        ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-!       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?
         jeq   dialog.print.default  ; Yes, so show default dialog
         ;-------------------------------------------------------
         ; Setup dialog title
@@ -98,6 +102,10 @@ dialog.print.cmdline:
         ; Set cursor shape
         ;-------------------------------------------------------
         bl    @pane.cursor.blink    ; Show cursor
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)                  
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

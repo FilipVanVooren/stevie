@@ -239,7 +239,7 @@ pos.info.cart.type  byte 0,>ff
 txt.hint.cart.type2 stri 'Select currently inserted cartridge.'
 txt.hint.cart.type  stri ''
 txt.keys.cart.type  stri 'F9 Back  SPACE Close menu'
-col.keys.cart.type  byte 0,2,15,5,>ff
+col.keys.cart.type  byte 0,2,9,5,>ff
                     even
 
 ;--------------------------------------------------------------
@@ -267,7 +267,7 @@ col.keys.basic     byte 0,2,9,2,24,5,>ff
                    even
 
 txt.keys.basic2    stri 'F9 Back  *F5 AutoUnpack'
-col.keys.basic2    byte 0,2,9,3,>ff
+col.keys.basic2    byte 0,2,1,2,>ff
                    even
 
 txt.keys.basic3    stri 'F9 Back'
@@ -286,7 +286,7 @@ txt.info.conflock  stri 'Clipboard   Clock   Font   Line-Length'
 pos.info.conflock  byte 0,14,20,27,>ff
                    even
 txt.keys.config    stri 'F9 Back  SPACE Close menu'
-col.keys.config    byte 0,2,15,5,>ff
+col.keys.config    byte 0,2,9,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -310,7 +310,7 @@ pos.info.font      byte 7,11,>ff
 
 txt.hint.font      stri 'Pick desired font 1-2.'
 txt.keys.font      stri 'F9 Back  SPACE Close menu'
-col.keys.font      byte 0,2,15,5,>ff
+col.keys.font      byte 0,2,9,5,>ff
                    even
 
 ;--------------------------------------------------------------
@@ -325,7 +325,7 @@ pos.info.shortcuts byte 0,9,16,23,32,37,>ff
 txt.hint.shortcuts stri ' '
                    even
 txt.keys.shortcuts stri 'F9 Back  SPACE Close menu'
-col.keys.shortcuts byte 0,2,15,5,>ff
+col.keys.shortcuts byte 0,2,9,5,>ff
                    even
 
 ;--------------------------------------------------------------

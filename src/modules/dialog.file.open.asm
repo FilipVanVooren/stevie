@@ -21,13 +21,17 @@
 dialog.open:
         .pushregs 1                 ; Push return address and registers on stack
         ;-------------------------------------------------------
+        ; Set SAMS pages that has dialogs data
+        ;-------------------------------------------------------        
+        bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)             
+        ;-------------------------------------------------------
         ; Show dialog "Unsaved changes" if editor buffer dirty
         ;-------------------------------------------------------
         mov   @edb.dirty,tmp0       ; Editor dirty?
         jeq   dialog.open.setup     ; No, skip "Unsaved changes"
 
         bl    @dialog.unsaved       ; Show dialog
-        jmp   dialog.open.exit      ; Exit early
+        jmp   dialog.open.prexit    ; Exit early
         ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
@@ -103,6 +107,11 @@ dialog.open.cursor:
         ; Show file browser
         ;-------------------------------------------------------
         bl    @pane.filebrowser     ; Show file browser
+        ;------------------------------------------------------
+        ; Restore current SAMS pages
+        ;------------------------------------------------------
+dialog.open.prexit        
+        bl    @mem.sams.dialogs.off ; Turn off SAMS pages #2 (>b000) and #3 (>c000)     
         ;-------------------------------------------------------
         ; Exit
         ;-------------------------------------------------------

@@ -93,7 +93,7 @@ col.keys.blocklock byte 0,2,9,5,16,6,24,4,>ff
                    even
 
 txt.keys.basic1    stri 'F9 Back  F5 AutoUnpack  SPACE Unpack program'
-col.keys.basic1    byte 0,2,9,2,>ff
+col.keys.basic1    byte 0,2,9,2,24,5,>ff
                    even
 txt.alpha.down     data >020e,>0f00
 txt.vertline       data >0110
