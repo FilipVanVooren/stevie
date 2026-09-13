@@ -83,6 +83,11 @@ pane.botline.shortcuts:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.blocklock ; Show reduced shortcuts
+
+        li    tmp0,col.keys.blocklock ; \
+        mov   tmp0,@cmdb.keycolors    ; | Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor  ; /  
+
         jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Show all block shortcuts
@@ -91,6 +96,11 @@ pane.botline.shortcuts.all:
         bl    @putat
               byte pane.botrow,0
               data txt.keys.block     ; Show block shortcuts
+
+        li    tmp0,col.keys.block     ; \
+        mov   tmp0,@cmdb.keycolors    ; | Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor  ; /  
+
         jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Active TI Basic session?
@@ -114,11 +124,14 @@ pane.botline.show_keys.defaultd:
               data txt.keys.defaultd
                                     ; Show defaults + TI Basic + Matches
 
+        li    tmp0,col.keys.defaultd  ; \
+        mov   tmp0,@cmdb.keycolors    ; | Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor  ; /  
+
         bl    @hchar
               byte pane.botrow,58,32,6
               data EOL              ; Remove any leftover junk after key markers              
 
-        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors
         jmp   pane.botline.show_keys.setbasic
         ;------------------------------------------------------
         ; Default Keys, TI Basic Session ID
@@ -129,11 +142,13 @@ pane.botline.show_keys.defaultb
               data txt.keys.defaultb
                                     ; Show defaults + TI Basic
 
+        li    tmp0,col.keys.defaultb  ; \
+        mov   tmp0,@cmdb.keycolors    ; | Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor  ; /  
+
         bl    @hchar
               byte pane.botrow,28,32,36
               data EOL              ; Remove any leftover junk after key markers              
-
-        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors
         ;------------------------------------------------------
         ; Add TI Basic session ID to string
         ;------------------------------------------------------
@@ -164,11 +179,14 @@ pane.botline.show_keys.default:
               data txt.keys.defaultc  
                                      ; Show default keys, including search keys
 
+        li    tmp0,col.keys.defaultc  ; \
+        mov   tmp0,@cmdb.keycolors    ; | Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor  ; /  
+
         bl    @hchar
               byte pane.botrow,43,32,21
               data EOL               ; Remove any leftover junk after key markers        
 
-        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors
         jmp   pane.botline.vertlines
         ;------------------------------------------------------
         ; Default keys only
@@ -177,11 +195,13 @@ pane.botline.show_keys.default:
               byte pane.botrow,0
               data txt.keys.default  ; Show default keys only
 
+        li    tmp0,col.keys.default   ; \
+        mov   tmp0,@cmdb.keycolors    ; | Colorize key markers using cmdb.keycolors
+        bl    @pane.botline.keycolor  ; /  
+
         bl    @hchar
               byte pane.botrow,16,32,32
               data EOL               ; Remove any leftover junk after key markers
-
-        bl    @pane.botline.keycolor ; Colorize key markers using cmdb.keycolors
         ;------------------------------------------------------
         ; Show vertical lines
         ;------------------------------------------------------
