@@ -20,7 +20,7 @@ mem.sams.dialogs.on:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Set SAMS pages that has dialogs data
+        ; Set SAMS pages that have dialog data
         ;------------------------------------------------------
         bl    @sams.page.set        ; Set SAMS page
               data >0002,>b000      ; \ i  p1  = SAMS page number

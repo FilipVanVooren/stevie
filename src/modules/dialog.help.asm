@@ -8,7 +8,7 @@ dialog.help:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;-------------------------------------------------------
-        ; Set SAMS pages that has dialogs data
+        ; Set SAMS pages that have dialog data
         ;-------------------------------------------------------        
         bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)         
         ;-------------------------------------------------------
