@@ -194,6 +194,27 @@ tib.run.return.stevie:
         ; Refresh Basic dialog
         ;------------------------------------------------------
 tib.run.return.refresh:
+        mov   @cmdb.visible,tmp0    ; Was BASIC started from its dialog?
+        jne   tib.run.return.dialog
+        ;------------------------------------------------------
+        ; FCTN-0 resumes BASIC directly from the editor. Do not
+        ; create an invisible BASIC dialog or stop its cursor.
+        ; Restore the cursor from the editor's logical position.
+        ;------------------------------------------------------
+        clr   @cmdb.dialog
+        clr   @tv.pane.focus        ; Editor has focus
+        mov   @fb.row,tmp0
+        sla   tmp0,8
+        soc   @fb.column,tmp0
+        mov   tmp0,@wyx
+
+        bl    @rom.farjump          ; Restart cursor blink in bank 1
+              data bank1.rom,vec.28,bankid
+
+        seto  @fb.status.dirty
+        jmp   tib.run.return.exit
+
+tib.run.return.dialog:
         bl    @dialog.basic         ; Refresh Basic dialog content
         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)   
         ;------------------------------------------------------

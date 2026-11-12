@@ -20,7 +20,8 @@ for exact offsets and field names.
 |            |        |      | >a026-a02b : keyboard flags / keycodes          |
 |            |        |      | >a02c-a031 : unpacked/packed uint16 workbuffers |
 |            |        |      | >a034      : trampoline vector                  |
-|            |        |      | >a036-a063 : free / temporary workspace         |
+|            |        |      | >a036-a043 : keyboard autorepeat state          |
+|            |        |      | >a044-a063 : free / temporary workspace         |
 |            |        |      | >a064-a0b3 : timers (80 bytes)                  |
 |            |        |      | >a0b4-a0d3 : TI-Basic session management area   |
 |            |        |      | >a0d4-a0f9 : TI-Basic temporary/free area       |

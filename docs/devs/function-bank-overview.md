@@ -142,6 +142,9 @@ This is the most mixed bank: it contains the TI-Basic session logic, memory layo
 
 These banks do not carry the bulk of Stevie editor logic. They are mostly placeholder banks, stub banks, or support tables.
 
+Bank 8 now holds `edkey.key.repeat`, the frame-paced keyboard autorepeat
+engine, at far-jump vector 1. The normal key dispatcher remains in bank 1.
+
 - `data.bank8.asm`, `data.bank9.asm`, `data.banka.asm`, `data.bankb.asm`, `data.bankc.asm`, `data.bankd.asm`, `data.banke.asm` — Spectra2 low-level / data: reserved bank data.
 - `rom.stubs.banka.asm`, `rom.stubs.bankb.asm`, `rom.stubs.bankc.asm`, `rom.stubs.bankd.asm`, `rom.stubs.banke.asm`, `rom.stubs.bankf.asm` — Spectra2 low-level: bank-specific stub vectors.
 - `rom.vectors.bank8.asm`, `rom.vectors.bank9.asm`, `rom.vectors.banka.asm`, `rom.vectors.bankb.asm`, `rom.vectors.bankc.asm`, `rom.vectors.bankd.asm`, `rom.vectors.banke.asm`, `rom.vectors.bankf.asm` — Spectra2 low-level: far-jump vectors.

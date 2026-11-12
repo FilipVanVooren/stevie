@@ -129,7 +129,14 @@ keycode2          equ  core1.top + 42  ; Previous key scanned
 uint16.unpacked   equ  core1.top + 44  ; Unpacked uint16 (len-prefixed string)
 uint16.packed     equ  core1.top + 50  ; Packed uint16 (2 bytes)
 trmpvector        equ  core1.top + 52  ; Vector trampoline (if p1|tmp1 = >ffff)
-core1.free1       equ  core1.top + 54  ; 54-99 **free**
+kb.repeat.key     equ  core1.top + 54  ; Last held key (LSB)
+kb.repeat.count   equ  core1.top + 56  ; Frames until next repeat
+kb.repeat.allow   equ  core1.top + 58  ; Current action may repeat (>ffff)
+kb.repeat.emit    equ  core1.top + 60  ; Key event ready (>ffff)
+kb.repeat.focus   equ  core1.top + 62  ; Pane at initial key press
+kb.repeat.dialog  equ  core1.top + 64  ; Dialog at initial key press
+kb.repeat.mods    equ  core1.top + 66  ; Physical FCTN/SHIFT/CTRL state
+core1.free1       equ  core1.top + 68  ; 68-99 **free**
 timers            equ  core1.top + 100 ; Timers (80 bytes)
 rom0_kscan_out    equ  keycode1        ; Where to store value of key pressed
 ;------------------------------------------------------------------------------
