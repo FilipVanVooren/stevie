@@ -3,6 +3,53 @@
 This local build adds autorepeat to upstream Stevie commit
 `2d470961f5c5a6d3bf6b9ba4438921f8c9c039a3`.
 
+Revision 9 fixes the corresponding line-deletion defects. Deleting from a
+2,048-line file needs the multi-page index path. For larger files, the
+spare index slot must be cleared before the text/framebuffer windows are
+restored. The old code cleared it afterward, so that address could refer
+to text instead of an index entry.
+
+The user's R8 attachment contains four NUL bytes in line 2039, replacing
+one space and `DEC` in `       DEC  R3`. With the actual XB Packer/DSR
+files, inserting five blank lines near that instruction then deleting two
+reproduces the same four-byte pattern. Revision 9 preserves the instruction
+and every other record, in memory and on save.
+
+The larger deletion tests also exposed an existing import-page problem:
+the progress callback can refresh the screen using another text page. The
+importer now checks and restores its write page before the next record.
+An import ending at 4,096 lines reproduces this in the 60-line build when
+the first progress refresh coincides with a new text-page allocation.
+
+Revision 8 fixes line-index insertion across a 2,048-line boundary. The
+single-page shift routine could write its final destination outside the
+index window, into editor text memory. Appending also bypassed the
+multi-page check. The index now maps multiple pages whenever the destination
+slot crosses a boundary, including an insertion at the end of a file.
+
+The user's exact CTRL-I failure was reproduced using the local 1,910-line
+XB Packer source and its 138-record DSR/GPL file. Record 120,
+`       BLWP @GPLLNK                Execute DSR LINK`, is the first record
+on a newly allocated text page. The final index shift cleared its length
+word, making that line blank in the buffer and saved file. Revision 8
+preserves it. The import file on disk was intact.
+
+CTRL-I now also commits a pending edit on the current row before mapping
+dialog pages and importing, so the refresh does not discard that edit.
+
+Revision 7 fixes saving an edited line before moving the cursor off it.
+The upstream Save dialog mapped its strings over the SAMS index window
+before committing the current line. The index cache could then leave an
+update in the dialog-data page instead of the real line index, losing the
+edit and corrupting dialog data. The line is now committed before either
+dialog page is mapped. Print already used this ordering.
+
+The failure reproduces with an ordinary CPU rate and with eight times as
+many CPU cycles per video frame, so overdrive is not required to trigger it.
+This is a controlled emulator timing stress test, not Classic99 itself.
+The user's separate report of invisible characters had not been reproduced
+in revision 7; revision 9 adds a matching four-NUL corruption case.
+
 Revision 6 fixes the command-field length used by Find. Appending a character
 previously counted it twice when updating the length prefix: entering `INSTAL`
 stored a seven-character query, including the following null byte. Find now
@@ -172,3 +219,54 @@ The FCTN-0 regression check fails on revision 4 at the second return with
 an invisible BASIC dialog (`cmdb.dialog=107`, `cmdb.visible=0`). The original
 1.9.10 image exhibits the same defect. Emulator checks do not establish
 that revision 5 resolves every symptom on the user's real hardware.
+
+The file-integrity regression test loads 4,000 D/V80 records with lengths
+from zero through 80 characters, saves unchanged, edits lines around SAMS
+index boundaries, and saves immediately from the dirty row. Every record
+is compared after every save, and both dialog-data pages must remain intact.
+It checks normal CPU timing and eight times as many CPU cycles per frame.
+
+```text
+node build/test_file_integrity.cjs --mode=6080 --cpu-factor=1
+node build/test_file_integrity.cjs --mode=6080 --cpu-factor=8
+```
+
+Revision 6 loses the edit on the current line in this test at either speed.
+Revision 7 passes all 56 save checks (seven per mode/speed combination),
+comparing 224,000 records in total. The keyboard, Find and BASIC regression
+suites are also rerun for every display mode by `build/validate_r7.py`.
+Revision 9 adds a matching reproduction for the invisible NUL characters
+found in the later attached source.
+
+The insertion regression tests compare every packed row immediately after
+CTRL-I and every saved record. Cases cover the 2,048/4,096-line boundaries,
+middle/end insertion, FCTN-8 line insertion, and pending current-row edits.
+The actual XB Packer/DSR files are also tested at both CPU factors in all
+display modes. The original files are read without modification.
+
+```text
+node build/test_file_insert.cjs --mode=6080
+node build/test_file_insert.cjs --mode=6080 --records=4095 --at=4095
+node build/test_file_insert.cjs --mode=6080 --dirty
+```
+
+`--base=PATH` and `--import=PATH` select existing TIFILES instead of synthetic
+records. `build/validate_r8.py BASE IMPORT` runs the insertion cases and all
+prior keyboard, Find, save-integrity and BASIC tests for every display mode.
+Revision 8 passes all 80 suites, including 36 insertion scenarios. The
+exact BLWP-line failure is covered with the original local files in all
+four modes at normal and accelerated CPU timing.
+
+The deletion tests also cover files at and above 2,048/4,096 lines,
+deletions at the beginning/end, and the exact DEC-to-NUL corruption pattern.
+
+```text
+node build/test_file_delete.cjs --mode=6080
+node build/test_file_delete.cjs --mode=6080 --records=3958 --extra-lines=0
+```
+
+`build/validate_r9.py BASE IMPORT` includes these cases alongside all prior
+regression suites. The actual source and import are read without modification.
+Revision 9 passes all 116 suites, including 32 deletion scenarios and 40
+insertion scenarios, across every display mode. The suite includes both
+normal and accelerated CPU timing for the actual-file corruption case.

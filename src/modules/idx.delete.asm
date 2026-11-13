@@ -77,9 +77,9 @@ idx.entry.delete.lastline:
 idx.entry.delete.reorg:
         mov   @parm2,tmp3           ; Get last line to reorganize
         ci    tmp3,2048
-        jle   idx.entry.delete.reorg.simple
-                                    ; Do simple reorg only if single
-                                    ; SAMS index page, otherwise complex reorg.
+        jlt   idx.entry.delete.reorg.simple
+                                    ; The source includes slot parm2, so
+                                    ; slot 2048 already needs a second page.
         ;------------------------------------------------------
         ; Complex index reorganization (multiple SAMS pages)
         ;------------------------------------------------------
@@ -98,10 +98,13 @@ idx.entry.delete.reorg.complex:
                                     ; \ i  tmp0 = Index offset
                                     ; / i  tmp2 = Loop count
 
+        clr   *tmp0                 ; Clear the spare slot while index pages
+                                    ; are still mapped. After restoring the
+                                    ; windows this address can be text RAM.
         bl    @_idx.sams.mapcolumn.off 
                                     ; Restore memory window layout
 
-        jmp   !
+        jmp   idx.entry.delete.exit
         ;------------------------------------------------------
         ; Simple index reorganization
         ;------------------------------------------------------

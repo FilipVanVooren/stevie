@@ -21,8 +21,17 @@
 dialog.save:
         .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
+        ; Commit the edited line while its index and data pages
+        ; are still mapped. Dialog pages occupy the same windows.
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   dialog.save.map_dialogs
+        bl    @edb.line.pack        ; Copy line to editor buffer
+        clr   @fb.row.dirty
+        ;-------------------------------------------------------
         ; Set SAMS pages that have dialog data
         ;-------------------------------------------------------        
+dialog.save.map_dialogs:
         bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)                 
         ;-------------------------------------------------------
         ; Copy dialog strings to RAM
@@ -30,16 +39,9 @@ dialog.save:
         bl    @cpym2m
               data txt.hint.lineterm,ram.msg2,42
         ;-------------------------------------------------------
-        ; Crunch current row if dirty
-        ;-------------------------------------------------------
-        c     @fb.row.dirty,@w$ffff
-        jne   !                     ; Skip crunching if clean
-        bl    @edb.line.pack        ; Copy line to editor buffer
-        clr   @fb.row.dirty         ; Current row no longer dirty
-        ;-------------------------------------------------------
         ; Setup dialog
         ;-------------------------------------------------------
-!       c     @edb.block.m2,@w$ffff ; Marker M2 unset?
+        c     @edb.block.m2,@w$ffff ; Marker M2 unset?
         jeq   dialog.save.default   ; Yes, so show default dialog
         ;-------------------------------------------------------
         ; Setup dialog title
