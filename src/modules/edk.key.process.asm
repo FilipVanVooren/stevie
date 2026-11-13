@@ -5,6 +5,7 @@
 * Editor - Process action keys
 ****************************************************************
 edkey.key.process:
+        clr   @kb.repeat.allow      ; Only approved handlers re-arm repeat
         .pushregs 1                 ; Push return address and registers on stack
 
         bl    @rsslot               ; \ Reset loop counter slot 1
@@ -143,6 +144,17 @@ edkey.key.check.scope:
 edkey.key.process.action:
         inc   tmp2                  ; Move to action address
         mov   *tmp2,tmp2            ; Get action address
+
+        li    tmp0,keymap_repeat.actions
+edkey.key.process.repeat.check:
+        c     *tmp0+,tmp2           ; Repeat only explicitly allowed actions
+        jeq   edkey.key.process.repeat.allow
+        ci    tmp0,keymap_repeat.actions.end
+        jne   edkey.key.process.repeat.check
+        jmp   edkey.key.process.repeat.done
+edkey.key.process.repeat.allow:
+        seto  @kb.repeat.allow
+edkey.key.process.repeat.done:
 
         li    tmp0,id.dialog.unsaved
         c     @cmdb.dialog,tmp0

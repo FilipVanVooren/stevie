@@ -167,8 +167,8 @@ fh.file.read.edb.check_setpage:
         andi  tmp0,>0fff            ; Get rid of highest nibble        
         ai    tmp0,82               ; Assume line of 80 chars (+2 bytes prefix)
         ci    tmp0,>1000 - 16       ; 4K boundary reached?
-        jlt   fh.file.read.edb.record
-                                    ; Not yet so skip SAMS page switch
+        jlt   fh.file.read.edb.setpage
+                                    ; Keep the page, but check its mapping
         ;------------------------------------------------------
         ; 1b: Increase SAMS page
         ;------------------------------------------------------ 
@@ -178,6 +178,12 @@ fh.file.read.edb.check_setpage:
         ;------------------------------------------------------
         ; 1c: Switch to SAMS page
         ;------------------------------------------------------ 
+fh.file.read.edb.setpage:
+        c     @fh.sams.hipage,@tv.sams.c000
+        jeq   fh.file.read.edb.record
+                                    ; A display callback can map a different
+                                    ; text page. Restore the file-write page
+                                    ; before reading the next record.
         mov   @fh.sams.hipage,tmp0
         mov   @edb.top.ptr,tmp1
         bl    @xsams.page.set       ; Set SAMS page

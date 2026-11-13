@@ -72,17 +72,19 @@ txt.m1             stri 'M1='
                    even
 txt.m2             stri 'M2='
                    even
-txt.keys.default   stri 'F9 Menu  ^H Help'
-col.keys.default   byte 0,2,9,2,>ff
+txt.keys.default   stri 'F9-Menu  ^H-Help'
+; Editor shortcut bars inherit the normal bar color in every scheme.
+; A non-null, empty marker list still lets the shared painter fill the bar.
+col.keys.default   byte >ff
                    even
-txt.keys.defaultb  stri 'F9 Menu  ^H Help  F0 Basic# '
-col.keys.defaultb  byte 0,2,9,2,18,2,>ff
+txt.keys.defaultb  stri 'F9-Menu  ^H-Help  F0-Basic# '
+col.keys.defaultb  equ col.keys.default
                    even
-txt.keys.defaultc  stri 'F9 Menu  ^H Help  ^, Prev  ^. Next  ^4 Done'
-col.keys.defaultc  byte 0,2,9,2,18,2,27,2,36,2,>ff
+txt.keys.defaultc  stri 'F9-Menu  ^H-Help  ^,-Prev  ^.-Next  ^4-Done'
+col.keys.defaultc  equ col.keys.default
                    even
-txt.keys.defaultd  stri 'F9 Menu  ^H Help  F0 Basic#   ^, Prev  ^. Next  ^4 Done'
-col.keys.defaultd  byte 0,2,9,2,18,2,30,2,39,2,48,2,>ff
+txt.keys.defaultd  stri 'F9-Menu  ^H-Help  F0-Basic#   ^,-Prev  ^.-Next  ^4-Done'
+col.keys.defaultd  equ col.keys.default
                    even
 
 txt.keys.block     stri 'F9 Exit  ^Copy  ^Move  ^Del  ^Save  ^Print  ^1-3 Clipb'

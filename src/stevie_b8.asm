@@ -19,7 +19,7 @@
 * File: stevie_b8.asm
 *
 * Bank 8 "Q"
-* Empty bank for future expansion
+* Keyboard autorepeat
 ********************************************************************************
         copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
         ;-----------------------------------------------------------------------
@@ -38,9 +38,9 @@
         copy  "macros/pushregs.mac" ; Push registers macro
         copy  "macros/popregs.mac"  ; Pop registers macro                     
 ***************************************************************
-* BANK A
+* BANK 8
 ********|*****|*********************|**************************
-bankid  equ   bank9.rom             ; Set bank identifier to current bank
+bankid  equ   bank8.rom             ; Set bank identifier to current bank
         aorg  >6000
         save  >6000,>8000           ; Save bank
 ***************************************************************
@@ -65,6 +65,7 @@ bankid  equ   bank9.rom             ; Set bank identifier to current bank
 main:
         aorg  kickstart.code2       ; >6000
         bl    @cpu.crash            ; Should never get here
+        copy  "edk.key.repeat.asm"  ; Frame-paced keyboard autorepeat
         ;-----------------------------------------------------------------------
         ; Stubs
         ;-----------------------------------------------------------------------
@@ -78,7 +79,7 @@ main:
         ; Bank full check
         ;-----------------------------------------------------------------------
         .ifge $, >7f50
-              .error 'Aborted. Bank A cartridge program too large!'
+              .error 'Aborted. Bank 8 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------
         ; Show ROM bank in CPU crash screen
