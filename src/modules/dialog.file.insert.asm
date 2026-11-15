@@ -21,8 +21,17 @@
 dialog.insert:
         .pushregs 1                 ; Push return address and registers on stack
         ;-------------------------------------------------------
+        ; Preserve the current edit before import refreshes the
+        ; frame buffer or dialog pages replace its index window.
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   dialog.insert.map_dialogs
+        bl    @edb.line.pack
+        clr   @fb.row.dirty
+        ;-------------------------------------------------------
         ; Set SAMS pages that have dialog data
         ;-------------------------------------------------------        
+dialog.insert.map_dialogs:
         bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)             
         ;-------------------------------------------------------
         ; Setup dialog

@@ -91,17 +91,17 @@ idx.entry.insert:
         ;------------------------------------------------------
         mov   @parm2,tmp2           ; Get last line to check
         s     @parm1,tmp2           ; Calculate loop         
-        jeq   idx.entry.insert.reorg.simple
-                                    ; Special treatment if last line
         ;------------------------------------------------------
         ; Reorganize index entries 
         ;------------------------------------------------------
 idx.entry.insert.reorg:
         mov   @parm2,tmp3
-        ci    tmp3,2048
+        ci    tmp3,2048-1
         jlt   idx.entry.insert.reorg.simple
-                                    ; Do simple reorg only if single
-                                    ; SAMS index page, otherwise complex reorg.
+                                    ; The last slot is copied to the next
+                                    ; slot, so slot 2047 already crosses
+                                    ; into a second SAMS index page.
+                                    ; This applies to appending as well.
         ;------------------------------------------------------
         ; Complex index reorganization (multiple SAMS pages)
         ;------------------------------------------------------

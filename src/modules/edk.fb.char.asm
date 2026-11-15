@@ -25,6 +25,7 @@ edk.fb.char:
         jlt   edk.fb.char.exit      ; Yes, skip
         ci    tmp0,>7e00            ; Keycode > ASCII 126 ?
         jgt   edk.fb.char.exit      ; Yes, skip
+        seto  @kb.repeat.allow      ; Printable text may repeat
         ;-------------------------------------------------------
         ; Save cursor YX
         ;-------------------------------------------------------

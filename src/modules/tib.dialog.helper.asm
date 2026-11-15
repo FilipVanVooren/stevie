@@ -15,7 +15,7 @@
 * none
 *--------------------------------------------------------------
 * Register usage
-* tmp0
+* tmp0,tmp1
 *--------------------------------------------------------------
 * Remarks
 * none
@@ -39,7 +39,7 @@ tibasic.am.off:
         li    tmp1,col.keys.basic
         
 !       mov   tmp0,@cmdb.pankeys    ; Keylist in status line
-        mov   tmp0,@cmdb.keycolors  ; Color position for key markers
+        mov   tmp1,@cmdb.keycolors  ; Marker list, separate from label text
         ;------------------------------------------------------
         ; Restore current SAMS pages
         ;------------------------------------------------------

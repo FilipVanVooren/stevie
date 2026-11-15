@@ -99,6 +99,7 @@ edk.act.cmdb.char:
         ci    tmp0,126              ; Keycode > ASCII 126 ?
         jgt   edk.act.cmdb.char.exit
                                     ; Yes, skip
+        seto  @kb.repeat.allow      ; Printable command text may repeat
 
         ;-------------------------------------------------------
         ; Convert keycode to command character format
@@ -125,8 +126,7 @@ edk.act.cmdb.char:
                                     ; \ i  @cmdb.cmd = Command string
                                     ; / o  @outparm1 = Length of command
 
-        mov   @outparm1,tmp0        ; Get command line 
-        inc   tmp0                  ; New length
+        mov   @outparm1,tmp0        ; Length already includes appended character
         sla   tmp0,8                ; Move to MSB 
         movb  tmp0,@cmdb.cmdlen     ; Set length-prefix of command line string
         jmp   edk.act.cmdb.char.redraw
