@@ -224,13 +224,42 @@ for (const [key, label] of [[83, 'left'], [68, 'right'], [69, 'up'], [88, 'down'
         assert(m.events.every(e => e.address === s[`edk.act.${label}`]), JSON.stringify(m.events));
     });
 }
-for (const [codes, description] of [[[13], 'ENTER'], [[18, 51], 'delete line'],
+for (const [codes, description] of [[[18, 51], 'delete line'],
     [[18, 190], 'insert-mode toggle'], [[17, 83], 'save'], [[17, 81], 'quit'],
     [[17, 32], 'CTRL-space block marking']]) {
     test(`${description} stays single-press`, () => {
         const m = machine(); m.press(...codes); m.frames(100);
         assert.equal(m.events.length, 1);
         assert.equal(m.get('kb.repeat.allow'), 0);
+    });
+}
+
+const navigationRepeats = [
+    [[13], 'enter'], [[18, 74], 'pword'], [[18, 75], 'nword'],
+    [[18, 54], 'ppage'], [[18, 52], 'npage'],
+    [[17, 188], 'goto.pmatch'], [[17, 190], 'goto.nmatch'],
+];
+for (const pal of [false,true]) for (const [codes,label] of navigationRepeats) {
+    test(`${pal?50:60} Hz: editor ${label} repeats after the long delay`,()=>{
+        const m=machine(pal),delay=pal?25:30,rate=pal?4:5;
+        m.press(...codes);m.frame();assert.equal(m.events.length,1);
+        m.frames(delay-1);assert.equal(m.events.length,1);
+        m.frame();assert.equal(m.events.length,2);
+        m.frames(rate);assert.equal(m.events.length,3);
+        assert(m.events.every(e=>e.address===s['edk.act.'+label]));
+        m.press();m.frames(2*delay);assert.equal(m.events.length,3);
+    });
+}
+for(const [codes,label] of [[[17,69],'ppage'],[[17,88],'npage']]) {
+    test(`Alternate editor ${label} shortcut repeats`,()=>{
+        const m=machine();m.press(...codes);m.frames(61);
+        assert.equal(m.events.length,8);assert(m.events.every(e=>e.address===s['edk.act.'+label]));
+    });
+}
+for(const dialog of ['open','save','find']) {
+    test(`ENTER in ${dialog} dialog remains single-press`,()=>{
+        const m=machine();m.set('tv.pane.focus',1);m.set('cmdb.dialog',s['id.dialog.'+dialog]);
+        m.press(13);m.frames(100);assert.equal(m.events.length,1);assert.equal(m.get('kb.repeat.allow'),0);
     });
 }
 test('Holding a menu letter does not repeat its command', () => {

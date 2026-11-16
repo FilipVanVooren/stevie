@@ -3,10 +3,13 @@
 
 * Actions that may repeat while held. Resolve the normal keymap first,
 * so printable menu choices, SPACE actions, toggles and commands stay
-* single-press. ENTER, line deletion, and insert-mode toggles stay off.
+* single-press. ENTER repeats only as the editor's newline action.
 keymap_repeat.actions:
         data  edk.act.left,edk.act.right,edk.act.up,edk.act.down
         data  edk.act.del_char
+        data  edk.act.enter,edk.act.nword,edk.act.pword
+        data  edk.act.npage,edk.act.ppage
+        data  edk.act.goto.nmatch,edk.act.goto.pmatch
         data  edk.act.cmdb.left,edk.act.cmdb.right,edk.act.cmdb.del_char
         data  edk.act.cmdb.pick.prev,edk.act.cmdb.pick.next
 keymap_repeat.actions.end equ $
