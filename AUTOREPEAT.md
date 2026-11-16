@@ -3,6 +3,19 @@
 This local build adds autorepeat to upstream Stevie commit
 `2d470961f5c5a6d3bf6b9ba4438921f8c9c039a3`.
 
+Revision 10 preserves edits when moving between search matches or starting
+a new Find operation. The current row is committed before a match jump
+refreshes it, and before the Find dialog maps its data pages. Cancelling
+Find also retains the edit and cursor position. The hit-counter display
+now preserves the scan registers, so multiple and adjacent matches on one
+line are found correctly.
+
+Autorepeat now includes ENTER, next/previous word, page up/down and
+next/previous search match, with the existing delay and repeat interval.
+ENTER follows the editor's current Insert/AutoInsert settings. Dialog
+submission remains one action per press. Large navigation commands are
+also limited by the time needed to redraw the editor.
+
 Revision 9 fixes the corresponding line-deletion defects. Deleting from a
 2,048-line file needs the multi-page index path. For larger files, the
 spare index slot must be cleared before the text/framebuffer windows are
@@ -96,8 +109,12 @@ These inputs repeat:
 - FCTN-S/D/E/X cursor movement.
 - FCTN-1 character deletion in the editor and command input.
 - FCTN-E/X previous/next file selection in catalog dialogs.
+- ENTER in the editor.
+- FCTN-K/J next/previous word.
+- FCTN-4/6 page down/up, including their CTRL-X/E aliases.
+- CTRL-./, next/previous search match.
 
-ENTER, save/open/quit commands, menu choices, block marking, line deletion,
+Save/open/quit commands, menu choices, block marking, line deletion,
 and toggles remain one action per press. SPACE used as a command, such as
 going up a directory, also remains one action per press. Changing pane,
 dialog, or held modifiers cancels repeat until a fresh key press.
@@ -270,3 +287,22 @@ regression suites. The actual source and import are read without modification.
 Revision 9 passes all 116 suites, including 32 deletion scenarios and 40
 insertion scenarios, across every display mode. The suite includes both
 normal and accelerated CPU timing for the actual-file corruption case.
+
+Revision 10 adds native tests for editing while navigating search results,
+starting/restarting/cancelling Find, clearing results, multiple/adjacent
+matches on one row, and edits near the 2,048-line boundary. Every saved
+record is compared with the expected text. Held-key tests execute the
+actual ENTER, word, page and match handlers, including automatic line
+insertion across the index boundary and stopping when released.
+
+```text
+node build/test_search_edits.cjs --mode=6080 --case=next
+node build/test_search_edits.cjs --mode=6080 --case=large-next --large
+node build/test_repeat_navigation.cjs --mode=6080
+```
+
+The keyboard suite checks all newly repeatable actions at 50/60 Hz and
+keeps ENTER single-press in Open, Save and Find dialogs. The complete
+revision 10 runner is `build/validate_r10.py BASE IMPORT`.
+Revision 10 passes all 156 suites, including 296 keyboard/color checks,
+36 search-edit scenarios and the real held-navigation suite in every mode.

@@ -25,9 +25,14 @@ fb.goto.nextmatch:
         ;-------------------------------------------------------
         abs   @edb.srch.matches      ; \ Exit early if no matches
         jeq   fb.goto.nextmatch.exit ; / 
+        c     @fb.row.dirty,@w$ffff
+        jne   fb.goto.nextmatch.navigate
+        bl    @edb.line.pack.fb     ; Preserve edits before refreshing this row
+        clr   @fb.row.dirty         ; or jumping to a different match
         ;-------------------------------------------------------
         ; Goto next match
         ;-------------------------------------------------------
+fb.goto.nextmatch.navigate:
         mov   @edb.srch.matches,tmp0  ; \ 
         dec   tmp0                    ; | Already at last entry?
         c     @edb.srch.curmatch,tmp0 ; / 
