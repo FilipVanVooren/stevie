@@ -64,17 +64,17 @@ edk.act.cmdb.show:
 
 ***************************************************************
 * Stub for "fb.refresh"
-* bank1 vec.20
+* bank4 vec.8
 ********|*****|*********************|**************************
 fb.refresh:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 4
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank1.rom        ; | i  p0 = bank address
-              data vec.20           ; | i  p1 = Vector with target address
+              data bank4.rom        ; | i  p0 = bank address
+              data vec.8            ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -386,7 +386,7 @@ pane.filebrowser.colbar:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "pane.filebrowser.colbar.exit"
+* Stub for "pane.filebrowser.colbar.remove"
 * bank4 vec.53
 ********|*****|*********************|**************************
 pane.filebrowser.colbar.remove:

@@ -651,13 +651,13 @@ dialog.vector:
 
 ***************************************************************
 * Stub for "error.display"
-* bank3 vec.48
+* bank4 vec.45
 ********|*****|*********************|**************************
 error.display:
         mov   @error.display.vector,@trmpvector
-        jmp   _trampoline.bank3.ret ; Longjump
+        b     @_trampoline.bank4.ret ; Longjump
 error.display.vector:
-        data  vec.48
+        data  vec.45
 
 
 

@@ -150,7 +150,7 @@ fb.goto.nextmatch:
 
 
 ***************************************************************
-* Stub for "pane.botline.busyline.on"
+* Stub for "pane.botline.busy.on"
 * bank4 vec.38
 ********|*****|*********************|**************************
 pane.botline.busy.on:

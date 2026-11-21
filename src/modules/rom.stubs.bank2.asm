@@ -210,7 +210,7 @@ fb.goto.nextmatch:
 
 
 ***************************************************************
-* Stub for "pane.botline.busyline.on"
+* Stub for "pane.botline.busy.on"
 * bank4 vec.38
 ********|*****|*********************|**************************
 pane.botline.busy.on:
@@ -313,7 +313,7 @@ pane.filebrowser.colbar:
         b     *r11                  ; Return to caller
 
 ***************************************************************
-* Stub for "pane.filebrowser.colbar.exit"
+* Stub for "pane.filebrowser.colbar.remove"
 * bank4 vec.53
 ********|*****|*********************|**************************
 pane.filebrowser.colbar.remove:

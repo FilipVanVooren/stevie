@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 261121-1839310
+0002               * BUILD: 261121-1842320
 0003               ***************************************************************
                    < stevie_be.asm
 0025                       ;-----------------------------------------------------------------------
@@ -992,12 +992,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 2.1.0-60'
+0047 6010 0F53                 stri 'STEVIE 2.2.0-60'
      6012 5445     
      6014 5649     
      6016 4520     
      6018 322E     
-     601A 312E     
+     601A 322E     
      601C 302D     
      601E 3630     
                    < stevie_be.asm
@@ -10159,12 +10159,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0012               
 0017               
 0022               
-0024 60C2 2020                 text '  Stevie 2.1.0   '
+0024 60C2 2020                 text '  Stevie 2.2.0   '
      60C4 5374     
      60C6 6576     
      60C8 6965     
      60CA 2032     
-     60CC 2E31     
+     60CC 2E32     
      60CE 2E30     
      60D0 2020     
      60D2 20       
@@ -10950,21 +10950,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      65E2 3A20     
 0194                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 65E4 3236                        text '261121-1839310'
+0001 65E4 3236                        text '261121-1842320'
      65E6 3131     
      65E8 3231     
      65EA 2D31     
-     65EC 3833     
-     65EE 3933     
-     65F0 3130     
+     65EC 3834     
+     65EE 3233     
+     65F0 3230     
                    < data.dialogs.asm
-0195 65F2 202D                        text ' - Stevie 2.1.0 - (c)2018-2026 Filip Van Vooren '
+0195 65F2 202D                        text ' - Stevie 2.2.0 - (c)2018-2026 Filip Van Vooren '
      65F4 2053     
      65F6 7465     
      65F8 7669     
      65FA 6520     
      65FC 322E     
-     65FE 312E     
+     65FE 322E     
      6600 3020     
      6602 2D20     
      6604 2863     

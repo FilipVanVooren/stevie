@@ -109,7 +109,7 @@ dialog.basic:
 
         
 ***************************************************************
-* Stub for "cmdb.cmdb.getlength"
+* Stub for "cmdb.cmd.getlength"
 * bank3 vec.26
 ********|*****|*********************|**************************
 cmdb.cmd.getlength:

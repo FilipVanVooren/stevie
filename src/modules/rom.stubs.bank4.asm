@@ -76,7 +76,7 @@ pane.cmdb.draw:
         ; Call function in bank 3
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank1.rom        ; | i  p0 = bank address
+              data bank3.rom        ; | i  p0 = bank address
               data vec.22           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
@@ -108,7 +108,7 @@ cmdb.refresh_prompt:
 
 
 ***************************************************************
-* Stub for "cmdb.cmdb.cursor_eol"
+* Stub for "cmdb.cmd.cursor_eol"
 * bank3 vec.29
 ********|*****|*********************|**************************
 cmdb.cmd.cursor_eol:
