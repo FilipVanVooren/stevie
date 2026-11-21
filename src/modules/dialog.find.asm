@@ -21,8 +21,18 @@
 dialog.find:
         .pushregs 2                 ; Push return address and registers on stack
         ;-------------------------------------------------------
+        ; Search must include the current edit. Commit it before
+        ; dialog data replaces the index/text memory windows.
+        ;-------------------------------------------------------
+        c     @fb.row.dirty,@w$ffff
+        jne   dialog.find.map_dialogs
+        bl    @edb.line.pack
+        clr   @fb.row.dirty
+        bl    @fb.calc.pointer      ; Preserve the cursor if Find is cancelled
+        ;-------------------------------------------------------
         ; Set SAMS pages that have dialog data
         ;-------------------------------------------------------        
+dialog.find.map_dialogs:
         bl    @mem.sams.dialogs.on  ; Turn on SAMS pages #2 (>b000) and #3 (>c000)         
         ;-------------------------------------------------------
         ; Setup dialog

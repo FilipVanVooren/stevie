@@ -137,9 +137,8 @@ edb.find.scan.compare:
                                     ; | index for columns
         inc   @edb.srch.matches     ; / Update search string match counter
 
-        bl    @putnum
-              byte 0,74             ; Show number of matches
-              data edb.srch.matches,rambuf,>3020
+        bl    @edb.find.scan.showmatches
+                                    ; PUTNUM destroys the scan registers
         ;------------------------------------------------------
         ; Check if match buffer is full
         ;------------------------------------------------------
@@ -148,6 +147,8 @@ edb.find.scan.compare:
         jeq   edb.find.scan.bufffull ; Buffer is full, halt scan
 
         li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
+        clr   tmp3                  ; A complete match starts a new candidate
+        mov   tmp4,@edb.srch.matchcol
         jmp   edb.find.scan.compare.nextchar
         ;------------------------------------------------------
         ; Buffer is full
@@ -263,3 +264,10 @@ txt.abort.search   stri 'Search aborted'
                    even
 txt.done.search    stri 'Search completed'
                    even
+
+edb.find.scan.showmatches:
+        .pushregs 4                 ; Preserve text pointer, count and column
+        bl    @putnum
+              byte 0,74
+              data edb.srch.matches,rambuf,>3020
+        .popregs 4
