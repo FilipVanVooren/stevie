@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 261115-1909520
+0002               * BUILD: 261121-1839310
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       ;-----------------------------------------------------------------------
@@ -10612,7 +10612,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      62E0 A010     
 0073               
 0074 62E2 06A0  32         bl    @fm.savefile          ; Save DV80 file
-     62E4 6A00     
+     62E4 6A2C     
 0075                                                   ; \ i  parm1 = Pointer to length-prefixed
 0076                                                   ; |            device/filename string
 0077                                                   ; | i  parm2 = First line to save (base 0)
@@ -10685,7 +10685,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6318 A012     
 0041               
 0042 631A 06A0  32         bl    @pane.colorscheme.load
-     631C 6A5A     
+     631C 6A86     
 0043                                                   ; Reload color scheme
 0044                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0045                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -10701,7 +10701,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6320 A21C     
      6322 A016     
 0055 6324 06A0  32         bl    @pane.colorscheme.botline
-     6326 6A6C     
+     6326 6A98     
 0056                                                   ; Set colors for bottom line
 0057                                                   ; \ i  @parm1 = Color combination
 0058                                                   ; /
@@ -10791,7 +10791,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      636A A220     
      636C A016     
 0051 636E 06A0  32         bl    @pane.colorscheme.botline
-     6370 6A6C     
+     6370 6A98     
 0052                                                   ; Set colors for bottom line
 0053                                                   ; \ i  @parm1 = Color combination
 0054                                                   ; /
@@ -10867,7 +10867,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0106                       ;------------------------------------------------------
 0107               edb.block.delete.fb.refresh:
 0108 63CC 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     63CE 6A12     
+     63CE 6A3E     
 0109                                                   ; | i  @parm1 = Line to start with
 0110                                                   ; /             (becomes @fb.topline)
 0111               
@@ -10989,7 +10989,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      643C 0035     
 0069               
 0070 643E 06A0  32         bl    @pane.errline.show    ; Show error line
-     6440 69EE     
+     6440 6A1A     
 0071               
 0072 6442 04E0  34         clr   @outparm1             ; No action (>0000)
      6444 A018     
@@ -11001,7 +11001,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      644A A220     
      644C A016     
 0078 644E 06A0  32         bl    @pane.colorscheme.botline
-     6450 6A6C     
+     6450 6A98     
 0079                                                   ; Set colors for bottom line
 0080                                                   ; \ i  @parm1 = Color combination
 0081                                                   ; /
@@ -11485,7 +11485,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0027 660A 6650                   data txt.find.hits    ; Show 'Hits:'
 0028               
 0029 660C 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
-     660E 6A7E     
+     660E 6AAA     
 0030               
 0031 6610 0720  34         seto  @fb.dirty             ; Refresh frame buffer
      6612 A31A     
@@ -11493,7 +11493,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6616 A304     
      6618 A016     
 0033 661A 06A0  32         bl    @fb.refresh           ; \ Refresh frame buffer
-     661C 6A12     
+     661C 6A3E     
 0034                                                   ; | i  @parm1 = Line to start with
 0035                                                   ; /             (becomes @fb.topline)
 0036               
@@ -11507,7 +11507,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6624 A31E     
      6626 A016     
 0043 6628 06A0  32         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT
-     662A 69DC     
+     662A 6A08     
 0044                                                   ; \ i  @parm1 = number of lines to dump
 0045                                                   ; /
 0046                       ;-------------------------------------------------------
@@ -11529,7 +11529,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      663E A5D0     
 0058                                                   ; \ Wrap around and goto 1st
 0059 6640 06A0  32         bl    @fb.goto.nextmatch    ; / match in file.
-     6642 6A24     
+     6642 6A50     
 0060                       ;------------------------------------------------------
 0061                       ; Exit
 0062                       ;------------------------------------------------------
@@ -11625,7 +11625,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0051               
 0052 668C 1502  14         jgt   !                     ; Continue if length search string > 0
 0053 668E 0460  28         b     @edb.find.scan.exit   ; Exit early on empty search string
-     6690 67C8     
+     6690 67C6     
 0054               
 0055 6692 8820  50 !       c     @edb.block.m1,@w$ffff   ; Marker M1 unset?
      6694 A50E     
@@ -11645,7 +11645,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0064                       ;------------------------------------------------------
 0065               edb.find.scan.showbusy:
 0066 66A6 06A0  32         bl    @pane.botline.busy.on ; \ Put busy indicator on
-     66A8 6A36     
+     66A8 6A62     
 0067                                                   ; /
 0068               
 0069 66AA 06A0  32         bl    @putat
@@ -11676,7 +11676,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      66CC A012     
 0087               
 0088 66CE 06A0  32         bl    @edb.line.unpack      ; Unpack line from editor buffer
-     66D0 69CA     
+     66D0 69F6     
 0089                                                   ; \ i  parm1    = Line to unpack
 0090                                                   ; | i  parm2    = Target row in framebuffer
 0091                                                   ; | i  parm3    = Column offset
@@ -11689,7 +11689,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0097                       ;------------------------------------------------------
 0098 66D6 81A0  34         c     @edb.srch.strlen,tmp2  ; Compare lengths of line and search string
      66D8 A5C6     
-0099 66DA 153A  14         jgt   edb.find.scan.nextline ; Yes, take shortcut
+0099 66DA 1539  14         jgt   edb.find.scan.nextline ; Yes, take shortcut
 0100                       ;------------------------------------------------------
 0101                       ; Prepare for string compare
 0102                       ;------------------------------------------------------
@@ -11708,7 +11708,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0111                       ;------------------------------------------------------
 0112               edb.find.scan.compare:
 0113 66F0 9D74  38         cb    *tmp0+,*tmp1+         ; Compare characters in MSB
-0114 66F2 1626  14         jne   edb.find.scan.compare.nomatch
+0114 66F2 1625  14         jne   edb.find.scan.compare.nomatch
 0115                                                   ; Characters do not match. Next try.
 0116                       ;------------------------------------------------------
 0117                       ; Character matches
@@ -11717,7 +11717,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0120 66F6 0588  14         inc   tmp4                  ; Update character counter
 0121 66F8 8807  34         c     tmp3,@edb.srch.strlen ; Last character in search string?
      66FA A5C6     
-0122 66FC 1627  14         jne   edb.find.scan.compare.nextchar
+0122 66FC 1626  14         jne   edb.find.scan.compare.nextchar
 0123                                                   ; Not yet, prepare for scanning next char
 0124                       ;------------------------------------------------------
 0125                       ; Search string found. Update search results index (rows + cols)
@@ -11743,193 +11743,224 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0138 6716 05A0  34         inc   @edb.srch.matches     ; / Update search string match counter
      6718 A5CE     
 0139               
-0140 671A 06A0  32         bl    @putnum
-     671C 2AD4     
-0141 671E 004A                   byte 0,74             ; Show number of matches
-0142 6720 A5CE                   data edb.srch.matches,rambuf,>3020
-     6722 A100     
-     6724 3020     
-0143                       ;------------------------------------------------------
-0144                       ; Check if match buffer is full
-0145                       ;------------------------------------------------------
-0146 6726 0204  20         li    tmp0,512               ; \ 512 matches reached?
-     6728 0200     
-0147 672A 8120  34         c     @edb.srch.matches,tmp0 ; /
-     672C A5CE     
-0148 672E 1303  14         jeq   edb.find.scan.bufffull ; Buffer is full, halt scan
-0149               
-0150 6730 0204  20         li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
-     6732 A577     
-0151 6734 100B  14         jmp   edb.find.scan.compare.nextchar
-0152                       ;------------------------------------------------------
-0153                       ; Buffer is full
-0154                       ;------------------------------------------------------
-0155               edb.find.scan.bufffull:
-0156 6736 0204  20         li   tmp0,txt.memfull.load  ; \ Set 'index full' message
-     6738 3D26     
-0157 673A C804  30         mov  tmp0,@waux1            ; /
-     673C 833C     
-0158 673E 1024  14         jmp  edb.find.scan.done     ; We're done
-0159                       ;------------------------------------------------------
-0160                       ; Search string not found. Next try on remaining chars on line
-0161                       ;------------------------------------------------------
-0162               edb.find.scan.compare.nomatch
-0163 6740 0204  20         li    tmp0,edb.srch.str + 1   ; Reset source for compare (skip len byte)
-     6742 A577     
-0164 6744 04C7  14         clr   tmp3                    ; Reset character match counter
-0165 6746 0588  14         inc   tmp4                    ; Update character counter
-0166 6748 C808  38         mov   tmp4,@edb.srch.matchcol ; \ Update start column of possible match
-     674A A5D8     
-0167                                                     ; | Start column is updated only if there
-0168                                                     ; / is NO matching character.
-0169                       ;------------------------------------------------------
-0170                       ; Prepare for processing next character
-0171                       ;------------------------------------------------------
-0172               edb.find.scan.compare.nextchar:
-0173 674C 0606  14         dec   tmp2                  ; Update loop counter
-0174 674E 15D0  14         jgt   edb.find.scan.compare ; Line not completely scanned
-0175                       ;------------------------------------------------------
-0176                       ; Prepare for processing Next line
-0177                       ;------------------------------------------------------
-0178               edb.find.scan.nextline:
-0179 6750 05A0  34         inc   @fh.records           ; Increase line counter
-     6752 A43C     
-0180 6754 0760  38         abs   @fh.records           ; \  Display line counter
-     6756 A43C     
-0181 6758 1C01  14         jop   edb.find.scan.show    ; /  update sporadically
-0182 675A 100E  14         jmp   edb.find.scan.checkcomplete
-0183                       ;------------------------------------------------------
-0184                       ; Show line counter
-0185                       ;------------------------------------------------------
-0186               edb.find.scan.show:
-0187 675C 06A0  32         bl    @putnum
-     675E 2AD4     
-0188 6760 3B48                   byte pane.botrow,72   ; Show lines processed
-0189 6762 A43C                   data fh.records,rambuf,>3020
-     6764 A100     
-     6766 3020     
-0190                       ;------------------------------------------------------
-0191                       ; Check for keyboard interrupt <FCTN-4>
-0192                       ;------------------------------------------------------
-0193 6768 06A0  28         bl    @>0020                ; Check keyboard. Destroys r12
-     676A 0020     
-0194 676C 1605  14         jne   edb.find.scan.checkcomplete
-0195                                                   ; No FCTN-4 pressed
-0196                       ;------------------------------------------------------
-0197                       ; Interrupt occured
-0198                       ;------------------------------------------------------
-0199 676E 0204  20         li    tmp0,txt.abort.search ; \
-     6770 67D8     
-0200 6772 C804  30         mov   tmp0,@waux1           ; / Set Search aborted message
-     6774 833C     
-0201 6776 1008  14         jmp   edb.find.scan.done    ; Exit scan
-0202                       ;------------------------------------------------------
-0203                       ; Check if scan is complete
-0204                       ;------------------------------------------------------
-0205               edb.find.scan.checkcomplete:
-0206 6778 8820  50         c     @fh.records,@edb.srch.endln
-     677A A43C     
-     677C A5CA     
-0207                                                   ; All lines scanned ?
-0208               
-0209 677E 16A0  14         jne   edb.find.scan.unpack_line
-0210                                                   ; Not yet, process next line
-0211               
-0212 6780 0204  20         li   tmp0,txt.done.search   ; \
-     6782 67E8     
-0213 6784 C804  30         mov  tmp0,@waux1            ; / Set Search completed message
-     6786 833C     
-0214                       ;------------------------------------------------------
-0215                       ; Scan completed. Restore 1st line in framebuffer
-0216                       ;------------------------------------------------------
-0217               edb.find.scan.done:
-0218 6788 C820  54         mov   @fb.topline,@parm1    ; Line to restore in framebuffer
-     678A A304     
-     678C A016     
-0219 678E 04E0  34         clr   @parm2                ; Top row
-     6790 A014     
-0220 6792 04E0  34         clr   @parm3                ; No column offset
-     6794 A012     
-0221               
-0222 6796 06A0  32         bl    @edb.line.unpack      ; Unpack line from editor buffer
-     6798 69CA     
-0223                                                   ; \ i  @parm1    = Line to unpack
-0224                                                   ; | i  @parm2    = Target row in framebuffer
-0225                                                   ; | i  @parm3    = Column offset
-0226                                                   ; / o  @outparm1 = Length of line
-0227               
-0228 679A 0720  34         seto  @fb.dirty             ; Trigger frame buffer refresh
-     679C A31A     
-0229               
-0230 679E 06A0  32         bl    @pane.botline.busy.off ; \ Put busyline indicator off
-     67A0 6A48     
-0231                                                    ; /
-0232                       ;------------------------------------------------------
-0233                       ; Scan completed. Display final message (set in @waux1)
-0234                       ;------------------------------------------------------
-0235 67A2 06A0  32         bl    @hchar
-     67A4 2832     
-0236 67A6 0032                   byte 0,50,32,20
-     67A8 2014     
-0237 67AA FFFF                   data EOL              ; Erase any previous message
-0238               
-0239 67AC 06A0  32         bl    @at
-     67AE 2726     
-0240 67B0 0034                   byte 0,52             ; Position cursor
-0241               
-0242 67B2 C160  30         mov   @waux1,tmp1           ; Message to display
-     67B4 833C     
-0243               
-0244 67B6 06A0  32         bl    @xutst0               ; Display string
-     67B8 2420     
-0245                                                   ; \ i  tmp1 = Pointer to string
-0246                                                   ; / i  @wyx = Cursor position at
-0247                       ;-------------------------------------------------------
-0248                       ; Setup one shot task for removing overlay message
-0249                       ;-------------------------------------------------------
-0250 67BA 0204  20         li    tmp0,pane.topline.oneshot.clearmsg
-     67BC 3898     
-0251 67BE C804  38         mov   tmp0,@tv.task.oneshot
-     67C0 A22C     
-0252               
-0253 67C2 06A0  32         bl    @rsslot               ; \ Reset loop counter slot 3
-     67C4 300C     
-0254 67C6 0003                   data 3                ; / for getting consistent delay
-0255                       ;------------------------------------------------------
-0256                       ; Exit
-0257                       ;------------------------------------------------------
-0258               edb.find.scan.exit:
-0259 67C8 C079  30         mov   *stack+,r1            ; Pop r1
-0260                       .popregs 4                  ; Pop registers and return to caller
+0140 671A 06A0  32         bl    @edb.find.scan.showmatches
+     671C 67F8     
+0141                                                   ; PUTNUM destroys the scan registers
+0142                       ;------------------------------------------------------
+0143                       ; Check if match buffer is full
+0144                       ;------------------------------------------------------
+0145 671E 0204  20         li    tmp0,512               ; \ 512 matches reached?
+     6720 0200     
+0146 6722 8120  34         c     @edb.srch.matches,tmp0 ; /
+     6724 A5CE     
+0147 6726 1306  14         jeq   edb.find.scan.bufffull ; Buffer is full, halt scan
+0148               
+0149 6728 0204  20         li    tmp0,edb.srch.str + 1  ; Reset source for compare (skip len byte)
+     672A A577     
+0150 672C 04C7  14         clr   tmp3                  ; A complete match starts a new candidate
+0151 672E C808  38         mov   tmp4,@edb.srch.matchcol
+     6730 A5D8     
+0152 6732 100B  14         jmp   edb.find.scan.compare.nextchar
+0153                       ;------------------------------------------------------
+0154                       ; Buffer is full
+0155                       ;------------------------------------------------------
+0156               edb.find.scan.bufffull:
+0157 6734 0204  20         li   tmp0,txt.memfull.load  ; \ Set 'index full' message
+     6736 3D26     
+0158 6738 C804  30         mov  tmp0,@waux1            ; /
+     673A 833C     
+0159 673C 1024  14         jmp  edb.find.scan.done     ; We're done
+0160                       ;------------------------------------------------------
+0161                       ; Search string not found. Next try on remaining chars on line
+0162                       ;------------------------------------------------------
+0163               edb.find.scan.compare.nomatch
+0164 673E 0204  20         li    tmp0,edb.srch.str + 1   ; Reset source for compare (skip len byte)
+     6740 A577     
+0165 6742 04C7  14         clr   tmp3                    ; Reset character match counter
+0166 6744 0588  14         inc   tmp4                    ; Update character counter
+0167 6746 C808  38         mov   tmp4,@edb.srch.matchcol ; \ Update start column of possible match
+     6748 A5D8     
+0168                                                     ; | Start column is updated only if there
+0169                                                     ; / is NO matching character.
+0170                       ;------------------------------------------------------
+0171                       ; Prepare for processing next character
+0172                       ;------------------------------------------------------
+0173               edb.find.scan.compare.nextchar:
+0174 674A 0606  14         dec   tmp2                  ; Update loop counter
+0175 674C 15D1  14         jgt   edb.find.scan.compare ; Line not completely scanned
+0176                       ;------------------------------------------------------
+0177                       ; Prepare for processing Next line
+0178                       ;------------------------------------------------------
+0179               edb.find.scan.nextline:
+0180 674E 05A0  34         inc   @fh.records           ; Increase line counter
+     6750 A43C     
+0181 6752 0760  38         abs   @fh.records           ; \  Display line counter
+     6754 A43C     
+0182 6756 1C01  14         jop   edb.find.scan.show    ; /  update sporadically
+0183 6758 100E  14         jmp   edb.find.scan.checkcomplete
+0184                       ;------------------------------------------------------
+0185                       ; Show line counter
+0186                       ;------------------------------------------------------
+0187               edb.find.scan.show:
+0188 675A 06A0  32         bl    @putnum
+     675C 2AD4     
+0189 675E 3B48                   byte pane.botrow,72   ; Show lines processed
+0190 6760 A43C                   data fh.records,rambuf,>3020
+     6762 A100     
+     6764 3020     
+0191                       ;------------------------------------------------------
+0192                       ; Check for keyboard interrupt <FCTN-4>
+0193                       ;------------------------------------------------------
+0194 6766 06A0  28         bl    @>0020                ; Check keyboard. Destroys r12
+     6768 0020     
+0195 676A 1605  14         jne   edb.find.scan.checkcomplete
+0196                                                   ; No FCTN-4 pressed
+0197                       ;------------------------------------------------------
+0198                       ; Interrupt occured
+0199                       ;------------------------------------------------------
+0200 676C 0204  20         li    tmp0,txt.abort.search ; \
+     676E 67D6     
+0201 6770 C804  30         mov   tmp0,@waux1           ; / Set Search aborted message
+     6772 833C     
+0202 6774 1008  14         jmp   edb.find.scan.done    ; Exit scan
+0203                       ;------------------------------------------------------
+0204                       ; Check if scan is complete
+0205                       ;------------------------------------------------------
+0206               edb.find.scan.checkcomplete:
+0207 6776 8820  50         c     @fh.records,@edb.srch.endln
+     6778 A43C     
+     677A A5CA     
+0208                                                   ; All lines scanned ?
+0209               
+0210 677C 16A1  14         jne   edb.find.scan.unpack_line
+0211                                                   ; Not yet, process next line
+0212               
+0213 677E 0204  20         li   tmp0,txt.done.search   ; \
+     6780 67E6     
+0214 6782 C804  30         mov  tmp0,@waux1            ; / Set Search completed message
+     6784 833C     
+0215                       ;------------------------------------------------------
+0216                       ; Scan completed. Restore 1st line in framebuffer
+0217                       ;------------------------------------------------------
+0218               edb.find.scan.done:
+0219 6786 C820  54         mov   @fb.topline,@parm1    ; Line to restore in framebuffer
+     6788 A304     
+     678A A016     
+0220 678C 04E0  34         clr   @parm2                ; Top row
+     678E A014     
+0221 6790 04E0  34         clr   @parm3                ; No column offset
+     6792 A012     
+0222               
+0223 6794 06A0  32         bl    @edb.line.unpack      ; Unpack line from editor buffer
+     6796 69F6     
+0224                                                   ; \ i  @parm1    = Line to unpack
+0225                                                   ; | i  @parm2    = Target row in framebuffer
+0226                                                   ; | i  @parm3    = Column offset
+0227                                                   ; / o  @outparm1 = Length of line
+0228               
+0229 6798 0720  34         seto  @fb.dirty             ; Trigger frame buffer refresh
+     679A A31A     
+0230               
+0231 679C 06A0  32         bl    @pane.botline.busy.off ; \ Put busyline indicator off
+     679E 6A74     
+0232                                                    ; /
+0233                       ;------------------------------------------------------
+0234                       ; Scan completed. Display final message (set in @waux1)
+0235                       ;------------------------------------------------------
+0236 67A0 06A0  32         bl    @hchar
+     67A2 2832     
+0237 67A4 0032                   byte 0,50,32,20
+     67A6 2014     
+0238 67A8 FFFF                   data EOL              ; Erase any previous message
+0239               
+0240 67AA 06A0  32         bl    @at
+     67AC 2726     
+0241 67AE 0034                   byte 0,52             ; Position cursor
+0242               
+0243 67B0 C160  30         mov   @waux1,tmp1           ; Message to display
+     67B2 833C     
+0244               
+0245 67B4 06A0  32         bl    @xutst0               ; Display string
+     67B6 2420     
+0246                                                   ; \ i  tmp1 = Pointer to string
+0247                                                   ; / i  @wyx = Cursor position at
+0248                       ;-------------------------------------------------------
+0249                       ; Setup one shot task for removing overlay message
+0250                       ;-------------------------------------------------------
+0251 67B8 0204  20         li    tmp0,pane.topline.oneshot.clearmsg
+     67BA 3898     
+0252 67BC C804  38         mov   tmp0,@tv.task.oneshot
+     67BE A22C     
+0253               
+0254 67C0 06A0  32         bl    @rsslot               ; \ Reset loop counter slot 3
+     67C2 300C     
+0255 67C4 0003                   data 3                ; / for getting consistent delay
+0256                       ;------------------------------------------------------
+0257                       ; Exit
+0258                       ;------------------------------------------------------
+0259               edb.find.scan.exit:
+0260 67C6 C079  30         mov   *stack+,r1            ; Pop r1
+0261                       .popregs 4                  ; Pop registers and return to caller
      **** ****     > POPREGS
-0002 67CA C239  30         mov   *stack+,tmp4          ; Pop tmp4
-0005 67CC C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
-0008 67CE C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0011 67D0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0014 67D2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0016 67D4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0017 67D6 045B  20         b     *r11                  ; Return
+0002 67C8 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0005 67CA C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0008 67CC C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0011 67CE C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0014 67D0 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0016 67D2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0017 67D4 045B  20         b     *r11                  ; Return
                    < edb.find.scan.asm
-0261               
-0262 67D8 0E53     txt.abort.search   stri 'Search aborted'
-     67DA 6561     
-     67DC 7263     
-     67DE 6820     
-     67E0 6162     
-     67E2 6F72     
-     67E4 7465     
-     67E6 64       
-0263                                  even
-0264 67E8 1053     txt.done.search    stri 'Search completed'
-     67EA 6561     
-     67EC 7263     
-     67EE 6820     
-     67F0 636F     
-     67F2 6D70     
-     67F4 6C65     
-     67F6 7465     
-     67F8 64       
-0265                                  even
+0262               
+0263 67D6 0E53     txt.abort.search   stri 'Search aborted'
+     67D8 6561     
+     67DA 7263     
+     67DC 6820     
+     67DE 6162     
+     67E0 6F72     
+     67E2 7465     
+     67E4 64       
+0264                                  even
+0265 67E6 1053     txt.done.search    stri 'Search completed'
+     67E8 6561     
+     67EA 7263     
+     67EC 6820     
+     67EE 636F     
+     67F0 6D70     
+     67F2 6C65     
+     67F4 7465     
+     67F6 64       
+0266                                  even
+0267               
+0268               edb.find.scan.showmatches:
+0269                       .pushregs 4                 ; Preserve text pointer, count and column
+     **** ****     > PUSHREGS
+0001 67F8 0229  22         ai    stack,-(4 * 2 + 4)   ; Make room on stack for registers
+     67FA FFF4     
+0003 67FC CE48  34         mov   tmp4,*stack+          ; Push tmp4
+0006 67FE CE47  34         mov   tmp3,*stack+          ; Push tmp3
+0009 6800 CE46  34         mov   tmp2,*stack+          ; Push tmp2
+0012 6802 CE45  34         mov   tmp1,*stack+          ; Push tmp1
+0015 6804 CE44  34         mov   tmp0,*stack+          ; Push tmp0
+0017 6806 C64B  30         mov   r11,*stack            ; Push return address
+0018 6808 0229  22         ai    stack,-(4 * 2 + 2)   ; Set stack pointer back to original position
+     680A FFF6     
+                   < edb.find.scan.asm
+0270 680C 06A0  32         bl    @putnum
+     680E 2AD4     
+0271 6810 004A                   byte 0,74
+0272 6812 A5CE                   data edb.srch.matches,rambuf,>3020
+     6814 A100     
+     6816 3020     
+0273                       .popregs 4
+     **** ****     > POPREGS
+0002 6818 C239  30         mov   *stack+,tmp4          ; Pop tmp4
+0005 681A C1F9  30         mov   *stack+,tmp3          ; Pop tmp3
+0008 681C C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0011 681E C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0014 6820 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0016 6822 C2F9  30         mov   *stack+,r11           ; Pop r11
+0017 6824 045B  20         b     *r11                  ; Return
+                   < edb.find.scan.asm
                    < stevie_b5.asm
 0085                       ;-----------------------------------------------------------------------
 0086                       ; Clock device support
@@ -11961,150 +11992,150 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0023               pane.clock.time:
 0024                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 67FA 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
-     67FC FFF8     
-0009 67FE CE46  34         mov   tmp2,*stack+          ; Push tmp2
-0012 6800 CE45  34         mov   tmp1,*stack+          ; Push tmp1
-0015 6802 CE44  34         mov   tmp0,*stack+          ; Push tmp0
-0017 6804 C64B  30         mov   r11,*stack            ; Push return address
-0018 6806 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
-     6808 FFFA     
+0001 6826 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
+     6828 FFF8     
+0009 682A CE46  34         mov   tmp2,*stack+          ; Push tmp2
+0012 682C CE45  34         mov   tmp1,*stack+          ; Push tmp1
+0015 682E CE44  34         mov   tmp0,*stack+          ; Push tmp0
+0017 6830 C64B  30         mov   r11,*stack            ; Push return address
+0018 6832 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
+     6834 FFFA     
                    < pane.clock.time.asm
 0025                       ;------------------------------------------------------
 0026                       ; Is clock on?
 0027                       ;------------------------------------------------------
-0028 680A C120  34         mov   @tv.clock.state,tmp0   ; Is clock on?
-     680C A240     
-0029 680E 1341  14         jeq   pane.clock.time.exit  ; No, exit early
+0028 6836 C120  34         mov   @tv.clock.state,tmp0   ; Is clock on?
+     6838 A240     
+0029 683A 1341  14         jeq   pane.clock.time.exit  ; No, exit early
 0030                       ;------------------------------------------------------
 0031                       ; Read date/time from clock device
 0032                       ;------------------------------------------------------
-0033 6810 0284  22         ci    tmp0,>994A            ; \ Skip reading clock device?
-     6812 994A     
-0034 6814 1305  14         jeq    !                    ; / Yes
+0033 683C 0284  22         ci    tmp0,>994A            ; \ Skip reading clock device?
+     683E 994A     
+0034 6840 1305  14         jeq    !                    ; / Yes
 0035               
-0036 6816 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6818 30D8     
-0037 681A 6004                   data bank2.rom        ; | i  p0 = bank address
-0038 681C 7F8A                   data vec.14           ; | i  p1 = Vector with target address
-0039 681E 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0036 6842 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6844 30D8     
+0037 6846 6004                   data bank2.rom        ; | i  p0 = bank address
+0038 6848 7F8A                   data vec.14           ; | i  p1 = Vector with target address
+0039 684A 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Display time?
 0042                       ;------------------------------------------------------
-0043 6820 0720  34 !       seto  @tv.clock.state          ; Set flag to ON state again
-     6822 A240     
-0044 6824 C120  34         mov  @fh.clock.datetime,tmp0  ; Clock initialized?
-     6826 A4C6     
-0045 6828 1334  14         jeq  pane.clock.time.exit     ; No, exit early
+0043 684C 0720  34 !       seto  @tv.clock.state          ; Set flag to ON state again
+     684E A240     
+0044 6850 C120  34         mov  @fh.clock.datetime,tmp0  ; Clock initialized?
+     6852 A4C6     
+0045 6854 1334  14         jeq  pane.clock.time.exit     ; No, exit early
 0046               
-0047 682A C120  34         mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
-     682C A702     
-0048 682E 1308  14         jeq   pane.clock.time.only  ; No, show clock time only
+0047 6856 C120  34         mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
+     6858 A702     
+0048 685A 1308  14         jeq   pane.clock.time.only  ; No, show clock time only
 0049               
-0050 6830 C120  34         mov   @cmdb.dialog,tmp0     ; Yes, get active CMDB dialog ID
-     6832 A71E     
-0051 6834 0284  22         ci    tmp0,id.dialog.main   ; \
-     6836 0064     
-0052 6838 112C  14         jlt   pane.clock.time.exit  ; / Skip clock if input dialog active
+0050 685C C120  34         mov   @cmdb.dialog,tmp0     ; Yes, get active CMDB dialog ID
+     685E A71E     
+0051 6860 0284  22         ci    tmp0,id.dialog.main   ; \
+     6862 0064     
+0052 6864 112C  14         jlt   pane.clock.time.exit  ; / Skip clock if input dialog active
 0053                       ;------------------------------------------------------
 0054                       ; Display time only?
 0055                       ;------------------------------------------------------
-0056 683A C120  34         mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
-     683C A702     
-0057 683E 160B  14         jne   pane.clock.time.date  ; Yes, show date & time
+0056 6866 C120  34         mov   @cmdb.visible,tmp0    ; Is CMDB pane visible?
+     6868 A702     
+0057 686A 160B  14         jne   pane.clock.time.date  ; Yes, show date & time
 0058                       ;------------------------------------------------------
 0059                       ; Display time only at bottom row
 0060                       ;------------------------------------------------------
 0061               pane.clock.time.only:
-0062 6840 06A0  32         bl    @cpym2v                     ; \ Display vertical line
-     6842 24E6     
-0063 6844 12A0                   data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
-0064 6846 689C                   data txt.vtline             ; | i  p2 = Source RAM address
-0065 6848 0002                   data 2                      ; / i  p3 = Number of bytes to copy
+0062 686C 06A0  32         bl    @cpym2v                     ; \ Display vertical line
+     686E 24E6     
+0063 6870 12A0                   data pane.botrow * 80 + 48  ; | i  p1 = Destination VDP address
+0064 6872 68C8                   data txt.vtline             ; | i  p2 = Source RAM address
+0065 6874 0002                   data 2                      ; / i  p3 = Number of bytes to copy
 0066               
-0067 684A 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
-     684C 24E6     
-0068 684E 12A2                   data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
-0069 6850 A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
-0070 6852 0005                   data 5                      ; / i  p3 = Number of bytes to copy
+0067 6876 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
+     6878 24E6     
+0068 687A 12A2                   data pane.botrow * 80 + 50  ; | i  p1 = Destination VDP address
+0069 687C A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
+0070 687E 0005                   data 5                      ; / i  p3 = Number of bytes to copy
 0071               
-0072 6854 101E  14         jmp   pane.clock.time.exit        ; Exit early
+0072 6880 101E  14         jmp   pane.clock.time.exit        ; Exit early
 0073                       ;------------------------------------------------------
 0074                       ; Display date and time at bottom row
 0075                       ;------------------------------------------------------
 0076               pane.clock.time.date:
-0077 6856 06A0  32         bl    @cpym2v                     ; \ Display vertical line
-     6858 24E6     
-0078 685A 12A8                   data pane.botrow * 80 + 56  ; | i  p1 = Destination VDP address
-0079 685C 689C                   data txt.vtline             ; | i  p2 = Source RAM address
-0080 685E 0002                   data 2                      ; / i  p3 = Number of bytes to copy
+0077 6882 06A0  32         bl    @cpym2v                     ; \ Display vertical line
+     6884 24E6     
+0078 6886 12A8                   data pane.botrow * 80 + 56  ; | i  p1 = Destination VDP address
+0079 6888 68C8                   data txt.vtline             ; | i  p2 = Source RAM address
+0080 688A 0002                   data 2                      ; / i  p3 = Number of bytes to copy
 0081                       ;------------------------------------------------------
 0082                       ; Display day of week
 0083                       ;------------------------------------------------------
-0084 6860 C120  34         mov   @fh.clock.datetime + 2,tmp0 ; Get day of week (0-6)
-     6862 A4C8     
-0085 6864 0984  32         srl   tmp0,8                      ; MSB to LSB
-0086 6866 0224  22         ai    tmp0,-48                    ; Remove ascii offset
-     6868 FFD0     
-0087 686A 3920  74         mpy   @const.3,tmp0               ; \ Multiply DOW by 3, result in tmp1
-     686C 3916     
-0088 686E 0225  22         ai    tmp1,txt.dow                ; / Add base address of DOW string
-     6870 689E     
+0084 688C C120  34         mov   @fh.clock.datetime + 2,tmp0 ; Get day of week (0-6)
+     688E A4C8     
+0085 6890 0984  32         srl   tmp0,8                      ; MSB to LSB
+0086 6892 0224  22         ai    tmp0,-48                    ; Remove ascii offset
+     6894 FFD0     
+0087 6896 3920  74         mpy   @const.3,tmp0               ; \ Multiply DOW by 3, result in tmp1
+     6898 3916     
+0088 689A 0225  22         ai    tmp1,txt.dow                ; / Add base address of DOW string
+     689C 68CA     
 0089               
-0090 6872 0204  20         li    tmp0,pane.botrow * 80 + 58  ; Destination VDP address
-     6874 12AA     
-0091 6876 0206  20         li    tmp2,3                      ; Number of bytes to copy
-     6878 0003     
-0092 687A 06A0  32         bl    @xpym2v                     ; \ Copy day of week to VDP memory
-     687C 24EC     
+0090 689E 0204  20         li    tmp0,pane.botrow * 80 + 58  ; Destination VDP address
+     68A0 12AA     
+0091 68A2 0206  20         li    tmp2,3                      ; Number of bytes to copy
+     68A4 0003     
+0092 68A6 06A0  32         bl    @xpym2v                     ; \ Copy day of week to VDP memory
+     68A8 24EC     
 0093                                                         ; | i  tmp0 = Destination VDP address
 0094                                                         ; | i  tmp1 = Source RAM address
 0095                                                         ; / i  tmp2 = Number of bytes to copy
 0096                       ;------------------------------------------------------
 0097                       ; Display date
 0098                       ;------------------------------------------------------
-0099 687E 06A0  32         bl    @cpym2v                     ; \ Copy date to VDP memory
-     6880 24E6     
-0100 6882 12AE                   data pane.botrow * 80 + 62  ; | i  p1 = Destination VDP address
-0101 6884 A4CA                   data fh.clock.datetime + 4  ; | i  p2 = Source RAM address
-0102 6886 0008                   data 8                      ; / i  p3 = Number of bytes to copy
+0099 68AA 06A0  32         bl    @cpym2v                     ; \ Copy date to VDP memory
+     68AC 24E6     
+0100 68AE 12AE                   data pane.botrow * 80 + 62  ; | i  p1 = Destination VDP address
+0101 68B0 A4CA                   data fh.clock.datetime + 4  ; | i  p2 = Source RAM address
+0102 68B2 0008                   data 8                      ; / i  p3 = Number of bytes to copy
 0103                       ;------------------------------------------------------
 0104                       ; Display time
 0105                       ;------------------------------------------------------
-0106 6888 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
-     688A 24E6     
-0107 688C 12B7                   data pane.botrow * 80 + 71  ; | i  p1 = Destination VDP address
-0108 688E A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
-0109 6890 0005                   data 5                      ; / i  p3 = Number of bytes to copy
+0106 68B4 06A0  32         bl    @cpym2v                     ; \ Copy time to VDP memory
+     68B6 24E6     
+0107 68B8 12B7                   data pane.botrow * 80 + 71  ; | i  p1 = Destination VDP address
+0108 68BA A4D3                   data fh.clock.datetime + 13 ; | i  p2 = Source RAM address
+0109 68BC 0005                   data 5                      ; / i  p3 = Number of bytes to copy
 0110                       ;------------------------------------------------------
 0111                       ; Exit
 0112                       ;------------------------------------------------------
 0113               pane.clock.time.exit:
 0114                       .popregs 2                  ; Pop registers and return to caller
      **** ****     > POPREGS
-0008 6892 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0011 6894 C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0014 6896 C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0016 6898 C2F9  30         mov   *stack+,r11           ; Pop r11
-0017 689A 045B  20         b     *r11                  ; Return
+0008 68BE C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0011 68C0 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0014 68C2 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0016 68C4 C2F9  30         mov   *stack+,r11           ; Pop r11
+0017 68C6 045B  20         b     *r11                  ; Return
                    < pane.clock.time.asm
 0115               
 0116               txt.vtline:
-0117 689C 0006             byte  0,6                   ; Vertical line character
+0117 68C8 0006             byte  0,6                   ; Vertical line character
 0118                       even
 0119               
 0120               txt.dow:
-0121 689E 5355             text 'SUNMONTUEWEDTHUFRISAT'
-     68A0 4E4D     
-     68A2 4F4E     
-     68A4 5455     
-     68A6 4557     
-     68A8 4544     
-     68AA 5448     
-     68AC 5546     
-     68AE 5249     
-     68B0 5341     
-     68B2 54       
+0121 68CA 5355             text 'SUNMONTUEWEDTHUFRISAT'
+     68CC 4E4D     
+     68CE 4F4E     
+     68D0 5455     
+     68D2 4557     
+     68D4 4544     
+     68D6 5448     
+     68D8 5546     
+     68DA 5249     
+     68DC 5341     
+     68DE 54       
 0122                       even
                    < stevie_b5.asm
 0089                       copy  "fm.clock.on.asm"     ; Turn clock reading/display on
@@ -12127,65 +12158,65 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0016               fm.clock.on:
 0017                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 68B4 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
-     68B6 FFF8     
-0009 68B8 CE46  34         mov   tmp2,*stack+          ; Push tmp2
-0012 68BA CE45  34         mov   tmp1,*stack+          ; Push tmp1
-0015 68BC CE44  34         mov   tmp0,*stack+          ; Push tmp0
-0017 68BE C64B  30         mov   r11,*stack            ; Push return address
-0018 68C0 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
-     68C2 FFFA     
+0001 68E0 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
+     68E2 FFF8     
+0009 68E4 CE46  34         mov   tmp2,*stack+          ; Push tmp2
+0012 68E6 CE45  34         mov   tmp1,*stack+          ; Push tmp1
+0015 68E8 CE44  34         mov   tmp0,*stack+          ; Push tmp0
+0017 68EA C64B  30         mov   r11,*stack            ; Push return address
+0018 68EC 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
+     68EE FFFA     
                    < fm.clock.on.asm
 0018                       ;------------------------------------------------------
 0019                       ; Reset clock
 0020                       ;------------------------------------------------------
-0021 68C4 06A0  32         bl    @tv.clock.start       ; Start clock task
-     68C6 69B8     
+0021 68F0 06A0  32         bl    @tv.clock.start       ; Start clock task
+     68F2 69E4     
 0022                       ;-------------------------------------------------------
 0023                       ; Show message 'Clock: ON'
 0024                       ;-------------------------------------------------------
-0025 68C8 0649  14         dect  stack
-0026 68CA C660  42         mov   @wyx,*stack           ; Save cursor position
-     68CC 832A     
+0025 68F4 0649  14         dect  stack
+0026 68F6 C660  42         mov   @wyx,*stack           ; Save cursor position
+     68F8 832A     
 0027               
-0028 68CE 06A0  32         bl    @putat
-     68D0 2442     
-0029 68D2 0034                   byte 0,52
-0030 68D4 68F2                   data txt.clockon      ; Display clock on message
+0028 68FA 06A0  32         bl    @putat
+     68FC 2442     
+0029 68FE 0034                   byte 0,52
+0030 6900 691E                   data txt.clockon      ; Display clock on message
 0031               
-0032 68D6 C839  42         mov   *stack+,@wyx          ; Restore cursor position
-     68D8 832A     
+0032 6902 C839  42         mov   *stack+,@wyx          ; Restore cursor position
+     6904 832A     
 0033                       ;-------------------------------------------------------
 0034                       ; Setup one shot task for removing overlay message
 0035                       ;-------------------------------------------------------
-0036 68DA 0204  20         li    tmp0,pane.topline.oneshot.clearmsg
-     68DC 3898     
-0037 68DE C804  38         mov   tmp0,@tv.task.oneshot
-     68E0 A22C     
+0036 6906 0204  20         li    tmp0,pane.topline.oneshot.clearmsg
+     6908 3898     
+0037 690A C804  38         mov   tmp0,@tv.task.oneshot
+     690C A22C     
 0038               
-0039 68E2 06A0  32         bl    @rsslot               ; \ Reset loop counter slot 3
-     68E4 300C     
-0040 68E6 0003                   data 3                ; / for getting consistent delay
+0039 690E 06A0  32         bl    @rsslot               ; \ Reset loop counter slot 3
+     6910 300C     
+0040 6912 0003                   data 3                ; / for getting consistent delay
 0041                       ;------------------------------------------------------
 0042                       ; Exit
 0043                       ;------------------------------------------------------
 0044               fm.clock.on.exit:
 0045                       .popregs 2                  ; Pop registers and return to caller
      **** ****     > POPREGS
-0008 68E8 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0011 68EA C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0014 68EC C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0016 68EE C2F9  30         mov   *stack+,r11           ; Pop r11
-0017 68F0 045B  20         b     *r11                  ; Return
+0008 6914 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0011 6916 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0014 6918 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0016 691A C2F9  30         mov   *stack+,r11           ; Pop r11
+0017 691C 045B  20         b     *r11                  ; Return
                    < fm.clock.on.asm
 0046               
 0047               
 0048               txt.clockon:
-0049 68F2 0943             stri "Clock: ON"            ; Text for clock on message
-     68F4 6C6F     
-     68F6 636B     
-     68F8 3A20     
-     68FA 4F4E     
+0049 691E 0943             stri "Clock: ON"            ; Text for clock on message
+     6920 6C6F     
+     6922 636B     
+     6924 3A20     
+     6926 4F4E     
 0050                       even
                    < stevie_b5.asm
 0090                       copy  "fm.clock.off.asm"    ; Turn clock reading/display off
@@ -12212,106 +12243,106 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0020               fm.clock.off:
 0021                       .pushregs 2                 ; Push return address and registers on stack
      **** ****     > PUSHREGS
-0001 68FC 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
-     68FE FFF8     
-0009 6900 CE46  34         mov   tmp2,*stack+          ; Push tmp2
-0012 6902 CE45  34         mov   tmp1,*stack+          ; Push tmp1
-0015 6904 CE44  34         mov   tmp0,*stack+          ; Push tmp0
-0017 6906 C64B  30         mov   r11,*stack            ; Push return address
-0018 6908 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
-     690A FFFA     
+0001 6928 0229  22         ai    stack,-(2 * 2 + 4)   ; Make room on stack for registers
+     692A FFF8     
+0009 692C CE46  34         mov   tmp2,*stack+          ; Push tmp2
+0012 692E CE45  34         mov   tmp1,*stack+          ; Push tmp1
+0015 6930 CE44  34         mov   tmp0,*stack+          ; Push tmp0
+0017 6932 C64B  30         mov   r11,*stack            ; Push return address
+0018 6934 0229  22         ai    stack,-(2 * 2 + 2)   ; Set stack pointer back to original position
+     6936 FFFA     
                    < fm.clock.off.asm
 0022                       ;------------------------------------------------------
 0023                       ; Reset clock
 0024                       ;------------------------------------------------------
-0025 690C 06A0  32         bl    @clslot               ; Stop clock task
-     690E 2FFE     
-0026 6910 0001                   data 1
+0025 6938 06A0  32         bl    @clslot               ; Stop clock task
+     693A 2FFE     
+0026 693C 0001                   data 1
 0027               
-0028 6912 06A0  32         bl    @film                 ; Clear clock structure
-     6914 2236     
-0029 6916 A4C6                   data  fh.clock.datetime,>00,19
-     6918 0000     
-     691A 0013     
+0028 693E 06A0  32         bl    @film                 ; Clear clock structure
+     6940 2236     
+0029 6942 A4C6                   data  fh.clock.datetime,>00,19
+     6944 0000     
+     6946 0013     
 0030                       ;------------------------------------------------------
 0031                       ; Determine message
 0032                       ;------------------------------------------------------
-0033 691C C120  34         mov   @tv.clock.state,tmp0  ; Is clock on?
-     691E A240     
-0034 6920 131B  14         jeq   fm.clock.off.exit     ; No, exit early
+0033 6948 C120  34         mov   @tv.clock.state,tmp0  ; Is clock on?
+     694A A240     
+0034 694C 131B  14         jeq   fm.clock.off.exit     ; No, exit early
 0035               
-0036 6922 0649  14         dect  stack
-0037 6924 C660  42         mov   @wyx,*stack           ; Save cursor position
-     6926 832A     
-0038 6928 0284  22         ci    tmp0,>dead            ; No clock device found?
-     692A DEAD     
-0039 692C 1307  14         jeq   !                     ; Yes, show clock not found
+0036 694E 0649  14         dect  stack
+0037 6950 C660  42         mov   @wyx,*stack           ; Save cursor position
+     6952 832A     
+0038 6954 0284  22         ci    tmp0,>dead            ; No clock device found?
+     6956 DEAD     
+0039 6958 1307  14         jeq   !                     ; Yes, show clock not found
 0040                       ;-------------------------------------------------------
 0041                       ; Clock: OFF
 0042                       ;-------------------------------------------------------
-0043 692E 06A0  32         bl    @putat
-     6930 2442     
-0044 6932 0034                   byte 0,52
-0045 6934 6962                   data txt.clockoff     ; Display clock off message
-0046 6936 C839  42         mov   *stack+,@wyx          ; Restore cursor position
-     6938 832A     
-0047 693A 1008  14         jmp   fm.clock.off.oneshot
+0043 695A 06A0  32         bl    @putat
+     695C 2442     
+0044 695E 0034                   byte 0,52
+0045 6960 698E                   data txt.clockoff     ; Display clock off message
+0046 6962 C839  42         mov   *stack+,@wyx          ; Restore cursor position
+     6964 832A     
+0047 6966 1008  14         jmp   fm.clock.off.oneshot
 0048                       ;-------------------------------------------------------
 0049                       ; Clock: Not found
 0050                       ;-------------------------------------------------------
-0051 693C 06A0  32 !       bl    @tv.flash.screen      ; Flash screen to draw attention to message
-     693E 6980     
+0051 6968 06A0  32 !       bl    @tv.flash.screen      ; Flash screen to draw attention to message
+     696A 69AC     
 0052               
-0053 6940 06A0  32         bl    @putat
-     6942 2442     
-0054 6944 0034                   byte 0,52
-0055 6946 696E                   data txt.noclock      ; Display No clock found message
-0056 6948 C839  42         mov   *stack+,@wyx          ; Restore cursor position
-     694A 832A     
+0053 696C 06A0  32         bl    @putat
+     696E 2442     
+0054 6970 0034                   byte 0,52
+0055 6972 699A                   data txt.noclock      ; Display No clock found message
+0056 6974 C839  42         mov   *stack+,@wyx          ; Restore cursor position
+     6976 832A     
 0057                       ;-------------------------------------------------------
 0058                       ; Setup one shot task for removing overlay message
 0059                       ;-------------------------------------------------------
 0060               fm.clock.off.oneshot:
-0061 694C 0204  20         li    tmp0,pane.topline.oneshot.clearmsg
-     694E 3898     
-0062 6950 C804  38         mov   tmp0,@tv.task.oneshot
-     6952 A22C     
+0061 6978 0204  20         li    tmp0,pane.topline.oneshot.clearmsg
+     697A 3898     
+0062 697C C804  38         mov   tmp0,@tv.task.oneshot
+     697E A22C     
 0063               
-0064 6954 04E0  34         clr   @tv.clock.state       ; Clear clock display flag (>00 = clock off)
-     6956 A240     
+0064 6980 04E0  34         clr   @tv.clock.state       ; Clear clock display flag (>00 = clock off)
+     6982 A240     
 0065                       ;------------------------------------------------------
 0066                       ; Exit
 0067                       ;------------------------------------------------------
 0068               fm.clock.off.exit:
 0069                       .popregs 2                  ; Pop registers and return to caller
      **** ****     > POPREGS
-0008 6958 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
-0011 695A C179  30         mov   *stack+,tmp1          ; Pop tmp1
-0014 695C C139  30         mov   *stack+,tmp0          ; Pop tmp0
-0016 695E C2F9  30         mov   *stack+,r11           ; Pop r11
-0017 6960 045B  20         b     *r11                  ; Return
+0008 6984 C1B9  30         mov   *stack+,tmp2          ; Pop tmp2
+0011 6986 C179  30         mov   *stack+,tmp1          ; Pop tmp1
+0014 6988 C139  30         mov   *stack+,tmp0          ; Pop tmp0
+0016 698A C2F9  30         mov   *stack+,r11           ; Pop r11
+0017 698C 045B  20         b     *r11                  ; Return
                    < fm.clock.off.asm
 0070               
 0071               
 0072               txt.clockoff:
-0073 6962 0A43             stri "Clock: OFF"           ; Text for clock off message
-     6964 6C6F     
-     6966 636B     
-     6968 3A20     
-     696A 4F46     
-     696C 46       
+0073 698E 0A43             stri "Clock: OFF"           ; Text for clock off message
+     6990 6C6F     
+     6992 636B     
+     6994 3A20     
+     6996 4F46     
+     6998 46       
 0074                       even
 0075               
 0076               txt.noclock:
-0077 696E 1143             stri "Clock: not found!"    ; Text for clock device not found message
-     6970 6C6F     
-     6972 636B     
-     6974 3A20     
-     6976 6E6F     
-     6978 7420     
-     697A 666F     
-     697C 756E     
-     697E 6421     
+0077 699A 1143             stri "Clock: not found!"    ; Text for clock device not found message
+     699C 6C6F     
+     699E 636B     
+     69A0 3A20     
+     69A2 6E6F     
+     69A4 7420     
+     69A6 666F     
+     69A8 756E     
+     69AA 6421     
 0078                       even
                    < stevie_b5.asm
 0091                       ;-----------------------------------------------------------------------
@@ -12338,43 +12369,43 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0017               * none
 0018               ********|*****|*********************|**************************
 0019               tv.flash.screen:
-0020 6980 0649  14         dect  stack
-0021 6982 C64B  30         mov   r11,*stack            ; Save return address
+0020 69AC 0649  14         dect  stack
+0021 69AE C64B  30         mov   r11,*stack            ; Save return address
 0022                       ;------------------------------------------------------
 0023                       ; Flash screen by changing color scheme for a moment
 0024                       ;------------------------------------------------------
-0025 6984 04E0  34         clr   @parm1                     ; Screen off
-     6986 A016     
-0026 6988 04E0  34         clr   @parm2                     ; Marked lines colored
-     698A A014     
-0027 698C 04E0  34         clr   @parm3                     ; Color everything
-     698E A012     
+0025 69B0 04E0  34         clr   @parm1                     ; Screen off
+     69B2 A016     
+0026 69B4 04E0  34         clr   @parm2                     ; Marked lines colored
+     69B6 A014     
+0027 69B8 04E0  34         clr   @parm3                     ; Color everything
+     69BA A012     
 0028               
-0029 6990 0649  14         dect  stack
-0030 6992 C660  46         mov   @tv.colorscheme,*stack     ; Backup color theme
-     6994 A212     
-0031 6996 C820  54         mov   @const.13,@tv.colorscheme  ; Set color scheme
-     6998 3926     
-     699A A212     
+0029 69BC 0649  14         dect  stack
+0030 69BE C660  46         mov   @tv.colorscheme,*stack     ; Backup color theme
+     69C0 A212     
+0031 69C2 C820  54         mov   @const.13,@tv.colorscheme  ; Set color scheme
+     69C4 3926     
+     69C6 A212     
 0032               
-0033 699C 06A0  32         bl    @pane.colorscheme.load     ; Load colorschene
-     699E 6A5A     
+0033 69C8 06A0  32         bl    @pane.colorscheme.load     ; Load colorschene
+     69CA 6A86     
 0034                                                        ; \ i  parm1 = Screen on/off
 0035                                                        ; | i  parm2 = Marked lines colored
 0036                                                        ; / i  parm3 = Color everything
 0037               
-0038 69A0 C839  50         mov   *stack+,@tv.colorscheme    ; Restore color theme
-     69A2 A212     
+0038 69CC C839  50         mov   *stack+,@tv.colorscheme    ; Restore color theme
+     69CE A212     
 0039               
-0040 69A4 0720  34         seto  @parm1                     ; Screen on
-     69A6 A016     
-0041 69A8 04E0  34         clr   @parm2                     ; Marked lines colored
-     69AA A014     
-0042 69AC 04E0  34         clr   @parm3                     ; Color everything
-     69AE A012     
+0040 69D0 0720  34         seto  @parm1                     ; Screen on
+     69D2 A016     
+0041 69D4 04E0  34         clr   @parm2                     ; Marked lines colored
+     69D6 A014     
+0042 69D8 04E0  34         clr   @parm3                     ; Color everything
+     69DA A012     
 0043               
-0044 69B0 06A0  32         bl    @pane.colorscheme.load     ; Load colorschene
-     69B2 6A5A     
+0044 69DC 06A0  32         bl    @pane.colorscheme.load     ; Load colorschene
+     69DE 6A86     
 0045                                                        ; \ i  parm1 = Screen on/off
 0046                                                        ; | i  parm2 = Marked lines colored
 0047                                                        ; / i  parm3 = Color everything
@@ -12382,8 +12413,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0049                       ; Exit
 0050                       ;------------------------------------------------------
 0051               tv.flash.screen.exit:
-0052 69B4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0053 69B6 045B  20         b     *r11                  ; Return
+0052 69E0 C2F9  30         mov   *stack+,r11           ; Pop r11
+0053 69E2 045B  20         b     *r11                  ; Return
                    < stevie_b5.asm
 0095                       ;-----------------------------------------------------------------------
 0096                       ; Stubs
@@ -12399,21 +12430,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               * bank1 vec.3
 0008               ********|*****|*********************|**************************
 0009               tv.clock.start:
-0010 69B8 0649  14         dect  stack
-0011 69BA C64B  30         mov   r11,*stack            ; Save return address
+0010 69E4 0649  14         dect  stack
+0011 69E6 C64B  30         mov   r11,*stack            ; Save return address
 0012                       ;------------------------------------------------------
 0013                       ; Call function in bank 1
 0014                       ;------------------------------------------------------
-0015 69BC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     69BE 30D8     
-0016 69C0 6002                   data bank1.rom        ; | i  p0 = bank address
-0017 69C2 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0018 69C4 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0015 69E8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     69EA 30D8     
+0016 69EC 6002                   data bank1.rom        ; | i  p0 = bank address
+0017 69EE 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0018 69F0 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0019                       ;------------------------------------------------------
 0020                       ; Exit
 0021                       ;------------------------------------------------------
-0022 69C6 C2F9  30         mov   *stack+,r11           ; Pop r11
-0023 69C8 045B  20         b     *r11                  ; Return to caller
+0022 69F2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0023 69F4 045B  20         b     *r11                  ; Return to caller
 0024               
 0025               
 0026               ***************************************************************
@@ -12421,21 +12452,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0028               * bank1 vec.11
 0029               ********|*****|*********************|**************************
 0030               edb.line.unpack:
-0031 69CA 0649  14         dect  stack
-0032 69CC C64B  30         mov   r11,*stack            ; Save return address
+0031 69F6 0649  14         dect  stack
+0032 69F8 C64B  30         mov   r11,*stack            ; Save return address
 0033                       ;------------------------------------------------------
 0034                       ; Call function in bank 1
 0035                       ;------------------------------------------------------
-0036 69CE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     69D0 30D8     
-0037 69D2 6002                   data bank1.rom        ; | i  p0 = bank address
-0038 69D4 7F84                   data vec.11           ; | i  p1 = Vector with target address
-0039 69D6 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0036 69FA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     69FC 30D8     
+0037 69FE 6002                   data bank1.rom        ; | i  p0 = bank address
+0038 6A00 7F84                   data vec.11           ; | i  p1 = Vector with target address
+0039 6A02 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Exit
 0042                       ;------------------------------------------------------
-0043 69D8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 69DA 045B  20         b     *r11                  ; Return to caller
+0043 6A04 C2F9  30         mov   *stack+,r11           ; Pop r11
+0044 6A06 045B  20         b     *r11                  ; Return to caller
 0045               
 0046               
 0047               ***************************************************************
@@ -12443,21 +12474,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0049               * bank1 vec.21
 0050               ********|*****|*********************|**************************
 0051               fb.vdpdump:
-0052 69DC 0649  14         dect  stack
-0053 69DE C64B  30         mov   r11,*stack            ; Save return address
+0052 6A08 0649  14         dect  stack
+0053 6A0A C64B  30         mov   r11,*stack            ; Save return address
 0054                       ;------------------------------------------------------
 0055                       ; Call function in bank 1
 0056                       ;------------------------------------------------------
-0057 69E0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     69E2 30D8     
-0058 69E4 6002                   data bank1.rom        ; | i  p0 = bank address
-0059 69E6 7F98                   data vec.21           ; | i  p1 = Vector with target address
-0060 69E8 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0057 6A0C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A0E 30D8     
+0058 6A10 6002                   data bank1.rom        ; | i  p0 = bank address
+0059 6A12 7F98                   data vec.21           ; | i  p1 = Vector with target address
+0060 6A14 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0061                       ;------------------------------------------------------
 0062                       ; Exit
 0063                       ;------------------------------------------------------
-0064 69EA C2F9  30         mov   *stack+,r11           ; Pop r11
-0065 69EC 045B  20         b     *r11                  ; Return to caller
+0064 6A16 C2F9  30         mov   *stack+,r11           ; Pop r11
+0065 6A18 045B  20         b     *r11                  ; Return to caller
 0066               
 0067               
 0068               ***************************************************************
@@ -12465,21 +12496,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0070               * bank1 vec.30
 0071               ********|*****|*********************|**************************
 0072               pane.errline.show:
-0073 69EE 0649  14         dect  stack
-0074 69F0 C64B  30         mov   r11,*stack            ; Save return address
+0073 6A1A 0649  14         dect  stack
+0074 6A1C C64B  30         mov   r11,*stack            ; Save return address
 0075                       ;------------------------------------------------------
 0076                       ; Call function in bank 1
 0077                       ;------------------------------------------------------
-0078 69F2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     69F4 30D8     
-0079 69F6 6002                   data bank1.rom        ; | i  p0 = bank address
-0080 69F8 7FAA                   data vec.30           ; | i  p1 = Vector with target address
-0081 69FA 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0078 6A1E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A20 30D8     
+0079 6A22 6002                   data bank1.rom        ; | i  p0 = bank address
+0080 6A24 7FAA                   data vec.30           ; | i  p1 = Vector with target address
+0081 6A26 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0082                       ;------------------------------------------------------
 0083                       ; Exit
 0084                       ;------------------------------------------------------
-0085 69FC C2F9  30         mov   *stack+,r11           ; Pop r11
-0086 69FE 045B  20         b     *r11                  ; Return to caller
+0085 6A28 C2F9  30         mov   *stack+,r11           ; Pop r11
+0086 6A2A 045B  20         b     *r11                  ; Return to caller
 0087               
 0088               
 0089               ***************************************************************
@@ -12487,21 +12518,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0091               * bank2 vec.4
 0092               ********|*****|*********************|**************************
 0093               fm.savefile:
-0094 6A00 0649  14         dect  stack
-0095 6A02 C64B  30         mov   r11,*stack            ; Save return address
+0094 6A2C 0649  14         dect  stack
+0095 6A2E C64B  30         mov   r11,*stack            ; Save return address
 0096                       ;------------------------------------------------------
 0097                       ; Call function in bank 2
 0098                       ;------------------------------------------------------
-0099 6A04 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A06 30D8     
-0100 6A08 6004                   data bank2.rom        ; | i  p0 = bank address
-0101 6A0A 7F76                   data vec.4            ; | i  p1 = Vector with target address
-0102 6A0C 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0099 6A30 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A32 30D8     
+0100 6A34 6004                   data bank2.rom        ; | i  p0 = bank address
+0101 6A36 7F76                   data vec.4            ; | i  p1 = Vector with target address
+0102 6A38 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0103                       ;------------------------------------------------------
 0104                       ; Exit
 0105                       ;------------------------------------------------------
-0106 6A0E C2F9  30         mov   *stack+,r11           ; Pop r11
-0107 6A10 045B  20         b     *r11                  ; Return to caller
+0106 6A3A C2F9  30         mov   *stack+,r11           ; Pop r11
+0107 6A3C 045B  20         b     *r11                  ; Return to caller
 0108               
 0109               
 0110               ***************************************************************
@@ -12509,21 +12540,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0112               * bank4 vec.8
 0113               ********|*****|*********************|**************************
 0114               fb.refresh:
-0115 6A12 0649  14         dect  stack
-0116 6A14 C64B  30         mov   r11,*stack            ; Save return address
+0115 6A3E 0649  14         dect  stack
+0116 6A40 C64B  30         mov   r11,*stack            ; Save return address
 0117                       ;------------------------------------------------------
 0118                       ; Call function in bank 4
 0119                       ;------------------------------------------------------
-0120 6A16 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A18 30D8     
-0121 6A1A 6008                   data bank4.rom        ; | i  p0 = bank address
-0122 6A1C 7F7E                   data vec.8            ; | i  p1 = Vector with target address
-0123 6A1E 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0120 6A42 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A44 30D8     
+0121 6A46 6008                   data bank4.rom        ; | i  p0 = bank address
+0122 6A48 7F7E                   data vec.8            ; | i  p1 = Vector with target address
+0123 6A4A 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0124                       ;------------------------------------------------------
 0125                       ; Exit
 0126                       ;------------------------------------------------------
-0127 6A20 C2F9  30         mov   *stack+,r11           ; Pop r11
-0128 6A22 045B  20         b     *r11                  ; Return to caller
+0127 6A4C C2F9  30         mov   *stack+,r11           ; Pop r11
+0128 6A4E 045B  20         b     *r11                  ; Return to caller
 0129               
 0130               
 0131               ***************************************************************
@@ -12531,21 +12562,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0133               * bank4 vec.23
 0134               ********|*****|*********************|**************************
 0135               fb.goto.nextmatch:
-0136 6A24 0649  14         dect  stack
-0137 6A26 C64B  30         mov   r11,*stack            ; Save return address
+0136 6A50 0649  14         dect  stack
+0137 6A52 C64B  30         mov   r11,*stack            ; Save return address
 0138                       ;------------------------------------------------------
 0139                       ; Call function in bank 4
 0140                       ;------------------------------------------------------
-0141 6A28 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A2A 30D8     
-0142 6A2C 6008                   data bank4.rom        ; | i  p0 = bank address
-0143 6A2E 7F9C                   data vec.23           ; | i  p1 = Vector with target address
-0144 6A30 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0141 6A54 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A56 30D8     
+0142 6A58 6008                   data bank4.rom        ; | i  p0 = bank address
+0143 6A5A 7F9C                   data vec.23           ; | i  p1 = Vector with target address
+0144 6A5C 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0145                       ;------------------------------------------------------
 0146                       ; Exit
 0147                       ;------------------------------------------------------
-0148 6A32 C2F9  30         mov   *stack+,r11           ; Pop r11
-0149 6A34 045B  20         b     *r11                  ; Return to caller
+0148 6A5E C2F9  30         mov   *stack+,r11           ; Pop r11
+0149 6A60 045B  20         b     *r11                  ; Return to caller
 0150               
 0151               
 0152               ***************************************************************
@@ -12553,21 +12584,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0154               * bank4 vec.38
 0155               ********|*****|*********************|**************************
 0156               pane.botline.busy.on:
-0157 6A36 0649  14         dect  stack
-0158 6A38 C64B  30         mov   r11,*stack            ; Save return address
+0157 6A62 0649  14         dect  stack
+0158 6A64 C64B  30         mov   r11,*stack            ; Save return address
 0159                       ;------------------------------------------------------
 0160                       ; Call function in bank 4
 0161                       ;------------------------------------------------------
-0162 6A3A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A3C 30D8     
-0163 6A3E 6008                   data bank4.rom        ; | i  p0 = bank address
-0164 6A40 7FBA                   data vec.38           ; | i  p1 = Vector with target address
-0165 6A42 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0162 6A66 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A68 30D8     
+0163 6A6A 6008                   data bank4.rom        ; | i  p0 = bank address
+0164 6A6C 7FBA                   data vec.38           ; | i  p1 = Vector with target address
+0165 6A6E 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0166                       ;------------------------------------------------------
 0167                       ; Exit
 0168                       ;------------------------------------------------------
-0169 6A44 C2F9  30         mov   *stack+,r11           ; Pop r11
-0170 6A46 045B  20         b     *r11                  ; Return to caller
+0169 6A70 C2F9  30         mov   *stack+,r11           ; Pop r11
+0170 6A72 045B  20         b     *r11                  ; Return to caller
 0171               
 0172               
 0173               ***************************************************************
@@ -12575,21 +12606,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0175               * bank4 vec.39
 0176               ********|*****|*********************|**************************
 0177               pane.botline.busy.off:
-0178 6A48 0649  14         dect  stack
-0179 6A4A C64B  30         mov   r11,*stack            ; Save return address
+0178 6A74 0649  14         dect  stack
+0179 6A76 C64B  30         mov   r11,*stack            ; Save return address
 0180                       ;------------------------------------------------------
 0181                       ; Call function in bank 4
 0182                       ;------------------------------------------------------
-0183 6A4C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A4E 30D8     
-0184 6A50 6008                   data bank4.rom        ; | i  p0 = bank address
-0185 6A52 7FBC                   data vec.39           ; | i  p1 = Vector with target address
-0186 6A54 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0183 6A78 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A7A 30D8     
+0184 6A7C 6008                   data bank4.rom        ; | i  p0 = bank address
+0185 6A7E 7FBC                   data vec.39           ; | i  p1 = Vector with target address
+0186 6A80 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0187                       ;------------------------------------------------------
 0188                       ; Exit
 0189                       ;------------------------------------------------------
-0190 6A56 C2F9  30         mov   *stack+,r11           ; Pop r11
-0191 6A58 045B  20         b     *r11                  ; Return to caller
+0190 6A82 C2F9  30         mov   *stack+,r11           ; Pop r11
+0191 6A84 045B  20         b     *r11                  ; Return to caller
 0192               
 0193               
 0194               ***************************************************************
@@ -12597,21 +12628,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0196               * bank4 vec.41
 0197               ********|*****|*********************|**************************
 0198               pane.colorscheme.load:
-0199 6A5A 0649  14         dect  stack
-0200 6A5C C64B  30         mov   r11,*stack            ; Save return address
+0199 6A86 0649  14         dect  stack
+0200 6A88 C64B  30         mov   r11,*stack            ; Save return address
 0201                       ;------------------------------------------------------
 0202                       ; Call function in bank 4
 0203                       ;------------------------------------------------------
-0204 6A5E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A60 30D8     
-0205 6A62 6008                   data bank4.rom        ; | i  p0 = bank address
-0206 6A64 7FC0                   data vec.41           ; | i  p1 = Vector with target address
-0207 6A66 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0204 6A8A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A8C 30D8     
+0205 6A8E 6008                   data bank4.rom        ; | i  p0 = bank address
+0206 6A90 7FC0                   data vec.41           ; | i  p1 = Vector with target address
+0207 6A92 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0208                       ;------------------------------------------------------
 0209                       ; Exit
 0210                       ;------------------------------------------------------
-0211 6A68 C2F9  30         mov   *stack+,r11           ; Pop r11
-0212 6A6A 045B  20         b     *r11                  ; Return to caller
+0211 6A94 C2F9  30         mov   *stack+,r11           ; Pop r11
+0212 6A96 045B  20         b     *r11                  ; Return to caller
 0213               
 0214               
 0215               ***************************************************************
@@ -12619,21 +12650,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0217               * bank4 vec.42
 0218               ********|*****|*********************|**************************
 0219               pane.colorscheme.botline:
-0220 6A6C 0649  14         dect  stack
-0221 6A6E C64B  30         mov   r11,*stack            ; Save return address
+0220 6A98 0649  14         dect  stack
+0221 6A9A C64B  30         mov   r11,*stack            ; Save return address
 0222                       ;------------------------------------------------------
 0223                       ; Call function in bank 1
 0224                       ;------------------------------------------------------
-0225 6A70 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A72 30D8     
-0226 6A74 6008                   data bank4.rom        ; | i  p0 = bank address
-0227 6A76 7FC2                   data vec.42           ; | i  p1 = Vector with target address
-0228 6A78 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0225 6A9C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6A9E 30D8     
+0226 6AA0 6008                   data bank4.rom        ; | i  p0 = bank address
+0227 6AA2 7FC2                   data vec.42           ; | i  p1 = Vector with target address
+0228 6AA4 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0229                       ;------------------------------------------------------
 0230                       ; Exit
 0231                       ;------------------------------------------------------
-0232 6A7A C2F9  30         mov   *stack+,r11           ; Pop r11
-0233 6A7C 045B  20         b     *r11                  ; Return to caller
+0232 6AA6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0233 6AA8 045B  20         b     *r11                  ; Return to caller
 0234               
 0235               
 0236               ***************************************************************
@@ -12641,21 +12672,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0238               * bank4 vec.49
 0239               ********|*****|*********************|**************************
 0240               pane.cmdb.hide:
-0241 6A7E 0649  14         dect  stack
-0242 6A80 C64B  30         mov   r11,*stack            ; Save return address
+0241 6AAA 0649  14         dect  stack
+0242 6AAC C64B  30         mov   r11,*stack            ; Save return address
 0243                       ;------------------------------------------------------
 0244                       ; Call function in bank 4
 0245                       ;------------------------------------------------------
-0246 6A82 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A84 30D8     
-0247 6A86 6008                   data bank4.rom        ; | i  p0 = bank address
-0248 6A88 7FD0                   data vec.49           ; | i  p1 = Vector with target address
-0249 6A8A 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0246 6AAE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6AB0 30D8     
+0247 6AB2 6008                   data bank4.rom        ; | i  p0 = bank address
+0248 6AB4 7FD0                   data vec.49           ; | i  p1 = Vector with target address
+0249 6AB6 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0250                       ;------------------------------------------------------
 0251                       ; Exit
 0252                       ;------------------------------------------------------
-0253 6A8C C2F9  30         mov   *stack+,r11           ; Pop r11
-0254 6A8E 045B  20         b     *r11                  ; Return to caller
+0253 6AB8 C2F9  30         mov   *stack+,r11           ; Pop r11
+0254 6ABA 045B  20         b     *r11                  ; Return to caller
                    < stevie_b5.asm
 0099                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
@@ -12669,21 +12700,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0009               * bank1 vec.1
 0010               ********|*****|*********************|**************************
 0011               mem.sams.setup.stevie:
-0012 6A90 0649  14         dect  stack
-0013 6A92 C64B  30         mov   r11,*stack            ; Save return address
+0012 6ABC 0649  14         dect  stack
+0013 6ABE C64B  30         mov   r11,*stack            ; Save return address
 0014                       ;------------------------------------------------------
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
-0017 6A94 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6A96 30D8     
-0018 6A98 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 6A9A 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0020 6A9C 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0017 6AC0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6AC2 30D8     
+0018 6AC4 6002                   data bank1.rom        ; | i  p0 = bank address
+0019 6AC6 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0020 6AC8 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
-0024 6A9E C2F9  30         mov   *stack+,r11           ; Pop r11
-0025 6AA0 045B  20         b     *r11                  ; Return to caller
+0024 6ACA C2F9  30         mov   *stack+,r11           ; Pop r11
+0025 6ACC 045B  20         b     *r11                  ; Return to caller
 0027               
 0028               
 0031               
@@ -12692,21 +12723,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 6AA2 0649  14         dect  stack
-0038 6AA4 C64B  30         mov   r11,*stack            ; Save return address
+0037 6ACE 0649  14         dect  stack
+0038 6AD0 C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 6AA6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6AA8 30D8     
-0043 6AAA 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 6AAC 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0045 6AAE 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 6AD2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6AD4 30D8     
+0043 6AD6 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 6AD8 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0045 6ADA 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 6AB0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 6AB2 045B  20         b     *r11                  ; Return to caller
+0049 6ADC C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 6ADE 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -12715,21 +12746,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 6AB4 0649  14         dect  stack
-0060 6AB6 C64B  30         mov   r11,*stack            ; Save return address
+0059 6AE0 0649  14         dect  stack
+0060 6AE2 C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 6AB8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6ABA 30D8     
-0065 6ABC 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 6ABE 7F72                   data vec.2            ; | i  p1 = Vector with target address
-0067 6AC0 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 6AE4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6AE6 30D8     
+0065 6AE8 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 6AEA 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0067 6AEC 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 6AC2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 6AC4 045B  20         b     *r11                  ; Return to caller
+0071 6AEE C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 6AF0 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -12737,21 +12768,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 6AC6 0649  14         dect  stack
-0081 6AC8 C64B  30         mov   r11,*stack            ; Save return address
+0080 6AF2 0649  14         dect  stack
+0081 6AF4 C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 6ACA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     6ACC 30D8     
-0086 6ACE 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 6AD0 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0088 6AD2 600A                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 6AF6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     6AF8 30D8     
+0086 6AFA 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 6AFC 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0088 6AFE 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 6AD4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 6AD6 045B  20         b     *r11                  ; Return to caller
+0092 6B00 C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 6B02 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b5.asm
 0100                       ;-----------------------------------------------------------------------
@@ -12933,10 +12964,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030 7F9A 2026     vec.22  data  cpu.crash             ;
 0031 7F9C 2026     vec.23  data  cpu.crash             ;
 0032 7F9E 2026     vec.24  data  cpu.crash             ;
-0033 7FA0 67FA     vec.25  data  pane.clock.time       ;
-0034 7FA2 68B4     vec.26  data  fm.clock.on           ;
-0035 7FA4 68FC     vec.27  data  fm.clock.off          ;
-0036 7FA6 6980     vec.28  data  tv.flash.screen       ;
+0033 7FA0 6826     vec.25  data  pane.clock.time       ;
+0034 7FA2 68E0     vec.26  data  fm.clock.on           ;
+0035 7FA4 6928     vec.27  data  fm.clock.off          ;
+0036 7FA6 69AC     vec.28  data  tv.flash.screen       ;
 0037 7FA8 2026     vec.29  data  cpu.crash             ;
 0038 7FAA 2026     vec.30  data  cpu.crash             ;
 0039 7FAC 2026     vec.31  data  cpu.crash             ;
@@ -13311,16 +13342,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     edb.find.init....... >65b8 :     
     edb.find.init.exit.. >65e8 :     
     edb.find.scan....... >665c :     
-    edb.find.scan.bufffull >6736 :     
-    edb.find.scan.checkcomplete >6778 :     
+    edb.find.scan.bufffull >6734 :     
+    edb.find.scan.checkcomplete >6776 :     
     edb.find.scan.compare >66f0 :     
-    edb.find.scan.compare.nextchar >674c :     
-    edb.find.scan.compare.nomatch >6740 :     
-    edb.find.scan.done.. >6788 :     
-    edb.find.scan.exit.. >67c8 :     
-    edb.find.scan.nextline >6750 :     
-    edb.find.scan.show.. >675c :     
+    edb.find.scan.compare.nextchar >674a :     
+    edb.find.scan.compare.nomatch >673e :     
+    edb.find.scan.done.. >6786 :     
+    edb.find.scan.exit.. >67c6 :     
+    edb.find.scan.nextline >674e :     
+    edb.find.scan.show.. >675a :     
     edb.find.scan.showbusy >66a6 :     
+    edb.find.scan.showmatches >67f8 :     
     edb.find.scan.unpack_line >66c0 :     
     edb.find.search..... >65f2 :     
     edb.find.search.exit >6644 :     
@@ -13353,7 +13385,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     edb.line.mappage.... >3796 :     
     edb.line.mappage.exit >37da :     
     edb.line.mappage.lookup >37b2 :     
-    edb.line.unpack..... >69ca :     
+    edb.line.unpack..... >69f6 :     
     edb.lines........... >a504 :     
     edb.lineterm........ >a524 :     
     edb.lock............ >6522 :     
@@ -13415,11 +13447,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     fb.curtoggle........ >a314 :     
     fb.dirty............ >a31a :     
     fb.free............. >a3c2 :     
-    fb.goto.nextmatch... >6a24 :     
+    fb.goto.nextmatch... >6a50 :     
     fb.init............. >3188 :     
     fb.init.exit........ >31dc :     
     fb.prevcursor....... >a316 :     
-    fb.refresh.......... >6a12 :     
+    fb.refresh.......... >6a3e :     
     fb.row.............. >a306 :     
     fb.row.dirty........ >a30a :     
     fb.row.length....... >a308 :     
@@ -13436,7 +13468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     fb.top.ptr.......... >a300 :     
     fb.topline.......... >a304 :     
     fb.uncrunch.area.... >d960 :     
-    fb.vdpdump.......... >69dc :     
+    fb.vdpdump.......... >6a08 :     
     fb.vwco............. >a310 :     
     fb.yxsave........... >a318 :     
     fg99................ >2ed8 :     
@@ -13509,12 +13541,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     filv................ >228e :     
     filzz............... >22b4 :     
     fj.bottom........... >b000 :     
-    fm.clock.off........ >68fc :     
-    fm.clock.off.exit... >6958 :     
-    fm.clock.off.oneshot >694c :     
-    fm.clock.on......... >68b4 :     
-    fm.clock.on.exit.... >68e8 :     
-    fm.savefile......... >6a00 :     
+    fm.clock.off........ >6928 :     
+    fm.clock.off.exit... >6984 :     
+    fm.clock.off.oneshot >6978 :     
+    fm.clock.on......... >68e0 :     
+    fm.clock.on.exit.... >6914 :     
+    fm.savefile......... >6a2c :     
     fnopt1.............. >0000 :     
     fnopt2.............. >0006 :     
     fnopt3.............. >000c :     
@@ -13854,10 +13886,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     mccode.............. >2210 :     
     mcloop.............. >8320 :     
     mcsprd.............. >8322 :     
-    mem.sams.set.boot... >6ab4 :     
-    mem.sams.set.legacy. >6aa2 :     
-    mem.sams.set.stevie. >6ac6 :     
-    mem.sams.setup.stevie >6a90 :     
+    mem.sams.set.boot... >6ae0 :     
+    mem.sams.set.legacy. >6ace :     
+    mem.sams.set.stevie. >6af2 :     
+    mem.sams.setup.stevie >6abc :     
     mkhex............... >29c8 :     
     mkhex1.............. >29e0 :     
     mkhex1.digit09...... >29f6 :     
@@ -13892,17 +13924,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     outparm6............ >a022 :     
     outparm7............ >a024 :     
     palon............... >201c :     
-    pane.botline.busy.off >6a48 :     
-    pane.botline.busy.on >6a36 :     
+    pane.botline.busy.off >6a74 :     
+    pane.botline.busy.on >6a62 :     
     pane.botrow......... >003b :     
-    pane.clock.time..... >67fa :     
-    pane.clock.time.date >6856 :     
-    pane.clock.time.exit >6892 :     
-    pane.clock.time.only >6840 :     
-    pane.cmdb.hide...... >6a7e :     
-    pane.colorscheme.botline >6a6c :     
-    pane.colorscheme.load >6a5a :     
-    pane.errline.show... >69ee :     
+    pane.clock.time..... >6826 :     
+    pane.clock.time.date >6882 :     
+    pane.clock.time.exit >68be :     
+    pane.clock.time.only >686c :     
+    pane.cmdb.hide...... >6aaa :     
+    pane.colorscheme.botline >6a98 :     
+    pane.colorscheme.load >6a86 :     
+    pane.errline.show... >6a1a :     
     pane.focus.cmdb..... >0001 :     
     pane.focus.fb....... >0000 :     
     pane.topline.oneshot.clearmsg >3898 :     
@@ -14184,7 +14216,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.busycolor........ >a220 :     
     tv.cat.fname........ >f890 :     
     tv.clip.fname....... >f840 :     
-    tv.clock.start...... >69b8 :     
+    tv.clock.start...... >69e4 :     
     tv.clock.state...... >a240 :     
     tv.cmdb.color....... >a224 :     
     tv.cmdb.hcolor...... >a226 :     
@@ -14200,8 +14232,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.error.visible.... >a230 :     
     tv.fg99.img.ptr..... >a238 :     
     tv.fj.stackpnt...... >a22e :     
-    tv.flash.screen..... >6980 :     
-    tv.flash.screen.exit >69b4 :     
+    tv.flash.screen..... >69ac :     
+    tv.flash.screen.exit >69e0 :     
     tv.font.ptr......... >a228 :     
     tv.free............. >a2e4 :     
     tv.init............. >343e :     
@@ -14246,7 +14278,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.uint16.unpack.exit >3574 :     
     tx4024.............. >21fc :     
     tx8024.............. >2206 :     
-    txt.abort.search.... >67d8 :     
+    txt.abort.search.... >67d6 :     
     txt.alpha.down...... >3c66 :     
     txt.block.clip...... >39c4 :     
     txt.block.copy...... >398e :     
@@ -14256,8 +14288,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.block.print..... >39de :     
     txt.block.save...... >39b2 :     
     txt.clearmem........ >39f0 :     
-    txt.clockoff........ >6962 :     
-    txt.clockon......... >68f2 :     
+    txt.clockoff........ >698e :     
+    txt.clockon......... >691e :     
     txt.cmdb.prompt..... >3d98 :     
     txt.colorscheme..... >3d9a :     
     txt.deleting........ >3968 :     
@@ -14270,8 +14302,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.done.load....... >3a18 :     
     txt.done.print...... >3a6c :     
     txt.done.save....... >3a4c :     
-    txt.done.search..... >67e8 :     
-    txt.dow............. >689e :     
+    txt.done.search..... >67e6 :     
+    txt.dow............. >68ca :     
     txt.filetype.dv80... >3b1a :     
     txt.filetype.none... >3c74 :     
     txt.find.hits....... >6650 :     
@@ -14300,7 +14332,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.memfull.load.... >3d26 :     
     txt.msg.tibasic..... >3c7a :     
     txt.newfile......... >3ae4 :     
-    txt.noclock......... >696e :     
+    txt.noclock......... >699a :     
     txt.nodisk.......... >3aa8 :     
     txt.picker.icon1.... >3da8 :     
     txt.picker.icon2.... >3daa :     
@@ -14315,7 +14347,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     txt.uncrunching..... >3abc :     
     txt.unlocked........ >65a8 :     
     txt.vertline........ >3c6a :     
-    txt.vtline.......... >689c :     
+    txt.vtline.......... >68c8 :     
     txt.ws1............. >3c6e :     
     txt.ws2............. >3c70 :     
     txt.ws4............. >3c74 :     
