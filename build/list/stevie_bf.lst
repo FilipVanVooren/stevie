@@ -11215,7 +11215,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0107                       ;-----------------------------------------------------------------------
 0108                       copy  "rom.vectors.bankf.asm"
      **** ****     > rom.vectors.bankf.asm
-0001               * FILE......: rom.vectors.bank6.asm
+0001               * FILE......: rom.vectors.bankf.asm
 0002               * Purpose...: Bank F vectors for trampoline function
 0003               
 0004               *--------------------------------------------------------------
@@ -11255,7 +11255,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0038 7FAC 2026     vec.31  data  cpu.crash             ;
 0039 7FAE 2026     vec.32  data  cpu.crash             ;
 0040               *--------------------------------------------------------------
-0041               * ROM 8: Vectors 33-64
+0041               * ROM F: Vectors 33-64
 0042               *--------------------------------------------------------------
 0043 7FB0 2026     vec.33  data  cpu.crash             ;
 0044 7FB2 2026     vec.34  data  cpu.crash             ;

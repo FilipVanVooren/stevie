@@ -1,7 +1,6 @@
 * FILE......: rom.stubs.bank3.asm
 * Purpose...: Bank 3 stubs for functions in other banks
 
-
 ***************************************************************
 * Stub for "tv.clock.start"
 * bank1 vec.3
@@ -101,7 +100,6 @@ pane.errline.hide:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.cursor.blink"
@@ -303,7 +301,6 @@ error.display:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.cmdb.hide"
 * bank4 vec.49
@@ -323,7 +320,6 @@ pane.cmdb.hide:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.filebrowser"
@@ -405,7 +401,6 @@ pane.filebrowser.colbar.remove:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.clock.time"
 * bank5 vec.25
@@ -444,8 +439,7 @@ vdp.cursor.tat.fb:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller        
-
+        b     *r11                  ; Return to caller
 
 ***************************************************************
 * Stub for "mem.sams.dialogs.on"
@@ -467,7 +461,6 @@ mem.sams.dialogs.on:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "mem.sams.dialogs.off"
 * banke vec.3
@@ -487,7 +480,6 @@ mem.sams.dialogs.off:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "dialog.help.content"

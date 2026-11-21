@@ -1,7 +1,6 @@
 * FILE......: rom.stubs.bank5.asm
 * Purpose...: Bank 5 stubs for functions in other banks
 
-
 ***************************************************************
 * Stub for "tv.clock.start"
 * bank1 vec.3
@@ -21,7 +20,6 @@ tv.clock.start:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "edb.line.unpack"
@@ -43,7 +41,6 @@ edb.line.unpack:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "fb.vdpdump"
 * bank1 vec.21
@@ -63,7 +60,6 @@ fb.vdpdump:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.errline.show"
@@ -85,7 +81,6 @@ pane.errline.show:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "fm.savefile"
 * bank2 vec.4
@@ -105,7 +100,6 @@ fm.savefile:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "fb.refresh"
@@ -127,7 +121,6 @@ fb.refresh:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "fb.goto.nextmatch"
 * bank4 vec.23
@@ -147,7 +140,6 @@ fb.goto.nextmatch:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.botline.busy.on"
@@ -169,7 +161,6 @@ pane.botline.busy.on:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.botline.busy.off"
 * bank4 vec.39
@@ -190,7 +181,6 @@ pane.botline.busy.off:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-        
 ***************************************************************
 * Stub for "pane.colorscheme.load"
 * bank4 vec.41
@@ -211,7 +201,6 @@ pane.colorscheme.load:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.colorscheme.botline"
 * bank4 vec.42
@@ -231,7 +220,6 @@ pane.colorscheme.botline:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.cmdb.hide"

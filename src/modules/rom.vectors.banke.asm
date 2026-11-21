@@ -1,9 +1,9 @@
-* FILE......: rom.vectors.bank6.asm
+* FILE......: rom.vectors.banke.asm
 * Purpose...: Bank E vectors for trampoline function
 
 *--------------------------------------------------------------
 * ROM E: Vectors 1-32
-*--------------------------------------------------------------        
+*--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  rom.dialogs2ram       ; Copy dialogs data to ram
 vec.2   data  mem.sams.dialogs.on   ; Activate SAMS pages #2 and #3
@@ -38,7 +38,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM E: Vectors 33-64 
+* ROM E: Vectors 33-64
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

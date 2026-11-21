@@ -1,10 +1,9 @@
 * FILE......: rom.vectors.bank5.asm
 * Purpose...: Bank 5 vectors for trampoline function
 
-
 *--------------------------------------------------------------
 * ROM 5: Vectors 1-32
-*--------------------------------------------------------------        
+*--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  edb.clear.sams        ;
 vec.2   data  cpu.crash             ;
@@ -30,7 +29,7 @@ vec.21  data  cpu.crash             ;
 vec.22  data  cpu.crash             ;
 vec.23  data  cpu.crash             ;
 vec.24  data  cpu.crash             ;
-vec.25  data  pane.clock.time       ; 
+vec.25  data  pane.clock.time       ;
 vec.26  data  fm.clock.on           ;
 vec.27  data  fm.clock.off          ;
 vec.28  data  tv.flash.screen       ;
@@ -39,7 +38,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 5: Vectors 33-64 
+* ROM 5: Vectors 33-64
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

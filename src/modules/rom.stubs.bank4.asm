@@ -1,7 +1,6 @@
 * FILE......: rom.stubs.bank4.asm
 * Purpose...: Bank 4 stubs for functions in other banks
 
-
 ***************************************************************
 * Stub for "edb.line.pack.fb"
 * bank1 vec.10
@@ -21,7 +20,6 @@ edb.line.pack.fb:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "edb.line.unpack.fb"
@@ -43,7 +41,6 @@ edb.line.unpack.fb:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.cursor.blink"
 * bank1 vec.28
@@ -63,7 +60,6 @@ pane.cursor.blink:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "pane.cmdb.draw"
@@ -85,7 +81,6 @@ pane.cmdb.draw:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "cmdb.refresh_prompt"
 * bank3 vec.24
@@ -105,7 +100,6 @@ cmdb.refresh_prompt:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "cmdb.cmd.cursor_eol"
@@ -127,8 +121,6 @@ cmdb.cmd.cursor_eol:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
-
 ***************************************************************
 * Stub for "vdp.colors.line"
 * bank6 vec.3
@@ -148,7 +140,6 @@ vdp.colors.line:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "vdp.cursor.tat.fb"
@@ -190,7 +181,6 @@ vdp.cursor.tat:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "mem.sams.dialogs.on"
 * banke vec.2
@@ -210,7 +200,6 @@ mem.sams.dialogs.on:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "mem.sams.dialogs.off"

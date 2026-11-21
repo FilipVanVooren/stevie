@@ -2,6 +2,21 @@
 
 This overview is intentionally at the assembly-subroutine level, not the file level. A single file may contain many labels, and the same logical routine can be reached from several banks via the ROM stub / far-jump mechanism.
 
+## Generated trampoline layer (do not hand-edit)
+
+The cross-bank call layer is generated from a single registry:
+
+- `build/vector-registry.txt` — source of truth for every vector slot
+  (`rom.vectors.bank[1-f].asm`) and every cross-bank stub block
+  (`rom.stubs.bank[1-7].asm`), including block order (which fixes ROM addresses).
+- `build/stub-raw/*.blk` — verbatim bodies of irregular stub blocks referenced by the registry.
+
+Workflow: edit the registry (or re-run `extract` after moving code), then run
+`python3 build/gen_vectors.py generate`. `build/build.sh` runs
+`gen_vectors.py check` before assembling and aborts when `src/modules` drifted
+from the registry. Exceptions that stay hand-written: `rom.vectors.bank0.asm`
+(equ-based boot vectors) and `rom.stubs.bankx.asm` (conditional SAMS stubs).
+
 Legend:
 - Stevie function: editor logic, file management, dialogs, buffer operations, screen logic, etc.
 - Spectra2 low-level function: ROM bridge, SAMS/VDP helpers, bank switching, crash/return plumbing, TI-Basic session glue.

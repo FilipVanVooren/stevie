@@ -1,0 +1,11 @@
+***************************************************************
+* Stub for dialog "Unsaved Changes"
+* bank3 vec.7
+********|*****|*********************|**************************
+dialog.unsaved:
+        clr   @cmdb.panmarkers      ; No key markers
+        mov   @dialog.unsaved.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.unsaved.vector:
+        data  vec.7
+

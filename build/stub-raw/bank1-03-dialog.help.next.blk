@@ -1,0 +1,8 @@
+***************************************************************
+* Stub for dialog "Help (next)"
+* bank3 vec.1
+********|*****|*********************|**************************
+dialog.help.next:
+        inc   @cmdb.dialog.var      ; Adjust page table index for next page
+        jmp   dialog.help
+

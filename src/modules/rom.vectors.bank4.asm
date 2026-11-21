@@ -3,7 +3,7 @@
 
 *--------------------------------------------------------------
 * ROM 4: Vectors 1-32
-*--------------------------------------------------------------        
+*--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  fb.goto.toprow        ; Refresh FB with top-row and row offset
 vec.2   data  fb.ruler.init         ; Setup ruler with tab positions in memory
@@ -38,40 +38,40 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 4: Vectors 33-64 
+* ROM 4: Vectors 33-64
 *--------------------------------------------------------------
-vec.33  data  pane.topline           ; Draw topline
-vec.34  data  pane.botline           ; Draw bottom line
-vec.35  data  pane.errline.show      ; Show error line
-vec.36  data  pane.errline.hide      ; Hide error line
+vec.33  data  pane.topline          ; Draw topline
+vec.34  data  pane.botline          ; Draw bottom line
+vec.35  data  pane.errline.show     ; Show error line
+vec.36  data  pane.errline.hide     ; Hide error line
 vec.37  data  pane.errline.drawcolor ; Draw error line
-vec.38  data  pane.botline.busy.on   ; Turn on busy indicator on bottom line
-vec.39  data  pane.botline.busy.off  ; Turn off busy indicator on bottom line
+vec.38  data  pane.botline.busy.on  ; Turn on busy indicator on bottom line
+vec.39  data  pane.botline.busy.off ; Turn off busy indicator on bottom line
 vec.40  data  pane.colorscheme.cycle ; Cycle through color schemes
-vec.41  data  pane.colorscheme.load  ; Load color scheme
+vec.41  data  pane.colorscheme.load ; Load color scheme
 vec.42  data  pane.colorscheme.botline
 vec.43  data  pane.colorscheme.index ; Get address of color scheme
-vec.44  data  pane.botline.keycolor  ; Colorize key markers
-vec.45  data  error.display          ;
-vec.46  data  cpu.crash              ;
-vec.47  data  cpu.crash              ;
-vec.48  data  cpu.crash              ;
-vec.49  data  pane.cmdb.hide         ;
-vec.50  data  pane.filebrowser       ; File browser
+vec.44  data  pane.botline.keycolor ; Colorize key markers
+vec.45  data  error.display         ;
+vec.46  data  cpu.crash             ;
+vec.47  data  cpu.crash             ;
+vec.48  data  cpu.crash             ;
+vec.49  data  pane.cmdb.hide        ;
+vec.50  data  pane.filebrowser      ; File browser
 vec.51  data  pane.filebrowser.hilight
 vec.52  data  pane.filebrowser.colbar
 vec.53  data  pane.filebrowser.colbar.remove
-vec.54  data  cpu.crash              ;
-vec.55  data  cpu.crash              ;
-vec.56  data  cpu.crash              ;
-vec.57  data  cpu.crash              ;
-vec.58  data  cpu.crash              ;
+vec.54  data  cpu.crash             ;
+vec.55  data  cpu.crash             ;
+vec.56  data  cpu.crash             ;
+vec.57  data  cpu.crash             ;
+vec.58  data  cpu.crash             ;
 vec.59  data  pane.cmdb.show        ; Show command buffer pane (=dialog)
-vec.60  data  cpu.crash              ;
-vec.61  data  cpu.crash              ;
-vec.62  data  cpu.crash              ;
-vec.63  data  cpu.crash              ;
-vec.64  data  cpu.crash              ;
+vec.60  data  cpu.crash             ;
+vec.61  data  cpu.crash             ;
+vec.62  data  cpu.crash             ;
+vec.63  data  cpu.crash             ;
+vec.64  data  cpu.crash             ;
 
 *--------------------------------------------------------------
 * ROM identification string for CPU crash

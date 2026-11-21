@@ -1,8 +1,6 @@
 * FILE......: rom.stubs.bank7.asm
 * Purpose...: Bank 7 stubs for functions in other banks
 
-
-
 ***************************************************************
 * Stub for "cmdb.dialog.close"
 * bank1 vec.18
@@ -22,7 +20,6 @@ cmdb.dialog.close:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "fm.newfile"
@@ -44,7 +41,6 @@ fm.newfile:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "file.vmem"
 * bank2 vec.32
@@ -64,7 +60,6 @@ file.vmem:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "edb.find.init"
@@ -86,7 +81,6 @@ edb.find.init:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "dialog.basic"
 * bank3 vec.13
@@ -107,7 +101,6 @@ dialog.basic:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-        
 ***************************************************************
 * Stub for "cmdb.cmd.getlength"
 * bank3 vec.26
@@ -127,7 +120,6 @@ cmdb.cmd.getlength:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "fb.refresh"
@@ -149,7 +141,6 @@ fb.refresh:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "pane.colorscheme.load"
 * bank4 vec.41
@@ -168,7 +159,7 @@ pane.colorscheme.load:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller        
+        b     *r11                  ; Return to caller
 
 ***************************************************************
 * Stub for "pane.colorscheme.botline"
@@ -188,4 +179,4 @@ pane.colorscheme.botline:
         ; Exit
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller        
+        b     *r11                  ; Return to caller

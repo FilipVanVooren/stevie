@@ -1,0 +1,19 @@
+***************************************************************
+* Trampoline 1 (bank 3, dialog)
+********|*****|*********************|**************************
+_trampoline.bank3:
+        bl    @pane.cursor.hide     ; Hide cursor
+        ;------------------------------------------------------
+        ; Call routine in specified bank
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank3.rom        ; | i  p0 = bank address
+              data >ffff            ; | i  p1 = Vector with target address
+                                    ; |         (deref @trmpvector)
+              data bankid           ; / i  p2 = Source ROM bank for return
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+        b     @edk.act.cmdb.show
+                                    ; Show dialog in CMDB pane
+

@@ -3,7 +3,7 @@
 
 *--------------------------------------------------------------
 * ROM 3: Vectors 1-32
-*--------------------------------------------------------------        
+*--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  dialog.help           ; Dialog "Help"
 vec.2   data  dialog.open           ; Dialog "Open file"
@@ -38,7 +38,7 @@ vec.30  data  dialog.main           ; Dialog "Main Menu"
 vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 3: Vectors 33-64 
+* ROM 3: Vectors 33-64
 *--------------------------------------------------------------
 vec.33  data  cmdb.cfg.fname        ; Configure filename
 vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print

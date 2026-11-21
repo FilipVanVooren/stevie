@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 261121-1842320
+0002               * BUILD: 260101-0000000
 0003               ***************************************************************
                    < stevie_b8.asm
 0025                       ;-----------------------------------------------------------------------
@@ -10214,80 +10214,80 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0094                       ;-----------------------------------------------------------------------
 0095                       copy  "rom.vectors.bank8.asm"
      **** ****     > rom.vectors.bank8.asm
-0001               * FILE......: rom.vectors.bank6.asm
+0001               * FILE......: rom.vectors.bank8.asm
 0002               * Purpose...: Bank 8 vectors for trampoline function
 0003               
 0004               *--------------------------------------------------------------
 0005               * ROM 8: Vectors 1-32
 0006               *--------------------------------------------------------------
 0007                       aorg  >7f70
-0008 7F70 6004     vec.1   data  edkey.key.repeat ; Update keyboard autorepeat
-0009 7F72 0000     vec.2   data  0             ;
-0010 7F74 0000     vec.3   data  0             ;
-0011 7F76 0000     vec.4   data  0             ;
-0012 7F78 0000     vec.5   data  0             ;
-0013 7F7A 0000     vec.6   data  0             ;
-0014 7F7C 0000     vec.7   data  0             ;
-0015 7F7E 0000     vec.8   data  0             ;
-0016 7F80 0000     vec.9   data  0             ;
-0017 7F82 0000     vec.10  data  0             ;
-0018 7F84 0000     vec.11  data  0             ;
-0019 7F86 0000     vec.12  data  0             ;
-0020 7F88 0000     vec.13  data  0             ;
-0021 7F8A 0000     vec.14  data  0             ;
-0022 7F8C 0000     vec.15  data  0             ;
-0023 7F8E 0000     vec.16  data  0             ;
-0024 7F90 0000     vec.17  data  0             ;
-0025 7F92 0000     vec.18  data  0             ;
-0026 7F94 0000     vec.19  data  0             ;
-0027 7F96 0000     vec.20  data  0             ;
-0028 7F98 0000     vec.21  data  0             ;
-0029 7F9A 0000     vec.22  data  0             ;
-0030 7F9C 0000     vec.23  data  0             ;
-0031 7F9E 0000     vec.24  data  0             ;
-0032 7FA0 0000     vec.25  data  0             ;
-0033 7FA2 0000     vec.26  data  0             ;
-0034 7FA4 0000     vec.27  data  0             ;
-0035 7FA6 0000     vec.28  data  0             ;
-0036 7FA8 0000     vec.29  data  0             ;
-0037 7FAA 0000     vec.30  data  0             ;
-0038 7FAC 0000     vec.31  data  0             ;
-0039 7FAE 0000     vec.32  data  0             ;
+0008 7F70 6004     vec.1   data  edkey.key.repeat      ; Update keyboard autorepeat
+0009 7F72 0000     vec.2   data  0                     ;
+0010 7F74 0000     vec.3   data  0                     ;
+0011 7F76 0000     vec.4   data  0                     ;
+0012 7F78 0000     vec.5   data  0                     ;
+0013 7F7A 0000     vec.6   data  0                     ;
+0014 7F7C 0000     vec.7   data  0                     ;
+0015 7F7E 0000     vec.8   data  0                     ;
+0016 7F80 0000     vec.9   data  0                     ;
+0017 7F82 0000     vec.10  data  0                     ;
+0018 7F84 0000     vec.11  data  0                     ;
+0019 7F86 0000     vec.12  data  0                     ;
+0020 7F88 0000     vec.13  data  0                     ;
+0021 7F8A 0000     vec.14  data  0                     ;
+0022 7F8C 0000     vec.15  data  0                     ;
+0023 7F8E 0000     vec.16  data  0                     ;
+0024 7F90 0000     vec.17  data  0                     ;
+0025 7F92 0000     vec.18  data  0                     ;
+0026 7F94 0000     vec.19  data  0                     ;
+0027 7F96 0000     vec.20  data  0                     ;
+0028 7F98 0000     vec.21  data  0                     ;
+0029 7F9A 0000     vec.22  data  0                     ;
+0030 7F9C 0000     vec.23  data  0                     ;
+0031 7F9E 0000     vec.24  data  0                     ;
+0032 7FA0 0000     vec.25  data  0                     ;
+0033 7FA2 0000     vec.26  data  0                     ;
+0034 7FA4 0000     vec.27  data  0                     ;
+0035 7FA6 0000     vec.28  data  0                     ;
+0036 7FA8 0000     vec.29  data  0                     ;
+0037 7FAA 0000     vec.30  data  0                     ;
+0038 7FAC 0000     vec.31  data  0                     ;
+0039 7FAE 0000     vec.32  data  0                     ;
 0040               *--------------------------------------------------------------
 0041               * ROM 8: Vectors 33-64
 0042               *--------------------------------------------------------------
-0043 7FB0 0000     vec.33  data  0             ;
-0044 7FB2 0000     vec.34  data  0             ;
-0045 7FB4 0000     vec.35  data  0             ;
-0046 7FB6 0000     vec.36  data  0             ;
-0047 7FB8 0000     vec.37  data  0             ;
-0048 7FBA 0000     vec.38  data  0             ;
-0049 7FBC 0000     vec.39  data  0             ;
-0050 7FBE 0000     vec.40  data  0             ;
-0051 7FC0 0000     vec.41  data  0             ;
-0052 7FC2 0000     vec.42  data  0             ;
-0053 7FC4 0000     vec.43  data  0             ;
-0054 7FC6 0000     vec.44  data  0             ;
-0055 7FC8 0000     vec.45  data  0             ;
-0056 7FCA 0000     vec.46  data  0             ;
-0057 7FCC 0000     vec.47  data  0             ;
-0058 7FCE 0000     vec.48  data  0             ;
-0059 7FD0 0000     vec.49  data  0             ;
-0060 7FD2 0000     vec.50  data  0             ;
-0061 7FD4 0000     vec.51  data  0             ;
-0062 7FD6 0000     vec.52  data  0             ;
-0063 7FD8 0000     vec.53  data  0             ;
-0064 7FDA 0000     vec.54  data  0             ;
-0065 7FDC 0000     vec.55  data  0             ;
-0066 7FDE 0000     vec.56  data  0             ;
-0067 7FE0 0000     vec.57  data  0             ;
-0068 7FE2 0000     vec.58  data  0             ;
-0069 7FE4 0000     vec.59  data  0             ;
-0070 7FE6 0000     vec.60  data  0             ;
-0071 7FE8 0000     vec.61  data  0             ;
-0072 7FEA 0000     vec.62  data  0             ;
-0073 7FEC 0000     vec.63  data  0             ;
-0074 7FEE 0000     vec.64  data  0             ;
+0043 7FB0 0000     vec.33  data  0                     ;
+0044 7FB2 0000     vec.34  data  0                     ;
+0045 7FB4 0000     vec.35  data  0                     ;
+0046 7FB6 0000     vec.36  data  0                     ;
+0047 7FB8 0000     vec.37  data  0                     ;
+0048 7FBA 0000     vec.38  data  0                     ;
+0049 7FBC 0000     vec.39  data  0                     ;
+0050 7FBE 0000     vec.40  data  0                     ;
+0051 7FC0 0000     vec.41  data  0                     ;
+0052 7FC2 0000     vec.42  data  0                     ;
+0053 7FC4 0000     vec.43  data  0                     ;
+0054 7FC6 0000     vec.44  data  0                     ;
+0055 7FC8 0000     vec.45  data  0                     ;
+0056 7FCA 0000     vec.46  data  0                     ;
+0057 7FCC 0000     vec.47  data  0                     ;
+0058 7FCE 0000     vec.48  data  0                     ;
+0059 7FD0 0000     vec.49  data  0                     ;
+0060 7FD2 0000     vec.50  data  0                     ;
+0061 7FD4 0000     vec.51  data  0                     ;
+0062 7FD6 0000     vec.52  data  0                     ;
+0063 7FD8 0000     vec.53  data  0                     ;
+0064 7FDA 0000     vec.54  data  0                     ;
+0065 7FDC 0000     vec.55  data  0                     ;
+0066 7FDE 0000     vec.56  data  0                     ;
+0067 7FE0 0000     vec.57  data  0                     ;
+0068 7FE2 0000     vec.58  data  0                     ;
+0069 7FE4 0000     vec.59  data  0                     ;
+0070 7FE6 0000     vec.60  data  0                     ;
+0071 7FE8 0000     vec.61  data  0                     ;
+0072 7FEA 0000     vec.62  data  0                     ;
+0073 7FEC 0000     vec.63  data  0                     ;
+0074 7FEE 0000     vec.64  data  0                     ;
 0075               
 0076               *--------------------------------------------------------------
 0077               * ROM identification string for CPU crash

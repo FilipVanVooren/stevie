@@ -29,7 +29,6 @@ fm.loadfile:
 fm.loadfile.exit:
         .popregs 0                  ; Pop registers and return to caller
 
-
 ***************************************************************
 * Stub for "fm.insertfile"
 * bank2 vec.2
@@ -49,7 +48,6 @@ fm.insertfile:
 fm.insertfile.exit:
         .popregs 0                  ; Pop registers and return to caller
 
-
 ***************************************************************
 * Stub for "fm.run.ea5"
 * bank2 vec.3
@@ -59,7 +57,6 @@ fm.run.ea5:
         jmp   _trampoline.bank2.ret ; Longjump
 fm.run.ea5.vector:
         data  vec.3
-
 
 ***************************************************************
 * Stub for "fm.savefile"
@@ -71,7 +68,6 @@ fm.savefile:
 fm.savefile.vector:
         data  vec.4
 
-
 ***************************************************************
 * Stub for "fm.newfile"
 * bank2 vec.5
@@ -81,7 +77,6 @@ fm.newfile:
         jmp   _trampoline.bank2.ret ; Longjump
 fm.newfile.vector:
         data  vec.5
-
 
 ***************************************************************
 * Stub for "fm.directory"
@@ -93,7 +88,6 @@ fm.directory:
 fm.directory.vector:
         data  vec.6
 
-
 ***************************************************************
 * Stub for "fm.browse.fname.prev"
 * bank2 vec.10
@@ -103,7 +97,6 @@ fm.browse.fname.prev:
         jmp   _trampoline.bank2.ret ; Longjump
 fm.browse.fname.prev.vector:
         data  vec.10
-
 
 ***************************************************************
 * Stub for "fm.browse.fname.next"
@@ -115,7 +108,6 @@ fm.browse.fname.next:
 fm.browse.fname.next.vector:
         data  vec.11
 
-
 ***************************************************************
 * Stub for "fm.browse.fname.set"
 * bank2 vec.12
@@ -125,7 +117,6 @@ fm.browse.fname.set:
         jmp   _trampoline.bank2.ret ; Longjump
 fm.browse.fname.set.vector:
         data  vec.12
-
 
 ***************************************************************
 * Stub for "fm.browse.updir"
@@ -137,7 +128,6 @@ fm.browse.updir:
 fm.browse.updir.vector:
         data  vec.13
 
-
 ***************************************************************
 * Stub for "fm.delfile"
 * bank2 vec.15
@@ -147,7 +137,6 @@ fm.delfile:
         jmp   _trampoline.bank2.ret ; Longjump
 fm.delfile.vector:
         data  vec.15
-
 
 ***************************************************************
 * Trampoline bank 2 with return
@@ -169,7 +158,6 @@ _trampoline.bank2.ret:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for dialog "Help (next)"
 * bank3 vec.1
@@ -177,7 +165,6 @@ _trampoline.bank2.ret:
 dialog.help.next:
         inc   @cmdb.dialog.var      ; Adjust page table index for next page
         jmp   dialog.help
-
 
 ***************************************************************
 * Stub for dialog "Help"
@@ -189,7 +176,6 @@ dialog.help:
 dialog.help.vector:
         data  vec.1
 
-
 ***************************************************************
 * Stub for dialog "Open file"
 * bank3 vec.2
@@ -199,7 +185,6 @@ dialog.open:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.open.vector:
         data  vec.2
-
 
 ***************************************************************
 * Stub for dialog "Save file"
@@ -211,7 +196,6 @@ dialog.save:
 dialog.save.vector:
         data  vec.3
 
-
 ***************************************************************
 * Stub for dialog "Insert file at line"
 * bank3 vec.4
@@ -222,17 +206,15 @@ dialog.insert:
 dialog.insert.vector:
         data  vec.4
 
-
 ***************************************************************
 * Stub for dialog "Print file"
 * bank3 vec.5
 ********|*****|*********************|**************************
 dialog.print:
         mov   @dialog.print.vector,@trmpvector
-        jmp   _trampoline.bank3    ; Show dialog
+        jmp   _trampoline.bank3     ; Show dialog
 dialog.print.vector:
         data  vec.5
-
 
 ***************************************************************
 * Stub for dialog "File"
@@ -243,7 +225,6 @@ dialog.file:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.file.vector:
         data  vec.6
-
 
 ***************************************************************
 * Stub for dialog "Unsaved Changes"
@@ -256,7 +237,6 @@ dialog.unsaved:
 dialog.unsaved.vector:
         data  vec.7
 
-
 ***************************************************************
 * Stub for dialog "Copy clipboard to line ..."
 * bank3 vec.8
@@ -266,7 +246,6 @@ dialog.clipboard:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.clipboard.vector:
         data  vec.8
-
 
 ***************************************************************
 * Stub for dialog "Configure clipboard device"
@@ -278,7 +257,6 @@ dialog.clipdev:
 dialog.clipdev.vector:
         data  vec.9
 
-
 ***************************************************************
 * Stub for dialog "Configure"
 * bank3 vec.10
@@ -288,7 +266,6 @@ dialog.config:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.config.vector:
         data  vec.10
-
 
 ***************************************************************
 * Stub for dialog "Append file"
@@ -300,7 +277,6 @@ dialog.append:
 dialog.append.vector:
         data  vec.11
 
-
 ***************************************************************
 * Stub for dialog "Cartridge"
 * bank3 vec.12
@@ -310,7 +286,6 @@ dialog.cartridge:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.cartridge.vector:
         data  vec.12
-
 
 ***************************************************************
 * Stub for dialog "Basic"
@@ -322,7 +297,6 @@ dialog.basic:
 dialog.basic.vector:
         data  vec.13
 
-
 ***************************************************************
 * Stub for dialog "Shortcuts"
 * bank3 vec.14
@@ -332,7 +306,6 @@ dialog.shortcuts:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.shortcuts.vector:
         data  vec.14
-
 
 ***************************************************************
 * Stub for dialog "Dir"
@@ -344,7 +317,6 @@ dialog.cat:
 dialog.cat.vector:
         data  vec.15
 
-
 ***************************************************************
 * Stub for dialog "Go to line"
 * bank3 vec.16
@@ -354,7 +326,6 @@ dialog.goto:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.goto.vector:
         data  vec.16
-
 
 ***************************************************************
 * Stub for dialog "Configure font"
@@ -366,7 +337,6 @@ dialog.font:
 dialog.font.vector:
         data  vec.17
 
-
 ***************************************************************
 * Stub for dialog "Run"
 * bank3 vec.18
@@ -376,7 +346,6 @@ dialog.run:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.run.vector:
         data  vec.18
-
 
 ***************************************************************
 * Stub for dialog "Main Menu"
@@ -403,7 +372,6 @@ dialog.main:
 dialog.main.vector:
         data  vec.30
 
-
 ***************************************************************
 * Stub for dialog "Find"
 * bank3 vec.43
@@ -413,7 +381,6 @@ dialog.find:
         jmp   _trampoline.bank3     ; Show dialog
 dialog.find.vector:
         data  vec.43
-
 
 ***************************************************************
 * Stub for dialog "Delete File"
@@ -435,7 +402,6 @@ dialog.cart.fg99:
 dialog.cart.fg99.vector:
         data  vec.45
 
-
 ***************************************************************
 * Trampoline 1 (bank 3, dialog)
 ********|*****|*********************|**************************
@@ -455,7 +421,6 @@ _trampoline.bank3:
         b     @edk.act.cmdb.show
                                     ; Show dialog in CMDB pane
 
-
 ***************************************************************
 * Stub for "pane.show_hintx"
 * bank3 vec.19
@@ -465,7 +430,6 @@ pane.show_hintx:
         jmp   _trampoline.bank3.ret ; Longjump
 pane.show_hintx.vector:
         data  vec.19
-
 
 ***************************************************************
 * Stub for "pane.cmdb.show"
@@ -477,7 +441,6 @@ pane.cmdb.show:
 pane.cmdb.show.vector:
         data  vec.59
 
-
 ***************************************************************
 * Stub for "pane.cmdb.draw"
 * bank3 vec.22
@@ -487,7 +450,6 @@ pane.cmdb.draw:
         jmp   _trampoline.bank3.ret ; Longjump
 pane.cmdb.draw.vector:
         data  vec.22
-
 
 ***************************************************************
 * Stub for "cmdb.refresh_prompt"
@@ -499,7 +461,6 @@ cmdb.refresh_prompt:
 cmdb.refresh_prompt.vector:
         data  vec.24
 
-
 ***************************************************************
 * Stub for "cmdb.cmd.clear"
 * bank3 vec.25
@@ -509,7 +470,6 @@ cmdb.cmd.clear:
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.clear.vector:
         data  vec.25
-
 
 ***************************************************************
 * Stub for "cmdb.cmdb.getlength"
@@ -521,7 +481,6 @@ cmdb.cmd.getlength:
 cmdb.cmd.getlength.vector:
         data  vec.26
 
-
 ***************************************************************
 * Stub for "cmdb.cmdb.preset"
 * bank3 vec.27
@@ -531,7 +490,6 @@ cmdb.cmd.preset:
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.preset.vector:
         data  vec.27
-
 
 ***************************************************************
 * Stub for "cmdb.cmdb.set"
@@ -543,7 +501,6 @@ cmdb.cmd.set:
 cmdb.cmd.set.vector:
         data  vec.28
 
-
 ***************************************************************
 * Stub for "cmdb.cmd.cursor_eol"
 * bank3 vec.29
@@ -553,7 +510,6 @@ cmdb.cmd.cursor_eol:
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.cursor_eol.vector:
         data  vec.29
-
 
 ***************************************************************
 * Stub for "cmdb.cmd.insert"
@@ -565,7 +521,6 @@ cmdb.cmd.insert:
 cmdb.cmd.insert.vector:
         data  vec.38
 
-
 ***************************************************************
 * Stub for "cmdb.cmd.delete"
 * bank3 vec.39
@@ -576,7 +531,6 @@ cmdb.cmd.delete:
 cmdb.cmd.delete.vector:
         data  vec.39
 
-
 ***************************************************************
 * Stub for "tibasic.am.toggle"
 * bank3 vec.31
@@ -586,7 +540,6 @@ tibasic.am.toggle:
         jmp   _trampoline.bank3.ret ; Longjump
 tibasic.am.toggle.vector:
         data  vec.31
-
 
 ***************************************************************
 * Stub for "cmdb.cfg.fname"
@@ -647,7 +600,6 @@ dialog:
         jmp   _trampoline.bank3.ret ; Longjump
 dialog.vector:
         data  vec.42
-        
 
 ***************************************************************
 * Stub for "error.display"
@@ -658,8 +610,6 @@ error.display:
         b     @_trampoline.bank4.ret ; Longjump
 error.display.vector:
         data  vec.45
-
-
 
 ***************************************************************
 * Trampoline bank 3 with return
@@ -681,7 +631,6 @@ _trampoline.bank3.ret:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "fb.ruler.init"
 * bank4 vec.2
@@ -691,7 +640,6 @@ fb.ruler.init:
         b     @_trampoline.bank4.ret ; Longjump
 fb.ruler.init.vector:
         data  vec.2
-
 
 ***************************************************************
 * Stub for "fb.colorlines"
@@ -703,7 +651,6 @@ fb.colorlines:
 fb.colorlines.vector:
         data  vec.3
 
-
 ***************************************************************
 * Stub for "fb.vdpdump"
 * bank4 vec.4
@@ -713,7 +660,6 @@ fb.vdpdump:
         b     @_trampoline.bank4.ret ; Longjump
 fb.vdpdump.vector:
         data  vec.4
-
 
 ***************************************************************
 * Stub for "fb.hscroll"
@@ -725,7 +671,6 @@ fb.hscroll:
 fb.hscroll.vector:
         data  vec.6
 
-
 ***************************************************************
 * Stub for "fb.restore"
 * bank4 vec.7
@@ -735,7 +680,6 @@ fb.restore:
         b     @_trampoline.bank4.ret ; Longjump
 fb.restore.vector:
         data  vec.7
-
 
 ***************************************************************
 * Stub for "fb.refresh"
@@ -747,7 +691,6 @@ fb.refresh:
 fb.refresh.vector:
         data  vec.8
 
-
 ***************************************************************
 * Stub for "fb.get.nonblank"
 * bank4 vec.9
@@ -757,7 +700,6 @@ fb.get.nonblank:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.get.nonblank.vector:
         data  vec.9
-
 
 ***************************************************************
 * Stub for "fb.tab.prev"
@@ -769,7 +711,6 @@ fb.tab.prev:
 fb.tab.prev.vector:
         data  vec.10
 
-
 ***************************************************************
 * Stub for "fb.tab.next"
 * bank4 vec.11
@@ -779,7 +720,6 @@ fb.tab.next:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.tab.next.vector:
         data  vec.11
-
 
 ***************************************************************
 * Stub for "fb.cursor.up"
@@ -791,7 +731,6 @@ fb.cursor.up:
 fb.cursor.up.vector:
         data  vec.12
 
-
 ***************************************************************
 * Stub for "fb.cursor.down"
 * bank4 vec.13
@@ -801,7 +740,6 @@ fb.cursor.down:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.cursor.down.vector:
         data  vec.13
-
 
 ***************************************************************
 * Stub for "fb.cursor.home"
@@ -813,7 +751,6 @@ fb.cursor.home:
 fb.cursor.home.vector:
         data  vec.14
 
-
 ***************************************************************
 * Stub for "fb.insert.line"
 * bank4 vec.15
@@ -823,7 +760,6 @@ fb.insert.line:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.insert.line.vector:
         data  vec.15
-
 
 ***************************************************************
 * Stub for "fb.cursor.top"
@@ -835,7 +771,6 @@ fb.cursor.top:
 fb.cursor.top.vector:
         data  vec.16
 
-
 ***************************************************************
 * Stub for "fb.cursor.topscr"
 * bank4 vec.17
@@ -845,7 +780,6 @@ fb.cursor.topscr:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.cursor.topscr.vector:
         data  vec.17
-
 
 ***************************************************************
 * Stub for "fb.cursor.bot"
@@ -857,7 +791,6 @@ fb.cursor.bot:
 fb.cursor.bot.vector:
         data  vec.18
 
-
 ***************************************************************
 * Stub for "fb.cursor.botscr"
 * bank4 vec.19
@@ -867,7 +800,6 @@ fb.cursor.botscr:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.cursor.botscr.vector:
         data  vec.19
-
 
 ***************************************************************
 * Stub for "fb.insert.char"
@@ -879,7 +811,6 @@ fb.insert.char:
 fb.insert.char.vector:
         data  vec.20
 
-
 ***************************************************************
 * Stub for "fb.replace.char"
 * bank4 vec.21
@@ -889,7 +820,6 @@ fb.replace.char:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.replace.char.vector:
         data  vec.21
-
 
 ***************************************************************
 * Stub for "fb.goto.prevmatch"
@@ -901,7 +831,6 @@ fb.goto.prevmatch:
 fb.goto.prevmatch.vector:
         data  vec.22
 
-
 ***************************************************************
 * Stub for "fb.goto.nextmatch"
 * bank4 vec.23
@@ -911,7 +840,6 @@ fb.goto.nextmatch:
         jmp   _trampoline.bank4.ret ; Longjump
 fb.goto.nextmatch.vector:
         data  vec.23
-
 
 ***************************************************************
 * Stub for "pane.topline"
@@ -923,7 +851,6 @@ pane.topline:
 pane.topline.vector:
         data  vec.33
 
-
 ***************************************************************
 * Stub for "pane.botline"
 * bank4 vec.34
@@ -933,7 +860,6 @@ pane.botline:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.botline.vector:
         data  vec.34
-
 
 ***************************************************************
 * Stub for "pane.errline.show"
@@ -945,7 +871,6 @@ pane.errline.show:
 pane.errline.show.vector:
         data  vec.35
 
-
 ***************************************************************
 * Stub for "pane.errline.hide"
 * bank4 vec.36
@@ -955,7 +880,6 @@ pane.errline.hide:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.errline.hide.vector:
         data  vec.36
-
 
 ***************************************************************
 * Stub for "pane.errline.drawcolor"
@@ -967,7 +891,6 @@ pane.errline.drawcolor:
 pane.errline.drawcolor.vector:
         data  vec.37
 
-
 ***************************************************************
 * Stub for "pane.colorscheme.cycle"
 * bank4 vec.40
@@ -977,7 +900,6 @@ pane.colorscheme.cycle:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.cycle.vector:
         data  vec.40
-
 
 ***************************************************************
 * Stub for "pane.colorscheme.load"
@@ -989,7 +911,6 @@ pane.colorscheme.load:
 pane.colorscheme.load.vector:
         data  vec.41
 
-
 ***************************************************************
 * Stub for "pane.botline.keycolor"
 * bank4 vec.44
@@ -999,7 +920,6 @@ pane.botline.keycolor:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.botline.keycolor.vector:
         data  vec.44
-
 
 ***************************************************************
 * Stub for "pane.cmdb.hide"
@@ -1011,7 +931,6 @@ pane.cmdb.hide:
 pane.cmdb.hide.vector:
         data  vec.49
 
-
 ***************************************************************
 * Stub for "pane.filebrowser"
 * bank4 vec.50
@@ -1022,7 +941,6 @@ pane.filebrowser:
 pane.filebrowser.vector:
         data  vec.50
 
-
 ***************************************************************
 * Stub for "pane.filebrowser.hilight"
 * bank4 vec.51
@@ -1032,7 +950,6 @@ pane.filebrowser.hilight:
         jmp   _trampoline.bank4.ret ; Longjump
 pane.filebrowser.hilight.vector:
         data  vec.51
-
 
 ***************************************************************
 * Trampoline bank 4 with return
@@ -1054,8 +971,6 @@ _trampoline.bank4.ret:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
-
 ***************************************************************
 * Stub for "edb.clear.sams"
 * bank5 vec.1
@@ -1065,7 +980,6 @@ edb.clear.sams:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.clear.sams.vector:
         data  vec.1
-
 
 ***************************************************************
 * Stub for "edb.block.mark"
@@ -1077,7 +991,6 @@ edb.block.mark:
 edb.block.mark.vector:
         data  vec.3
 
-
 ***************************************************************
 * Stub for "edb.block.mark.m1"
 * bank5 vec.4
@@ -1087,7 +1000,6 @@ edb.block.mark.m1:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.block.mark.m1.vector:
         data  vec.4
-
 
 ***************************************************************
 * Stub for "edb.block.mark.m2"
@@ -1099,7 +1011,6 @@ edb.block.mark.m2:
 edb.block.mark.m2.vector:
         data  vec.5
 
-
 ***************************************************************
 * Stub for "edb.block.clip"
 * bank5 vec.6
@@ -1109,7 +1020,6 @@ edb.block.clip:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.block.clip.vector:
         data  vec.6
-
 
 ***************************************************************
 * Stub for "edb.block.reset"
@@ -1121,7 +1031,6 @@ edb.block.reset:
 edb.block.reset.vector:
         data  vec.7
 
-
 ***************************************************************
 * Stub for "edb.block.delete"
 * bank5 vec.8
@@ -1131,7 +1040,6 @@ edb.block.delete:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.block.delete.vector:
         data  vec.8
-
 
 ***************************************************************
 * Stub for "edb.block.copy"
@@ -1143,7 +1051,6 @@ edb.block.copy:
 edb.block.copy.vector:
         data  vec.9
 
-
 ***************************************************************
 * Stub for "edb.line.del"
 * bank5 vec.10
@@ -1153,7 +1060,6 @@ edb.line.del:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.line.del.vector:
         data  vec.10
-
 
 ***************************************************************
 * Stub for "edb.lock"
@@ -1165,7 +1071,6 @@ edb.lock:
 edb.lock.vector:
         data  vec.13
 
-
 ***************************************************************
 * Stub for "edb.unlock"
 * bank5 vec.14
@@ -1175,7 +1080,6 @@ edb.unlock:
         jmp   _trampoline.bank5.ret ; Longjump
 edb.unlock.vector:
         data  vec.14
-
 
 ***************************************************************
 * Stub for "edb.find.init"
@@ -1187,7 +1091,6 @@ edb.find.init:
 edb.find.init.vector:
         data  vec.15
 
-
 ***************************************************************
 * Stub for "edb.find.search"
 * bank5 vec.16
@@ -1198,7 +1101,6 @@ edb.find.search:
 edb.find.search.vector:
         data  vec.16
 
-
 ***************************************************************
 * Stub for "tv.flash.screen"
 * bank5 vec.28
@@ -1208,7 +1110,6 @@ tv.flash.screen:
         jmp   _trampoline.bank5.ret ; Longjump
 tv.flash.screen.vector:
         data  vec.28
-
 
 ***************************************************************
 * Trampoline bank 5 with return
@@ -1230,7 +1131,6 @@ _trampoline.bank5.ret:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "vdp.dump.patterns"
 * bank6 vec.1
@@ -1241,7 +1141,6 @@ vdp.dump.patterns:
 vdp.dump.patterns.vector:
         data  vec.1
 
-
 ***************************************************************
 * Stub for "vdp.dump.font"
 * bank6 vec.2
@@ -1251,7 +1150,6 @@ vdp.dump.font:
         jmp   _trampoline.bank6.ret ; Longjump
 vdp.dump.font.vector:
         data  vec.2
-
 
 ***************************************************************
 * Stub for "vdp.colors.line"
@@ -1273,7 +1171,6 @@ vdp.cursor.tat:
 vdp.cursor.tat.vector:
         data  vec.5
 
-
 ***************************************************************
 * Stub for "tv.set.font"
 * bank6 vec.32
@@ -1283,7 +1180,6 @@ tv.set.font:
         jmp   _trampoline.bank6.ret ; Longjump
 tv.set.font.vector:
         data  vec.32
-
 
 ***************************************************************
 * Trampoline bank 6 with return
@@ -1304,7 +1200,6 @@ _trampoline.bank6.ret:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "tibasic"
@@ -1345,8 +1240,7 @@ tibasic:
         ;------------------------------------------------------
 tibasic.exit:
         seto  @fb.status.dirty      ; Trigger status lines update
-        .popregs 0                  ; Pop registers and return to caller        
-
+        .popregs 0                  ; Pop registers and return to caller
 
 ***************************************************************
 * Stub for "tibasic.uncrunch"
@@ -1372,7 +1266,6 @@ tibasic.uncrunch.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "tv.reset"
 * bank7 vec.23
@@ -1393,7 +1286,6 @@ tv.reset:
 tv.reset.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "cart.fg99.mgr"
@@ -1416,7 +1308,6 @@ cart.fg99.mgr.exit:
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
 
-
 ***************************************************************
 * Stub for "rom.dialogs2ram"
 * banke vec.1
@@ -1436,4 +1327,4 @@ rom.dialogs2ram:
         ;------------------------------------------------------
 rom.dialogs2ram.exit:
         mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller        
+        b     *r11                  ; Return to caller

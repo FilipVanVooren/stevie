@@ -1,7 +1,6 @@
 * FILE......: rom.stubs.bank6.asm
 * Purpose...: Bank 6 stubs for functions in other banks
 
-
 ***************************************************************
 * Stub for "pane.colorscheme.index"
 * bank4 vec.43
@@ -21,7 +20,6 @@ pane.colorscheme.index:
         ;------------------------------------------------------
         mov   *stack+,r11           ; Pop r11
         b     *r11                  ; Return to caller
-
 
 ***************************************************************
 * Stub for "edb.block.match"

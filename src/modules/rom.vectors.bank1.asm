@@ -3,7 +3,7 @@
 
 *--------------------------------------------------------------
 * ROM 1: Vectors 1-32
-*--------------------------------------------------------------        
+*--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  mem.sams.setup.stevie ;
 vec.2   data  cpu.crash             ;
@@ -19,7 +19,7 @@ vec.11  data  edb.line.unpack.fb    ;
 vec.12  data  edb.clear.sams        ;
 vec.13  data  edb.lock              ;
 vec.14  data  edb.unlock            ;
-vec.15  data  edk.act.cmdb.show
+vec.15  data  edk.act.cmdb.show     ;
 vec.16  data  cpu.crash             ;
 vec.17  data  cpu.crash             ;
 vec.18  data  cmdb.dialog.close     ;
@@ -38,7 +38,7 @@ vec.30  data  pane.errline.show     ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM 1: Vectors 33-64 
+* ROM 1: Vectors 33-64
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

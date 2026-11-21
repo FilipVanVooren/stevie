@@ -1,9 +1,9 @@
-* FILE......: rom.vectors.bankD.asm
+* FILE......: rom.vectors.bankd.asm
 * Purpose...: Bank D vectors for trampoline function
 
 *--------------------------------------------------------------
 * ROM D: Vectors 1-32
-*--------------------------------------------------------------        
+*--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  cpu.crash             ;
 vec.2   data  cpu.crash             ;
@@ -38,7 +38,7 @@ vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
 *--------------------------------------------------------------
-* ROM D: Vectors 33-64 
+* ROM D: Vectors 33-64
 *--------------------------------------------------------------
 vec.33  data  cpu.crash             ;
 vec.34  data  cpu.crash             ;

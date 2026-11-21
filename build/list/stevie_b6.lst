@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 261121-1842320
+0002               * BUILD: 260101-0000000
 0003               ***************************************************************
                    < stevie_b6.asm
 0025                       ;-----------------------------------------------------------------------
@@ -10608,49 +10608,47 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0001               * FILE......: rom.stubs.bank6.asm
 0002               * Purpose...: Bank 6 stubs for functions in other banks
 0003               
-0004               
-0005               ***************************************************************
-0006               * Stub for "pane.colorscheme.index"
-0007               * bank4 vec.43
-0008               ********|*****|*********************|**************************
-0009               pane.colorscheme.index:
-0010 6282 0649  14         dect  stack
-0011 6284 C64B  30         mov   r11,*stack            ; Save return address
-0012                       ;------------------------------------------------------
-0013                       ; Call function in bank 1
-0014                       ;------------------------------------------------------
-0015 6286 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0004               ***************************************************************
+0005               * Stub for "pane.colorscheme.index"
+0006               * bank4 vec.43
+0007               ********|*****|*********************|**************************
+0008               pane.colorscheme.index:
+0009 6282 0649  14         dect  stack
+0010 6284 C64B  30         mov   r11,*stack            ; Save return address
+0011                       ;------------------------------------------------------
+0012                       ; Call function in bank 1
+0013                       ;------------------------------------------------------
+0014 6286 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6288 30D8     
-0016 628A 6008                   data bank4.rom        ; | i  p0 = bank address
-0017 628C 7FC4                   data vec.43           ; | i  p1 = Vector with target address
-0018 628E 600C                   data bankid           ; / i  p2 = Source ROM bank for return
-0019                       ;------------------------------------------------------
-0020                       ; Exit
-0021                       ;------------------------------------------------------
-0022 6290 C2F9  30         mov   *stack+,r11           ; Pop r11
-0023 6292 045B  20         b     *r11                  ; Return to caller
-0024               
-0025               
-0026               ***************************************************************
-0027               * Stub for "edb.block.match"
-0028               * bank5 vec.12
-0029               ********|*****|*********************|**************************
-0030               edb.block.match:
-0031 6294 0649  14         dect  stack
-0032 6296 C64B  30         mov   r11,*stack            ; Save return address
+0015 628A 6008                   data bank4.rom        ; | i  p0 = bank address
+0016 628C 7FC4                   data vec.43           ; | i  p1 = Vector with target address
+0017 628E 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0018                       ;------------------------------------------------------
+0019                       ; Exit
+0020                       ;------------------------------------------------------
+0021 6290 C2F9  30         mov   *stack+,r11           ; Pop r11
+0022 6292 045B  20         b     *r11                  ; Return to caller
+0023               
+0024               ***************************************************************
+0025               * Stub for "edb.block.match"
+0026               * bank5 vec.12
+0027               ********|*****|*********************|**************************
+0028               edb.block.match:
+0029 6294 0649  14         dect  stack
+0030 6296 C64B  30         mov   r11,*stack            ; Save return address
+0031                       ;------------------------------------------------------
+0032                       ; Call function in bank 1
 0033                       ;------------------------------------------------------
-0034                       ; Call function in bank 1
-0035                       ;------------------------------------------------------
-0036 6298 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0034 6298 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      629A 30D8     
-0037 629C 600A                   data bank5.rom        ; | i  p0 = bank address
-0038 629E 7F86                   data vec.12           ; | i  p1 = Vector with target address
-0039 62A0 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0035 629C 600A                   data bank5.rom        ; | i  p0 = bank address
+0036 629E 7F86                   data vec.12           ; | i  p1 = Vector with target address
+0037 62A0 600C                   data bankid           ; / i  p2 = Source ROM bank for return
+0038                       ;------------------------------------------------------
+0039                       ; Exit
 0040                       ;------------------------------------------------------
-0041                       ; Exit
-0042                       ;------------------------------------------------------
-0043 62A2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0044 62A4 045B  20         b     *r11                  ; Return to caller
+0041 62A2 C2F9  30         mov   *stack+,r11           ; Pop r11
+0042 62A4 045B  20         b     *r11                  ; Return to caller
                    < stevie_b6.asm
 0083                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks > 0
      **** ****     > rom.stubs.bankx.asm
@@ -11852,38 +11850,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0005               * ROM 6: Vectors 1-32
 0006               *--------------------------------------------------------------
 0007                       aorg  bankx.vectab
-0008 7F70 6004     vec.1   data  vdp.dump.patterns        ; Dump character patterns to VDP
-0009 7F72 6016     vec.2   data  vdp.dump.font            ; Dump font to VDP
-0010 7F74 6044     vec.3   data  vdp.colors.line          ; Set colors for specified line
-0011 7F76 60C2     vec.4   data  vdp.cursor.tat.fb        ; Set cursor shape (framebuffer)
-0012 7F78 608E     vec.5   data  vdp.cursor.tat           ; Set cursor shape (cmdb)
+0008 7F70 6004     vec.1   data  vdp.dump.patterns     ; Dump character patterns to VDP
+0009 7F72 6016     vec.2   data  vdp.dump.font         ; Dump font to VDP
+0010 7F74 6044     vec.3   data  vdp.colors.line       ; Set colors for specified line
+0011 7F76 60C2     vec.4   data  vdp.cursor.tat.fb     ; Set cursor shape (framebuffer)
+0012 7F78 608E     vec.5   data  vdp.cursor.tat        ; Set cursor shape (cmdb)
 0013 7F7A 6204     vec.6   data  vdp.cursor.tat.cmdb.hide ; Hide CMDB cursor
-0014 7F7C 2026     vec.7   data  cpu.crash                ;
-0015 7F7E 2026     vec.8   data  cpu.crash                ;
-0016 7F80 2026     vec.9   data  cpu.crash                ;
-0017 7F82 2026     vec.10  data  cpu.crash                ;
-0018 7F84 2026     vec.11  data  cpu.crash                ;
-0019 7F86 2026     vec.12  data  cpu.crash                ;
-0020 7F88 2026     vec.13  data  cpu.crash                ;
-0021 7F8A 2026     vec.14  data  cpu.crash                ;
-0022 7F8C 2026     vec.15  data  cpu.crash                ;
-0023 7F8E 2026     vec.16  data  cpu.crash                ;
-0024 7F90 2026     vec.17  data  cpu.crash                ;
-0025 7F92 2026     vec.18  data  cpu.crash                ;
-0026 7F94 2026     vec.19  data  cpu.crash                ;
-0027 7F96 2026     vec.20  data  cpu.crash                ;
-0028 7F98 2026     vec.21  data  cpu.crash                ;
-0029 7F9A 2026     vec.22  data  cpu.crash                ;
-0030 7F9C 2026     vec.23  data  cpu.crash                ;
-0031 7F9E 2026     vec.24  data  cpu.crash                ;
-0032 7FA0 2026     vec.25  data  cpu.crash                ;
-0033 7FA2 2026     vec.26  data  cpu.crash                ;
-0034 7FA4 2026     vec.27  data  cpu.crash                ;
-0035 7FA6 2026     vec.28  data  cpu.crash                ;
-0036 7FA8 2026     vec.29  data  cpu.crash                ;
-0037 7FAA 2026     vec.30  data  cpu.crash                ;
-0038 7FAC 2026     vec.31  data  cpu.crash                ;
-0039 7FAE 6246     vec.32  data  tv.set.font              ; Set font
+0014 7F7C 2026     vec.7   data  cpu.crash             ;
+0015 7F7E 2026     vec.8   data  cpu.crash             ;
+0016 7F80 2026     vec.9   data  cpu.crash             ;
+0017 7F82 2026     vec.10  data  cpu.crash             ;
+0018 7F84 2026     vec.11  data  cpu.crash             ;
+0019 7F86 2026     vec.12  data  cpu.crash             ;
+0020 7F88 2026     vec.13  data  cpu.crash             ;
+0021 7F8A 2026     vec.14  data  cpu.crash             ;
+0022 7F8C 2026     vec.15  data  cpu.crash             ;
+0023 7F8E 2026     vec.16  data  cpu.crash             ;
+0024 7F90 2026     vec.17  data  cpu.crash             ;
+0025 7F92 2026     vec.18  data  cpu.crash             ;
+0026 7F94 2026     vec.19  data  cpu.crash             ;
+0027 7F96 2026     vec.20  data  cpu.crash             ;
+0028 7F98 2026     vec.21  data  cpu.crash             ;
+0029 7F9A 2026     vec.22  data  cpu.crash             ;
+0030 7F9C 2026     vec.23  data  cpu.crash             ;
+0031 7F9E 2026     vec.24  data  cpu.crash             ;
+0032 7FA0 2026     vec.25  data  cpu.crash             ;
+0033 7FA2 2026     vec.26  data  cpu.crash             ;
+0034 7FA4 2026     vec.27  data  cpu.crash             ;
+0035 7FA6 2026     vec.28  data  cpu.crash             ;
+0036 7FA8 2026     vec.29  data  cpu.crash             ;
+0037 7FAA 2026     vec.30  data  cpu.crash             ;
+0038 7FAC 2026     vec.31  data  cpu.crash             ;
+0039 7FAE 6246     vec.32  data  tv.set.font           ; Set font
 0040               *--------------------------------------------------------------
 0041               * ROM 6: Vectors 33-64
 0042               *--------------------------------------------------------------

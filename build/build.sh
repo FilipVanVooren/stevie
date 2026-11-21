@@ -13,6 +13,14 @@
 set -e
 source helper.sh
 
+# Guard: cross-bank vector tables and stubs are generated from the registry.
+# Fail the build when src/modules drifted away from build/vector-registry.txt.
+if command -v python3 >/dev/null 2>&1; then
+    python3 "$(dirname "$0")/gen_vectors.py" check
+else
+    log "**** Warning **** python3 not found; skipping vector registry check"
+fi
+
 
 setbin() {    
     vdpmode="${1:-3080}"

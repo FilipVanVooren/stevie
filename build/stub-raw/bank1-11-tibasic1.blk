@@ -1,0 +1,41 @@
+***************************************************************
+* Stub for "tibasic"
+* bank7 vec.10
+********|*****|*********************|**************************
+tibasic1:
+        mov   @const.1,@tib.session
+        jmp   tibasic
+tibasic2:
+        mov   @const.2,@tib.session
+        jmp   tibasic
+tibasic3:
+        mov   @const.3,@tib.session
+tibasic:
+        dect  stack
+        mov   r11,*stack            ; Save return address
+        dect  stack
+        mov   tmp0,*stack           ; Push tmp0
+        ;------------------------------------------------------
+        ; Exit early if no TI Basic session
+        ;------------------------------------------------------
+        mov   @tib.session,tmp0     ; Get session ID
+        jeq   tibasic.exit          ; Exit early if no session
+        ;------------------------------------------------------
+        ; Run TI Basic session
+        ;------------------------------------------------------
+        bl    @rom.farjump          ; \ Trampoline jump to bank
+              data bank7.rom        ; | i  p0 = bank address
+              data vec.10           ; | i  p1 = Vector with target address
+              data bankid           ; / i  p2 = Source ROM bank for return
+
+        mov   @tib.autounpk,tmp0    ; AutoUnpack flag set?
+        jeq   tibasic.exit          ; No, skip uncrunching
+
+        bl    @tibasic.uncrunch     ; Uncrunch TI Basic program
+        ;------------------------------------------------------
+        ; Exit
+        ;------------------------------------------------------
+tibasic.exit:
+        seto  @fb.status.dirty      ; Trigger status lines update
+        .popregs 0                  ; Pop registers and return to caller
+

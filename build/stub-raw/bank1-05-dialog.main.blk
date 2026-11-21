@@ -1,0 +1,25 @@
+***************************************************************
+* Stub for dialog "Main Menu"
+* bank3 vec.30
+********|*****|*********************|**************************
+dialog.main:
+        ;------------------------------------------------------
+        ; Check if block mode is active
+        ;------------------------------------------------------
+        mov   @edb.block.m2,tmp0    ; \
+        inc   tmp0                  ; | Skip if M2 unset (>ffff)
+                                    ; /
+        jeq   !                     ; Block mode inactive, show dialog
+        ;------------------------------------------------------
+        ; Special treatment for block mode
+        ;------------------------------------------------------
+        b     @edk.act.block.reset
+                                    ; Reset block mode
+        ;------------------------------------------------------
+        ; Show dialog
+        ;------------------------------------------------------
+!       mov   @dialog.main.vector,@trmpvector
+        jmp   _trampoline.bank3     ; Show dialog
+dialog.main.vector:
+        data  vec.30
+
