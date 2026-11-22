@@ -3,13 +3,14 @@
 This local build adds autorepeat to upstream Stevie commit
 `2d470961f5c5a6d3bf6b9ba4438921f8c9c039a3`.
 
-Revision 12 makes scrolling one line cheaper. Cursor up/down now shifts
-the frame buffer by a single row and unpacks only the newly exposed line,
-instead of unpacking every visible row again. The color pass no longer
-repaints the whole screen when nothing is block-marked; it skipped that
-work only by accident before, because the marker check tested the wrong
-register (an upstream defect, present in `2d470961`). See *Scrolling*
-below for what to watch while testing.
+Revision 12 makes scrolling one line cheaper. Cursor up/down now shifts the
+frame buffer by a single row and unpacks only the newly exposed line, instead
+of unpacking every visible row again, and unpacking a row erases only the
+columns the copy did not reach instead of all 80 up front. The color pass no
+longer repaints the whole screen when nothing is block-marked; it skipped
+that work only by accident before, because the marker check tested the wrong
+register (an upstream defect, present in `2d470961`). See *Scrolling* and
+*Unpacking a row* below for what to watch while testing.
 
 Revision 11 makes autorepeat two-speed. A held key still acts immediately
 and starts repeating after the same 500 ms delay at the same first speed.
@@ -145,6 +146,25 @@ the markers set so the pass runs, and clearing them goes through
 A half-marked block (M1 set, M2 not yet set) keeps its previous appearance:
 the pass runs whenever either marker is set.
 
+### Unpacking a row
+
+`edb.line.unpack.fb` used to erase all 80 columns of the destination row and
+then copy the visible text over them, writing `80 + len` bytes per row. The
+copy now runs first and only the columns it did not reach are erased, so a
+row always costs exactly 80 written bytes: about 37% less RAM traffic per
+rebuild for typical line lengths, and half for full 80 column lines. A row
+whose text fills the row skips the fill entirely, because `xfilm` asserts on
+a repeat count of zero.
+
+The result is byte for byte identical to the previous behaviour, including
+`@outparm1`, so nothing that reads the frame buffer afterwards has to
+change. The three "nothing visible" exits (line past end of file, empty
+line, horizontal scroll offset past the text) all route through one full-row
+erase. `tmp4` carries the copied column count across the block copy, which
+raises the register save level of this routine to `.pushregs 4`; `xpym2m`
+does not touch `tmp4`. The change adds 14 bytes to bank 1, which is the
+tightest bank (`python3 build/tools/bank_report.py --bank 1`).
+
 Things to check while testing in an emulator:
 - Scroll down and up through a large file, including past the last line and
   back; every row must show the expected text, with no leftover or shifted
@@ -156,6 +176,10 @@ Things to check while testing in an emulator:
   (`M1`/`M2` reset) must restore normal text color everywhere.
 - Scroll in all four display modes; the row shift copies whole words and the
   horizontal scroll offset (`@fb.vwco`) must stay aligned.
+- Scroll horizontally with FCTN-S/E on a long line, then back to column 0:
+  no characters may remain from a previously visible longer line. Save the
+  file afterwards and compare; the row erase change must not leak text into
+  saved records.
 
 These inputs repeat:
 

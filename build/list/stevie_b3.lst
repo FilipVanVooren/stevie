@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 261122-1934360
+0002               * BUILD: 261122-2023040
 0003               ***************************************************************
                    < stevie_b3.asm
 0025                       ;-----------------------------------------------------------------------
@@ -9812,13 +9812,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0012               
 0017               
 0022               
-0024 B000 2020                 text '  Stevie 2.2.2   '
+0024 B000 2020                 text '  Stevie 2.2.3   '
      B002 5374     
      B004 6576     
      B006 6965     
      B008 2032     
      B00A 2E32     
-     B00C 2E32     
+     B00C 2E33     
      B00E 2020     
      B010 20       
 0025                           even
@@ -10603,22 +10603,22 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      B520 3A20     
 0194                                  copy "buildstr.asm"
      **** ****     > buildstr.asm
-0001 B522 3236                        text '261122-1934360'
+0001 B522 3236                        text '261122-2023040'
      B524 3131     
      B526 3232     
-     B528 2D31     
-     B52A 3933     
-     B52C 3433     
-     B52E 3630     
+     B528 2D32     
+     B52A 3032     
+     B52C 3330     
+     B52E 3430     
                    < data.dialogs.asm
-0195 B530 202D                        text ' - Stevie 2.2.2 - (c)2018-2026 Filip Van Vooren '
+0195 B530 202D                        text ' - Stevie 2.2.3 - (c)2018-2026 Filip Van Vooren '
      B532 2053     
      B534 7465     
      B536 7669     
      B538 6520     
      B53A 322E     
      B53C 322E     
-     B53E 3220     
+     B53E 3320     
      B540 2D20     
      B542 2863     
      B544 2932     
