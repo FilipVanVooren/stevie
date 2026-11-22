@@ -1,5 +1,12 @@
 * FILE......: rom.stubs.bank1.asm
 * Purpose...: Bank 1 stubs for functions in other banks
+*
+* GENERATED FILE - DO NOT EDIT. Content and block order are derived
+* from build/vector-registry.txt; edit the registry (or re-run
+* 'gen_vectors.py extract' after moving code) and regenerate with:
+*     python3 build/gen_vectors.py generate
+* The build aborts on drift ('gen_vectors.py check'). Exception that
+* stays hand-written: rom.stubs.bankx.asm (conditional SAMS stubs).
 
 ***************************************************************
 * Stub for "fm.loadfile"
@@ -145,7 +152,7 @@ _trampoline.bank2.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call routine in bank 2
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
@@ -618,7 +625,7 @@ _trampoline.bank3.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call routine in bank 3
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank3.rom        ; | i  p0 = bank address
@@ -958,7 +965,7 @@ _trampoline.bank4.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call routine in bank 4
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
@@ -1118,7 +1125,7 @@ _trampoline.bank5.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call routine in bank 5
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
@@ -1188,7 +1195,7 @@ _trampoline.bank6.ret:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call routine in bank 6
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank6.rom        ; | i  p0 = bank address
@@ -1274,7 +1281,7 @@ tv.reset:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call function in bank 7
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address
@@ -1295,7 +1302,7 @@ cart.fg99.mgr:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call function in bank 7
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address
@@ -1316,7 +1323,7 @@ rom.dialogs2ram:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call function in bank E
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data banke.rom        ; | i  p0 = bank address

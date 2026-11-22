@@ -1019,15 +1019,15 @@ stub fm.browse.fname.next bank2 vec.11 lean form=jmp
 stub fm.browse.fname.set bank2 vec.12 lean form=jmp
 stub fm.browse.updir bank2 vec.13 lean form=jmp
 stub fm.delfile bank2 vec.15 lean form=jmp
-raw  bank1-02-_trampoline.bank2.ret.blk
-raw  bank1-03-dialog.help.next.blk bank3 vec.1
+helper bank2
+raw  bank1-02-dialog.help.next.blk bank3 vec.1
 stub dialog.help bank3 vec.1 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Help"
 stub dialog.open bank3 vec.2 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Open file"
 stub dialog.save bank3 vec.3 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Save file"
 stub dialog.insert bank3 vec.4 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Insert file at line"
 stub dialog.print bank3 vec.5 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Print file"
 stub dialog.file bank3 vec.6 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "File"
-raw  bank1-04-dialog.unsaved.blk bank3 vec.7
+raw  bank1-03-dialog.unsaved.blk bank3 vec.7
 stub dialog.clipboard bank3 vec.8 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Copy clipboard to line ..."
 stub dialog.clipdev bank3 vec.9 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Configure clipboard device"
 stub dialog.config bank3 vec.10 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Configure"
@@ -1039,11 +1039,11 @@ stub dialog.cat bank3 vec.15 trmp helper=_trampoline.bank3 form=jmp comment="Sho
 stub dialog.goto bank3 vec.16 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Go to line"
 stub dialog.font bank3 vec.17 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Configure font"
 stub dialog.run bank3 vec.18 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Run"
-raw  bank1-05-dialog.main.blk bank3 vec.30
+raw  bank1-04-dialog.main.blk bank3 vec.30
 stub dialog.find bank3 vec.43 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Find"
 stub dialog.delete bank3 vec.44 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Delete File"
 stub dialog.cart.fg99 bank3 vec.45 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "FinalGROM 99 Cartridge"
-raw  bank1-06-_trampoline.bank3.blk
+raw  bank1-05-_trampoline.bank3.blk
 stub pane.show_hintx bank3 vec.19 lean form=jmp
 stub pane.cmdb.show bank4 vec.59 lean form=bindirect
 stub pane.cmdb.draw bank3 vec.22 lean form=jmp
@@ -1063,7 +1063,7 @@ stub tv.clock.toggle bank3 vec.36 lean form=jmp
 stub tv.linelen.toggle bank3 vec.37 lean form=jmp
 stub dialog bank3 vec.42 lean form=jmp
 stub error.display bank4 vec.45 lean form=bindirect
-raw  bank1-07-_trampoline.bank3.ret.blk
+helper bank3
 stub fb.ruler.init bank4 vec.2 lean form=bindirect
 stub fb.colorlines bank4 vec.3 lean form=bindirect
 stub fb.vdpdump bank4 vec.4 lean form=bindirect
@@ -1096,7 +1096,7 @@ stub pane.botline.keycolor bank4 vec.44 lean form=jmp
 stub pane.cmdb.hide bank4 vec.49 lean form=jmp
 stub pane.filebrowser bank4 vec.50 lean form=jmp
 stub pane.filebrowser.hilight bank4 vec.51 lean form=jmp
-raw  bank1-08-_trampoline.bank4.ret.blk
+helper bank4
 stub edb.clear.sams bank5 vec.1 lean form=jmp
 stub edb.block.mark bank5 vec.3 lean form=jmp
 stub edb.block.mark.m1 bank5 vec.4 lean form=jmp
@@ -1111,18 +1111,18 @@ stub edb.unlock bank5 vec.14 lean form=jmp
 stub edb.find.init bank5 vec.15 lean form=jmp
 stub edb.find.search bank5 vec.16 lean form=jmp
 stub tv.flash.screen bank5 vec.28 lean form=jmp
-raw  bank1-09-_trampoline.bank5.ret.blk
+helper bank5
 stub vdp.dump.patterns bank6 vec.1 lean form=jmp
 stub vdp.dump.font bank6 vec.2 lean form=jmp
 stub vdp.colors.line bank6 vec.3 lean form=jmp
 stub vdp.cursor.tat bank6 vec.5 lean form=jmp
 stub tv.set.font bank6 vec.32 lean form=jmp
-raw  bank1-10-_trampoline.bank6.ret.blk
-raw  bank1-11-tibasic1.blk bank7 vec.10
-raw  bank1-12-tibasic.uncrunch.blk bank7 vec.11
-raw  bank1-13-tv.reset.blk bank7 vec.23
-raw  bank1-14-cart.fg99.mgr.blk bank7 vec.24
-raw  bank1-15-rom.dialogs2ram.blk banke vec.1
+helper bank6
+raw  bank1-06-tibasic1.blk bank7 vec.10
+raw  bank1-07-tibasic.uncrunch.blk bank7 vec.11
+stub tv.reset bank7 vec.23 inline variant=exitlabel
+stub cart.fg99.mgr bank7 vec.24 inline variant=exitlabel
+stub rom.dialogs2ram banke vec.1 inline variant=exitlabel
 
 @stubs bank2
 helper bank1
@@ -1133,8 +1133,8 @@ stub pane.cursor.hide bank1 vec.29 lean form=jmp
 stub pane.errline.show bank1 vec.30 lean form=jmp
 helper bank4
 stub pane.colorscheme.load bank4 vec.41 lean form=jmp
-raw  bank2-16-pane.colorscheme.botline.blk bank4 vec.42
-raw  bank2-17-pane.cmdb.show.blk bank4 vec.59
+stub pane.colorscheme.botline bank4 vec.42 lean form=jmp
+stub pane.cmdb.show bank4 vec.59 lean form=jmp
 stub fb.cursor.top bank4 vec.16 lean form=jmp
 stub fb.goto.nextmatch bank4 vec.23 lean form=jmp
 stub pane.botline.busy.on bank4 vec.38 lean form=jmp
@@ -1154,8 +1154,8 @@ stub vdp.dump.patterns bank6 vec.1 lean form=jmp
 stub vdp.colors.line bank6 vec.3 lean form=jmp
 stub vdp.cursor.tat.cmdb.hide bank6 vec.6 inline variant=exitlabel
 stub tv.set.font bank6 vec.32 inline variant=exitlabel
-raw  bank2-18-tv.reset.blk bank7 vec.23
-raw  bank2-19-mem.run.ea5.blk bank7 vec.12
+stub tv.reset bank7 vec.23 inline variant=exitlabel
+stub mem.run.ea5 bank7 vec.12 inline variant=exitlabel
 
 @stubs bank3
 helper bank1
@@ -1222,12 +1222,12 @@ stub fb.goto.nextmatch bank4 vec.23 lean form=jmp
 stub pane.botline.busy.on bank4 vec.38 lean form=jmp
 stub pane.botline.busy.off bank4 vec.39 lean form=jmp
 stub pane.colorscheme.load bank4 vec.41 lean form=jmp
-raw  bank5-20-pane.colorscheme.botline.blk bank4 vec.42
+stub pane.colorscheme.botline bank4 vec.42 lean form=jmp
 stub pane.cmdb.hide bank4 vec.49 lean form=jmp
 
 @stubs bank6
-raw  bank6-21-pane.colorscheme.index.blk bank4 vec.43
-raw  bank6-22-edb.block.match.blk bank5 vec.12
+stub pane.colorscheme.index bank4 vec.43 inline variant=plain
+stub edb.block.match bank5 vec.12 inline variant=plain
 
 @stubs bank7
 helper bank1
@@ -1235,11 +1235,11 @@ stub cmdb.dialog.close bank1 vec.18 lean form=jmp
 helper bank2
 stub fm.newfile bank2 vec.5 lean form=jmp
 stub file.vmem bank2 vec.32 lean form=jmp
-raw  bank7-23-edb.find.init.blk bank5 vec.15
+stub edb.find.init bank5 vec.15 inline variant=plain
 helper bank3
 stub dialog.basic bank3 vec.13 lean form=jmp
 stub cmdb.cmd.getlength bank3 vec.26 lean form=jmp
 helper bank4
 stub fb.refresh bank4 vec.8 lean form=jmp
 stub pane.colorscheme.load bank4 vec.41 lean form=jmp
-raw  bank7-24-pane.colorscheme.botline.blk bank4 vec.42
+stub pane.colorscheme.botline bank4 vec.42 lean form=jmp

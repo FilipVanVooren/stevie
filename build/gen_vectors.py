@@ -30,6 +30,7 @@ import re
 import shutil
 import sys
 import tempfile
+from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -268,6 +269,19 @@ FJ_RE = re.compile(
 )
 
 
+def norm_lines(lines):
+    """Code-only view of a block: strip comments/blank lines, collapse runs
+    of spaces. Used to recognize template-shaped blocks whose comments were
+    hand-worded differently (comments don't assemble, so the ROM bytes of a
+    re-rendered block are unchanged)."""
+    out = []
+    for ln in lines:
+        code = ln.split(";", 1)[0].rstrip()
+        if code.strip():
+            out.append(" ".join(code.split()))
+    return out
+
+
 def classify(block_lines):
     body, seen_subban = [], False
     hdr = None
@@ -308,7 +322,10 @@ def classify(block_lines):
         label = lm.group(1)
         dest, vec = fj[0][0], int(fj[0][1])
         for variant in ("plain", "exitlabel", "regs"):
-            if inline_body(label, dest, vec, variant) == body:
+            tmpl = inline_body(label, dest, vec, variant)
+            # Tolerant fallback: same code, hand-worded comments. Re-rendering
+            # the canonical template keeps ROM bytes identical.
+            if tmpl == body or norm_lines(tmpl) == norm_lines(body):
                 blk = Block("inline")
                 blk.label, blk.dest, blk.vec, blk.variant = label, dest, vec, variant
                 canon = f'* Stub for "{label}"'
@@ -316,9 +333,10 @@ def classify(block_lines):
                     blk.desc = hdr
                 return blk
 
-    # Shared tail-jump helper (lean stub target), canonical text only.
+    # Shared tail-jump helper (lean stub target); comments may differ.
     hm = re.match(r"_trampoline\.bank(\w)\.ret:", text)
-    if hm and body == helper_body(hm.group(1)):
+    if hm and (body == helper_body(hm.group(1))
+               or norm_lines(body) == norm_lines(helper_body(hm.group(1)))):
         blk = Block("helper")
         blk.label = f"_trampoline.bank{hm.group(1)}.ret"
         blk.dest = hm.group(1)
@@ -532,6 +550,13 @@ def render_stub_file(bank, blocks):
     out = [
         f"* FILE......: rom.stubs.bank{bank}.asm",
         f"* Purpose...: Bank {bank.upper()} stubs for functions in other banks",
+        "*",
+        "* GENERATED FILE - DO NOT EDIT. Content and block order are derived",
+        "* from build/vector-registry.txt; edit the registry (or re-run",
+        "* 'gen_vectors.py extract' after moving code) and regenerate with:",
+        "*     python3 build/gen_vectors.py generate",
+        "* The build aborts on drift ('gen_vectors.py check'). Exception that",
+        "* stays hand-written: rom.stubs.bankx.asm (conditional SAMS stubs).",
         "",
     ]
     for blk in blocks:
@@ -559,9 +584,7 @@ def do_generate(vectors, stubs, outdir):
     for bank in EMPTY_STUB_BANKS:
         path = os.path.join(outdir, f"rom.stubs.bank{bank}.asm")
         with open(path, "w", encoding="latin-1") as fh:
-            fh.write(
-                f"* FILE......: rom.stubs.bank{bank}.asm\n"
-                f"* Purpose...: Bank {bank.upper()} stubs for functions in other banks\n")
+            fh.write(render_stub_file(bank, []))
         written.append(path)
     return written
 
@@ -585,6 +608,7 @@ GEN_LINE_RE = re.compile(r"^[0-9A-F]{4}\s+([0-9A-F]{4})")
 SZ_INLINE_PLAIN = 18       # dect/push + bl@farjump + 3 operands + pop/return
 SZ_LEAN = 10               # mov @v.vector,@trmpvector (4) + jmp helper (4) + data vec.N (2)
 SZ_HELPER = 18             # shared per-target-bank trampoline (listing-measured)
+MIN_STUBS_FOR_NEW_HELPER = 3   # helper pays off only from 3 pass-throughs on
 
 
 def measure_stub_labels(bank):
@@ -641,10 +665,23 @@ def convert_bank(blocks, sizes):
 
     A helper is emitted at the position of the first converted stub that needs
     its target bank; later stubs to the same bank jump back to it (or use
-    b-indirect when outside the +-256-byte branch range)."""
+    b-indirect when outside the +-256-byte branch range).
+
+    A target bank with no helper yet costs SZ_HELPER bytes, so it only pays
+    off from MIN_STUBS_FOR_NEW_HELPER stubs onwards; below that the block is
+    left in its inline form."""
     out, pos, active = [], 0, {}
     nbytes = measure_bytes(blocks, sizes)
-    converted = helpers = 0
+    per_dest = Counter(b["dest"] for b in blocks
+                       if b["kind"] == "inline" and b.get("variant") == "plain")
+    # Helpers already present in the block list are valid jump targets; never
+    # emit a second one with the same label.
+    scan = 0
+    for blk, nb in zip(blocks, nbytes):
+        if blk["kind"] == "helper" and blk["dest"] not in active:
+            active[blk["dest"]] = scan
+        scan += nb
+    converted = helpers = skipped = 0
     for blk, nb in zip(blocks, nbytes):
         if not (blk["kind"] == "inline" and blk.get("variant") == "plain"):
             out.append(blk)
@@ -652,6 +689,11 @@ def convert_bank(blocks, sizes):
             continue
         dest = blk["dest"]
         if dest not in active:
+            if per_dest[dest] < MIN_STUBS_FOR_NEW_HELPER:
+                skipped += 1
+                out.append(blk)
+                pos += nb
+                continue
             active[dest] = pos                   # helper emitted here
             out.append({"kind": "helper", "dest": dest})
             pos += SZ_HELPER
@@ -663,7 +705,7 @@ def convert_bank(blocks, sizes):
                     "form": form})
         pos += SZ_LEAN
         converted += 1
-    return out, converted, helpers
+    return out, converted, helpers, skipped
 
 
 def cmd_convert_lean(args):
@@ -672,9 +714,10 @@ def cmd_convert_lean(args):
 
     for bank in banks:
         sizes = measure_stub_labels(bank) or {}
-        new_blocks, n_conv, n_help = convert_bank(stubs[bank], sizes)
+        new_blocks, n_conv, n_help, n_skip = convert_bank(stubs[bank], sizes)
         stubs[bank] = new_blocks
-        print(f"bank{bank}: converted={n_conv} helpers={n_help}")
+        extra = f" skipped(too few to target)={n_skip}" if n_skip else ""
+        print(f"bank{bank}: converted={n_conv} helpers={n_help}{extra}")
 
     if args.dry:
         print("dry run: registry not modified")

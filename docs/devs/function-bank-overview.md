@@ -39,13 +39,29 @@ convertible stub (only `inline variant=plain`; exitlabel/regs/raw variants
 keep their post-return processing) to the lean form, inserts the needed
 `helper bankN` records and picks `form=jmp|bindirect` per stub based on the
 measured distance to the helper (`b @helper` when the ±256 B branch range is
-not enough). After conversion run `generate`, a full build, and verify: zero
-diagnostics, `check` passes, vector tables byte-identical, binary diff
-confined to converted banks.
+not enough). A *new* helper costs 18 B, so it is only emitted when at least
+`MIN_STUBS_FOR_NEW_HELPER` (3) pass-throughs share that target bank and no
+helper for it exists yet; otherwise the stub stays inline (cheaper). After
+conversion run `generate`, a full build, and verify: zero diagnostics,
+`check` passes, vector tables byte-identical, binary diff confined to
+converted banks.
 
-Converted 2026-11-22 (75 stubs): bank 2 −146 B used (352→448 free), bank 3
-−138 B (2626→2700 free), bank 4 −46 B, bank 5 −62 B, bank 7 −6 B (7 stubs but
-4 new helpers; kept for consistency). Bank 6 and bank 1 were already lean.
+Converted 2026-11-22 (78 stubs total): bank 2 −162 B used (352→464 free),
+bank 3 −138 B (2626→2700 free), bank 4 −46 B, bank 5 −72 B (5196→5238 free),
+bank 7 −16 B. Bank 6 and bank 1 were already lean or cost-guarded.
+
+### Raw blocks (`build/stub-raw/`)
+
+`extract` matches block bodies against the templates comment-insensitively,
+so a pass-through stub whose comments were merely hand-worded differently is
+still recorded as `inline`/`helper`, never as raw — re-rendering such a block
+changes no ROM bytes. What remains in `stub-raw/` (7 blocks since 2026-11-22,
+all in bank 1) are stubs with genuine *behavior*: pre-call guards or side
+effects (`dialog.unsaved`, `_trampoline.bank3` cursor hide/show), post-return
+logic (`fm.loadfile` unsaved-changes dialog), session setup (`tibasic1/2/3`,
+`tibasic.uncrunch`) and `dialog.main` block-mode handling. Anything else that
+lands in `stub-raw/` after an `extract` is a classification miss worth
+checking.
 
 ## Bank headroom report
 

@@ -1,5 +1,12 @@
 * FILE......: rom.stubs.bank2.asm
 * Purpose...: Bank 2 stubs for functions in other banks
+*
+* GENERATED FILE - DO NOT EDIT. Content and block order are derived
+* from build/vector-registry.txt; edit the registry (or re-run
+* 'gen_vectors.py extract' after moving code) and regenerate with:
+*     python3 build/gen_vectors.py generate
+* The build aborts on drift ('gen_vectors.py check'). Exception that
+* stays hand-written: rom.stubs.bankx.asm (conditional SAMS stubs).
 
 ***************************************************************
 * Trampoline bank 1 with return
@@ -106,40 +113,20 @@ pane.colorscheme.load.vector:
 * bank4 vec.42
 ********|*****|*********************|**************************
 pane.colorscheme.botline:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 1
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.42           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @pane.colorscheme.botline.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.colorscheme.botline.vector:
+        data  vec.42
 
 ***************************************************************
 * Stub for "pane.cmdb.show"
 * bank4 vec.59
 ********|*****|*********************|**************************
 pane.cmdb.show:
-        dect  stack
-        mov   r11,*stack            ; Save return address
-        ;------------------------------------------------------
-        ; Call function in bank 3
-        ;------------------------------------------------------
-        bl    @rom.farjump          ; \ Trampoline jump to bank
-              data bank4.rom        ; | i  p0 = bank address
-              data vec.59           ; | i  p1 = Vector with target address
-              data bankid           ; / i  p2 = Source ROM bank for return
-        ;------------------------------------------------------
-        ; Exit
-        ;------------------------------------------------------
-        mov   *stack+,r11           ; Pop r11
-        b     *r11                  ; Return to caller
+        mov   @pane.cmdb.show.vector,@trmpvector
+        jmp   _trampoline.bank4.ret ; Longjump
+pane.cmdb.show.vector:
+        data  vec.59
 
 ***************************************************************
 * Stub for "fb.cursor.top"
@@ -381,7 +368,7 @@ tv.reset:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call function in bank 7
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address
@@ -402,7 +389,7 @@ mem.run.ea5:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call routine in specified bank
+        ; Call function in bank 7
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank7.rom        ; | i  p0 = bank address

@@ -1,5 +1,12 @@
 * FILE......: rom.stubs.bank6.asm
 * Purpose...: Bank 6 stubs for functions in other banks
+*
+* GENERATED FILE - DO NOT EDIT. Content and block order are derived
+* from build/vector-registry.txt; edit the registry (or re-run
+* 'gen_vectors.py extract' after moving code) and regenerate with:
+*     python3 build/gen_vectors.py generate
+* The build aborts on drift ('gen_vectors.py check'). Exception that
+* stays hand-written: rom.stubs.bankx.asm (conditional SAMS stubs).
 
 ***************************************************************
 * Stub for "pane.colorscheme.index"
@@ -9,7 +16,7 @@ pane.colorscheme.index:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 4
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
@@ -29,7 +36,7 @@ edb.block.match:
         dect  stack
         mov   r11,*stack            ; Save return address
         ;------------------------------------------------------
-        ; Call function in bank 1
+        ; Call function in bank 5
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
