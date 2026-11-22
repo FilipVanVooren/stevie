@@ -136,7 +136,8 @@ kb.repeat.emit    equ  core1.top + 60  ; Key event ready (>ffff)
 kb.repeat.focus   equ  core1.top + 62  ; Pane at initial key press
 kb.repeat.dialog  equ  core1.top + 64  ; Dialog at initial key press
 kb.repeat.mods    equ  core1.top + 66  ; Physical FCTN/SHIFT/CTRL state
-core1.free1       equ  core1.top + 68  ; 68-99 **free**
+kb.repeat.slow    equ  core1.top + 68  ; Slow repeats left, 0 = fast speed
+core1.free1       equ  core1.top + 70  ; 70-99 **free**
 timers            equ  core1.top + 100 ; Timers (80 bytes)
 rom0_kscan_out    equ  keycode1        ; Where to store value of key pressed
 ;------------------------------------------------------------------------------

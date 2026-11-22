@@ -3,6 +3,12 @@
 This local build adds autorepeat to upstream Stevie commit
 `2d470961f5c5a6d3bf6b9ba4438921f8c9c039a3`.
 
+Revision 11 makes autorepeat two-speed. A held key still acts immediately
+and starts repeating after the same 500 ms delay at the same first speed.
+After eight repeats at that speed it switches to a second, faster speed and
+stays there for the rest of the hold. Release stops repeat as before, and a
+fresh press restarts the long delay and the first speed.
+
 Revision 10 preserves edits when moving between search matches or starting
 a new Find operation. The current row is committed before a match jump
 refreshes it, and before the Find dialog maps its data pages. Cancelling
@@ -100,7 +106,16 @@ on cyan, matching the adjacent text.
 
 Pressing a key acts immediately. Holding an eligible key starts repeating
 after 500 ms, at approximately 12 characters/actions per second (12 at
-60 Hz, 12.5 at 50 Hz). Release stops repeat on the next keyboard scan.
+60 Hz, 12.5 at 50 Hz). Holding the same key longer accelerates it: after
+eight repeats at that first speed, which is roughly 1.2 s after the press,
+the repeat jumps to a second, faster speed of one action per VDP frame,
+approximately 60 actions per second at 60 Hz and 50 at 50 Hz, and stays
+there while the key is held. That is the fastest this engine can run: it is
+paced by the keyboard hook, which executes once per frame. Actions whose
+handler needs more than a frame, such as paging, are still limited by their
+own redraw time. The two speeds apply to every repeatable input listed
+below. Release stops repeat on the next keyboard scan; pressing again
+restarts the long delay and the first speed.
 
 These inputs repeat:
 
@@ -142,8 +157,9 @@ The keyboard hook now runs once per VDP frame after the console KSCAN.
 ROM bank 8 holds the repeat state machine because bank 1 has little space
 left. Bank 8 vector 1 is its entry point; its previously unused bank ID is
 corrected to `bank8.rom`. The existing ROM trampoline restores bank 1 and
-both stacks after each call. Fourteen bytes of previously free core RAM,
-`>a036` through `>a043`, hold repeat state.
+both stacks after each call. Sixteen bytes of previously free core RAM,
+`>a036` through `>a045`, hold repeat state, including the remaining count
+of first-speed repeats.
 
 The first decoded key is retained during a hold. Spectra2's RKSCAN resets
 the console's modifier cache before each scan; reading its later translated
@@ -157,8 +173,14 @@ Only the approved action addresses in `keymap_repeat.actions` and validated
 character input handlers enable it. This keeps printable menu shortcuts and
 context-dependent SPACE commands from repeating.
 
-Timing constants are at the top of `src/modules/edk.key.repeat.asm`.
-They are frame counts; rebuild after changing them.
+Timing constants are at the top of `src/modules/edk.key.repeat.asm`:
+`key.repeat.delay.*`, `key.repeat.rate1.*` (first speed),
+`key.repeat.slow.count` (repeats before accelerating) and
+`key.repeat.rate2.*` (second speed). They are frame counts; rebuild after
+changing them. A rate of 1 is the fastest possible interval, because the
+engine only runs once per VDP frame; `key.repeat.rate2.*` is already at
+that limit. Setting `key.repeat.slow.count` to zero repeats at the second
+speed from the first repeat onwards.
 
 ## Build and validation
 
@@ -306,3 +328,14 @@ keeps ENTER single-press in Open, Save and Find dialogs. The complete
 revision 10 runner is `build/validate/validate_r10.py BASE IMPORT`.
 Revision 10 passes all 156 suites, including 296 keyboard/color checks,
 36 search-edit scenarios and the real held-navigation suite in every mode.
+
+The revision 11 two-speed schedule is covered by `test_autorepeat.cjs` at
+both 50 Hz and 60 Hz: it compares every repeat frame with the expected
+two-speed schedule, checks that the 8 first-speed repeats are followed by
+second-speed gaps of a single frame, and checks that a fresh press restores
+the long delay and the first speed. The pre-existing pacing tests still measure
+only the first eight repeats, so their expected counts are unchanged.
+Rebuild with `python build/tests/build_autorepeat.py` and rerun
+`node build/tests/test_autorepeat.cjs <mode>` for all four display modes,
+plus `build/validate/validate_r10.py BASE IMPORT`, which also runs the real
+held-navigation suite where acceleration is now visible.

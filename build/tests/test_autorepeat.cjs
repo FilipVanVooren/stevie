@@ -188,10 +188,13 @@ function machine(pal = false, options = {}) {
 }
 let passed = 0;
 function test(name, run) {run(); passed++; console.log(`PASS ${name}`);}
+// Mirrors the key.repeat.* frame counts in src/modules/edk.key.repeat.asm.
 for (const pal of [false, true]) {
     const hz = pal ? 50 : 60;
     const delay = pal ? 25 : 30;
-    const rate = pal ? 4 : 5;
+    const rate1 = pal ? 4 : 5;
+    const rate2 = 1;              // one repeat per frame: the engine's ceiling
+    const slowQuota = 8;
     test(`${hz} Hz: immediate type, 500 ms delay, repeat interval, idle pacing, release`, () => {
         const m = machine(pal);
         m.press(65); m.frame();
@@ -200,11 +203,36 @@ for (const pal of [false, true]) {
         m.idle();
         m.frames(delay - 1); assert.equal(m.events.length, 1);
         m.frame(); assert.equal(m.events.length, 2);
-        m.frames(rate - 1); assert.equal(m.events.length, 2);
+        m.frames(rate1 - 1); assert.equal(m.events.length, 2);
         m.frame(); assert.equal(m.events.length, 3);
         m.press(); m.frame(); m.frames(2 * delay);
         assert.equal(m.events.length, 3);
         assert.equal(m.get('kb.repeat.allow'), 0);
+    });
+    test(`${hz} Hz: held key switches to the 2nd speed after ${slowQuota} repeats`, () => {
+        const m = machine(pal);
+        m.press(65); m.frames(90);
+        // The first repeats follow the long delay and the 1st speed.
+        const expected = [1, ...Array.from({length: slowQuota}, (_, i) => 1 + delay + rate1 * i)];
+        // The gap after the last slow repeat is still slow; every later gap is fast.
+        for (let frame = expected.at(-1) + rate1; frame <= 90; frame += rate2) expected.push(frame);
+        assert.deepEqual(m.events.map(e => e.frame), expected);
+        assert(m.events.every(e => e.key === 97 && e.action === 'character'));
+        // One repeat per frame from then on: 60 actions/s at 60 Hz, 50 at 50 Hz.
+        assert(m.events.length > 1 + slowQuota + 4, 'the 2nd speed must add repeats');
+    });
+    test(`${hz} Hz: a fresh press restarts the delay and the 1st speed`, () => {
+        const m = machine(pal);
+        m.press(65); m.frames(80);
+        assert(m.events.length > 1 + slowQuota, 'the hold must reach the 2nd speed');
+        m.press(); m.frame();
+        const stop = m.events.length;
+        m.frames(4 * rate2); assert.equal(m.events.length, stop, 'release stops repeat');
+        m.press(65); m.frame();
+        m.frames(delay - 1); assert.equal(m.events.length, stop + 1);
+        m.frame(); assert.equal(m.events.length, stop + 2);
+        m.frames(rate1 - 1); assert.equal(m.events.length, stop + 2);
+        m.frame(); assert.equal(m.events.length, stop + 3);
     });
     test(`${hz} Hz: new key and quick same-key re-press restart long delay`, () => {
         const m = machine(pal);

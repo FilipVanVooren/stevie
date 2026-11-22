@@ -7,11 +7,20 @@
 * which can change >8375's translation on a held FCTN/SHIFT/CTRL key.
 * The dispatcher arms repeat only for typing and approved actions.
 * No Spectra2 changes are needed. State is cleared at Stevie startup.
+* Repeat is two-speed: a held key starts at the slow speed and,
+* once its slow quota is used up, stays at the fast speed until it
+* is released or pressed again. The hook runs at most once per VDP
+* frame, so a 2nd-speed interval of 1 frame (one repeat per frame)
+* is the fastest the engine can go. Slow handlers, such as paging,
+* still pace themselves to their own redraw time.
 
 key.repeat.delay.ntsc  equ  30      ; 500 ms at 60 Hz
 key.repeat.delay.pal   equ  25      ; 500 ms at 50 Hz
-key.repeat.rate.ntsc   equ  5       ; 12 repeats/second
-key.repeat.rate.pal    equ  4       ; 12.5 repeats/second
+key.repeat.rate1.ntsc  equ  5       ; 12 repeats/second (1st speed)
+key.repeat.rate1.pal   equ  4       ; 12.5 repeats/second (1st speed)
+key.repeat.slow.count  equ  8       ; Slow repeats, 2nd speed after ~1.2 s
+key.repeat.rate2.ntsc  equ  1       ; 60 repeats/second (2nd speed)
+key.repeat.rate2.pal   equ  1       ; 50 repeats/second (2nd speed)
 
 edkey.key.repeat:
         clr   @kb.repeat.emit
@@ -61,11 +70,29 @@ edkey.key.repeat.check:
         jeq   edkey.key.repeat.exit
         dec   @kb.repeat.count
         jne   edkey.key.repeat.exit
+        ;-------------------------------------------------------
+        ; Repeat due. The first key.repeat.slow.count repeats run
+        ; at the 1st speed. The quota is left at zero afterwards,
+        ; so the rest of the hold keeps the 2nd speed.
+        ;-------------------------------------------------------
+        mov   @kb.repeat.slow,tmp1
+        jeq   edkey.key.repeat.fast ; Quota spent, keep the 2nd speed
+        dec   tmp1                  ; Spend one repeat at the 1st speed
+        mov   tmp1,@kb.repeat.slow
 
-        li    tmp1,key.repeat.rate.ntsc
+        li    tmp1,key.repeat.rate1.ntsc
         coc   @wbit2,config         ; Spectra2 PAL flag
         jne   edkey.key.repeat.rate
-        li    tmp1,key.repeat.rate.pal
+        li    tmp1,key.repeat.rate1.pal
+        jmp   edkey.key.repeat.rate
+        ;-------------------------------------------------------
+        ; 2nd speed, after the slow quota is used up
+        ;-------------------------------------------------------
+edkey.key.repeat.fast:
+        li    tmp1,key.repeat.rate2.ntsc
+        coc   @wbit2,config         ; Spectra2 PAL flag
+        jne   edkey.key.repeat.rate
+        li    tmp1,key.repeat.rate2.pal
 edkey.key.repeat.rate:
         mov   tmp1,@kb.repeat.count
         mov   @kb.repeat.key,tmp0   ; Keep first press's translated code
@@ -81,6 +108,8 @@ edkey.key.repeat.new:
         mov   @tv.pane.focus,@kb.repeat.focus
         mov   @cmdb.dialog,@kb.repeat.dialog
         mov   tmp2,@kb.repeat.mods
+        li    tmp1,key.repeat.slow.count
+        mov   tmp1,@kb.repeat.slow  ; Start over at the 1st speed
 
         li    tmp1,key.repeat.delay.ntsc
         coc   @wbit2,config
