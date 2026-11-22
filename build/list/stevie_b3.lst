@@ -9810,7 +9810,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0012               
 0017               
 0022               
-0024 B000 2020                 text '  Stevie 2.2.0   '
+0024 B000 2020                 text '  Stevie 2.2.1   '
      B002 5374     
      B004 6576     
      B006 6965     
@@ -10609,7 +10609,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      B52C 3230     
      B52E 3830     
                    < data.dialogs.asm
-0195 B530 202D                        text ' - Stevie 2.2.0 - (c)2018-2026 Filip Van Vooren '
+0195 B530 202D                        text ' - Stevie 2.2.1 - (c)2018-2026 Filip Van Vooren '
      B532 2053     
      B534 7465     
      B536 7669     

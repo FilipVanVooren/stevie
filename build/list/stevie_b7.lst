@@ -1006,7 +1006,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0037               
 0041               
 0045               
-0047 6010 0F53                 stri 'STEVIE 2.2.0-60'
+0047 6010 0F53                 stri 'STEVIE 2.2.1-60'
      6012 5445     
      6014 5649     
      6016 4520     
