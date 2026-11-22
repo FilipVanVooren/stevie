@@ -35,7 +35,7 @@ pane.clock.time:
 
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank2.rom        ; | i  p0 = bank address
-              data vec.14           ; | i  p1 = Vector with target address
+              data vec.11           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return  
         ;------------------------------------------------------
         ; Display time?

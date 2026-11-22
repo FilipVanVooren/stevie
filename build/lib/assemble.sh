@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091,SC2086,SC2181
 
-source helper.sh
+# xas99 wrapper: assembles the bank main files given on the command line.
+# Called by build/build.sh, build/buildone.sh and build/buildrpk.sh; runnable
+# standalone from any directory.
+
+LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BUILD_DIR="$(dirname "$LIB_DIR")"
+cd "$BUILD_DIR" || exit 1
+
+source "$LIB_DIR/helper.sh"
 
 # Constants
 IMAGE="${IMAGE:-easyxdt99:3.6.5-cpython3.14-slim}"
-IMAGE="${IMAGE:-easyxdt99:3.5.0-cpython3.11-alpine}"
 
 # Variables
 marker="***************************************************************"
@@ -33,7 +40,7 @@ if [ "${#xas99found}" -eq "0" ]; then
 
       #shellcheck disable=SC2140,SC2154
       docker run \
-            --mount type=bind,source="$(pwd)/../../",target="/workspace" \
+            --mount type=bind,source="$BUILD_DIR/../../",target="/workspace" \
             --workdir "$workdir"     \
             --name "$container"      \
             $IMAGE                   \

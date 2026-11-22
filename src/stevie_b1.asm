@@ -167,11 +167,12 @@ main:
         ; Program data
         ;-----------------------------------------------------------------------
         copy  "data.keymap.actions.asm"     ; Keyboard actions
-        copy  "data.colorscheme.asm"        ; Colorscheme data table
+        ; Colorscheme table lives in bank 4 (owner of pane.colorscheme.index);
+        ; all other banks reach it through the vector stub. Do not re-include.
         ;-----------------------------------------------------------------------
         ; Bank full check
         ;-----------------------------------------------------------------------
-        .ifge $, >7f50
+        .ifge $, >7f88
               .error 'Aborted. Bank 1 cartridge program too large!'
         .endif
         ;-----------------------------------------------------------------------

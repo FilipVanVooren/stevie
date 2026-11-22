@@ -2,9 +2,168 @@
 
 This overview is intentionally at the assembly-subroutine level, not the file level. A single file may contain many labels, and the same logical routine can be reached from several banks via the ROM stub / far-jump mechanism.
 
+## Generated trampoline layer (do not hand-edit)
+
+The cross-bank call layer is generated from a single registry:
+
+- `build/vector-registry.txt` — source of truth for every vector slot
+  (`rom.vectors.bank[1-f].asm`) and every cross-bank stub block
+  (`rom.stubs.bank[1-7].asm`), including block order (which fixes ROM addresses).
+- `build/stub-raw/*.blk` — verbatim bodies of irregular stub blocks referenced by the registry.
+
+Workflow: edit the registry (or re-run `extract` after moving code), then run
+`python3 build/tools/gen_vectors.py generate`. `build/build.sh` runs
+`gen_vectors.py check` before assembling and aborts when `src/modules` drifted
+from the registry. Exceptions that stay hand-written: `rom.vectors.bank0.asm`
+(equ-based boot vectors) and `rom.stubs.bankx.asm` (conditional SAMS stubs).
+
+### Table geometry: 32 main slots + an optional 16-slot island
+
+Every bank exposes its vector table at a fixed address, so a call site only
+needs *(bank, slot)*. The addresses are equated once, in
+`src/modules/equ.rom.build.asm`; `gen_vectors.py` reads them back and refuses to
+generate if they overlap or collide with the ROM-id signature:
+
+| island | address | size | contents |
+|---|---|---|---|
+| `bankx.exttab`  | >7F68 | 32 B | extension slots **33-48**, only in banks that need them |
+| `bankx.vectab`  | >7F88 | 64 B | main slots **1-32**, in every bank |
+| `bankx.vdptab`  | >7FC8 | 32 B | per-bank VDP mode table |
+| (ROM id)        | >7FEA |  8 B | `'ROM#N'` signature |
+| `bankx.crash.showbank` | >7FF0 | 16 B | crash banner |
+
+Slots 1-32 are addressed as `vec.N`; slots 33-48 as `bankx.exttab+<2*(N-33)>`
+(`gen_vectors.py` emits and rewrites both spellings). A bank without an island
+may therefore use code space up to >7F88; a bank with one must stop at >7F68.
+Each bank asserts its own ceiling:
+
+```asm
+        .ifge   $, >7f88          ; >7f68 in banks 3 and 4 (they carry the island)
+        .error  'Aborted. Bank N cartridge program too large!'
+        .endif
+```
+
+`gen_vectors.py` owns that guard: `compact` rewrites it together with the table,
+so the ceiling can never disagree with how many slots a bank actually declares.
+Before 2026-11-22 the single table held 64 slots at >7F70 and every bank stopped
+at >7F50; splitting it reclaimed 17 unreferenced slots and gave every non-island
+bank 56 more bytes of code space (banks 3/4: 24 B).
+
+`python3 build/tools/gen_vectors.py compact [--reap] [--force]` renumbers slots
+so each bank's used slots are 1..N with no gaps (`--reap` first drops slots that
+nothing calls), rewrites *every* reference — registry, generated files, raw
+`.blk` bodies and hand-written farjump triples — and moves the `.ifge` ceilings.
+It refuses to reap when a call site cannot be attributed to a bank. Read-only
+census: `python3 build/tools/vector_report.py` (dead slots, island users,
+duplicate targets, dangling references).
+
 Legend:
 - Stevie function: editor logic, file management, dialogs, buffer operations, screen logic, etc.
 - Spectra2 low-level function: ROM bridge, SAMS/VDP helpers, bank switching, crash/return plumbing, TI-Basic session glue.
+
+### Stub forms and `convert-lean`
+
+Pass-through cross-bank calls exist in two registry-recorded forms:
+
+- `inline variant=plain` (fat, 18 B/stub): every stub embeds its own
+  `bl @rom.farjump` with the target vector as immediate operands.
+- `lean` (10 B/stub + one shared 18 B helper per *target* bank): the stub is
+  just `mov @label.vector,@trmpvector` + `jmp _trampoline.bankN.ret`. The
+  shared `_trampoline.bankN.ret` helper calls `rom.farjump` with `p1 =>ffff`,
+  which makes farjump dereference `@trmpvector` *after* the bank switch
+  (`trmpvector` lives in scratch pad, so it survives the switch). This is the
+  form bank 1 and bank 6 originally used.
+
+`python3 build/tools/gen_vectors.py convert-lean [--bank N] [--dry]` rewrites every
+convertible stub (only `inline variant=plain`; exitlabel/regs/raw variants
+keep their post-return processing) to the lean form, inserts the needed
+`helper bankN` records and picks `form=jmp|bindirect` per stub based on the
+measured distance to the helper (`b @helper` when the ±256 B branch range is
+not enough). A *new* helper costs 18 B, so it is only emitted when at least
+`MIN_STUBS_FOR_NEW_HELPER` (3) pass-throughs share that target bank and no
+helper for it exists yet; otherwise the stub stays inline (cheaper). After
+conversion run `generate`, a full build, and verify: zero diagnostics,
+`check` passes, vector tables byte-identical, binary diff confined to
+converted banks.
+
+Converted 2026-11-22 (78 stubs total): bank 2 −162 B used (352→464 free),
+bank 3 −138 B (2626→2700 free), bank 4 −46 B, bank 5 −72 B (5196→5238 free),
+bank 7 −16 B. Bank 6 and bank 1 were already lean or cost-guarded.
+
+### Raw blocks (`build/stub-raw/`)
+
+`extract` matches block bodies against the templates comment-insensitively,
+so a pass-through stub whose comments were merely hand-worded differently is
+still recorded as `inline`/`helper`, never as raw — re-rendering such a block
+changes no ROM bytes. What remains in `stub-raw/` (7 blocks since 2026-11-22,
+all in bank 1) are stubs with genuine *behavior*: pre-call guards or side
+effects (`dialog.unsaved`, `_trampoline.bank3` cursor hide/show), post-return
+logic (`fm.loadfile` unsaved-changes dialog), session setup (`tibasic1/2/3`,
+`tibasic.uncrunch`) and `dialog.main` block-mode handling. Anything else that
+lands in `stub-raw/` after an `extract` is a classification miss worth
+checking.
+
+## Bank headroom report
+
+`python3 build/tools/bank_report.py` parses the xas99 listings in `build/list/` and
+reports per bank: program segment end, bytes used, free bytes up to that bank's
+ceiling (the extension island at >7F68 when it carries one, otherwise the main
+vector table at >7F88 - i.e. exactly where its `.ifge` guard trips), whether the
+bank has an island, and the largest contributing modules. Fixed AORG islands
+(extension + main vector tables, the per-bank VDP mode tables at >7FC8, the
+crash banner at >7FF0) are detected and excluded from the program segment. The
+ceiling addresses are read from `equ.rom.build.asm` through `gen_vectors.py`, so
+the report cannot silently disagree with the generator. Options: `--bank N`, `--top N`, `--json`. Run after a
+build; use it before deciding where new code or data should go (banks 8-D are
+the overflow pool).
+
+## Data residency rules
+
+A shared read-mostly table must have exactly one *runtime* home; extra ROM
+copies are only allowed when they resolve labels for the copier/relocator code
+that installs the runtime copy:
+
+- `data.dialogs.asm` — canonical ROM copy in bank E (`dialogs`..`enddial`),
+  copied to SAMS RAM pages #2/#3 at boot by `rom.dialogs2ram`. Bank 3 re-includes
+  it under `aorg >b000` purely so dialog code assembles against the runtime
+  addresses. Do not add a third copy; new banks reach dialogs through the SAMS window.
+- `data.colorscheme.asm` — lives only in bank 4 (owner of
+  `pane.colorscheme.index`, the sole reader of `tv.colorscheme.table`). Other
+  banks cycle/read schemes through the vector stub. A stale second copy in
+  bank 1 was removed on 2026-11-22 (bank 1 is the tightest bank).
+- `data.vdpmodes.asm` — intentional per-bank copy: each bank must expose its
+  video-mode table at the fixed address `bankx.vdptab` (>7FC8), so it is an
+  AORG island, not program churn.
+
+## Rebalancing tight banks (playbook)
+
+Measured 2026-11-22, after the vector-table split and slot compaction: banks
+0/1/7 run at 97–98% fill (142–228 bytes free; the split added 56 B to each of
+them). An audit found **no dead weight** there — the pressure is structural:
+
+- Bank 0 hosts the RAM-resident runtime library copy plus bootstrap.
+- Bank 1 is the editor core; keymap tables are referenced by immediate loads
+  (`li tmp,keymap_actions.editor`) from `edk.key.process` in the same bank, so
+  tables and dispatcher must stay co-resident.
+- Bank 7 hosts the TI-Basic bridge as one cohesive cluster
+  (`tib.session.*`, `tib.uncrunch.*`, `data.tib.tokens` via `tib.tokenindex`,
+  `data.scrpad`/`data.sams.layout` via `mem.run.ea5`).
+
+When a tight bank needs headroom, move a *cohesive cluster* to the overflow
+pool (banks 8-D, ~7.7 KB free each) instead of scattering single modules:
+
+1. Move the `copy "…"` lines of the whole cluster from e.g. `stevie_b7.asm` to
+   `stevie_b8.asm` (keep relative order inside the cluster).
+2. Update `owner=` for every exported vector of the cluster in
+   `build/vector-registry.txt`; slots freed in the old bank may be re-used by
+   functions moving in the opposite direction.
+3. `python3 build/tools/gen_vectors.py generate`, then full `build/build.sh`.
+4. Verify: zero assembler diagnostics, `gen_vectors check` passes, and binary
+   diff shows changes only in the affected banks (plus shifted addresses).
+
+Candidate clusters if needed: the TI-Basic bridge bank 7 → bank 8 (largest
+single relief, ~2–3 KB); a set of `edk.*` keyboard handlers bank 1 → bank 9
+(smaller win, each handler needs its own vector slot for the dispatcher).
 
 ## Shared / cross-bank symbols
 

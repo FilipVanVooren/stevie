@@ -1,11 +1,11 @@
-"""Run the native search, keyboard/color and BASIC regression suites for R7."""
+"""Run the native search, keyboard/color and BASIC regression suites for R6."""
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import subprocess
 import sys
 
-root = Path(__file__).resolve().parents[1]
-logs = root / 'build/autorepeat/validation-r7'
+root = Path(__file__).resolve().parents[2]
+logs = root / 'build/autorepeat/validation-r6'
 logs.mkdir(parents=True, exist_ok=True)
 source = Path(sys.argv[1]) if len(sys.argv) > 1 else None
 jobs = []
@@ -18,14 +18,12 @@ scenarios = {
     'resume-empty': ['--resume', '--empty-basic'],
 }
 for mode in (2480, 3080, 4880, 6080):
-    jobs.append((f'keyboard-{mode}', ['node', 'build/test_autorepeat.cjs', str(mode)]))
-    jobs.append((f'search-{mode}-fixture', ['node', 'build/test_search.cjs', f'--mode={mode}']))
+    jobs.append((f'keyboard-{mode}', ['node', 'build/tests/test_autorepeat.cjs', str(mode)]))
+    jobs.append((f'search-{mode}-fixture', ['node', 'build/tests/test_search.cjs', f'--mode={mode}']))
     if source:
-        jobs.append((f'search-{mode}-file', ['node', 'build/test_search.cjs', f'--mode={mode}', f'--file={source}']))
-    for factor in (1,8):
-        jobs.append((f'file-integrity-{mode}-{factor}', ['node', 'build/test_file_integrity.cjs', f'--mode={mode}', f'--cpu-factor={factor}']))
+        jobs.append((f'search-{mode}-file', ['node', 'build/tests/test_search.cjs', f'--mode={mode}', f'--file={source}']))
     for name, options in scenarios.items():
-        jobs.append((f'basic-{mode}-{name}', ['node', 'build/test_basic_sessions.cjs', f'--mode={mode}', '--quiet', *options]))
+        jobs.append((f'basic-{mode}-{name}', ['node', 'build/tests/test_basic_sessions.cjs', f'--mode={mode}', '--quiet', *options]))
 
 def run(job):
     name, args = job

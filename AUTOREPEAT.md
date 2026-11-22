@@ -3,6 +3,21 @@
 This local build adds autorepeat to upstream Stevie commit
 `2d470961f5c5a6d3bf6b9ba4438921f8c9c039a3`.
 
+Revision 12 makes scrolling one line cheaper. Cursor up/down now shifts the
+frame buffer by a single row and unpacks only the newly exposed line, instead
+of unpacking every visible row again, and unpacking a row erases only the
+columns the copy did not reach instead of all 80 up front. The color pass no
+longer repaints the whole screen when nothing is block-marked; it skipped
+that work only by accident before, because the marker check tested the wrong
+register (an upstream defect, present in `2d470961`). See *Scrolling* and
+*Unpacking a row* below for what to watch while testing.
+
+Revision 11 makes autorepeat two-speed. A held key still acts immediately
+and starts repeating after the same 500 ms delay at the same first speed.
+After eight repeats at that speed it switches to a second, faster speed and
+stays there for the rest of the hold. Release stops repeat as before, and a
+fresh press restarts the long delay and the first speed.
+
 Revision 10 preserves edits when moving between search matches or starting
 a new Find operation. The current row is committed before a match jump
 refreshes it, and before the Find dialog maps its data pages. Cancelling
@@ -100,7 +115,71 @@ on cyan, matching the adjacent text.
 
 Pressing a key acts immediately. Holding an eligible key starts repeating
 after 500 ms, at approximately 12 characters/actions per second (12 at
-60 Hz, 12.5 at 50 Hz). Release stops repeat on the next keyboard scan.
+60 Hz, 12.5 at 50 Hz). Holding the same key longer accelerates it: after
+eight repeats at that first speed, which is roughly 1.2 s after the press,
+the repeat jumps to a second, faster speed of one action per VDP frame,
+approximately 60 actions per second at 60 Hz and 50 at 50 Hz, and stays
+there while the key is held. That is the fastest this engine can run: it is
+paced by the keyboard hook, which executes once per frame. Actions whose
+handler needs more than a frame, such as paging, are still limited by their
+own redraw time. The two speeds apply to every repeatable input listed
+below. Release stops repeat on the next keyboard scan; pressing again
+restarts the long delay and the first speed.
+
+### Scrolling
+
+`fb.refresh` rebuilds the visible window from the editor buffer. For a
+one-row scroll that is wasted work, so `fb.cursor.up`/`fb.cursor.down` set
+`@fb.scroll` and `fb.refresh` then shifts the rows in place and unpacks the
+single line that entered the window. The request is consumed on every call
+and is ignored when the delta is not exactly one row, when the current row
+still holds an uncommitted edit, or when the row length is odd; those cases
+rebuild every row as before. Paging, jumps, searches and file operations
+always rebuild. End-of-file needs no extra erase pass because a line beyond
+the editor buffer unpacks as a blank row.
+
+`fb.colorlines` paints block-marked rows in the color table. It now returns
+early when neither M1 nor M2 is set, which is the common case while
+scrolling. Marking or unmarking still repaints: `edb.block.mark.m1/m2` keep
+the markers set so the pass runs, and clearing them goes through
+`pane.colorscheme.load`, which fills the rows with the normal text color.
+A half-marked block (M1 set, M2 not yet set) keeps its previous appearance:
+the pass runs whenever either marker is set.
+
+### Unpacking a row
+
+`edb.line.unpack.fb` used to erase all 80 columns of the destination row and
+then copy the visible text over them, writing `80 + len` bytes per row. The
+copy now runs first and only the columns it did not reach are erased, so a
+row always costs exactly 80 written bytes: about 37% less RAM traffic per
+rebuild for typical line lengths, and half for full 80 column lines. A row
+whose text fills the row skips the fill entirely, because `xfilm` asserts on
+a repeat count of zero.
+
+The result is byte for byte identical to the previous behaviour, including
+`@outparm1`, so nothing that reads the frame buffer afterwards has to
+change. The three "nothing visible" exits (line past end of file, empty
+line, horizontal scroll offset past the text) all route through one full-row
+erase. `tmp4` carries the copied column count across the block copy, which
+raises the register save level of this routine to `.pushregs 4`; `xpym2m`
+does not touch `tmp4`. The change adds 14 bytes to bank 1, which is the
+tightest bank (`python3 build/tools/bank_report.py --bank 1`).
+
+Things to check while testing in an emulator:
+- Scroll down and up through a large file, including past the last line and
+  back; every row must show the expected text, with no leftover or shifted
+  rows near end-of-file.
+- Type on a line, then scroll before the edit is committed (AutoInsert off)
+  and after it; the edit must land on the right line when saved.
+- Mark a block with M1/M2 and scroll so that the marked range moves into and
+  out of view; the highlight must follow it, and clearing the mark
+  (`M1`/`M2` reset) must restore normal text color everywhere.
+- Scroll in all four display modes; the row shift copies whole words and the
+  horizontal scroll offset (`@fb.vwco`) must stay aligned.
+- Scroll horizontally with FCTN-S/E on a long line, then back to column 0:
+  no characters may remain from a previously visible longer line. Save the
+  file afterwards and compare; the row erase change must not leak text into
+  saved records.
 
 These inputs repeat:
 
@@ -142,8 +221,9 @@ The keyboard hook now runs once per VDP frame after the console KSCAN.
 ROM bank 8 holds the repeat state machine because bank 1 has little space
 left. Bank 8 vector 1 is its entry point; its previously unused bank ID is
 corrected to `bank8.rom`. The existing ROM trampoline restores bank 1 and
-both stacks after each call. Fourteen bytes of previously free core RAM,
-`>a036` through `>a043`, hold repeat state.
+both stacks after each call. Sixteen bytes of previously free core RAM,
+`>a036` through `>a045`, hold repeat state, including the remaining count
+of first-speed repeats.
 
 The first decoded key is retained during a hold. Spectra2's RKSCAN resets
 the console's modifier cache before each scan; reading its later translated
@@ -157,8 +237,14 @@ Only the approved action addresses in `keymap_repeat.actions` and validated
 character input handlers enable it. This keeps printable menu shortcuts and
 context-dependent SPACE commands from repeating.
 
-Timing constants are at the top of `src/modules/edk.key.repeat.asm`.
-They are frame counts; rebuild after changing them.
+Timing constants are at the top of `src/modules/edk.key.repeat.asm`:
+`key.repeat.delay.*`, `key.repeat.rate1.*` (first speed),
+`key.repeat.slow.count` (repeats before accelerating) and
+`key.repeat.rate2.*` (second speed). They are frame counts; rebuild after
+changing them. A rate of 1 is the fastest possible interval, because the
+engine only runs once per VDP frame; `key.repeat.rate2.*` is already at
+that limit. Setting `key.repeat.slow.count` to zero repeats at the second
+speed from the first repeat onwards.
 
 ## Build and validation
 
@@ -166,7 +252,7 @@ The portable build script uses Python's standard library and xdt99. With
 sibling `spectra2` and `xdt99` checkouts beside this repository, run:
 
 ```text
-python build/build_autorepeat.py
+python build/tests/build_autorepeat.py
 ```
 
 Use `--assembler PATH` or `--spectra2 PATH` to select other locations.
@@ -183,7 +269,7 @@ For automated keyboard tests, use Node.js with a sibling `test-emulator`
 checkout of `https://github.com/Rasmus-M/Old-Js99er`:
 
 ```text
-node build/test_autorepeat.cjs 3080
+node build/tests/test_autorepeat.cjs 3080
 ```
 
 The tests execute the assembled cartridge's actual scheduler, Spectra2
@@ -210,8 +296,8 @@ AutoUnpack on the real TI/Pico9918.
 Run the search regression tests with:
 
 ```text
-node build/test_search.cjs --mode=6080
-node build/test_search.cjs --mode=6080 "--file=C:\path\to\XBP14;S"
+node build/tests/test_search.cjs --mode=6080
+node build/tests/test_search.cjs --mode=6080 "--file=C:\path\to\XBP14;S"
 ```
 
 The default uses a synthetic D/V80 fixture. `--file` loads an existing TIFILES
@@ -227,7 +313,7 @@ movement, the logical cursor position, and continued cursor blinking after
 return. It leaves the cursor on different editor rows between visits.
 
 ```text
-node build/test_basic_sessions.cjs --mode=6080 --mixed --empty-basic --quiet
+node build/tests/test_basic_sessions.cjs --mode=6080 --mixed --empty-basic --quiet
 ```
 
 Revision 5 passes six scenarios of six round trips per display mode
@@ -244,14 +330,14 @@ is compared after every save, and both dialog-data pages must remain intact.
 It checks normal CPU timing and eight times as many CPU cycles per frame.
 
 ```text
-node build/test_file_integrity.cjs --mode=6080 --cpu-factor=1
-node build/test_file_integrity.cjs --mode=6080 --cpu-factor=8
+node build/tests/test_file_integrity.cjs --mode=6080 --cpu-factor=1
+node build/tests/test_file_integrity.cjs --mode=6080 --cpu-factor=8
 ```
 
 Revision 6 loses the edit on the current line in this test at either speed.
 Revision 7 passes all 56 save checks (seven per mode/speed combination),
 comparing 224,000 records in total. The keyboard, Find and BASIC regression
-suites are also rerun for every display mode by `build/validate_r7.py`.
+suites are also rerun for every display mode by `build/validate/validate_r7.py`.
 Revision 9 adds a matching reproduction for the invisible NUL characters
 found in the later attached source.
 
@@ -262,13 +348,13 @@ The actual XB Packer/DSR files are also tested at both CPU factors in all
 display modes. The original files are read without modification.
 
 ```text
-node build/test_file_insert.cjs --mode=6080
-node build/test_file_insert.cjs --mode=6080 --records=4095 --at=4095
-node build/test_file_insert.cjs --mode=6080 --dirty
+node build/tests/test_file_insert.cjs --mode=6080
+node build/tests/test_file_insert.cjs --mode=6080 --records=4095 --at=4095
+node build/tests/test_file_insert.cjs --mode=6080 --dirty
 ```
 
 `--base=PATH` and `--import=PATH` select existing TIFILES instead of synthetic
-records. `build/validate_r8.py BASE IMPORT` runs the insertion cases and all
+records. `build/validate/validate_r8.py BASE IMPORT` runs the insertion cases and all
 prior keyboard, Find, save-integrity and BASIC tests for every display mode.
 Revision 8 passes all 80 suites, including 36 insertion scenarios. The
 exact BLWP-line failure is covered with the original local files in all
@@ -278,11 +364,11 @@ The deletion tests also cover files at and above 2,048/4,096 lines,
 deletions at the beginning/end, and the exact DEC-to-NUL corruption pattern.
 
 ```text
-node build/test_file_delete.cjs --mode=6080
-node build/test_file_delete.cjs --mode=6080 --records=3958 --extra-lines=0
+node build/tests/test_file_delete.cjs --mode=6080
+node build/tests/test_file_delete.cjs --mode=6080 --records=3958 --extra-lines=0
 ```
 
-`build/validate_r9.py BASE IMPORT` includes these cases alongside all prior
+`build/validate/validate_r9.py BASE IMPORT` includes these cases alongside all prior
 regression suites. The actual source and import are read without modification.
 Revision 9 passes all 116 suites, including 32 deletion scenarios and 40
 insertion scenarios, across every display mode. The suite includes both
@@ -296,13 +382,24 @@ actual ENTER, word, page and match handlers, including automatic line
 insertion across the index boundary and stopping when released.
 
 ```text
-node build/test_search_edits.cjs --mode=6080 --case=next
-node build/test_search_edits.cjs --mode=6080 --case=large-next --large
-node build/test_repeat_navigation.cjs --mode=6080
+node build/tests/test_search_edits.cjs --mode=6080 --case=next
+node build/tests/test_search_edits.cjs --mode=6080 --case=large-next --large
+node build/tests/test_repeat_navigation.cjs --mode=6080
 ```
 
 The keyboard suite checks all newly repeatable actions at 50/60 Hz and
 keeps ENTER single-press in Open, Save and Find dialogs. The complete
-revision 10 runner is `build/validate_r10.py BASE IMPORT`.
+revision 10 runner is `build/validate/validate_r10.py BASE IMPORT`.
 Revision 10 passes all 156 suites, including 296 keyboard/color checks,
 36 search-edit scenarios and the real held-navigation suite in every mode.
+
+The revision 11 two-speed schedule is covered by `test_autorepeat.cjs` at
+both 50 Hz and 60 Hz: it compares every repeat frame with the expected
+two-speed schedule, checks that the 8 first-speed repeats are followed by
+second-speed gaps of a single frame, and checks that a fresh press restores
+the long delay and the first speed. The pre-existing pacing tests still measure
+only the first eight repeats, so their expected counts are unchanged.
+Rebuild with `python build/tests/build_autorepeat.py` and rerun
+`node build/tests/test_autorepeat.cjs <mode>` for all four display modes,
+plus `build/validate/validate_r10.py BASE IMPORT`, which also runs the real
+held-navigation suite where acceleration is now visible.

@@ -1,12 +1,13 @@
 // Native file loading and find-dialog regression tests using Old-Js99er.
-// Usage: node build/test_search.cjs --mode=6080 [--file=PATH]
+// Usage: node build/tests/test_search.cjs --mode=6080 [--file=PATH]
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const root = path.resolve(__dirname, '..');
+const build = path.resolve(__dirname, '..');
+const root = path.resolve(build, '..');
 const emu = path.resolve(root, '../test-emulator/src');
 const mode = Number(process.argv.find(a => a.startsWith('--mode='))?.split('=')[1] || 6080);
-const out = path.join(__dirname, 'autorepeat', String(mode));
+const out = path.join(build, 'autorepeat', String(mode));
 const assert = require('node:assert/strict');
 const sandbox = vm.createContext({console, performance, window: {performance},
     Image: class {}, DiskDrive: {DSR_ROM: []},
@@ -41,7 +42,7 @@ const memory = new sandbox.Memory(vdp, sound, {}, {
     isGRAMEnabled: () => false, isGoogleDriveEnabled: () => false,
 });
 const image = process.argv.slice(2).find(a => !a.startsWith('--')) ||
-    path.join(__dirname, 'autorepeat', `stevie${Math.floor(mode / 100)}_8.bin`);
+    path.join(build, 'autorepeat', `stevie${Math.floor(mode / 100)}_8.bin`);
 const imageData = fs.readFileSync(image);
 memory.setCartridgeImage(imageData, false, false, false, false);
 cru.setMemory(memory);

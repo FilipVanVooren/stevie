@@ -10,7 +10,15 @@
 # shellcheck disable=SC1091,SC2086,SC2181
 
 set -e
-source helper.sh
+
+# Layout: entry points live in build/, shell helpers in build/lib/, python
+# tools in build/tools/. Resolve them from this script's location and work
+# from build/ so all relative paths (bin/, list/, .buildinfo/) stay valid.
+BUILD_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LIB_DIR="$BUILD_DIR/lib"
+cd "$BUILD_DIR" || exit 1
+
+source "$LIB_DIR/helper.sh"
 
 
 setbin() {    
@@ -91,11 +99,11 @@ log "Building stevie binary for vdp mode $vdpmode"
 export workdir="$workdir"
 export include="$include"
 export xas99_options="-D vdpmode=$vdpmode"
-bash assemble.sh $banks
+bash "$LIB_DIR/assemble.sh" $banks
 
 # Concatenate banks to binary
 if [ "$?" -eq "0" ]; then
-    bash concat.sh "bin/$binary" $banks
+    bash "$LIB_DIR/concat.sh" "bin/$binary" $banks
 else
     log "**** Error **** Error during assembly process. Terminated."
 fi

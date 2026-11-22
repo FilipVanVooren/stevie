@@ -11,6 +11,13 @@
 * @parm1       = Force refresh if >ffff (overrides @fb.colorize)
 * @fb.colorize = Colorize frame buffer content if >ffff
 *--------------------------------------------------------------
+* Markers M1/M2 hold a base 1 line number when set and >ffff
+* when unset. With neither marker set there is nothing to paint:
+* the color scheme already filled the frame buffer rows with the
+* normal text color, so scrolling needs no full-screen color
+* pass. Clearing markers repaints through the color scheme (see
+* pane.colorscheme.load) or with @parm1 forced.
+*--------------------------------------------------------------
 * OUTPUT
 * none
 *--------------------------------------------------------------
@@ -33,12 +40,13 @@ fb.colorlines:
         ;------------------------------------------------------
         ; Speedup screen refresh dramatically
         ;------------------------------------------------------
-        mov   @edb.block.m1,tmp0    ; \ M1 marker unset?
-        ci    tmp4,>ffff            ; / 
-        jeq   fb.colorlines.exit    ; Exit if marker M1 unset
-        mov   @edb.block.m2,tmp0    ; \ M2 marker unset?
-        ci    tmp4,>ffff            ; /         
-        jeq   fb.colorlines.exit    ; Exit if marker M2 unset
+        mov   @edb.block.m1,tmp0    ; M1 set? (holds >ffff when unset)
+        ci    tmp0,>ffff
+        jne   !                     ; Yes, paint the marked range
+        mov   @edb.block.m2,tmp0    ; M2 set?
+        ci    tmp0,>ffff
+        jne   !                     ; Yes, paint the marked range
+        jmp   fb.colorlines.exit    ; Nothing marked, skip the color pass
         ;------------------------------------------------------
         ; Color the lines in the framebuffer (TAT)
         ;------------------------------------------------------

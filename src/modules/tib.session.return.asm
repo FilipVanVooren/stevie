@@ -209,7 +209,7 @@ tib.run.return.refresh:
         mov   tmp0,@wyx
 
         bl    @rom.farjump          ; Restart cursor blink in bank 1
-              data bank1.rom,vec.28,bankid
+              data bank1.rom,vec.9,bankid
 
         seto  @fb.status.dirty
         jmp   tib.run.return.exit
