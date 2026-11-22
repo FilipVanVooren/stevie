@@ -3,6 +3,14 @@
 This local build adds autorepeat to upstream Stevie commit
 `2d470961f5c5a6d3bf6b9ba4438921f8c9c039a3`.
 
+Revision 12 makes scrolling one line cheaper. Cursor up/down now shifts
+the frame buffer by a single row and unpacks only the newly exposed line,
+instead of unpacking every visible row again. The color pass no longer
+repaints the whole screen when nothing is block-marked; it skipped that
+work only by accident before, because the marker check tested the wrong
+register (an upstream defect, present in `2d470961`). See *Scrolling*
+below for what to watch while testing.
+
 Revision 11 makes autorepeat two-speed. A held key still acts immediately
 and starts repeating after the same 500 ms delay at the same first speed.
 After eight repeats at that speed it switches to a second, faster speed and
@@ -116,6 +124,38 @@ handler needs more than a frame, such as paging, are still limited by their
 own redraw time. The two speeds apply to every repeatable input listed
 below. Release stops repeat on the next keyboard scan; pressing again
 restarts the long delay and the first speed.
+
+### Scrolling
+
+`fb.refresh` rebuilds the visible window from the editor buffer. For a
+one-row scroll that is wasted work, so `fb.cursor.up`/`fb.cursor.down` set
+`@fb.scroll` and `fb.refresh` then shifts the rows in place and unpacks the
+single line that entered the window. The request is consumed on every call
+and is ignored when the delta is not exactly one row, when the current row
+still holds an uncommitted edit, or when the row length is odd; those cases
+rebuild every row as before. Paging, jumps, searches and file operations
+always rebuild. End-of-file needs no extra erase pass because a line beyond
+the editor buffer unpacks as a blank row.
+
+`fb.colorlines` paints block-marked rows in the color table. It now returns
+early when neither M1 nor M2 is set, which is the common case while
+scrolling. Marking or unmarking still repaints: `edb.block.mark.m1/m2` keep
+the markers set so the pass runs, and clearing them goes through
+`pane.colorscheme.load`, which fills the rows with the normal text color.
+A half-marked block (M1 set, M2 not yet set) keeps its previous appearance:
+the pass runs whenever either marker is set.
+
+Things to check while testing in an emulator:
+- Scroll down and up through a large file, including past the last line and
+  back; every row must show the expected text, with no leftover or shifted
+  rows near end-of-file.
+- Type on a line, then scroll before the edit is committed (AutoInsert off)
+  and after it; the edit must land on the right line when saved.
+- Mark a block with M1/M2 and scroll so that the marked range moves into and
+  out of view; the highlight must follow it, and clearing the mark
+  (`M1`/`M2` reset) must restore normal text color everywhere.
+- Scroll in all four display modes; the row shift copies whole words and the
+  horizontal scroll offset (`@fb.vwco`) must stay aligned.
 
 These inputs repeat:
 

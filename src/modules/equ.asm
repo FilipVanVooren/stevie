@@ -245,7 +245,8 @@ fb.scrrows        equ  fb.struct + 30  ; Rows on physical screen for framebuffer
 fb.scrrows.max    equ  fb.struct + 32  ; Max # of rows on physical screen for fb
 fb.ruler.sit      equ  fb.struct + 34  ; 80 char ruler  (no length-prefix!)
 fb.ruler.tat      equ  fb.struct + 114 ; 80 char colors (no length-prefix!)
-fb.free           equ  fb.struct + 194 ; **free** up to 256
+fb.scroll         equ  fb.struct + 194 ; Shift 1 row on the next refresh (>ffff)
+fb.free           equ  fb.struct + 196 ; **free** up to 256
 ;-------------------------------------------------------------------------------
 ; File handle structure                @>a400-a4ff                   (256 bytes)
 ;-------------------------------------------------------------------------------

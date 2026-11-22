@@ -64,6 +64,7 @@ fb.cursor.down.move:
         mov   @fb.topline,@parm1
         inc   @parm1
 
+        seto  @fb.scroll            ; Shift 1 row instead of rebuilding all
         bl    @fb.refresh           ; \ Refresh frame buffer
                                     ; | i  @parm1 = Line to start with
                                     ; /             (becomes @fb.topline)
