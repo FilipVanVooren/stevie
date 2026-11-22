@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 261122-1556140
+0002               * BUILD: 261122-1742080
 0003               ***************************************************************
                    < stevie_b5.asm
 0025                       ;-----------------------------------------------------------------------
@@ -69,12 +69,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0033      0001     rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 0034      0000     debug                     equ  0       ; Turn on debugging mode
 0035               *--------------------------------------------------------------
-0036               * ROM layout
-0037               *--------------------------------------------------------------
-0038      7F50     bankx.vdptab              equ  >7f50   ; VDP mode tables
-0039      7F70     bankx.vectab              equ  >7f70   ; Vector table
-0040      7FF0     bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
-0041      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
+0036               * ROM layout (top of every 8K cartridge bank)
+0037               *
+0038               *   >6000 ...    program code, guarded by '.ifge $, >xxxx' in stevie_bN.asm
+0039               *   bankx.exttab vector extension slots 33-48; ONLY banks that need more than
+0040               *                32 cross-bank entry points carry this island (today: bank 3
+0041               *                and bank 4). Those banks lower their guard to >7f68, every
+0042               *                other bank may use the space up to the main vector table.
+0043               *   bankx.vectab main vector table, slots 1-32 (all banks)
+0044               *   bankx.vdptab VDP mode tables
+0045               *   >7fea        ROM identification string 'ROM#n'
+0046               *   >7ff0        cpu.crash.showbank
+0047               *
+0048               * gen_vectors.py validates these equates and the per-bank guards on every
+0049               * build ('gen_vectors.py check'); packing slots is 'gen_vectors.py compact'.
+0050               *--------------------------------------------------------------
+0051      7F68     bankx.exttab              equ  >7f68   ; Vector extension, slots 33-48 (optional)
+0052      7F88     bankx.vectab              equ  >7f88   ; Vector table, slots 1-32
+0053      7FC8     bankx.vdptab              equ  >7fc8   ; VDP mode tables
+0054      7FF0     bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
+0055      0000     device.fg99.mode.adv      equ  0       ; FG99 advanced mode off
                    < stevie_b5.asm
 0029                       copy  "equ.romseq.asm"      ; ROM bank order "non-inverted"
      **** ****     > equ.romseq.asm
@@ -176,7 +190,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0041               *--------------------------------------------------------------
 0042      00F4     spfclr  equ   >f4                   ; Foreground/Background color for font.
 0043      0004     spfbck  equ   >04                   ; Screen background color.
-0044      7F50     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
+0044      7FC8     spvmod  equ   bankx.vdptab          ; Video mode.   See VIDTAB for details.
 0045      000C     spfont  equ   >0c                   ; Font to load. See LDFONT for details.
 0046      12C0     pctadr  equ   >12c0                 ; VDP color table base
 0047      2900     fntadr  equ   vdp.pdt.base + >100   ; VDP font start address (in PDT range)
@@ -6372,7 +6386,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0379               *--------------------------------------------------------------
 0380 30B0 06A0  32 runlic  bl    @vidtab               ; Load video mode table into VDP
      30B2 22F8     
-0381 30B4 7F50             data  spvmod                ; Equate selected video mode table
+0381 30B4 7FC8             data  spvmod                ; Equate selected video mode table
 0382 30B6 0204  20         li    tmp0,spfont           ; Get font option
      30B8 000C     
 0383 30BA 0544  14         inv   tmp0                  ; NOFONT (>FFFF) specified ?
@@ -7589,7 +7603,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0027 34AA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      34AC 30D8     
 0028 34AE 600E                   data bank7.rom        ; | i  p0 = bank address
-0029 34B0 7F70                   data bankx.vectab     ; | i  p1 = Vector with target address
+0029 34B0 7F88                   data bankx.vectab     ; | i  p1 = Vector with target address
 0030 34B2 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0031               
 0032                       ; We never return here. We call @mem.sams.set.legacy (vector1) and
@@ -8926,7 +8940,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0029               
 0030 38BC 06A0  32         bl    @vidtab               ; Load video mode table into VDP
      38BE 22F8     
-0031 38C0 7F5A                   data tibasic.32x24    ; Equate selected video mode table
+0031 38C0 7FD2                   data tibasic.32x24    ; Equate selected video mode table
 0032               
 0033 38C2 06A0  32         bl    @scroff               ; Turn off screen
      38C4 26E6     
@@ -8981,7 +8995,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0013 38DC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      38DE 30D8     
 0014 38E0 600C                   data bank6.rom        ; | i  p0 = bank address
-0015 38E2 7F78                   data vec.5            ; | i  p1 = Vector with target address
+0015 38E2 7F90                   data vec.5            ; | i  p1 = Vector with target address
 0016 38E4 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0017                       ;------------------------------------------------------
 0018                       ; Exit
@@ -12017,7 +12031,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0036 6842 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6844 30D8     
 0037 6846 6004                   data bank2.rom        ; | i  p0 = bank address
-0038 6848 7F8A                   data vec.14           ; | i  p1 = Vector with target address
+0038 6848 7F9C                   data vec.11           ; | i  p1 = Vector with target address
 0039 684A 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0040                       ;------------------------------------------------------
 0041                       ; Display time?
@@ -12454,7 +12468,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030               
 0031               ***************************************************************
 0032               * Stub for "tv.clock.start"
-0033               * bank1 vec.3
+0033               * bank1 vec.2
 0034               ********|*****|*********************|**************************
 0035               tv.clock.start:
 0036 69F6 C820  54         mov   @tv.clock.start.vector,@trmpvector
@@ -12462,11 +12476,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      69FA A034     
 0037 69FC 10F3  14         jmp   _trampoline.bank1.ret ; Longjump
 0038               tv.clock.start.vector:
-0039 69FE 7F74             data  vec.3
+0039 69FE 7F8A             data  vec.2
 0040               
 0041               ***************************************************************
 0042               * Stub for "edb.line.unpack"
-0043               * bank1 vec.11
+0043               * bank1 vec.4
 0044               ********|*****|*********************|**************************
 0045               edb.line.unpack:
 0046 6A00 C820  54         mov   @edb.line.unpack.vector,@trmpvector
@@ -12474,11 +12488,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A04 A034     
 0047 6A06 10EE  14         jmp   _trampoline.bank1.ret ; Longjump
 0048               edb.line.unpack.vector:
-0049 6A08 7F84             data  vec.11
+0049 6A08 7F8E             data  vec.4
 0050               
 0051               ***************************************************************
 0052               * Stub for "fb.vdpdump"
-0053               * bank1 vec.21
+0053               * bank1 vec.7
 0054               ********|*****|*********************|**************************
 0055               fb.vdpdump:
 0056 6A0A C820  54         mov   @fb.vdpdump.vector,@trmpvector
@@ -12486,11 +12500,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A0E A034     
 0057 6A10 10E9  14         jmp   _trampoline.bank1.ret ; Longjump
 0058               fb.vdpdump.vector:
-0059 6A12 7F98             data  vec.21
+0059 6A12 7F94             data  vec.7
 0060               
 0061               ***************************************************************
 0062               * Stub for "pane.errline.show"
-0063               * bank1 vec.30
+0063               * bank1 vec.11
 0064               ********|*****|*********************|**************************
 0065               pane.errline.show:
 0066 6A14 C820  54         mov   @pane.errline.show.vector,@trmpvector
@@ -12498,7 +12512,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A18 A034     
 0067 6A1A 10E4  14         jmp   _trampoline.bank1.ret ; Longjump
 0068               pane.errline.show.vector:
-0069 6A1C 7FAA             data  vec.30
+0069 6A1C 7F9C             data  vec.11
 0070               
 0071               ***************************************************************
 0072               * Trampoline bank 2 with return
@@ -12531,7 +12545,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A34 A034     
 0097 6A36 10F3  14         jmp   _trampoline.bank2.ret ; Longjump
 0098               fm.savefile.vector:
-0099 6A38 7F76             data  vec.4
+0099 6A38 7F8E             data  vec.4
 0100               
 0101               ***************************************************************
 0102               * Trampoline bank 4 with return
@@ -12556,7 +12570,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0120               
 0121               ***************************************************************
 0122               * Stub for "fb.refresh"
-0123               * bank4 vec.8
+0123               * bank4 vec.7
 0124               ********|*****|*********************|**************************
 0125               fb.refresh:
 0126 6A4C C820  54         mov   @fb.refresh.vector,@trmpvector
@@ -12564,11 +12578,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A50 A034     
 0127 6A52 10F3  14         jmp   _trampoline.bank4.ret ; Longjump
 0128               fb.refresh.vector:
-0129 6A54 7F7E             data  vec.8
+0129 6A54 7F94             data  vec.7
 0130               
 0131               ***************************************************************
 0132               * Stub for "fb.goto.nextmatch"
-0133               * bank4 vec.23
+0133               * bank4 vec.22
 0134               ********|*****|*********************|**************************
 0135               fb.goto.nextmatch:
 0136 6A56 C820  54         mov   @fb.goto.nextmatch.vector,@trmpvector
@@ -12576,11 +12590,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A5A A034     
 0137 6A5C 10EE  14         jmp   _trampoline.bank4.ret ; Longjump
 0138               fb.goto.nextmatch.vector:
-0139 6A5E 7F9C             data  vec.23
+0139 6A5E 7FB2             data  vec.22
 0140               
 0141               ***************************************************************
 0142               * Stub for "pane.botline.busy.on"
-0143               * bank4 vec.38
+0143               * bank4 vec.28
 0144               ********|*****|*********************|**************************
 0145               pane.botline.busy.on:
 0146 6A60 C820  54         mov   @pane.botline.busy.on.vector,@trmpvector
@@ -12588,11 +12602,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A64 A034     
 0147 6A66 10E9  14         jmp   _trampoline.bank4.ret ; Longjump
 0148               pane.botline.busy.on.vector:
-0149 6A68 7FBA             data  vec.38
+0149 6A68 7FBE             data  vec.28
 0150               
 0151               ***************************************************************
 0152               * Stub for "pane.botline.busy.off"
-0153               * bank4 vec.39
+0153               * bank4 vec.29
 0154               ********|*****|*********************|**************************
 0155               pane.botline.busy.off:
 0156 6A6A C820  54         mov   @pane.botline.busy.off.vector,@trmpvector
@@ -12600,11 +12614,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A6E A034     
 0157 6A70 10E4  14         jmp   _trampoline.bank4.ret ; Longjump
 0158               pane.botline.busy.off.vector:
-0159 6A72 7FBC             data  vec.39
+0159 6A72 7FC0             data  vec.29
 0160               
 0161               ***************************************************************
 0162               * Stub for "pane.colorscheme.load"
-0163               * bank4 vec.41
+0163               * bank4 vec.31
 0164               ********|*****|*********************|**************************
 0165               pane.colorscheme.load:
 0166 6A74 C820  54         mov   @pane.colorscheme.load.vector,@trmpvector
@@ -12612,11 +12626,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A78 A034     
 0167 6A7A 10DF  14         jmp   _trampoline.bank4.ret ; Longjump
 0168               pane.colorscheme.load.vector:
-0169 6A7C 7FC0             data  vec.41
+0169 6A7C 7FC4             data  vec.31
 0170               
 0171               ***************************************************************
 0172               * Stub for "pane.colorscheme.botline"
-0173               * bank4 vec.42
+0173               * bank4 vec.32
 0174               ********|*****|*********************|**************************
 0175               pane.colorscheme.botline:
 0176 6A7E C820  54         mov   @pane.colorscheme.botline.vector,@trmpvector
@@ -12624,11 +12638,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A82 A034     
 0177 6A84 10DA  14         jmp   _trampoline.bank4.ret ; Longjump
 0178               pane.colorscheme.botline.vector:
-0179 6A86 7FC2             data  vec.42
+0179 6A86 7FC6             data  vec.32
 0180               
 0181               ***************************************************************
 0182               * Stub for "pane.cmdb.hide"
-0183               * bank4 vec.49
+0183               * bank4 vec.36
 0184               ********|*****|*********************|**************************
 0185               pane.cmdb.hide:
 0186 6A88 C820  54         mov   @pane.cmdb.hide.vector,@trmpvector
@@ -12636,7 +12650,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6A8C A034     
 0187 6A8E 10D5  14         jmp   _trampoline.bank4.ret ; Longjump
 0188               pane.cmdb.hide.vector:
-0189 6A90 7FD0             data  vec.49
+0189 6A90 7F6E             data  bankx.exttab+6
                    < stevie_b5.asm
 0099                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
@@ -12658,7 +12672,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0017 6A96 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6A98 30D8     
 0018 6A9A 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 6A9C 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0019 6A9C 7F88                   data vec.1            ; | i  p1 = Vector with target address
 0020 6A9E 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
@@ -12681,7 +12695,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0042 6AA8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6AAA 30D8     
 0043 6AAC 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 6AAE 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0044 6AAE 7F88                   data vec.1            ; | i  p1 = Vector with target address
 0045 6AB0 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
@@ -12704,7 +12718,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0064 6ABA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6ABC 30D8     
 0065 6ABE 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 6AC0 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0066 6AC0 7F8A                   data vec.2            ; | i  p1 = Vector with target address
 0067 6AC2 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
@@ -12726,7 +12740,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0085 6ACC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      6ACE 30D8     
 0086 6AD0 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 6AD2 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0087 6AD2 7F8C                   data vec.3            ; | i  p1 = Vector with target address
 0088 6AD4 600A                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
@@ -12809,24 +12823,24 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0038               ***************************************************************
 0039               stevie.80x30:
 0040                      ; VDP#0
-0051 7F50 0C              byte   >0c
+0051 7FC8 0C              byte   >0c
 0053                      ; VDP#1 - VDP#7
-0054 7F51   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
-     7F52 004B     
-     7F54 054B     
-     7F56 05F4     
-     7F58 0050     
+0054 7FC9   F0            byte   >f0,>00,>4b,>05,>4b,>05,SPFCLR,0,80
+     7FCA 004B     
+     7FCC 054B     
+     7FCE 05F4     
+     7FD0 0050     
 0055               
 0056               
 0057               ***************************************************************
 0058               * TI Basic mode (32 columns/24 rows)
 0059               *--------------------------------------------------------------
 0060               tibasic.32x24:
-0061 7F5A 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
-     7F5C 000C     
-     7F5E 0006     
-     7F60 0007     
-     7F62 0020     
+0061 7FD2 00E2             byte  >00,>e2,>00,>0c,>00,>06,>00,>07,0,32
+     7FD4 000C     
+     7FD6 0006     
+     7FD8 0007     
+     7FDA 0020     
 0062               *
 0063               * ; VDP#0 Control bits
 0064               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -12852,11 +12866,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0084               * Editor/Assembler (32 columns/24 rows)
 0085               *--------------------------------------------------------------
 0086               edasm.32x24:
-0087 7F64 00E2             byte  >00,>e2,>00,>0e,>01,>06,>00,>03,0,32
-     7F66 000E     
-     7F68 0106     
-     7F6A 0003     
-     7F6C 0020     
+0087 7FDC 00E2             byte  >00,>e2,>00,>0e,>01,>06,>00,>03,0,32
+     7FDE 000E     
+     7FE0 0106     
+     7FE2 0003     
+     7FE4 0020     
 0088               *
 0089               * ; VDP#0 Control bits
 0090               * ;      bit 6=0: M3 | Graphics 1 mode
@@ -12886,83 +12900,48 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0002               * Purpose...: Bank 5 vectors for trampoline function
 0003               
 0004               *--------------------------------------------------------------
-0005               * ROM 5: Vectors 1-32
+0005               * ROM 5: Vectors 1-32 (main table, bankx.vectab)
 0006               *--------------------------------------------------------------
 0007                       aorg  bankx.vectab
-0008 7F70 6004     vec.1   data  edb.clear.sams        ;
-0009 7F72 2026     vec.2   data  cpu.crash             ;
-0010 7F74 622A     vec.3   data  edb.block.mark        ;
-0011 7F76 61DA     vec.4   data  edb.block.mark.m1     ;
-0012 7F78 6202     vec.5   data  edb.block.mark.m2     ;
-0013 7F7A 6270     vec.6   data  edb.block.clip        ;
-0014 7F7C 62F0     vec.7   data  edb.block.reset       ;
-0015 7F7E 633E     vec.8   data  edb.block.delete      ;
-0016 7F80 63E2     vec.9   data  edb.block.copy        ;
-0017 7F82 6064     vec.10  data  edb.line.del          ;
-0018 7F84 60F8     vec.11  data  edb.line.copy         ;
-0019 7F86 64D8     vec.12  data  edb.block.match       ;
-0020 7F88 6522     vec.13  data  edb.lock              ;
-0021 7F8A 656C     vec.14  data  edb.unlock            ;
-0022 7F8C 65B8     vec.15  data  edb.find.init         ;
-0023 7F8E 65F2     vec.16  data  edb.find.search       ;
-0024 7F90 665C     vec.17  data  edb.find.scan         ;
-0025 7F92 2026     vec.18  data  cpu.crash             ;
-0026 7F94 2026     vec.19  data  cpu.crash             ;
-0027 7F96 2026     vec.20  data  cpu.crash             ;
-0028 7F98 2026     vec.21  data  cpu.crash             ;
-0029 7F9A 2026     vec.22  data  cpu.crash             ;
-0030 7F9C 2026     vec.23  data  cpu.crash             ;
-0031 7F9E 2026     vec.24  data  cpu.crash             ;
-0032 7FA0 6826     vec.25  data  pane.clock.time       ;
-0033 7FA2 68E0     vec.26  data  fm.clock.on           ;
-0034 7FA4 6928     vec.27  data  fm.clock.off          ;
-0035 7FA6 69AC     vec.28  data  tv.flash.screen       ;
-0036 7FA8 2026     vec.29  data  cpu.crash             ;
-0037 7FAA 2026     vec.30  data  cpu.crash             ;
-0038 7FAC 2026     vec.31  data  cpu.crash             ;
-0039 7FAE 2026     vec.32  data  cpu.crash             ;
-0040               *--------------------------------------------------------------
-0041               * ROM 5: Vectors 33-64
-0042               *--------------------------------------------------------------
-0043 7FB0 2026     vec.33  data  cpu.crash             ;
-0044 7FB2 2026     vec.34  data  cpu.crash             ;
-0045 7FB4 2026     vec.35  data  cpu.crash             ;
-0046 7FB6 2026     vec.36  data  cpu.crash             ;
-0047 7FB8 2026     vec.37  data  cpu.crash             ;
-0048 7FBA 2026     vec.38  data  cpu.crash             ;
-0049 7FBC 2026     vec.39  data  cpu.crash             ;
-0050 7FBE 2026     vec.40  data  cpu.crash             ;
-0051 7FC0 2026     vec.41  data  cpu.crash             ;
-0052 7FC2 2026     vec.42  data  cpu.crash             ;
-0053 7FC4 2026     vec.43  data  cpu.crash             ;
-0054 7FC6 2026     vec.44  data  cpu.crash             ;
-0055 7FC8 2026     vec.45  data  cpu.crash             ;
-0056 7FCA 2026     vec.46  data  cpu.crash             ;
-0057 7FCC 2026     vec.47  data  cpu.crash             ;
-0058 7FCE 2026     vec.48  data  cpu.crash             ;
-0059 7FD0 2026     vec.49  data  cpu.crash             ;
-0060 7FD2 2026     vec.50  data  cpu.crash             ;
-0061 7FD4 2026     vec.51  data  cpu.crash             ;
-0062 7FD6 2026     vec.52  data  cpu.crash             ;
-0063 7FD8 2026     vec.53  data  cpu.crash             ;
-0064 7FDA 2026     vec.54  data  cpu.crash             ;
-0065 7FDC 2026     vec.55  data  cpu.crash             ;
-0066 7FDE 2026     vec.56  data  cpu.crash             ;
-0067 7FE0 2026     vec.57  data  cpu.crash             ;
-0068 7FE2 2026     vec.58  data  cpu.crash             ;
-0069 7FE4 2026     vec.59  data  cpu.crash             ;
-0070 7FE6 2026     vec.60  data  cpu.crash             ;
-0071 7FE8 2026     vec.61  data  cpu.crash             ;
-0072 7FEA 2026     vec.62  data  cpu.crash             ;
-0073 7FEC 2026     vec.63  data  cpu.crash             ;
-0074 7FEE 2026     vec.64  data  cpu.crash             ;
-0075               
-0076               *--------------------------------------------------------------
-0077               * ROM identification string for CPU crash
-0078               *--------------------------------------------------------------
-0079               cpu.crash.showbank.bankstr:
-0080                       aorg >7fea
-0081 7FEA 0552             stri 'ROM#5'
+0008 7F88 6004     vec.1   data  edb.clear.sams        ;
+0009 7F8A 622A     vec.2   data  edb.block.mark        ;
+0010 7F8C 61DA     vec.3   data  edb.block.mark.m1     ;
+0011 7F8E 6202     vec.4   data  edb.block.mark.m2     ;
+0012 7F90 6270     vec.5   data  edb.block.clip        ;
+0013 7F92 62F0     vec.6   data  edb.block.reset       ;
+0014 7F94 633E     vec.7   data  edb.block.delete      ;
+0015 7F96 63E2     vec.8   data  edb.block.copy        ;
+0016 7F98 6064     vec.9   data  edb.line.del          ;
+0017 7F9A 64D8     vec.10  data  edb.block.match       ;
+0018 7F9C 6522     vec.11  data  edb.lock              ;
+0019 7F9E 656C     vec.12  data  edb.unlock            ;
+0020 7FA0 65B8     vec.13  data  edb.find.init         ;
+0021 7FA2 65F2     vec.14  data  edb.find.search       ;
+0022 7FA4 6826     vec.15  data  pane.clock.time       ;
+0023 7FA6 6928     vec.16  data  fm.clock.off          ;
+0024 7FA8 69AC     vec.17  data  tv.flash.screen       ;
+0025 7FAA 2026     vec.18  data  cpu.crash             ;
+0026 7FAC 2026     vec.19  data  cpu.crash             ;
+0027 7FAE 2026     vec.20  data  cpu.crash             ;
+0028 7FB0 2026     vec.21  data  cpu.crash             ;
+0029 7FB2 2026     vec.22  data  cpu.crash             ;
+0030 7FB4 2026     vec.23  data  cpu.crash             ;
+0031 7FB6 2026     vec.24  data  cpu.crash             ;
+0032 7FB8 2026     vec.25  data  cpu.crash             ;
+0033 7FBA 2026     vec.26  data  cpu.crash             ;
+0034 7FBC 2026     vec.27  data  cpu.crash             ;
+0035 7FBE 2026     vec.28  data  cpu.crash             ;
+0036 7FC0 2026     vec.29  data  cpu.crash             ;
+0037 7FC2 2026     vec.30  data  cpu.crash             ;
+0038 7FC4 2026     vec.31  data  cpu.crash             ;
+0039 7FC6 2026     vec.32  data  cpu.crash             ;
+0040               
+0041               *--------------------------------------------------------------
+0042               * ROM identification string for CPU crash
+0043               *--------------------------------------------------------------
+0044               cpu.crash.showbank.bankstr:
+0045                       aorg >7fea
+0046 7FEA 0552             stri 'ROM#5'
      7FEC 4F4D     
      7FEE 2335     
                    < stevie_b5.asm
@@ -13003,8 +12982,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     bankf.rom........... >601e :     
     bankid.............. >600a :     
     bankx.crash.showbank >7ff0 :     
-    bankx.vdptab........ >7f50 :     
-    bankx.vectab........ >7f70 :     
+    bankx.exttab........ >7f68 :     
+    bankx.vdptab........ >7fc8 :     
+    bankx.vectab........ >7f88 :     
     btihi............... >8314 :     
     bvdpst.............. >831a :     
     bx.................. >832b :     
@@ -13248,7 +13228,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     dsrlnk.savlen....... >a432 :     
     dsrlnk.savpab....... >a42e :     
     dsrlnk.savver....... >a430 :     
-    edasm.32x24......... >7f64 :     
+    edasm.32x24......... >7fdc :     
     edb.autoinsert...... >a50c :     
     edb.bk.fb.row....... >a520 :     
     edb.bk.fb.topline... >a51e :     
@@ -14080,9 +14060,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     spkon............... >6000 :     
     sprpdt.............. >2800 :     
     sprsat.............. >2580 :     
-    spvmod.............. >7f50 :     
+    spvmod.............. >7fc8 :     
     stack............... >0009 :     
-    stevie.80x30........ >7f50 :     
+    stevie.80x30........ >7fc8 :     
     string.getlenc...... >2b4a :     
     string.getlenc.exit. >2b96 :     
     string.getlenc.loop. >2b78 :     
@@ -14130,7 +14110,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tib.var7............ >a0f8 :     
     tib.var8............ >a0fa :     
     tib.var9............ >a0fc :     
-    tibasic.32x24....... >7f5a :     
+    tibasic.32x24....... >7fd2 :     
     timers.............. >a064 :     
     tmdat............... >2fb4 :     
     tmgr................ >2f18 :     
@@ -14343,70 +14323,38 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     vdpw................ >8c00 :     
     vdra................ >22ba :     
     vdwa................ >22b6 :     
-    vec.1............... >7f70 :     
-    vec.10.............. >7f82 :     
-    vec.11.............. >7f84 :     
-    vec.12.............. >7f86 :     
-    vec.13.............. >7f88 :     
-    vec.14.............. >7f8a :     
-    vec.15.............. >7f8c :     
-    vec.16.............. >7f8e :     
-    vec.17.............. >7f90 :     
-    vec.18.............. >7f92 :     
-    vec.19.............. >7f94 :     
-    vec.2............... >7f72 :     
-    vec.20.............. >7f96 :     
-    vec.21.............. >7f98 :     
-    vec.22.............. >7f9a :     
-    vec.23.............. >7f9c :     
-    vec.24.............. >7f9e :     
-    vec.25.............. >7fa0 :     
-    vec.26.............. >7fa2 :     
-    vec.27.............. >7fa4 :     
-    vec.28.............. >7fa6 :     
-    vec.29.............. >7fa8 :     
-    vec.3............... >7f74 :     
-    vec.30.............. >7faa :     
-    vec.31.............. >7fac :     
-    vec.32.............. >7fae :     
-    vec.33.............. >7fb0 :     
-    vec.34.............. >7fb2 :     
-    vec.35.............. >7fb4 :     
-    vec.36.............. >7fb6 :     
-    vec.37.............. >7fb8 :     
-    vec.38.............. >7fba :     
-    vec.39.............. >7fbc :     
-    vec.4............... >7f76 :     
-    vec.40.............. >7fbe :     
-    vec.41.............. >7fc0 :     
-    vec.42.............. >7fc2 :     
-    vec.43.............. >7fc4 :     
-    vec.44.............. >7fc6 :     
-    vec.45.............. >7fc8 :     
-    vec.46.............. >7fca :     
-    vec.47.............. >7fcc :     
-    vec.48.............. >7fce :     
-    vec.49.............. >7fd0 :     
-    vec.5............... >7f78 :     
-    vec.50.............. >7fd2 :     
-    vec.51.............. >7fd4 :     
-    vec.52.............. >7fd6 :     
-    vec.53.............. >7fd8 :     
-    vec.54.............. >7fda :     
-    vec.55.............. >7fdc :     
-    vec.56.............. >7fde :     
-    vec.57.............. >7fe0 :     
-    vec.58.............. >7fe2 :     
-    vec.59.............. >7fe4 :     
-    vec.6............... >7f7a :     
-    vec.60.............. >7fe6 :     
-    vec.61.............. >7fe8 :     
-    vec.62.............. >7fea :     
-    vec.63.............. >7fec :     
-    vec.64.............. >7fee :     
-    vec.7............... >7f7c :     
-    vec.8............... >7f7e :     
-    vec.9............... >7f80 :     
+    vec.1............... >7f88 :     
+    vec.10.............. >7f9a :     
+    vec.11.............. >7f9c :     
+    vec.12.............. >7f9e :     
+    vec.13.............. >7fa0 :     
+    vec.14.............. >7fa2 :     
+    vec.15.............. >7fa4 :     
+    vec.16.............. >7fa6 :     
+    vec.17.............. >7fa8 :     
+    vec.18.............. >7faa :     
+    vec.19.............. >7fac :     
+    vec.2............... >7f8a :     
+    vec.20.............. >7fae :     
+    vec.21.............. >7fb0 :     
+    vec.22.............. >7fb2 :     
+    vec.23.............. >7fb4 :     
+    vec.24.............. >7fb6 :     
+    vec.25.............. >7fb8 :     
+    vec.26.............. >7fba :     
+    vec.27.............. >7fbc :     
+    vec.28.............. >7fbe :     
+    vec.29.............. >7fc0 :     
+    vec.3............... >7f8c :     
+    vec.30.............. >7fc2 :     
+    vec.31.............. >7fc4 :     
+    vec.32.............. >7fc6 :     
+    vec.4............... >7f8e :     
+    vec.5............... >7f90 :     
+    vec.6............... >7f92 :     
+    vec.7............... >7f94 :     
+    vec.8............... >7f96 :     
+    vec.9............... >7f98 :     
     vgetb............... >22e2 :     
     vidta1.............. >2314 :     
     vidtab.............. >22f8 :     

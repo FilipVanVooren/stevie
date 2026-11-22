@@ -2,9 +2,9 @@
 * Purpose...: Bank 8 vectors for trampoline function
 
 *--------------------------------------------------------------
-* ROM 8: Vectors 1-32
+* ROM 8: Vectors 1-32 (main table, bankx.vectab)
 *--------------------------------------------------------------
-        aorg  >7f70
+        aorg  bankx.vectab
 vec.1   data  edkey.key.repeat      ; Update keyboard autorepeat
 vec.2   data  0                     ;
 vec.3   data  0                     ;
@@ -37,41 +37,6 @@ vec.29  data  0                     ;
 vec.30  data  0                     ;
 vec.31  data  0                     ;
 vec.32  data  0                     ;
-*--------------------------------------------------------------
-* ROM 8: Vectors 33-64
-*--------------------------------------------------------------
-vec.33  data  0                     ;
-vec.34  data  0                     ;
-vec.35  data  0                     ;
-vec.36  data  0                     ;
-vec.37  data  0                     ;
-vec.38  data  0                     ;
-vec.39  data  0                     ;
-vec.40  data  0                     ;
-vec.41  data  0                     ;
-vec.42  data  0                     ;
-vec.43  data  0                     ;
-vec.44  data  0                     ;
-vec.45  data  0                     ;
-vec.46  data  0                     ;
-vec.47  data  0                     ;
-vec.48  data  0                     ;
-vec.49  data  0                     ;
-vec.50  data  0                     ;
-vec.51  data  0                     ;
-vec.52  data  0                     ;
-vec.53  data  0                     ;
-vec.54  data  0                     ;
-vec.55  data  0                     ;
-vec.56  data  0                     ;
-vec.57  data  0                     ;
-vec.58  data  0                     ;
-vec.59  data  0                     ;
-vec.60  data  0                     ;
-vec.61  data  0                     ;
-vec.62  data  0                     ;
-vec.63  data  0                     ;
-vec.64  data  0                     ;
 
 *--------------------------------------------------------------
 * ROM identification string for CPU crash

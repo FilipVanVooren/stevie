@@ -17,6 +17,46 @@ Workflow: edit the registry (or re-run `extract` after moving code), then run
 from the registry. Exceptions that stay hand-written: `rom.vectors.bank0.asm`
 (equ-based boot vectors) and `rom.stubs.bankx.asm` (conditional SAMS stubs).
 
+### Table geometry: 32 main slots + an optional 16-slot island
+
+Every bank exposes its vector table at a fixed address, so a call site only
+needs *(bank, slot)*. The addresses are equated once, in
+`src/modules/equ.rom.build.asm`; `gen_vectors.py` reads them back and refuses to
+generate if they overlap or collide with the ROM-id signature:
+
+| island | address | size | contents |
+|---|---|---|---|
+| `bankx.exttab`  | >7F68 | 32 B | extension slots **33-48**, only in banks that need them |
+| `bankx.vectab`  | >7F88 | 64 B | main slots **1-32**, in every bank |
+| `bankx.vdptab`  | >7FC8 | 32 B | per-bank VDP mode table |
+| (ROM id)        | >7FEA |  8 B | `'ROM#N'` signature |
+| `bankx.crash.showbank` | >7FF0 | 16 B | crash banner |
+
+Slots 1-32 are addressed as `vec.N`; slots 33-48 as `bankx.exttab+<2*(N-33)>`
+(`gen_vectors.py` emits and rewrites both spellings). A bank without an island
+may therefore use code space up to >7F88; a bank with one must stop at >7F68.
+Each bank asserts its own ceiling:
+
+```asm
+        .ifge   $, >7f88          ; >7f68 in banks 3 and 4 (they carry the island)
+        .error  'Aborted. Bank N cartridge program too large!'
+        .endif
+```
+
+`gen_vectors.py` owns that guard: `compact` rewrites it together with the table,
+so the ceiling can never disagree with how many slots a bank actually declares.
+Before 2026-11-22 the single table held 64 slots at >7F70 and every bank stopped
+at >7F50; splitting it reclaimed 17 unreferenced slots and gave every non-island
+bank 56 more bytes of code space (banks 3/4: 24 B).
+
+`python3 build/tools/gen_vectors.py compact [--reap] [--force]` renumbers slots
+so each bank's used slots are 1..N with no gaps (`--reap` first drops slots that
+nothing calls), rewrites *every* reference — registry, generated files, raw
+`.blk` bodies and hand-written farjump triples — and moves the `.ifge` ceilings.
+It refuses to reap when a call site cannot be attributed to a bank. Read-only
+census: `python3 build/tools/vector_report.py` (dead slots, island users,
+duplicate targets, dangling references).
+
 Legend:
 - Stevie function: editor logic, file management, dialogs, buffer operations, screen logic, etc.
 - Spectra2 low-level function: ROM bridge, SAMS/VDP helpers, bank switching, crash/return plumbing, TI-Basic session glue.
@@ -66,11 +106,14 @@ checking.
 ## Bank headroom report
 
 `python3 build/tools/bank_report.py` parses the xas99 listings in `build/list/` and
-reports per bank: program segment end, bytes used, free bytes up to the fixed
-anchor `bankx.vdptab` (>7F50, where the `.ifge $, >7f50` "bank full" guard
-trips) and the largest contributing modules. AORG islands (the per-bank VDP
-mode tables at >7F50 and the crash banner at >7FF0) are detected and excluded
-from the program segment. Options: `--bank N`, `--top N`, `--json`. Run after a
+reports per bank: program segment end, bytes used, free bytes up to that bank's
+ceiling (the extension island at >7F68 when it carries one, otherwise the main
+vector table at >7F88 - i.e. exactly where its `.ifge` guard trips), whether the
+bank has an island, and the largest contributing modules. Fixed AORG islands
+(extension + main vector tables, the per-bank VDP mode tables at >7FC8, the
+crash banner at >7FF0) are detected and excluded from the program segment. The
+ceiling addresses are read from `equ.rom.build.asm` through `gen_vectors.py`, so
+the report cannot silently disagree with the generator. Options: `--bank N`, `--top N`, `--json`. Run after a
 build; use it before deciding where new code or data should go (banks 8-D are
 the overflow pool).
 
@@ -89,13 +132,14 @@ that installs the runtime copy:
   banks cycle/read schemes through the vector stub. A stale second copy in
   bank 1 was removed on 2026-11-22 (bank 1 is the tightest bank).
 - `data.vdpmodes.asm` — intentional per-bank copy: each bank must expose its
-  video-mode table at the fixed address `bankx.vdptab` (>7F50), so it is an
+  video-mode table at the fixed address `bankx.vdptab` (>7FC8), so it is an
   AORG island, not program churn.
 
 ## Rebalancing tight banks (playbook)
 
-Measured 2026-11-22: banks 0/1/7 run at 98–99% fill (86–164 bytes free). An
-audit found **no dead weight** there — the pressure is structural:
+Measured 2026-11-22, after the vector-table split and slot compaction: banks
+0/1/7 run at 97–98% fill (142–228 bytes free; the split added 56 B to each of
+them). An audit found **no dead weight** there — the pressure is structural:
 
 - Bank 0 hosts the RAM-resident runtime library copy plus bootstrap.
 - Bank 1 is the editor core; keymap tables are referenced by immediate loads

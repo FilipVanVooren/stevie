@@ -5,7 +5,9 @@ bank_report.py - Per-bank ROM headroom report for Stevie.
 Parses xas99 listing files (build/list/stevie_bN.lst) and reports, per bank:
   * program segment base / end (the contiguous run of emitted code in the
     cartridge bank window; absolute AORG islands are detected separately)
-  * bytes used and free bytes up to the vector table (bankx.vectab = >7F70)
+  * bytes used and free bytes up to the bank's ceiling: the extension vector
+    island when the bank carries one, the main vector table otherwise. Both
+    addresses come from src/modules/equ.rom.build.asm - never duplicated.
   * top N largest modules by emitted ROM bytes in the program segment
 
 Listing format facts (xas99 3.6.x):
@@ -27,9 +29,9 @@ import sys
 from pathlib import Path
 
 BUILD = Path(__file__).resolve().parents[1]        # build/
+sys.path.insert(0, str(BUILD / "tools"))
+import gen_vectors as gv                           # noqa: E402  shared layout
 
-VEC_BASE = 0x7F70          # bankx.vectab (equ.rom.build.asm)
-VDPTAB_BASE = 0x7F50       # bankx.vdptab - fixed anchor below the vectors
 BANK_LO, BANK_HI = 0x6000, 0x8000
 TIGHT_WARN = 256           # free bytes below which a bank is flagged
 
@@ -85,7 +87,11 @@ def bank_title(path):
     return ""
 
 
-def report_bank(lst_path):
+def report_bank(lst_path, layout):
+    """One bank: program segment plus headroom against that bank's ceiling.
+
+    Banks whose vector table spills past slot 32 carry the extension island at
+    bankx.exttab, so their code has to stop there instead of at vectab."""
     all_em = list(parse_emissions(lst_path))
     emissions = [(a, n, mod) for a, n, mod in all_em
                  if BANK_LO <= a < BANK_HI
@@ -95,10 +101,15 @@ def report_bank(lst_path):
     if not emissions:
         return None
 
-    # Relative program content can only live in [BANK_LO, VDPTAB_BASE): the
-    # .ifge $, >7f50 guard plus fixed AORG anchors at >7F50/>7FF0 guarantee it.
-    prog = [(a, n, mod) for a, n, mod in emissions if a < VDPTAB_BASE]
-    islands_em = [(a, n, mod) for a, n, mod in emissions if a >= VDPTAB_BASE]
+    has_island = any((mod or "").startswith("rom.vectors.")
+                     and a == layout["bankx.exttab"] for a, _n, mod in all_em)
+    ceiling = (layout["bankx.exttab"] if has_island
+               else layout["bankx.vectab"])
+
+    # Relative program content can only live in [BANK_LO, ceiling): the .ifge
+    # guard in each bank plus the fixed AORG anchors guarantee it.
+    prog = [(a, n, mod) for a, n, mod in emissions if a < ceiling]
+    islands_em = [(a, n, mod) for a, n, mod in emissions if a >= ceiling]
     if not prog:
         return None
     prog_start = min(a for a, _, _ in prog)
@@ -112,7 +123,7 @@ def report_bank(lst_path):
         island_names.setdefault(mod, set()).add(a)
 
     used = sum(per_mod.values())
-    free = VDPTAB_BASE - prog_end
+    free = ceiling - prog_end
     return {
         "bank": lst_path.stem.replace("stevie_b", ""),
         "title": bank_title(lst_path),
@@ -120,6 +131,8 @@ def report_bank(lst_path):
         "prog_end": prog_end,
         "used": used,
         "free": free,
+        "ceiling": ceiling,
+        "island": has_island,
         "vectors_bytes": vectors,
         "islands": {k: sorted(v) for k, v in sorted(island_names.items())},
         "top_modules": sorted(per_mod.items(), key=lambda t: -t[1])[:20],
@@ -138,22 +151,30 @@ def main():
     list_dir = Path(args.list_dir)
     names = ([f"stevie_b{args.bank}.lst"] if args.bank
              else sorted(p.name for p in list_dir.glob("stevie_b*.lst")))
-    results = [r for r in (report_bank(list_dir / n) for n in names) if r]
+    layout = gv.read_layout()       # single source: equ.rom.build.asm
+    bad = gv.layout_errors(layout)
+    if bad:
+        for e in bad:
+            print(f"layout: {e}", file=sys.stderr)
+        return 1
+    results = [r for r in (report_bank(list_dir / n, layout) for n in names)
+               if r]
 
     if args.json:
         print(json.dumps(results, indent=1))
         return 0
 
     hdr = (f"{'bank':<5} {'name':<14} {'base':>6} {'prog end':>8} "
-           f"{'used':>6} {'free':>6}  fill")
+           f"{'used':>6} {'free':>6} {'ceil':>7} {'isl':>3}  fill")
     print(hdr)
     print("-" * len(hdr))
     for r in results:
-        span = VDPTAB_BASE - r["prog_start"]
+        span = r["ceiling"] - r["prog_start"]
         pct = 100.0 * (r["prog_end"] - r["prog_start"]) / span
         warn = "  <-- TIGHT" if r["free"] < TIGHT_WARN else ""
         print(f"{r['bank']:<5} {r['title'][:14]:<14} >{r['prog_start']:04X} "
-              f">{r['prog_end']:04X} {r['used']:>6} {r['free']:>6}  "
+              f">{r['prog_end']:04X} {r['used']:>6} {r['free']:>6} "
+              f">{r['ceiling']:04X} {'yes' if r['island'] else '-':>3}  "
               f"{pct:5.1f}%{warn}")
     if args.top:
         print()

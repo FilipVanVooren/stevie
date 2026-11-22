@@ -30,33 +30,33 @@ _trampoline.bank1.ret:
 
 ***************************************************************
 * Stub for "edb.line.pack.fb"
-* bank1 vec.10
+* bank1 vec.3
 ********|*****|*********************|**************************
 edb.line.pack.fb:
         mov   @edb.line.pack.fb.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 edb.line.pack.fb.vector:
-        data  vec.10
+        data  vec.3
 
 ***************************************************************
 * Stub for "edb.line.unpack.fb"
-* bank1 vec.11
+* bank1 vec.4
 ********|*****|*********************|**************************
 edb.line.unpack.fb:
         mov   @edb.line.unpack.fb.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 edb.line.unpack.fb.vector:
-        data  vec.11
+        data  vec.4
 
 ***************************************************************
 * Stub for "pane.cursor.blink"
-* bank1 vec.28
+* bank1 vec.9
 ********|*****|*********************|**************************
 pane.cursor.blink:
         mov   @pane.cursor.blink.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 pane.cursor.blink.vector:
-        data  vec.28
+        data  vec.9
 
 ***************************************************************
 * Trampoline bank 3 with return
@@ -80,33 +80,33 @@ _trampoline.bank3.ret:
 
 ***************************************************************
 * Stub for "pane.cmdb.draw"
-* bank3 vec.22
+* bank3 vec.20
 ********|*****|*********************|**************************
 pane.cmdb.draw:
         mov   @pane.cmdb.draw.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 pane.cmdb.draw.vector:
-        data  vec.22
+        data  vec.20
 
 ***************************************************************
 * Stub for "cmdb.refresh_prompt"
-* bank3 vec.24
+* bank3 vec.21
 ********|*****|*********************|**************************
 cmdb.refresh_prompt:
         mov   @cmdb.refresh_prompt.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.refresh_prompt.vector:
-        data  vec.24
+        data  vec.21
 
 ***************************************************************
 * Stub for "cmdb.cmd.cursor_eol"
-* bank3 vec.29
+* bank3 vec.26
 ********|*****|*********************|**************************
 cmdb.cmd.cursor_eol:
         mov   @cmdb.cmd.cursor_eol.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.cursor_eol.vector:
-        data  vec.29
+        data  vec.26
 
 ***************************************************************
 * Trampoline bank 6 with return

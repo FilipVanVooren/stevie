@@ -30,43 +30,43 @@ _trampoline.bank1.ret:
 
 ***************************************************************
 * Stub for "tv.clock.start"
-* bank1 vec.3
+* bank1 vec.2
 ********|*****|*********************|**************************
 tv.clock.start:
         mov   @tv.clock.start.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 tv.clock.start.vector:
-        data  vec.3
+        data  vec.2
 
 ***************************************************************
 * Stub for "edb.line.unpack"
-* bank1 vec.11
+* bank1 vec.4
 ********|*****|*********************|**************************
 edb.line.unpack:
         mov   @edb.line.unpack.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 edb.line.unpack.vector:
-        data  vec.11
+        data  vec.4
 
 ***************************************************************
 * Stub for "fb.vdpdump"
-* bank1 vec.21
+* bank1 vec.7
 ********|*****|*********************|**************************
 fb.vdpdump:
         mov   @fb.vdpdump.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 fb.vdpdump.vector:
-        data  vec.21
+        data  vec.7
 
 ***************************************************************
 * Stub for "pane.errline.show"
-* bank1 vec.30
+* bank1 vec.11
 ********|*****|*********************|**************************
 pane.errline.show:
         mov   @pane.errline.show.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 pane.errline.show.vector:
-        data  vec.30
+        data  vec.11
 
 ***************************************************************
 * Trampoline bank 2 with return
@@ -120,70 +120,70 @@ _trampoline.bank4.ret:
 
 ***************************************************************
 * Stub for "fb.refresh"
-* bank4 vec.8
+* bank4 vec.7
 ********|*****|*********************|**************************
 fb.refresh:
         mov   @fb.refresh.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 fb.refresh.vector:
-        data  vec.8
+        data  vec.7
 
 ***************************************************************
 * Stub for "fb.goto.nextmatch"
-* bank4 vec.23
+* bank4 vec.22
 ********|*****|*********************|**************************
 fb.goto.nextmatch:
         mov   @fb.goto.nextmatch.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 fb.goto.nextmatch.vector:
-        data  vec.23
+        data  vec.22
 
 ***************************************************************
 * Stub for "pane.botline.busy.on"
-* bank4 vec.38
+* bank4 vec.28
 ********|*****|*********************|**************************
 pane.botline.busy.on:
         mov   @pane.botline.busy.on.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.botline.busy.on.vector:
-        data  vec.38
+        data  vec.28
 
 ***************************************************************
 * Stub for "pane.botline.busy.off"
-* bank4 vec.39
+* bank4 vec.29
 ********|*****|*********************|**************************
 pane.botline.busy.off:
         mov   @pane.botline.busy.off.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.botline.busy.off.vector:
-        data  vec.39
+        data  vec.29
 
 ***************************************************************
 * Stub for "pane.colorscheme.load"
-* bank4 vec.41
+* bank4 vec.31
 ********|*****|*********************|**************************
 pane.colorscheme.load:
         mov   @pane.colorscheme.load.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.load.vector:
-        data  vec.41
+        data  vec.31
 
 ***************************************************************
 * Stub for "pane.colorscheme.botline"
-* bank4 vec.42
+* bank4 vec.32
 ********|*****|*********************|**************************
 pane.colorscheme.botline:
         mov   @pane.colorscheme.botline.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.botline.vector:
-        data  vec.42
+        data  vec.32
 
 ***************************************************************
 * Stub for "pane.cmdb.hide"
-* bank4 vec.49
+* bank4 vec.36
 ********|*****|*********************|**************************
 pane.cmdb.hide:
         mov   @pane.cmdb.hide.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.cmdb.hide.vector:
-        data  vec.49
+        data  bankx.exttab+6

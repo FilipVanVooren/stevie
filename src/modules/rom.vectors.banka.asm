@@ -2,7 +2,7 @@
 * Purpose...: Bank A vectors for trampoline function
 
 *--------------------------------------------------------------
-* ROM A: Vectors 1-32
+* ROM A: Vectors 1-32 (main table, bankx.vectab)
 *--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  cpu.crash             ;
@@ -37,41 +37,6 @@ vec.29  data  cpu.crash             ;
 vec.30  data  cpu.crash             ;
 vec.31  data  cpu.crash             ;
 vec.32  data  cpu.crash             ;
-*--------------------------------------------------------------
-* ROM A: Vectors 33-64
-*--------------------------------------------------------------
-vec.33  data  cpu.crash             ;
-vec.34  data  cpu.crash             ;
-vec.35  data  cpu.crash             ;
-vec.36  data  cpu.crash             ;
-vec.37  data  cpu.crash             ;
-vec.38  data  cpu.crash             ;
-vec.39  data  cpu.crash             ;
-vec.40  data  cpu.crash             ;
-vec.41  data  cpu.crash             ;
-vec.42  data  cpu.crash             ;
-vec.43  data  cpu.crash             ;
-vec.44  data  cpu.crash             ;
-vec.45  data  cpu.crash             ;
-vec.46  data  cpu.crash             ;
-vec.47  data  cpu.crash             ;
-vec.48  data  cpu.crash             ;
-vec.49  data  cpu.crash             ;
-vec.50  data  cpu.crash             ;
-vec.51  data  cpu.crash             ;
-vec.52  data  cpu.crash             ;
-vec.53  data  cpu.crash             ;
-vec.54  data  cpu.crash             ;
-vec.55  data  cpu.crash             ;
-vec.56  data  cpu.crash             ;
-vec.57  data  cpu.crash             ;
-vec.58  data  cpu.crash             ;
-vec.59  data  cpu.crash             ;
-vec.60  data  cpu.crash             ;
-vec.61  data  cpu.crash             ;
-vec.62  data  cpu.crash             ;
-vec.63  data  cpu.crash             ;
-vec.64  data  cpu.crash             ;
 
 *--------------------------------------------------------------
 * ROM identification string for CPU crash

@@ -30,13 +30,13 @@ _trampoline.bank1.ret:
 
 ***************************************************************
 * Stub for "cmdb.dialog.close"
-* bank1 vec.18
+* bank1 vec.6
 ********|*****|*********************|**************************
 cmdb.dialog.close:
         mov   @cmdb.dialog.close.vector,@trmpvector
         jmp   _trampoline.bank1.ret ; Longjump
 cmdb.dialog.close.vector:
-        data  vec.18
+        data  vec.6
 
 ***************************************************************
 * Trampoline bank 2 with return
@@ -70,17 +70,17 @@ fm.newfile.vector:
 
 ***************************************************************
 * Stub for "file.vmem"
-* bank2 vec.32
+* bank2 vec.13
 ********|*****|*********************|**************************
 file.vmem:
         mov   @file.vmem.vector,@trmpvector
         jmp   _trampoline.bank2.ret ; Longjump
 file.vmem.vector:
-        data  vec.32
+        data  vec.13
 
 ***************************************************************
 * Stub for "edb.find.init"
-* bank5 vec.15
+* bank5 vec.13
 ********|*****|*********************|**************************
 edb.find.init:
         dect  stack
@@ -90,7 +90,7 @@ edb.find.init:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
-              data vec.15           ; | i  p1 = Vector with target address
+              data vec.13           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -130,13 +130,13 @@ dialog.basic.vector:
 
 ***************************************************************
 * Stub for "cmdb.cmd.getlength"
-* bank3 vec.26
+* bank3 vec.23
 ********|*****|*********************|**************************
 cmdb.cmd.getlength:
         mov   @cmdb.cmd.getlength.vector,@trmpvector
         jmp   _trampoline.bank3.ret ; Longjump
 cmdb.cmd.getlength.vector:
-        data  vec.26
+        data  vec.23
 
 ***************************************************************
 * Trampoline bank 4 with return
@@ -160,30 +160,30 @@ _trampoline.bank4.ret:
 
 ***************************************************************
 * Stub for "fb.refresh"
-* bank4 vec.8
+* bank4 vec.7
 ********|*****|*********************|**************************
 fb.refresh:
         mov   @fb.refresh.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 fb.refresh.vector:
-        data  vec.8
+        data  vec.7
 
 ***************************************************************
 * Stub for "pane.colorscheme.load"
-* bank4 vec.41
+* bank4 vec.31
 ********|*****|*********************|**************************
 pane.colorscheme.load:
         mov   @pane.colorscheme.load.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.load.vector:
-        data  vec.41
+        data  vec.31
 
 ***************************************************************
 * Stub for "pane.colorscheme.botline"
-* bank4 vec.42
+* bank4 vec.32
 ********|*****|*********************|**************************
 pane.colorscheme.botline:
         mov   @pane.colorscheme.botline.vector,@trmpvector
         jmp   _trampoline.bank4.ret ; Longjump
 pane.colorscheme.botline.vector:
-        data  vec.42
+        data  vec.32

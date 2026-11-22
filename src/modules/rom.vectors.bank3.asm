@@ -2,7 +2,7 @@
 * Purpose...: Bank 3 vectors for trampoline function
 
 *--------------------------------------------------------------
-* ROM 3: Vectors 1-32
+* ROM 3: Vectors 1-32 (main table, bankx.vectab)
 *--------------------------------------------------------------
         aorg  bankx.vectab
 vec.1   data  dialog.help           ; Dialog "Help"
@@ -24,54 +24,40 @@ vec.16  data  dialog.goto           ; Dialog "Go to line"
 vec.17  data  dialog.font           ; Dialog "Configure font"
 vec.18  data  dialog.run            ; Dialog "Run program image (EA5)"
 vec.19  data  pane.show_hintx       ; Show or hide hint (register version)
-vec.20  data  cpu.crash             ;
-vec.21  data  cpu.crash             ;
-vec.22  data  pane.cmdb.draw        ; Draw content in command
-vec.23  data  cpu.crash             ;
-vec.24  data  cmdb.refresh_prompt   ; Refresh command line
-vec.25  data  cmdb.cmd.clear        ; Clear command line
-vec.26  data  cmdb.cmd.getlength    ; Get length of command line
-vec.27  data  cmdb.cmd.preset       ;
-vec.28  data  cmdb.cmd.set          ;
-vec.29  data  cmdb.cmd.cursor_eol   ; Position cursor at end of command line
-vec.30  data  dialog.main           ; Dialog "Main Menu"
-vec.31  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
-vec.32  data  cpu.crash             ;
+vec.20  data  pane.cmdb.draw        ; Draw content in command
+vec.21  data  cmdb.refresh_prompt   ; Refresh command line
+vec.22  data  cmdb.cmd.clear        ; Clear command line
+vec.23  data  cmdb.cmd.getlength    ; Get length of command line
+vec.24  data  cmdb.cmd.preset       ;
+vec.25  data  cmdb.cmd.set          ;
+vec.26  data  cmdb.cmd.cursor_eol   ; Position cursor at end of command line
+vec.27  data  dialog.main           ; Dialog "Main Menu"
+vec.28  data  tibasic.am.toggle     ; Toggle AutoUnpack in Run TI-Basic dialog
+vec.29  data  cmdb.cfg.fname        ; Configure filename
+vec.30  data  fm.lineterm           ; Toggle line term on/off in Save/Print
+vec.31  data  tv.autoinsert.toggle  ; Toggle auto insert mode for editor buffer
+vec.32  data  tv.clock.toggle       ; Toggle clock display on/off
 *--------------------------------------------------------------
-* ROM 3: Vectors 33-64
+* ROM 3: Vectors 33-48 (extension island, bankx.exttab)
+*           Referenced from other banks as bankx.exttab+offset
 *--------------------------------------------------------------
-vec.33  data  cmdb.cfg.fname        ; Configure filename
-vec.34  data  fm.lineterm           ; Toggle line term on/off in Save/Print
-vec.35  data  tv.autoinsert.toggle  ; Toggle auto insert mode for editor buffer
-vec.36  data  tv.clock.toggle       ; Toggle clock display on/off
-vec.37  data  tv.linelen.toggle     ; Toggle line length display on/off
-vec.38  data  cmdb.cmd.insert       ; Insert character in CMDB command line
-vec.39  data  cmdb.cmd.delete       ; Delete character in CMDB command line
-vec.40  data  cpu.crash             ;
-vec.41  data  cpu.crash             ;
-vec.42  data  dialog                ; Dialog initialisation code
-vec.43  data  dialog.find           ; Dialog "Find"
-vec.44  data  dialog.delete         ; Dialog "Delete file"
-vec.45  data  dialog.cart.fg99      ; Dialog "FinalGROM 99 Cartridge"
-vec.46  data  cpu.crash             ;
-vec.47  data  cpu.crash             ;
-vec.48  data  cpu.crash             ;
-vec.49  data  cpu.crash             ;
-vec.50  data  cpu.crash             ;
-vec.51  data  cpu.crash             ;
-vec.52  data  cpu.crash             ;
-vec.53  data  cpu.crash             ;
-vec.54  data  cpu.crash             ;
-vec.55  data  cpu.crash             ;
-vec.56  data  cpu.crash             ;
-vec.57  data  cpu.crash             ;
-vec.58  data  cpu.crash             ;
-vec.59  data  cpu.crash             ;
-vec.60  data  cpu.crash             ;
-vec.61  data  cpu.crash             ;
-vec.62  data  cpu.crash             ;
-vec.63  data  cpu.crash             ;
-vec.64  data  cpu.crash             ;
+        aorg  bankx.exttab
+extvec.33 data  tv.linelen.toggle   ; Toggle line length display on/off
+extvec.34 data  cmdb.cmd.insert     ; Insert character in CMDB command line
+extvec.35 data  cmdb.cmd.delete     ; Delete character in CMDB command line
+extvec.36 data  dialog              ; Dialog initialisation code
+extvec.37 data  dialog.find         ; Dialog "Find"
+extvec.38 data  dialog.delete       ; Dialog "Delete file"
+extvec.39 data  dialog.cart.fg99    ; Dialog "FinalGROM 99 Cartridge"
+extvec.40 data  cpu.crash           ;
+extvec.41 data  cpu.crash           ;
+extvec.42 data  cpu.crash           ;
+extvec.43 data  cpu.crash           ;
+extvec.44 data  cpu.crash           ;
+extvec.45 data  cpu.crash           ;
+extvec.46 data  cpu.crash           ;
+extvec.47 data  cpu.crash           ;
+extvec.48 data  cpu.crash           ;
 
 *--------------------------------------------------------------
 * ROM identification string for CPU crash

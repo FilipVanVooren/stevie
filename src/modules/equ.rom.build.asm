@@ -33,9 +33,23 @@ kickstart.code2           equ  >6000   ; Uniform aorg entry addr accross banks
 rom0_kscan_on             equ  1       ; Use KSCAN in console ROM#0
 debug                     equ  0       ; Turn on debugging mode
 *--------------------------------------------------------------
-* ROM layout
+* ROM layout (top of every 8K cartridge bank)
+*
+*   >6000 ...    program code, guarded by '.ifge $, >xxxx' in stevie_bN.asm
+*   bankx.exttab vector extension slots 33-48; ONLY banks that need more than
+*                32 cross-bank entry points carry this island (today: bank 3
+*                and bank 4). Those banks lower their guard to >7f68, every
+*                other bank may use the space up to the main vector table.
+*   bankx.vectab main vector table, slots 1-32 (all banks)
+*   bankx.vdptab VDP mode tables
+*   >7fea        ROM identification string 'ROM#n'
+*   >7ff0        cpu.crash.showbank
+*
+* gen_vectors.py validates these equates and the per-bank guards on every
+* build ('gen_vectors.py check'); packing slots is 'gen_vectors.py compact'.
 *--------------------------------------------------------------
-bankx.vdptab              equ  >7f50   ; VDP mode tables
-bankx.vectab              equ  >7f70   ; Vector table
+bankx.exttab              equ  >7f68   ; Vector extension, slots 33-48 (optional)
+bankx.vectab              equ  >7f88   ; Vector table, slots 1-32
+bankx.vdptab              equ  >7fc8   ; VDP mode tables
 bankx.crash.showbank      equ  >7ff0   ; Show ROM bank in CPU crash screen
 device.fg99.mode.adv      equ  0       ; FG99 advanced mode off

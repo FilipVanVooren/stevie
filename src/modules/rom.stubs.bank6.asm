@@ -10,7 +10,7 @@
 
 ***************************************************************
 * Stub for "pane.colorscheme.index"
-* bank4 vec.43
+* bank4 vec.33
 ********|*****|*********************|**************************
 pane.colorscheme.index:
         dect  stack
@@ -20,7 +20,7 @@ pane.colorscheme.index:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank4.rom        ; | i  p0 = bank address
-              data vec.43           ; | i  p1 = Vector with target address
+              data bankx.exttab+0   ; | i  p1 = Vector in bankx.exttab (slot 33)
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit
@@ -30,7 +30,7 @@ pane.colorscheme.index:
 
 ***************************************************************
 * Stub for "edb.block.match"
-* bank5 vec.12
+* bank5 vec.10
 ********|*****|*********************|**************************
 edb.block.match:
         dect  stack
@@ -40,7 +40,7 @@ edb.block.match:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
-              data vec.12           ; | i  p1 = Vector with target address
+              data vec.10           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return
         ;------------------------------------------------------
         ; Exit

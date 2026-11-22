@@ -12,7 +12,7 @@ task.clock:
         ;------------------------------------------------------
         bl    @rom.farjump          ; \ Trampoline jump to bank
               data bank5.rom        ; | i  p0 = bank address
-              data vec.25           ; | i  p1 = Vector with target address
+              data vec.15           ; | i  p1 = Vector with target address
               data bankid           ; / i  p2 = Source ROM bank for return 
         ;------------------------------------------------------
         ; Exit
