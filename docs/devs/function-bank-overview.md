@@ -12,7 +12,7 @@ The cross-bank call layer is generated from a single registry:
 - `build/stub-raw/*.blk` — verbatim bodies of irregular stub blocks referenced by the registry.
 
 Workflow: edit the registry (or re-run `extract` after moving code), then run
-`python3 build/gen_vectors.py generate`. `build/build.sh` runs
+`python3 build/tools/gen_vectors.py generate`. `build/build.sh` runs
 `gen_vectors.py check` before assembling and aborts when `src/modules` drifted
 from the registry. Exceptions that stay hand-written: `rom.vectors.bank0.asm`
 (equ-based boot vectors) and `rom.stubs.bankx.asm` (conditional SAMS stubs).
@@ -34,7 +34,7 @@ Pass-through cross-bank calls exist in two registry-recorded forms:
   (`trmpvector` lives in scratch pad, so it survives the switch). This is the
   form bank 1 and bank 6 originally used.
 
-`python3 build/gen_vectors.py convert-lean [--bank N] [--dry]` rewrites every
+`python3 build/tools/gen_vectors.py convert-lean [--bank N] [--dry]` rewrites every
 convertible stub (only `inline variant=plain`; exitlabel/regs/raw variants
 keep their post-return processing) to the lean form, inserts the needed
 `helper bankN` records and picks `form=jmp|bindirect` per stub based on the
@@ -65,7 +65,7 @@ checking.
 
 ## Bank headroom report
 
-`python3 build/bank_report.py` parses the xas99 listings in `build/list/` and
+`python3 build/tools/bank_report.py` parses the xas99 listings in `build/list/` and
 reports per bank: program segment end, bytes used, free bytes up to the fixed
 anchor `bankx.vdptab` (>7F50, where the `.ifge $, >7f50` "bank full" guard
 trips) and the largest contributing modules. AORG islands (the per-bank VDP
@@ -113,7 +113,7 @@ pool (banks 8-D, ~7.7 KB free each) instead of scattering single modules:
 2. Update `owner=` for every exported vector of the cluster in
    `build/vector-registry.txt`; slots freed in the old bank may be re-used by
    functions moving in the opposite direction.
-3. `python3 build/gen_vectors.py generate`, then full `build/build.sh`.
+3. `python3 build/tools/gen_vectors.py generate`, then full `build/build.sh`.
 4. Verify: zero assembler diagnostics, `gen_vectors check` passes, and binary
    diff shows changes only in the affected banks (plus shifted addresses).
 

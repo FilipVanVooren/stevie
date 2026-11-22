@@ -166,7 +166,7 @@ The portable build script uses Python's standard library and xdt99. With
 sibling `spectra2` and `xdt99` checkouts beside this repository, run:
 
 ```text
-python build/build_autorepeat.py
+python build/tests/build_autorepeat.py
 ```
 
 Use `--assembler PATH` or `--spectra2 PATH` to select other locations.
@@ -183,7 +183,7 @@ For automated keyboard tests, use Node.js with a sibling `test-emulator`
 checkout of `https://github.com/Rasmus-M/Old-Js99er`:
 
 ```text
-node build/test_autorepeat.cjs 3080
+node build/tests/test_autorepeat.cjs 3080
 ```
 
 The tests execute the assembled cartridge's actual scheduler, Spectra2
@@ -210,8 +210,8 @@ AutoUnpack on the real TI/Pico9918.
 Run the search regression tests with:
 
 ```text
-node build/test_search.cjs --mode=6080
-node build/test_search.cjs --mode=6080 "--file=C:\path\to\XBP14;S"
+node build/tests/test_search.cjs --mode=6080
+node build/tests/test_search.cjs --mode=6080 "--file=C:\path\to\XBP14;S"
 ```
 
 The default uses a synthetic D/V80 fixture. `--file` loads an existing TIFILES
@@ -227,7 +227,7 @@ movement, the logical cursor position, and continued cursor blinking after
 return. It leaves the cursor on different editor rows between visits.
 
 ```text
-node build/test_basic_sessions.cjs --mode=6080 --mixed --empty-basic --quiet
+node build/tests/test_basic_sessions.cjs --mode=6080 --mixed --empty-basic --quiet
 ```
 
 Revision 5 passes six scenarios of six round trips per display mode
@@ -244,14 +244,14 @@ is compared after every save, and both dialog-data pages must remain intact.
 It checks normal CPU timing and eight times as many CPU cycles per frame.
 
 ```text
-node build/test_file_integrity.cjs --mode=6080 --cpu-factor=1
-node build/test_file_integrity.cjs --mode=6080 --cpu-factor=8
+node build/tests/test_file_integrity.cjs --mode=6080 --cpu-factor=1
+node build/tests/test_file_integrity.cjs --mode=6080 --cpu-factor=8
 ```
 
 Revision 6 loses the edit on the current line in this test at either speed.
 Revision 7 passes all 56 save checks (seven per mode/speed combination),
 comparing 224,000 records in total. The keyboard, Find and BASIC regression
-suites are also rerun for every display mode by `build/validate_r7.py`.
+suites are also rerun for every display mode by `build/validate/validate_r7.py`.
 Revision 9 adds a matching reproduction for the invisible NUL characters
 found in the later attached source.
 
@@ -262,13 +262,13 @@ The actual XB Packer/DSR files are also tested at both CPU factors in all
 display modes. The original files are read without modification.
 
 ```text
-node build/test_file_insert.cjs --mode=6080
-node build/test_file_insert.cjs --mode=6080 --records=4095 --at=4095
-node build/test_file_insert.cjs --mode=6080 --dirty
+node build/tests/test_file_insert.cjs --mode=6080
+node build/tests/test_file_insert.cjs --mode=6080 --records=4095 --at=4095
+node build/tests/test_file_insert.cjs --mode=6080 --dirty
 ```
 
 `--base=PATH` and `--import=PATH` select existing TIFILES instead of synthetic
-records. `build/validate_r8.py BASE IMPORT` runs the insertion cases and all
+records. `build/validate/validate_r8.py BASE IMPORT` runs the insertion cases and all
 prior keyboard, Find, save-integrity and BASIC tests for every display mode.
 Revision 8 passes all 80 suites, including 36 insertion scenarios. The
 exact BLWP-line failure is covered with the original local files in all
@@ -278,11 +278,11 @@ The deletion tests also cover files at and above 2,048/4,096 lines,
 deletions at the beginning/end, and the exact DEC-to-NUL corruption pattern.
 
 ```text
-node build/test_file_delete.cjs --mode=6080
-node build/test_file_delete.cjs --mode=6080 --records=3958 --extra-lines=0
+node build/tests/test_file_delete.cjs --mode=6080
+node build/tests/test_file_delete.cjs --mode=6080 --records=3958 --extra-lines=0
 ```
 
-`build/validate_r9.py BASE IMPORT` includes these cases alongside all prior
+`build/validate/validate_r9.py BASE IMPORT` includes these cases alongside all prior
 regression suites. The actual source and import are read without modification.
 Revision 9 passes all 116 suites, including 32 deletion scenarios and 40
 insertion scenarios, across every display mode. The suite includes both
@@ -296,13 +296,13 @@ actual ENTER, word, page and match handlers, including automatic line
 insertion across the index boundary and stopping when released.
 
 ```text
-node build/test_search_edits.cjs --mode=6080 --case=next
-node build/test_search_edits.cjs --mode=6080 --case=large-next --large
-node build/test_repeat_navigation.cjs --mode=6080
+node build/tests/test_search_edits.cjs --mode=6080 --case=next
+node build/tests/test_search_edits.cjs --mode=6080 --case=large-next --large
+node build/tests/test_repeat_navigation.cjs --mode=6080
 ```
 
 The keyboard suite checks all newly repeatable actions at 50/60 Hz and
 keeps ENTER single-press in Open, Save and Find dialogs. The complete
-revision 10 runner is `build/validate_r10.py BASE IMPORT`.
+revision 10 runner is `build/validate/validate_r10.py BASE IMPORT`.
 Revision 10 passes all 156 suites, including 296 keyboard/color checks,
 36 search-edit scenarios and the real held-navigation suite in every mode.

@@ -3,16 +3,17 @@
  * Screen/file action bodies are intercepted after dispatch. Character
  * handlers run their real validation/arming code and unwind their stacks.
  * This verifies keyboard behavior, not the editor's drawing/file routines.
- * Usage: node build/test_autorepeat.cjs [VDP mode, default 3080]
+ * Usage: node build/tests/test_autorepeat.cjs [VDP mode, default 3080]
  */
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
-const root = path.resolve(__dirname, '..');
+const build = path.resolve(__dirname, '..');
+const root = path.resolve(build, '..');
 const emu = path.resolve(root, '../test-emulator/src');
 const mode = process.argv[2] || '3080';
-const out = path.join(__dirname, 'autorepeat', mode);
+const out = path.join(build, 'autorepeat', mode);
 const sandbox = vm.createContext({
     console,
     Log: {getLog: () => ({info() {}, warn() {}, error(s) {throw Error(s);}})},

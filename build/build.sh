@@ -11,12 +11,21 @@
 
 
 set -e
-source helper.sh
+
+# Layout: entry points live in build/, shell helpers in build/lib/, python
+# tools in build/tools/. Resolve them from this script's location and work
+# from build/ so all relative paths (bin/, list/, .buildinfo/) stay valid.
+BUILD_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LIB_DIR="$BUILD_DIR/lib"
+TOOLS_DIR="$BUILD_DIR/tools"
+cd "$BUILD_DIR" || exit 1
+
+source "$LIB_DIR/helper.sh"
 
 # Guard: cross-bank vector tables and stubs are generated from the registry.
 # Fail the build when src/modules drifted away from build/vector-registry.txt.
 if command -v python3 >/dev/null 2>&1; then
-    python3 "$(dirname "$0")/gen_vectors.py" check
+    python3 "$TOOLS_DIR/gen_vectors.py" check
 else
     log "**** Warning **** python3 not found; skipping vector registry check"
 fi
@@ -88,9 +97,9 @@ for vdpmode in "${vdpmodes[@]}"; do
     export include="$include"
     export xas99_options="-D vdpmode=$vdpmode"
 
-    if bash assemble.sh $banks; then
+    if bash "$LIB_DIR/assemble.sh" $banks; then
         # Concatenate banks to binary
-        bash concat.sh "bin/$binary" $banks
+        bash "$LIB_DIR/concat.sh" "bin/$binary" $banks
     else
         log "**** Error **** Error during assembly process for mode $vdpmode. Skipping to next mode."
         continue

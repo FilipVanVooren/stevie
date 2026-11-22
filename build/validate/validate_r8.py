@@ -4,7 +4,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-root = Path(__file__).resolve().parents[1]
+root = Path(__file__).resolve().parents[2]
 logs = root / 'build/autorepeat/validation-r8'
 logs.mkdir(parents=True, exist_ok=True)
 source = Path(sys.argv[1]) if len(sys.argv) > 1 else None
@@ -19,12 +19,12 @@ scenarios = {
     'resume-empty': ['--resume', '--empty-basic'],
 }
 for mode in (2480, 3080, 4880, 6080):
-    jobs.append((f'keyboard-{mode}', ['node', 'build/test_autorepeat.cjs', str(mode)]))
-    jobs.append((f'search-{mode}-fixture', ['node', 'build/test_search.cjs', f'--mode={mode}']))
+    jobs.append((f'keyboard-{mode}', ['node', 'build/tests/test_autorepeat.cjs', str(mode)]))
+    jobs.append((f'search-{mode}-fixture', ['node', 'build/tests/test_search.cjs', f'--mode={mode}']))
     if source:
-        jobs.append((f'search-{mode}-file', ['node', 'build/test_search.cjs', f'--mode={mode}', f'--file={source}']))
+        jobs.append((f'search-{mode}-file', ['node', 'build/tests/test_search.cjs', f'--mode={mode}', f'--file={source}']))
     for factor in (1,8):
-        jobs.append((f'file-integrity-{mode}-{factor}', ['node', 'build/test_file_integrity.cjs', f'--mode={mode}', f'--cpu-factor={factor}']))
+        jobs.append((f'file-integrity-{mode}-{factor}', ['node', 'build/tests/test_file_integrity.cjs', f'--mode={mode}', f'--cpu-factor={factor}']))
     insert_cases = {
         'middle': [],
         'append': ['--at=1910'],
@@ -38,9 +38,9 @@ for mode in (2480, 3080, 4880, 6080):
         for factor in (1,8):
             insert_cases[f'real-{factor}'] = [f'--base={source}', f'--import={imported}', f'--cpu-factor={factor}']
     for case, options in insert_cases.items():
-        jobs.append((f'insert-{mode}-{case}', ['node','build/test_file_insert.cjs',f'--mode={mode}',*options]))
+        jobs.append((f'insert-{mode}-{case}', ['node','build/tests/test_file_insert.cjs',f'--mode={mode}',*options]))
     for name, options in scenarios.items():
-        jobs.append((f'basic-{mode}-{name}', ['node', 'build/test_basic_sessions.cjs', f'--mode={mode}', '--quiet', *options]))
+        jobs.append((f'basic-{mode}-{name}', ['node', 'build/tests/test_basic_sessions.cjs', f'--mode={mode}', '--quiet', *options]))
 
 def run(job):
     name, args = job

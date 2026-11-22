@@ -1,7 +1,9 @@
 """Build Stevie with a sibling Spectra2 checkout and the xdt99 assembler.
 
-Run from any directory: python build/build_autorepeat.py
+Run from any directory: python build/tests/build_autorepeat.py
 Outputs are isolated in build/autorepeat; checked-in release images stay intact.
+The regression suites in build/tests/ read their ROM images and symbol files
+from there.
 """
 
 import argparse
@@ -12,7 +14,7 @@ import sys
 
 
 def main():
-    root = Path(__file__).resolve().parents[1]
+    root = Path(__file__).resolve().parents[2]      # stevie/
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--assembler", type=Path,
                         default=root.parent / "xdt99" / "xas99.py")

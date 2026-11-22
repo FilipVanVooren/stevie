@@ -17,7 +17,7 @@ Macro frames are uppercase names without dots (PUSHREGS, ...); their bytes are
 attributed to the enclosing module.
 
 Usage:
-    python3 build/bank_report.py [--top N] [--bank B] [--json] [--list-dir D]
+    python3 build/tools/bank_report.py [--top N] [--bank B] [--json] [--list-dir D]
 """
 
 import argparse
@@ -25,6 +25,8 @@ import json
 import re
 import sys
 from pathlib import Path
+
+BUILD = Path(__file__).resolve().parents[1]        # build/
 
 VEC_BASE = 0x7F70          # bankx.vectab (equ.rom.build.asm)
 VDPTAB_BASE = 0x7F50       # bankx.vdptab - fixed anchor below the vectors
@@ -126,8 +128,8 @@ def report_bank(lst_path):
 
 def main():
     ap = argparse.ArgumentParser(description="Stevie bank headroom report")
-    ap.add_argument("--list-dir",
-                    default=str(Path(__file__).resolve().parent / "list"))
+    ap.add_argument("--list-dir", default=str(BUILD / "list"),
+                    help="directory with the xas99 listings (default build/list)")
     ap.add_argument("--top", type=int, default=5, help="modules listed per bank")
     ap.add_argument("--bank", help="single bank, e.g. 3")
     ap.add_argument("--json", action="store_true")

@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091,SC2086,SC2181
 
+# Concatenates the bank images in build/bin/ into one cartridge image.
+# Usage: lib/concat.sh <output-image> <bank> [<bank> ...]; runnable from any
+# directory because all paths are resolved relative to build/.
+
 set -e
-source helper.sh
+
+LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BUILD_DIR="$(dirname "$LIB_DIR")"
+cd "$BUILD_DIR" || exit 1
+
+source "$LIB_DIR/helper.sh"
 
 # Variables
 image="$1"
