@@ -21,6 +21,90 @@ Legend:
 - Stevie function: editor logic, file management, dialogs, buffer operations, screen logic, etc.
 - Spectra2 low-level function: ROM bridge, SAMS/VDP helpers, bank switching, crash/return plumbing, TI-Basic session glue.
 
+### Stub forms and `convert-lean`
+
+Pass-through cross-bank calls exist in two registry-recorded forms:
+
+- `inline variant=plain` (fat, 18 B/stub): every stub embeds its own
+  `bl @rom.farjump` with the target vector as immediate operands.
+- `lean` (10 B/stub + one shared 18 B helper per *target* bank): the stub is
+  just `mov @label.vector,@trmpvector` + `jmp _trampoline.bankN.ret`. The
+  shared `_trampoline.bankN.ret` helper calls `rom.farjump` with `p1 =>ffff`,
+  which makes farjump dereference `@trmpvector` *after* the bank switch
+  (`trmpvector` lives in scratch pad, so it survives the switch). This is the
+  form bank 1 and bank 6 originally used.
+
+`python3 build/gen_vectors.py convert-lean [--bank N] [--dry]` rewrites every
+convertible stub (only `inline variant=plain`; exitlabel/regs/raw variants
+keep their post-return processing) to the lean form, inserts the needed
+`helper bankN` records and picks `form=jmp|bindirect` per stub based on the
+measured distance to the helper (`b @helper` when the ±256 B branch range is
+not enough). After conversion run `generate`, a full build, and verify: zero
+diagnostics, `check` passes, vector tables byte-identical, binary diff
+confined to converted banks.
+
+Converted 2026-11-22 (75 stubs): bank 2 −146 B used (352→448 free), bank 3
+−138 B (2626→2700 free), bank 4 −46 B, bank 5 −62 B, bank 7 −6 B (7 stubs but
+4 new helpers; kept for consistency). Bank 6 and bank 1 were already lean.
+
+## Bank headroom report
+
+`python3 build/bank_report.py` parses the xas99 listings in `build/list/` and
+reports per bank: program segment end, bytes used, free bytes up to the fixed
+anchor `bankx.vdptab` (>7F50, where the `.ifge $, >7f50` "bank full" guard
+trips) and the largest contributing modules. AORG islands (the per-bank VDP
+mode tables at >7F50 and the crash banner at >7FF0) are detected and excluded
+from the program segment. Options: `--bank N`, `--top N`, `--json`. Run after a
+build; use it before deciding where new code or data should go (banks 8-D are
+the overflow pool).
+
+## Data residency rules
+
+A shared read-mostly table must have exactly one *runtime* home; extra ROM
+copies are only allowed when they resolve labels for the copier/relocator code
+that installs the runtime copy:
+
+- `data.dialogs.asm` — canonical ROM copy in bank E (`dialogs`..`enddial`),
+  copied to SAMS RAM pages #2/#3 at boot by `rom.dialogs2ram`. Bank 3 re-includes
+  it under `aorg >b000` purely so dialog code assembles against the runtime
+  addresses. Do not add a third copy; new banks reach dialogs through the SAMS window.
+- `data.colorscheme.asm` — lives only in bank 4 (owner of
+  `pane.colorscheme.index`, the sole reader of `tv.colorscheme.table`). Other
+  banks cycle/read schemes through the vector stub. A stale second copy in
+  bank 1 was removed on 2026-11-22 (bank 1 is the tightest bank).
+- `data.vdpmodes.asm` — intentional per-bank copy: each bank must expose its
+  video-mode table at the fixed address `bankx.vdptab` (>7F50), so it is an
+  AORG island, not program churn.
+
+## Rebalancing tight banks (playbook)
+
+Measured 2026-11-22: banks 0/1/7 run at 98–99% fill (86–164 bytes free). An
+audit found **no dead weight** there — the pressure is structural:
+
+- Bank 0 hosts the RAM-resident runtime library copy plus bootstrap.
+- Bank 1 is the editor core; keymap tables are referenced by immediate loads
+  (`li tmp,keymap_actions.editor`) from `edk.key.process` in the same bank, so
+  tables and dispatcher must stay co-resident.
+- Bank 7 hosts the TI-Basic bridge as one cohesive cluster
+  (`tib.session.*`, `tib.uncrunch.*`, `data.tib.tokens` via `tib.tokenindex`,
+  `data.scrpad`/`data.sams.layout` via `mem.run.ea5`).
+
+When a tight bank needs headroom, move a *cohesive cluster* to the overflow
+pool (banks 8-D, ~7.7 KB free each) instead of scattering single modules:
+
+1. Move the `copy "…"` lines of the whole cluster from e.g. `stevie_b7.asm` to
+   `stevie_b8.asm` (keep relative order inside the cluster).
+2. Update `owner=` for every exported vector of the cluster in
+   `build/vector-registry.txt`; slots freed in the old bank may be re-used by
+   functions moving in the opposite direction.
+3. `python3 build/gen_vectors.py generate`, then full `build/build.sh`.
+4. Verify: zero assembler diagnostics, `gen_vectors check` passes, and binary
+   diff shows changes only in the affected banks (plus shifted addresses).
+
+Candidate clusters if needed: the TI-Basic bridge bank 7 → bank 8 (largest
+single relief, ~2–3 KB); a set of `edk.*` keyboard handlers bank 1 → bank 9
+(smaller win, each handler needs its own vector slot for the dispatcher).
+
 ## Shared / cross-bank symbols
 
 These are the bank-agnostic routines that get reused from multiple banks and are the key low-level bridges between Stevie and the underlying Spectra2 runtime.

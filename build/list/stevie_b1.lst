@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260101-0000000
+0002               * BUILD: 261122-1456390
 0003               ***************************************************************
                    < stevie_b1.asm
 0025                       copy  "equ.rom.build.asm"   ; Cartridge build options
@@ -18407,140 +18407,15 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0642                       ;-------------------------------------------------------
 0643 7EA2 FFFF             data  EOL                           ; EOL
                    < stevie_b1.asm
-0170                       copy  "data.colorscheme.asm"        ; Colorscheme data table
-     **** ****     > data.colorscheme.asm
-0001               * FILE......: data.colorscheme.asm
-0002               * Purpose...: Stevie Editor - Color schemes table
-0003               
-0004               ***************************************************************
-0005               * Stevie color schemes table
-0006               *--------------------------------------------------------------
-0007               * ;
-0008               * ; Word 0
-0009               * ; A  MSB  high-nibble    Foreground color text line in frame buffer
-0010               * ; B  MSB  low-nibble     Background color text line in frame buffer
-0011               * ; C  LSB  high-nibble    Foreground color top line
-0012               * ; D  LSB  low-nibble     Background color top line
-0013               *
-0014               * ; Word 1
-0015               * ; E  MSB  high-nibble    Foreground color cmdb pane
-0016               * ; F  MSB  low-nibble     Background color cmdb pane
-0017               * ; G  LSB  high-nibble    Cursor foreground color cmdb pane
-0018               * ; H  LSB  low-nibble     Cursor foreground color frame buffer
-0019               * ;
-0020               * ; Word 2
-0021               * ; I  MSB  high-nibble    Foreground color busy top/bottom line
-0022               * ; J  MSB  low-nibble     Background color busy top/bottom line
-0023               * ; K  LSB  high-nibble    Foreground color marked line in frame buffer
-0024               * ; L  LSB  low-nibble     Background color marked line in frame buffer
-0025               *
-0026               * ; Word 3
-0027               * ; M  MSB  high-nibble    Foreground color command buffer header line
-0028               * ; N  MSB  low-nibble     Background color command buffer header line
-0029               * ; O  LSB  high-nibble    Foreground color line+column indicator frame buffer
-0030               * ; P  LSB  low-nibble     Foreground color ruler frame buffer
-0031               *
-0032               * ; Word 4
-0033               * ; Q  MSB  high-nibble    Foreground color bottom line
-0034               * ; R  LSB  low-nibble     Background color bottom line
-0035               * ; S  MSB  high-nibble    Forground color key marker
-0036               * ; T  LSB  low-nibble     Background color key marker
-0037               *
-0038               * ; Colors
-0039               * ; 0  Transparant
-0040               * ; 1  black
-0041               * ; 2  Green
-0042               * ; 3  Light Green
-0043               * ; 4  Blue
-0044               * ; 5  Light Blue
-0045               * ; 6  Dark Red
-0046               * ; 7  Cyan
-0047               * ; 8  Red
-0048               * ; 9  Light Red
-0049               * ; A  Yellow
-0050               * ; B  Light Yellow
-0051               * ; C  Dark Green
-0052               * ; D  Magenta
-0053               * ; E  Grey
-0054               * ; F  White
-0055               *--------------------------------------------------------------
-0056               tv.colorscheme.table:
-0057                       ;      0     2     4     6     8
-0058                       ;      ABCD  EFGH  IJKL  MNOP  QRST ;
-0059 7EA4 F41E             data  >f41e,>f1f1,>1b1f,>7111,>1717 ; 1 White on blue with cyan (1)
-     7EA6 F1F1     
-     7EA8 1B1F     
-     7EAA 7111     
-     7EAC 1717     
-0060 7EAE 21F0             data  >21f0,>21ff,>f112,>21ff,>c1f1 ; 2  Dark green on black
-     7EB0 21FF     
-     7EB2 F112     
-     7EB4 21FF     
-     7EB6 C1F1     
-0061 7EB8 A11A             data  >a11a,>f0ff,>1f1a,>f1ff,>1afa ; 3  Dark yellow on black
-     7EBA F0FF     
-     7EBC 1F1A     
-     7EBE F1FF     
-     7EC0 1AFA     
-0062 7EC2 1E1E             data  >1e1e,>1e11,>1ee1,>1e11,>e1c1 ; 4  Black on grey
-     7EC4 1E11     
-     7EC6 1EE1     
-     7EC8 1E11     
-     7ECA E1C1     
-0063 7ECC F417             data  >f417,>7171,>1b1f,>7111,>176f ; 5  White on blue with cyan (2)
-     7ECE 7171     
-     7ED0 1B1F     
-     7ED2 7111     
-     7ED4 176F     
-0064 7ED6 1313             data  >1313,>1311,>1331,>1311,>1cfc ; 6  Black on light green
-     7ED8 1311     
-     7EDA 1331     
-     7EDC 1311     
-     7EDE 1CFC     
-0065 7EE0 1771             data  >1771,>1011,>0171,>1711,>1f4f ; 7  Black on cyan
-     7EE2 1011     
-     7EE4 0171     
-     7EE6 1711     
-     7EE8 1F4F     
-0066 7EEA 2112             data  >2112,>f0ff,>1f12,>f1f6,>121f ; 8  Dark green on black
-     7EEC F0FF     
-     7EEE 1F12     
-     7EF0 F1F6     
-     7EF2 121F     
-0067 7EF4 1FF1             data  >1ff1,>1011,>f1f1,>1f11,>f1f1 ; 9  Black on white
-     7EF6 1011     
-     7EF8 F1F1     
-     7EFA 1F11     
-     7EFC F1F1     
-0068 7EFE 1AF1             data  >1af1,>a111,>1f1f,>f11f,>10f0 ; 10 Black on dark yellow
-     7F00 A111     
-     7F02 1F1F     
-     7F04 F11F     
-     7F06 10F0     
-0069 7F08 1919             data  >1919,>1911,>1991,>1911,>16f6 ; 11 Black on light red
-     7F0A 1911     
-     7F0C 1991     
-     7F0E 1911     
-     7F10 16F6     
-0070 7F12 A41F             data  >a41f,>f171,>1b1f,>7111,>1f6f ; 12 Yellow on blue with cyan (3)
-     7F14 F171     
-     7F16 1B1F     
-     7F18 7111     
-     7F1A 1F6F     
-0071 7F1C 1919             data  >1919,>1919,>1919,>1919,>1919 ; 13 All yellow
-     7F1E 1919     
-     7F20 1919     
-     7F22 1919     
-     7F24 1919     
-0072                       even
-                   < stevie_b1.asm
-0171                       ;-----------------------------------------------------------------------
-0172                       ; Bank full check
-0173                       ;-----------------------------------------------------------------------
-0177                       ;-----------------------------------------------------------------------
-0178                       ; Show ROM bank in CPU crash screen
-0179                       ;-----------------------------------------------------------------------
-0180                       copy  "rom.crash.asm"
+0170                       ; Colorscheme table lives in bank 4 (owner of pane.colorscheme.index);
+0171                       ; all other banks reach it through the vector stub. Do not re-include.
+0172                       ;-----------------------------------------------------------------------
+0173                       ; Bank full check
+0174                       ;-----------------------------------------------------------------------
+0178                       ;-----------------------------------------------------------------------
+0179                       ; Show ROM bank in CPU crash screen
+0180                       ;-----------------------------------------------------------------------
+0181                       copy  "rom.crash.asm"
      **** ****     > rom.crash.asm
 0001               * FILE......: rom.crash.asm
 0002               * Purpose...: Show ROM bank number on CPU crash
@@ -18559,10 +18434,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      7FFA 26EE     
 0014 7FFC 10FF  14         jmp   $
                    < stevie_b1.asm
-0181                       ;-----------------------------------------------------------------------
-0182                       ; Table for VDP modes
-0183                       ;-----------------------------------------------------------------------
-0184                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
+0182                       ;-----------------------------------------------------------------------
+0183                       ; Table for VDP modes
+0184                       ;-----------------------------------------------------------------------
+0185                       copy  "data.vdpmodes.asm"   ; Table for VDP modes
      **** ****     > data.vdpmodes.asm
 0001               * FILE......: data.vdp.modes.asm
 0002               * Purpose...: VDP modes tables
@@ -18672,10 +18547,10 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0105               * ; VDP#6 SPT (Sprite pattern table)     at >0000  (>00 * >800)
 0106               * ; VDP#7 Set screen background color
                    < stevie_b1.asm
-0185                       ;-----------------------------------------------------------------------
-0186                       ; Vector table
-0187                       ;-----------------------------------------------------------------------
-0188                       copy  "rom.vectors.bank1.asm"
+0186                       ;-----------------------------------------------------------------------
+0187                       ; Vector table
+0188                       ;-----------------------------------------------------------------------
+0189                       copy  "rom.vectors.bank1.asm"
      **** ****     > rom.vectors.bank1.asm
 0001               * FILE......: rom.vectors.bank1.asm
 0002               * Purpose...: Bank 1 vectors for trampoline function
@@ -18761,7 +18636,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      7FEC 4F4D     
      7FEE 2331     
                    < stevie_b1.asm
-0189                                                   ; Vector table bank 1
+0190                                                   ; Vector table bank 1
     anykey.............. >200a :     
     at.................. >2726 :     
     bank0.ram........... >6800 :     
@@ -20395,7 +20270,6 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.colorize.reset... >9900 :     
     tv.colorscheme...... >a212 :     
     tv.colorscheme.entries >000c :     
-    tv.colorscheme.table >7ea4 :     
     tv.curcolor......... >a216 :     
     tv.curshape......... >a214 :     
     tv.devpath.......... >a294 :     

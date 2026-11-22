@@ -26,7 +26,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       copy  "buildinfo.asm"       ; "build/.buildinfo/buildinfo.asm"
      **** ****     > buildinfo.asm
 0001               ***************************************************************
-0002               * BUILD: 260101-0000000
+0002               * BUILD: 261122-1456390
 0003               ***************************************************************
                    < stevie_b2.asm
 0025                       ;-----------------------------------------------------------------------
@@ -10474,7 +10474,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0119 62A8 06A0  32         bl    @cpym2v
      62AA 24E6     
 0120 62AC 2580                   data fh.vpab,fh.file.pab.header,9
-     62AE 7D3C     
+     62AE 7CDC     
      62B0 0009     
 0121                                                   ; Copy PAB header to VDP
 0122                       ;------------------------------------------------------
@@ -10809,7 +10809,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0375                                                   ; /
 0376               
 0377 640E 06A0  32         bl    @mem.sams.setup.stevie
-     6410 7CEA     
+     6410 7C8A     
 0378                                                   ; Restore SAMS windows
 0379                       ;------------------------------------------------------
 0380                       ; Callback "Memory full error"
@@ -10869,7 +10869,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0424                                                   ; /
 0425               
 0426 6450 06A0  32         bl    @mem.sams.setup.stevie
-     6452 7CEA     
+     6452 7C8A     
 0427                                                   ; Restore SAMS windows
 0428                       ;------------------------------------------------------
 0429                       ; Callback "File I/O error"
@@ -10889,7 +10889,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0441                                                   ; /
 0442               
 0443 6464 06A0  32         bl    @mem.sams.setup.stevie
-     6466 7CEA     
+     6466 7C8A     
 0444                                                   ; Restore SAMS windows
 0445                       ;------------------------------------------------------
 0446                       ; Callback "Close file"
@@ -11093,7 +11093,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0101 6550 06A0  32         bl    @cpym2v
      6552 24E6     
 0102 6554 2580                   data fh.vpab,fh.file.pab.header,9
-     6556 7D3C     
+     6556 7CDC     
      6558 0009     
 0103                                                   ; Copy PAB header to VDP
 0104                       ;------------------------------------------------------
@@ -11146,7 +11146,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      658E A012     
 0141               
 0142 6590 06A0  32         bl    @edb.line.unpack      ; Unpack line
-     6592 7B04     
+     6592 7B16     
 0143                                                   ; \ i  parm1    = Line to unpack
 0144                                                   ; | i  parm2    = Target row in frame buffer
 0145                                                   ; | i  parm3    = Column offset
@@ -11451,7 +11451,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      66C6 A454     
 0053               
 0054 66C8 0204  20         li    tmp0,fh.file.pab.header.binimage
-     66CA 7D50     
+     66CA 7CF0     
 0055 66CC C804  38         mov   tmp0,@fh.pabtpl.ptr   ; Set pointer to PAB template in ROM/RAM
      66CE A466     
 0056               
@@ -11788,7 +11788,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6842 200A     
 0033 6844 FFFF                   data eol
 0034 6846 06A0  32         bl    @pane.botline.busy.on ; \ Put busy indicator on
-     6848 7BB8     
+     6848 7B9C     
 0035                                                   ; /
 0036                       ;------------------------------------------------------
 0037                       ; Step 1: Set parameters
@@ -12087,7 +12087,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      69AA A454     
 0055               
 0056 69AC 0204  20         li    tmp0,fh.file.pab.header.delete
-     69AE 7D5A     
+     69AE 7CFA     
 0057 69B0 C804  38         mov   tmp0,@fh.pabtpl.ptr    ; Set pointer to PAB template in ROM/RAM
      69B2 A466     
 0058 69B4 04E0  34         clr   @fh.ftype.init         ; File type/mode (in LSB)
@@ -12387,7 +12387,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6B0E A230     
 0062               
 0063 6B10 06A0  32         bl    @pane.colorscheme.load
-     6B12 7B5E     
+     6B12 7B5A     
 0064                                                   ; Reload color scheme
 0065                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0066                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -12406,7 +12406,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0076                       ; Reset editor
 0077                       ;-------------------------------------------------------
 0078 6B20 06A0  32         bl    @tv.reset             ; Reset editor
-     6B22 7CC6     
+     6B22 7C66     
 0079                       ;-------------------------------------------------------
 0080                       ; Change filename
 0081                       ;-------------------------------------------------------
@@ -12832,7 +12832,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0022               * Put message
 0023               *--------------------------------------------------------------
 0024 6CB4 06A0  32         bl    @pane.botline.busy.on ; \ Put busy indicator on
-     6CB6 7BB8     
+     6CB6 7B9C     
 0025                                                   ; /
 0026 6CB8 06A0  32         bl    @putat
      6CBA 2442     
@@ -12842,9 +12842,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030               * Clear SAMS pages and exit editor
 0031               *--------------------------------------------------------------
 0032 6CC0 06A0  32         bl    @edb.clear.sams       ; Clear SAMS memory used by editor buffer
-     6CC2 7C24     
+     6CC2 7BEA     
 0033 6CC4 06A0  32         bl    @tv.reset             ; Reset editor
-     6CC6 7CC6     
+     6CC6 7C66     
 0034               *--------------------------------------------------------------
 0035               * Remove message
 0036               *--------------------------------------------------------------
@@ -12858,7 +12858,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6CD4 A23A     
 0042               
 0043 6CD6 06A0  32         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     6CD8 7BCA     
+     6CD8 7BA6     
 0044                                                     ; /
 0045               *--------------------------------------------------------------
 0046               * Exit
@@ -12988,7 +12988,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0067                                                   ; / @parm3 = Skip filebrowser flag
 0068               
 0069 6D44 06A0  32         bl    @pane.cmdb.hide       ; Hide CMDB pane
-     6D46 7BDC     
+     6D46 7BB0     
 0070               *--------------------------------------------------------------
 0071               * Exit
 0072               *--------------------------------------------------------------
@@ -13125,7 +13125,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6DCC A230     
 0059               
 0060 6DCE 06A0  32         bl    @pane.colorscheme.load
-     6DD0 7B5E     
+     6DD0 7B5A     
 0061                                                   ; Reload color scheme
 0062                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0063                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -13152,7 +13152,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0070                       ; Reset editor
 0071                       ;-------------------------------------------------------
 0072 6DE4 06A0  32         bl    @tv.reset             ; Reset editor
-     6DE6 7CC6     
+     6DE6 7C66     
 0073                       ;-------------------------------------------------------
 0074                       ; Load EA5 program image into memory
 0075                       ;-------------------------------------------------------
@@ -13172,7 +13172,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6DF8 A016     
 0086               
 0087 6DFA 06A0  32         bl    @mem.run.ea5          ; Run EA5 memory image
-     6DFC 7CD8     
+     6DFC 7C78     
 0088                                                   ; \ i  @parm1 = Entrypoint in EA5 program
 0089                                                   ; /
 0090 6DFE 1002  14         jmp   fm.run.ea5.exit
@@ -13181,7 +13181,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0093                       ;-------------------------------------------------------
 0094               fm.run.ea5.error:
 0095 6E00 06A0  32         bl    @fb.cursor.top        ; Goto top of file
-     6E02 7B94     
+     6E02 7B88     
 0096               *--------------------------------------------------------------
 0097               * Exit
 0098               *--------------------------------------------------------------
@@ -13260,7 +13260,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0024                       ; Read clock data into memory
 0025                       ;-------------------------------------------------------
 0026 6E44 0204  20         li    tmp0,def.clock        ; \ Pointer to clock device string
-     6E46 7DC4     
+     6E46 7D64     
 0027 6E48 C804  38         mov   tmp0,@parm1           ; /
      6E4A A016     
 0028 6E4C 04E0  34         clr   @parm2                ; Callback function "Before open file"
@@ -13284,7 +13284,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      6E6A A00A     
 0039               
 0040 6E6C 0204  20         li    tmp0,fh.file.pab.clock
-     6E6E 7D46     
+     6E6E 7CE6     
 0041 6E70 C804  38         mov   tmp0,@parm8           ; PAB Header template for reading clock
      6E72 A008     
 0042               
@@ -13326,7 +13326,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0073 6E8A C804  38         mov   tmp0,@tv.clock.state  ; Set clock state to "No clock found"
      6E8C A240     
 0074 6E8E 06A0  32         bl    @fm.clock.off         ; Turn clock off (reset clock data)
-     6E90 7C6C     
+     6E90 7C12     
 0075               *--------------------------------------------------------------
 0076               * Exit
 0077               *--------------------------------------------------------------
@@ -13462,7 +13462,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0071 6F18 FFFF                   data eol
 0072               
 0073 6F1A 06A0  32         bl    @pane.botline.busy.on ; \ Put busy indicator on
-     6F1C 7BB8     
+     6F1C 7B9C     
 0074                                                   ; /
 0075               
 0076 6F1E C120  34         mov   @fh.fopmode,tmp0      ; Check file operation mode
@@ -13669,7 +13669,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0225                       ;------------------------------------------------------
 0226               fm.loadsave.cb.indicator2.refresh:
 0227 7004 06A0  32         bl    @fb.refresh           ; Refresh frame buffer
-     7006 7C36     
+     7006 7BF4     
 0228                                                   ; \ i  @parm1 = Line to start with
 0229                                                   ; /
 0230               
@@ -13683,7 +13683,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      700E A31E     
      7010 A016     
 0237 7012 06A0  32         bl    @fb.vdpdump           ; Dump frame buffer to VDP SIT
-     7014 7B16     
+     7014 7B20     
 0238                                                   ; \ i  @parm1 = number of lines to dump
 0239                                                   ; /
 0240                       ;------------------------------------------------------
@@ -13789,7 +13789,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0306                       ; Restore status line colors
 0307                       ;------------------------------------------------------
 0308 7082 06A0  32         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     7084 7BCA     
+     7084 7BA6     
 0309                                                     ; /
 0310                       ;------------------------------------------------------
 0311                       ; Only show updated KB if loading/saving full file
@@ -14054,7 +14054,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0502                       ;------------------------------------------------------
 0503               fm.loadsave.cb.fioerr.errmsg:
 0504 71CC 06A0  32         bl    @pane.errline.show    ; Show error line
-     71CE 7B4C     
+     71CE 7B3E     
 0505               
 0506 71D0 0204  20         li    tmp0,id.file.interrupt ; \ Flag "keyboard interrupt" set?
      71D2 FFFF     
@@ -14078,7 +14078,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0521                       ; Restore status line colors
 0522                       ;------------------------------------------------------
 0523 71EE 06A0  32 !       bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     71F0 7BCA     
+     71F0 7BA6     
 0524                                                     ; /
 0525                       ;-------------------------------------------------------
 0526                       ; Setup one shot task for removing overlay message
@@ -14155,13 +14155,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0579                       ; Display memory full error message
 0580                       ;------------------------------------------------------
 0581 723E 06A0  32         bl    @pane.errline.show    ; Show error line
-     7240 7B4C     
+     7240 7B3E     
 0582               
 0583                       ;------------------------------------------------------
 0584                       ; Restore status line colors
 0585                       ;------------------------------------------------------
 0586 7242 06A0  32         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     7244 7BCA     
+     7244 7BA6     
 0587                                                     ; /
 0588                       ;------------------------------------------------------
 0589                       ; Exit
@@ -14304,7 +14304,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0111                       ; Show reading directory message
 0112                       ;------------------------------------------------------
 0113 7278 06A0  32         bl    @pane.botline.busy.on ; \ Put busy indicator on
-     727A 7BB8     
+     727A 7B9C     
 0114                                                   ; /
 0115               
 0116 727C 06A0  32         bl    @putat
@@ -14758,7 +14758,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0480                       ; Restore status line colors
 0481                       ;------------------------------------------------------
 0482 7448 06A0  32         bl    @pane.botline.busy.off ; \ Put busyline indicator off
-     744A 7BCA     
+     744A 7BA6     
 0483                                                    ; /
 0484               
 0485 744C 0720  34         seto  @cmdb.dirty           ; Command buffer dirty (text changed!)
@@ -14843,7 +14843,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0542                       ; Restore status line colors
 0543                       ;------------------------------------------------------
 0544 7486 06A0  32         bl    @pane.botline.busy.off
-     7488 7BCA     
+     7488 7BA6     
 0545                                                   ; Put busyline indicator off
 0546               
 0547                       ; Depending on the device DSR used (emulators, real HW)
@@ -14917,7 +14917,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0595                       ; Restore status line colors
 0596                       ;------------------------------------------------------
 0597 74BC 06A0  32         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     74BE 7BCA     
+     74BE 7BA6     
 0598                                                     ; /
 0599                       ;------------------------------------------------------
 0600                       ; Exit
@@ -15037,7 +15037,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0068                       ; Restore status line colors
 0069                       ;------------------------------------------------------
 0070 7522 06A0  32         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     7524 7BCA     
+     7524 7BA6     
 0071                                                     ; /
 0072                       ;-------------------------------------------------------
 0073                       ; Show message
@@ -15117,17 +15117,17 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0118                       ; Restore VDP patterns, set font and colorscheme
 0119                       ;------------------------------------------------------
 0120 7572 06A0  32         bl    @vdp.dump.patterns    ; Dump patterns to VDP
-     7574 7C7E     
+     7574 7C2E     
 0121               
 0122 7576 04E0  34         clr   @parm1                ; Pick font 0
      7578 A016     
 0123 757A 06A0  32         bl    @tv.set.font          ; Set current font (dumps font to VDP)
-     757C 7CB4     
+     757C 7C54     
 0124                                                   ; \ i  @parm1       = Font index (0-5)
 0125                                                   ; / o  @tv.font.ptr = Pointer to font
 0126               
 0127 757E 06A0  32         bl    @pane.colorscheme.load
-     7580 7B5E     
+     7580 7B5A     
 0128                                                   ; Reload color scheme
 0129                                                   ; \ i  @parm1 = Skip screen off if >FFFF
 0130                                                   ; | i  @parm2 = Skip colorizing marked lines
@@ -15210,7 +15210,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0192                       ;------------------------------------------------------
 0193               fm.load.ea5.cb.fioerr.errmsg:
 0194 75DA 06A0  32         bl    @pane.errline.show    ; Show error line
-     75DC 7B4C     
+     75DC 7B3E     
 0195               
 0196 75DE 06A0  32         bl    @putnum               ; Convert unsigned number to string
      75E0 2AD4     
@@ -15228,7 +15228,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0207                       ; Restore status line colors
 0208                       ;------------------------------------------------------
 0209 75F2 06A0  32         bl    @pane.botline.busy.off  ; \ Put busyline indicator off
-     75F4 7BCA     
+     75F4 7BA6     
 0210                                                     ; /
 0211                       ;-------------------------------------------------------
 0212                       ; Setup one shot task for removing overlay message
@@ -15341,7 +15341,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0028 7646 FFFF                   data eol
 0029               
 0030 7648 06A0  32         bl    @pane.botline.busy.on ; \ Put busy indicator on
-     764A 7BB8     
+     764A 7B9C     
 0031                                                   ; /
 0032               
 0033 764C 06A0  32         bl    @putat
@@ -15405,7 +15405,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0072                       ; Restore status line colors
 0073                       ;------------------------------------------------------
 0074 7678 06A0  32         bl    @pane.botline.busy.off ; Put busyline indicator off
-     767A 7BCA     
+     767A 7BA6     
 0075                       ;-------------------------------------------------------
 0076                       ; Show message 'File deleted'
 0077                       ;-------------------------------------------------------
@@ -15657,7 +15657,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0057                                                   ; Calculate 1st filename on page
 0058               
 0059 776E 06A0  32         bl    @pane.filebrowser     ; Refresh filebrowser pane
-     7770 7BEE     
+     7770 7BBA     
 0060               
 0061 7772 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      7774 769A     
@@ -15788,7 +15788,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      77D2 E232     
 0062               
 0063 77D4 06A0  32         bl    @pane.filebrowser     ; Refresh filebrowser pane
-     77D6 7BEE     
+     77D6 7BBA     
 0064               
 0065 77D8 06A0  32         bl    @fm.browse.fname.set  ; Create string with device & filename
      77DA 769A     
@@ -16032,13 +16032,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0034                       ; Remove filepicker color bar and old files from screen
 0035                       ;------------------------------------------------------
 0036 78B2 06A0  32         bl    @vdp.cursor.tat.cmdb.hide
-     78B4 7CA2     
+     78B4 7C42     
 0037                                                   ; Hide CMDB cursor
 0038                                                   ; \ i @cmdb.cursor     = New Cursor position
 0039                                                   ; / i @cmdb.prevcursor = Old cursor position
 0040               
 0041 78B6 06A0  32         bl    @pane.filebrowser.colbar.remove
-     78B8 7C12     
+     78B8 7BCE     
 0042                                                   ; Remove filepicker color bar
 0043                                                   ; \ i  @cat.barpos = YX position color bar
 0044                                                   ; /
@@ -16079,7 +16079,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      78E4 A014     
 0069 78E6 0A14  18         sla   tmp0,1                ; Word align
 0070 78E8 C824  54         mov   @device.list(tmp0),@parm1
-     78EA 7DCE     
+     78EA 7D6E     
      78EC A016     
 0071                                                   ; Set device string
 0072                       ;-------------------------------------------------------
@@ -16133,7 +16133,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
      7934 A00A     
 0106               
 0107 7936 0204  20         li    tmp0,fh.file.pab.header.cat
-     7938 7D32     
+     7938 7CD2     
 0108 793A C804  38         mov   tmp0,@parm8           ; PAB Header template for reading catalog
      793C A008     
 0109               
@@ -16160,7 +16160,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0125                                                   ; / i  tmp2 = bytes to copy
 0126               
 0127 7958 06A0  32         bl    @pane.cursor.hide     ; Hide cursor
-     795A 7B3A     
+     795A 7B34     
 0128                       ;-------------------------------------------------------
 0129                       ; Read catalog into memory
 0130                       ;-------------------------------------------------------
@@ -16428,9 +16428,9 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0336                                                   ; /        device & filename
 0337               
 0338 7A90 06A0  32         bl    @pane.cursor.blink    ; Blink cursor again
-     7A92 7B28     
+     7A92 7B2A     
 0339 7A94 06A0  32         bl    @pane.filebrowser     ; Browse files
-     7A96 7BEE     
+     7A96 7BBA     
 0340               *--------------------------------------------------------------
 0341               * Exit
 0342               *--------------------------------------------------------------
@@ -16515,19 +16515,19 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0002               * Purpose...: Bank 2 stubs for functions in other banks
 0003               
 0004               ***************************************************************
-0005               * Stub for "edb.line.unpack"
-0006               * bank1 vec.11
-0007               ********|*****|*********************|**************************
-0008               edb.line.unpack:
-0009 7B04 0649  14         dect  stack
-0010 7B06 C64B  30         mov   r11,*stack            ; Save return address
-0011                       ;------------------------------------------------------
-0012                       ; Call function in bank 1
-0013                       ;------------------------------------------------------
-0014 7B08 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+0005               * Trampoline bank 1 with return
+0006               ********|*****|*********************|**************************
+0007               _trampoline.bank1.ret:
+0008 7B04 0649  14         dect  stack
+0009 7B06 C64B  30         mov   r11,*stack            ; Save return address
+0010                       ;------------------------------------------------------
+0011                       ; Call routine in bank 1
+0012                       ;------------------------------------------------------
+0013 7B08 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
      7B0A 30D8     
-0015 7B0C 6002                   data bank1.rom        ; | i  p0 = bank address
-0016 7B0E 7F84                   data vec.11           ; | i  p1 = Vector with target address
+0014 7B0C 6002                   data bank1.rom        ; | i  p0 = bank address
+0015 7B0E FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0016                                                   ; |         (deref @trmpvector)
 0017 7B10 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0018                       ;------------------------------------------------------
 0019                       ; Exit
@@ -16536,554 +16536,449 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0022 7B14 045B  20         b     *r11                  ; Return to caller
 0023               
 0024               ***************************************************************
-0025               * Stub for "fb.vdpdump"
-0026               * bank1 vec.21
+0025               * Stub for "edb.line.unpack"
+0026               * bank1 vec.11
 0027               ********|*****|*********************|**************************
-0028               fb.vdpdump:
-0029 7B16 0649  14         dect  stack
-0030 7B18 C64B  30         mov   r11,*stack            ; Save return address
-0031                       ;------------------------------------------------------
-0032                       ; Call function in bank 1
-0033                       ;------------------------------------------------------
-0034 7B1A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B1C 30D8     
-0035 7B1E 6002                   data bank1.rom        ; | i  p0 = bank address
-0036 7B20 7F98                   data vec.21           ; | i  p1 = Vector with target address
-0037 7B22 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0038                       ;------------------------------------------------------
-0039                       ; Exit
-0040                       ;------------------------------------------------------
-0041 7B24 C2F9  30         mov   *stack+,r11           ; Pop r11
-0042 7B26 045B  20         b     *r11                  ; Return to caller
+0028               edb.line.unpack:
+0029 7B16 C820  54         mov   @edb.line.unpack.vector,@trmpvector
+     7B18 7B1E     
+     7B1A A034     
+0030 7B1C 10F3  14         jmp   _trampoline.bank1.ret ; Longjump
+0031               edb.line.unpack.vector:
+0032 7B1E 7F84             data  vec.11
+0033               
+0034               ***************************************************************
+0035               * Stub for "fb.vdpdump"
+0036               * bank1 vec.21
+0037               ********|*****|*********************|**************************
+0038               fb.vdpdump:
+0039 7B20 C820  54         mov   @fb.vdpdump.vector,@trmpvector
+     7B22 7B28     
+     7B24 A034     
+0040 7B26 10EE  14         jmp   _trampoline.bank1.ret ; Longjump
+0041               fb.vdpdump.vector:
+0042 7B28 7F98             data  vec.21
 0043               
 0044               ***************************************************************
 0045               * Stub for "pane.cursor.blink"
 0046               * bank1 vec.28
 0047               ********|*****|*********************|**************************
 0048               pane.cursor.blink:
-0049 7B28 0649  14         dect  stack
-0050 7B2A C64B  30         mov   r11,*stack            ; Save return address
-0051                       ;------------------------------------------------------
-0052                       ; Call function in bank 1
-0053                       ;------------------------------------------------------
-0054 7B2C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B2E 30D8     
-0055 7B30 6002                   data bank1.rom        ; | i  p0 = bank address
-0056 7B32 7FA6                   data vec.28           ; | i  p1 = Vector with target address
-0057 7B34 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0058                       ;------------------------------------------------------
-0059                       ; Exit
-0060                       ;------------------------------------------------------
-0061 7B36 C2F9  30         mov   *stack+,r11           ; Pop r11
-0062 7B38 045B  20         b     *r11                  ; Return to caller
+0049 7B2A C820  54         mov   @pane.cursor.blink.vector,@trmpvector
+     7B2C 7B32     
+     7B2E A034     
+0050 7B30 10E9  14         jmp   _trampoline.bank1.ret ; Longjump
+0051               pane.cursor.blink.vector:
+0052 7B32 7FA6             data  vec.28
+0053               
+0054               ***************************************************************
+0055               * Stub for "pane.cursor.hide"
+0056               * bank1 vec.29
+0057               ********|*****|*********************|**************************
+0058               pane.cursor.hide:
+0059 7B34 C820  54         mov   @pane.cursor.hide.vector,@trmpvector
+     7B36 7B3C     
+     7B38 A034     
+0060 7B3A 10E4  14         jmp   _trampoline.bank1.ret ; Longjump
+0061               pane.cursor.hide.vector:
+0062 7B3C 7FA8             data  vec.29
 0063               
 0064               ***************************************************************
-0065               * Stub for "pane.cursor.hide"
-0066               * bank1 vec.29
+0065               * Stub for "pane.errline.show"
+0066               * bank1 vec.30
 0067               ********|*****|*********************|**************************
-0068               pane.cursor.hide:
-0069 7B3A 0649  14         dect  stack
-0070 7B3C C64B  30         mov   r11,*stack            ; Save return address
-0071                       ;------------------------------------------------------
-0072                       ; Call function in bank 1
-0073                       ;------------------------------------------------------
-0074 7B3E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B40 30D8     
-0075 7B42 6002                   data bank1.rom        ; | i  p0 = bank address
-0076 7B44 7FA8                   data vec.29           ; | i  p1 = Vector with target address
-0077 7B46 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0078                       ;------------------------------------------------------
-0079                       ; Exit
+0068               pane.errline.show:
+0069 7B3E C820  54         mov   @pane.errline.show.vector,@trmpvector
+     7B40 7B46     
+     7B42 A034     
+0070 7B44 10DF  14         jmp   _trampoline.bank1.ret ; Longjump
+0071               pane.errline.show.vector:
+0072 7B46 7FAA             data  vec.30
+0073               
+0074               ***************************************************************
+0075               * Trampoline bank 4 with return
+0076               ********|*****|*********************|**************************
+0077               _trampoline.bank4.ret:
+0078 7B48 0649  14         dect  stack
+0079 7B4A C64B  30         mov   r11,*stack            ; Save return address
 0080                       ;------------------------------------------------------
-0081 7B48 C2F9  30         mov   *stack+,r11           ; Pop r11
-0082 7B4A 045B  20         b     *r11                  ; Return to caller
-0083               
-0084               ***************************************************************
-0085               * Stub for "pane.errline.show"
-0086               * bank1 vec.30
-0087               ********|*****|*********************|**************************
-0088               pane.errline.show:
-0089 7B4C 0649  14         dect  stack
-0090 7B4E C64B  30         mov   r11,*stack            ; Save return address
-0091                       ;------------------------------------------------------
-0092                       ; Call function in bank 1
-0093                       ;------------------------------------------------------
-0094 7B50 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B52 30D8     
-0095 7B54 6002                   data bank1.rom        ; | i  p0 = bank address
-0096 7B56 7FAA                   data vec.30           ; | i  p1 = Vector with target address
-0097 7B58 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0098                       ;------------------------------------------------------
-0099                       ; Exit
-0100                       ;------------------------------------------------------
-0101 7B5A C2F9  30         mov   *stack+,r11           ; Pop r11
-0102 7B5C 045B  20         b     *r11                  ; Return to caller
+0081                       ; Call routine in bank 4
+0082                       ;------------------------------------------------------
+0083 7B4C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B4E 30D8     
+0084 7B50 6008                   data bank4.rom        ; | i  p0 = bank address
+0085 7B52 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0086                                                   ; |         (deref @trmpvector)
+0087 7B54 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0088                       ;------------------------------------------------------
+0089                       ; Exit
+0090                       ;------------------------------------------------------
+0091 7B56 C2F9  30         mov   *stack+,r11           ; Pop r11
+0092 7B58 045B  20         b     *r11                  ; Return to caller
+0093               
+0094               ***************************************************************
+0095               * Stub for "pane.colorscheme.load"
+0096               * bank4 vec.41
+0097               ********|*****|*********************|**************************
+0098               pane.colorscheme.load:
+0099 7B5A C820  54         mov   @pane.colorscheme.load.vector,@trmpvector
+     7B5C 7B62     
+     7B5E A034     
+0100 7B60 10F3  14         jmp   _trampoline.bank4.ret ; Longjump
+0101               pane.colorscheme.load.vector:
+0102 7B62 7FC0             data  vec.41
 0103               
 0104               ***************************************************************
-0105               * Stub for "pane.colorscheme.load"
-0106               * bank4 vec.41
+0105               * Stub for "pane.colorscheme.botline"
+0106               * bank4 vec.42
 0107               ********|*****|*********************|**************************
-0108               pane.colorscheme.load:
-0109 7B5E 0649  14         dect  stack
-0110 7B60 C64B  30         mov   r11,*stack            ; Save return address
+0108               pane.colorscheme.botline:
+0109 7B64 0649  14         dect  stack
+0110 7B66 C64B  30         mov   r11,*stack            ; Save return address
 0111                       ;------------------------------------------------------
-0112                       ; Call function in bank 4
+0112                       ; Call function in bank 1
 0113                       ;------------------------------------------------------
-0114 7B62 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B64 30D8     
-0115 7B66 6008                   data bank4.rom        ; | i  p0 = bank address
-0116 7B68 7FC0                   data vec.41           ; | i  p1 = Vector with target address
-0117 7B6A 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0114 7B68 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B6A 30D8     
+0115 7B6C 6008                   data bank4.rom        ; | i  p0 = bank address
+0116 7B6E 7FC2                   data vec.42           ; | i  p1 = Vector with target address
+0117 7B70 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0118                       ;------------------------------------------------------
 0119                       ; Exit
 0120                       ;------------------------------------------------------
-0121 7B6C C2F9  30         mov   *stack+,r11           ; Pop r11
-0122 7B6E 045B  20         b     *r11                  ; Return to caller
+0121 7B72 C2F9  30         mov   *stack+,r11           ; Pop r11
+0122 7B74 045B  20         b     *r11                  ; Return to caller
 0123               
 0124               ***************************************************************
-0125               * Stub for "pane.colorscheme.botline"
-0126               * bank4 vec.42
+0125               * Stub for "pane.cmdb.show"
+0126               * bank4 vec.59
 0127               ********|*****|*********************|**************************
-0128               pane.colorscheme.botline:
-0129 7B70 0649  14         dect  stack
-0130 7B72 C64B  30         mov   r11,*stack            ; Save return address
+0128               pane.cmdb.show:
+0129 7B76 0649  14         dect  stack
+0130 7B78 C64B  30         mov   r11,*stack            ; Save return address
 0131                       ;------------------------------------------------------
-0132                       ; Call function in bank 1
+0132                       ; Call function in bank 3
 0133                       ;------------------------------------------------------
-0134 7B74 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B76 30D8     
-0135 7B78 6008                   data bank4.rom        ; | i  p0 = bank address
-0136 7B7A 7FC2                   data vec.42           ; | i  p1 = Vector with target address
-0137 7B7C 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0134 7B7A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7B7C 30D8     
+0135 7B7E 6008                   data bank4.rom        ; | i  p0 = bank address
+0136 7B80 7FE4                   data vec.59           ; | i  p1 = Vector with target address
+0137 7B82 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0138                       ;------------------------------------------------------
 0139                       ; Exit
 0140                       ;------------------------------------------------------
-0141 7B7E C2F9  30         mov   *stack+,r11           ; Pop r11
-0142 7B80 045B  20         b     *r11                  ; Return to caller
+0141 7B84 C2F9  30         mov   *stack+,r11           ; Pop r11
+0142 7B86 045B  20         b     *r11                  ; Return to caller
 0143               
 0144               ***************************************************************
-0145               * Stub for "pane.cmdb.show"
-0146               * bank4 vec.59
+0145               * Stub for "fb.cursor.top"
+0146               * bank4 vec.16
 0147               ********|*****|*********************|**************************
-0148               pane.cmdb.show:
-0149 7B82 0649  14         dect  stack
-0150 7B84 C64B  30         mov   r11,*stack            ; Save return address
-0151                       ;------------------------------------------------------
-0152                       ; Call function in bank 3
-0153                       ;------------------------------------------------------
-0154 7B86 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B88 30D8     
-0155 7B8A 6008                   data bank4.rom        ; | i  p0 = bank address
-0156 7B8C 7FE4                   data vec.59           ; | i  p1 = Vector with target address
-0157 7B8E 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0158                       ;------------------------------------------------------
-0159                       ; Exit
-0160                       ;------------------------------------------------------
-0161 7B90 C2F9  30         mov   *stack+,r11           ; Pop r11
-0162 7B92 045B  20         b     *r11                  ; Return to caller
+0148               fb.cursor.top:
+0149 7B88 C820  54         mov   @fb.cursor.top.vector,@trmpvector
+     7B8A 7B90     
+     7B8C A034     
+0150 7B8E 10DC  14         jmp   _trampoline.bank4.ret ; Longjump
+0151               fb.cursor.top.vector:
+0152 7B90 7F8E             data  vec.16
+0153               
+0154               ***************************************************************
+0155               * Stub for "fb.goto.nextmatch"
+0156               * bank4 vec.23
+0157               ********|*****|*********************|**************************
+0158               fb.goto.nextmatch:
+0159 7B92 C820  54         mov   @fb.goto.nextmatch.vector,@trmpvector
+     7B94 7B9A     
+     7B96 A034     
+0160 7B98 10D7  14         jmp   _trampoline.bank4.ret ; Longjump
+0161               fb.goto.nextmatch.vector:
+0162 7B9A 7F9C             data  vec.23
 0163               
 0164               ***************************************************************
-0165               * Stub for "fb.cursor.top"
-0166               * bank4 vec.16
+0165               * Stub for "pane.botline.busy.on"
+0166               * bank4 vec.38
 0167               ********|*****|*********************|**************************
-0168               fb.cursor.top:
-0169 7B94 0649  14         dect  stack
-0170 7B96 C64B  30         mov   r11,*stack            ; Save return address
-0171                       ;------------------------------------------------------
-0172                       ; Call function in bank 4
-0173                       ;------------------------------------------------------
-0174 7B98 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7B9A 30D8     
-0175 7B9C 6008                   data bank4.rom        ; | i  p0 = bank address
-0176 7B9E 7F8E                   data vec.16           ; | i  p1 = Vector with target address
-0177 7BA0 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0178                       ;------------------------------------------------------
-0179                       ; Exit
-0180                       ;------------------------------------------------------
-0181 7BA2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0182 7BA4 045B  20         b     *r11                  ; Return to caller
+0168               pane.botline.busy.on:
+0169 7B9C C820  54         mov   @pane.botline.busy.on.vector,@trmpvector
+     7B9E 7BA4     
+     7BA0 A034     
+0170 7BA2 10D2  14         jmp   _trampoline.bank4.ret ; Longjump
+0171               pane.botline.busy.on.vector:
+0172 7BA4 7FBA             data  vec.38
+0173               
+0174               ***************************************************************
+0175               * Stub for "pane.botline.busy.off"
+0176               * bank4 vec.39
+0177               ********|*****|*********************|**************************
+0178               pane.botline.busy.off:
+0179 7BA6 C820  54         mov   @pane.botline.busy.off.vector,@trmpvector
+     7BA8 7BAE     
+     7BAA A034     
+0180 7BAC 10CD  14         jmp   _trampoline.bank4.ret ; Longjump
+0181               pane.botline.busy.off.vector:
+0182 7BAE 7FBC             data  vec.39
 0183               
 0184               ***************************************************************
-0185               * Stub for "fb.goto.nextmatch"
-0186               * bank4 vec.23
+0185               * Stub for "pane.cmdb.hide"
+0186               * bank4 vec.49
 0187               ********|*****|*********************|**************************
-0188               fb.goto.nextmatch:
-0189 7BA6 0649  14         dect  stack
-0190 7BA8 C64B  30         mov   r11,*stack            ; Save return address
-0191                       ;------------------------------------------------------
-0192                       ; Call function in bank 4
-0193                       ;------------------------------------------------------
-0194 7BAA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BAC 30D8     
-0195 7BAE 6008                   data bank4.rom        ; | i  p0 = bank address
-0196 7BB0 7F9C                   data vec.23           ; | i  p1 = Vector with target address
-0197 7BB2 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0198                       ;------------------------------------------------------
-0199                       ; Exit
-0200                       ;------------------------------------------------------
-0201 7BB4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0202 7BB6 045B  20         b     *r11                  ; Return to caller
+0188               pane.cmdb.hide:
+0189 7BB0 C820  54         mov   @pane.cmdb.hide.vector,@trmpvector
+     7BB2 7BB8     
+     7BB4 A034     
+0190 7BB6 10C8  14         jmp   _trampoline.bank4.ret ; Longjump
+0191               pane.cmdb.hide.vector:
+0192 7BB8 7FD0             data  vec.49
+0193               
+0194               ***************************************************************
+0195               * Stub for "pane.filebrowser"
+0196               * bank4 vec.50
+0197               ********|*****|*********************|**************************
+0198               pane.filebrowser:
+0199 7BBA C820  54         mov   @pane.filebrowser.vector,@trmpvector
+     7BBC 7BC2     
+     7BBE A034     
+0200 7BC0 10C3  14         jmp   _trampoline.bank4.ret ; Longjump
+0201               pane.filebrowser.vector:
+0202 7BC2 7FD2             data  vec.50
 0203               
 0204               ***************************************************************
-0205               * Stub for "pane.botline.busy.on"
-0206               * bank4 vec.38
+0205               * Stub for "pane.filebrowser.colbar"
+0206               * bank4 vec.52
 0207               ********|*****|*********************|**************************
-0208               pane.botline.busy.on:
-0209 7BB8 0649  14         dect  stack
-0210 7BBA C64B  30         mov   r11,*stack            ; Save return address
-0211                       ;------------------------------------------------------
-0212                       ; Call function in bank 4
-0213                       ;------------------------------------------------------
-0214 7BBC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BBE 30D8     
-0215 7BC0 6008                   data bank4.rom        ; | i  p0 = bank address
-0216 7BC2 7FBA                   data vec.38           ; | i  p1 = Vector with target address
-0217 7BC4 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0218                       ;------------------------------------------------------
-0219                       ; Exit
-0220                       ;------------------------------------------------------
-0221 7BC6 C2F9  30         mov   *stack+,r11           ; Pop r11
-0222 7BC8 045B  20         b     *r11                  ; Return to caller
+0208               pane.filebrowser.colbar:
+0209 7BC4 C820  54         mov   @pane.filebrowser.colbar.vector,@trmpvector
+     7BC6 7BCC     
+     7BC8 A034     
+0210 7BCA 10BE  14         jmp   _trampoline.bank4.ret ; Longjump
+0211               pane.filebrowser.colbar.vector:
+0212 7BCC 7FD6             data  vec.52
+0213               
+0214               ***************************************************************
+0215               * Stub for "pane.filebrowser.colbar.remove"
+0216               * bank4 vec.53
+0217               ********|*****|*********************|**************************
+0218               pane.filebrowser.colbar.remove:
+0219 7BCE C820  54         mov   @pane.filebrowser.colbar.remove.vector,@trmpvector
+     7BD0 7BD6     
+     7BD2 A034     
+0220 7BD4 10B9  14         jmp   _trampoline.bank4.ret ; Longjump
+0221               pane.filebrowser.colbar.remove.vector:
+0222 7BD6 7FD8             data  vec.53
 0223               
 0224               ***************************************************************
-0225               * Stub for "pane.botline.busy.off"
-0226               * bank4 vec.39
-0227               ********|*****|*********************|**************************
-0228               pane.botline.busy.off:
-0229 7BCA 0649  14         dect  stack
-0230 7BCC C64B  30         mov   r11,*stack            ; Save return address
-0231                       ;------------------------------------------------------
-0232                       ; Call function in bank 4
-0233                       ;------------------------------------------------------
-0234 7BCE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BD0 30D8     
-0235 7BD2 6008                   data bank4.rom        ; | i  p0 = bank address
-0236 7BD4 7FBC                   data vec.39           ; | i  p1 = Vector with target address
-0237 7BD6 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0225               * Trampoline bank 5 with return
+0226               ********|*****|*********************|**************************
+0227               _trampoline.bank5.ret:
+0228 7BD8 0649  14         dect  stack
+0229 7BDA C64B  30         mov   r11,*stack            ; Save return address
+0230                       ;------------------------------------------------------
+0231                       ; Call routine in bank 5
+0232                       ;------------------------------------------------------
+0233 7BDC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7BDE 30D8     
+0234 7BE0 600A                   data bank5.rom        ; | i  p0 = bank address
+0235 7BE2 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0236                                                   ; |         (deref @trmpvector)
+0237 7BE4 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0238                       ;------------------------------------------------------
 0239                       ; Exit
 0240                       ;------------------------------------------------------
-0241 7BD8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0242 7BDA 045B  20         b     *r11                  ; Return to caller
+0241 7BE6 C2F9  30         mov   *stack+,r11           ; Pop r11
+0242 7BE8 045B  20         b     *r11                  ; Return to caller
 0243               
 0244               ***************************************************************
-0245               * Stub for "pane.cmdb.hide"
-0246               * bank4 vec.49
+0245               * Stub for "edb.clear.sams"
+0246               * bank5 vec.1
 0247               ********|*****|*********************|**************************
-0248               pane.cmdb.hide:
-0249 7BDC 0649  14         dect  stack
-0250 7BDE C64B  30         mov   r11,*stack            ; Save return address
-0251                       ;------------------------------------------------------
-0252                       ; Call function in bank 4
-0253                       ;------------------------------------------------------
-0254 7BE0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BE2 30D8     
-0255 7BE4 6008                   data bank4.rom        ; | i  p0 = bank address
-0256 7BE6 7FD0                   data vec.49           ; | i  p1 = Vector with target address
-0257 7BE8 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0258                       ;------------------------------------------------------
-0259                       ; Exit
-0260                       ;------------------------------------------------------
-0261 7BEA C2F9  30         mov   *stack+,r11           ; Pop r11
-0262 7BEC 045B  20         b     *r11                  ; Return to caller
+0248               edb.clear.sams:
+0249 7BEA C820  54         mov   @edb.clear.sams.vector,@trmpvector
+     7BEC 7BF2     
+     7BEE A034     
+0250 7BF0 10F3  14         jmp   _trampoline.bank5.ret ; Longjump
+0251               edb.clear.sams.vector:
+0252 7BF2 7F70             data  vec.1
+0253               
+0254               ***************************************************************
+0255               * Stub for "fb.refresh"
+0256               * bank4 vec.8
+0257               ********|*****|*********************|**************************
+0258               fb.refresh:
+0259 7BF4 C820  54         mov   @fb.refresh.vector,@trmpvector
+     7BF6 7BFC     
+     7BF8 A034     
+0260 7BFA 10A6  14         jmp   _trampoline.bank4.ret ; Longjump
+0261               fb.refresh.vector:
+0262 7BFC 7F7E             data  vec.8
 0263               
 0264               ***************************************************************
-0265               * Stub for "pane.filebrowser"
-0266               * bank4 vec.50
+0265               * Stub for "edb.find.init"
+0266               * bank5 vec.15
 0267               ********|*****|*********************|**************************
-0268               pane.filebrowser:
-0269 7BEE 0649  14         dect  stack
-0270 7BF0 C64B  30         mov   r11,*stack            ; Save return address
-0271                       ;------------------------------------------------------
-0272                       ; Call function in bank 4
-0273                       ;------------------------------------------------------
-0274 7BF2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7BF4 30D8     
-0275 7BF6 6008                   data bank4.rom        ; | i  p0 = bank address
-0276 7BF8 7FD2                   data vec.50           ; | i  p1 = Vector with target address
-0277 7BFA 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0278                       ;------------------------------------------------------
-0279                       ; Exit
-0280                       ;------------------------------------------------------
-0281 7BFC C2F9  30         mov   *stack+,r11           ; Pop r11
-0282 7BFE 045B  20         b     *r11                  ; Return to caller
+0268               edb.find.init:
+0269 7BFE C820  54         mov   @edb.find.init.vector,@trmpvector
+     7C00 7C06     
+     7C02 A034     
+0270 7C04 10E9  14         jmp   _trampoline.bank5.ret ; Longjump
+0271               edb.find.init.vector:
+0272 7C06 7F8C             data  vec.15
+0273               
+0274               ***************************************************************
+0275               * Stub for "edb.find.search"
+0276               * bank5 vec.16
+0277               ********|*****|*********************|**************************
+0278               edb.find.search:
+0279 7C08 C820  54         mov   @edb.find.search.vector,@trmpvector
+     7C0A 7C10     
+     7C0C A034     
+0280 7C0E 10E4  14         jmp   _trampoline.bank5.ret ; Longjump
+0281               edb.find.search.vector:
+0282 7C10 7F8E             data  vec.16
 0283               
 0284               ***************************************************************
-0285               * Stub for "pane.filebrowser.colbar"
-0286               * bank4 vec.52
+0285               * Stub for "fm.clock.off"
+0286               * bank5 vec.27
 0287               ********|*****|*********************|**************************
-0288               pane.filebrowser.colbar:
-0289 7C00 0649  14         dect  stack
-0290 7C02 C64B  30         mov   r11,*stack            ; Save return address
-0291                       ;------------------------------------------------------
-0292                       ; Call function in bank 4
-0293                       ;------------------------------------------------------
-0294 7C04 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C06 30D8     
-0295 7C08 6008                   data bank4.rom        ; | i  p0 = bank address
-0296 7C0A 7FD6                   data vec.52           ; | i  p1 = Vector with target address
-0297 7C0C 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0298                       ;------------------------------------------------------
-0299                       ; Exit
+0288               fm.clock.off:
+0289 7C12 C820  54         mov   @fm.clock.off.vector,@trmpvector
+     7C14 7C1A     
+     7C16 A034     
+0290 7C18 10DF  14         jmp   _trampoline.bank5.ret ; Longjump
+0291               fm.clock.off.vector:
+0292 7C1A 7FA4             data  vec.27
+0293               
+0294               ***************************************************************
+0295               * Trampoline bank 6 with return
+0296               ********|*****|*********************|**************************
+0297               _trampoline.bank6.ret:
+0298 7C1C 0649  14         dect  stack
+0299 7C1E C64B  30         mov   r11,*stack            ; Save return address
 0300                       ;------------------------------------------------------
-0301 7C0E C2F9  30         mov   *stack+,r11           ; Pop r11
-0302 7C10 045B  20         b     *r11                  ; Return to caller
-0303               
-0304               ***************************************************************
-0305               * Stub for "pane.filebrowser.colbar.remove"
-0306               * bank4 vec.53
-0307               ********|*****|*********************|**************************
-0308               pane.filebrowser.colbar.remove:
-0309 7C12 0649  14         dect  stack
-0310 7C14 C64B  30         mov   r11,*stack            ; Save return address
-0311                       ;------------------------------------------------------
-0312                       ; Call function in bank 4
-0313                       ;------------------------------------------------------
-0314 7C16 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C18 30D8     
-0315 7C1A 6008                   data bank4.rom        ; | i  p0 = bank address
-0316 7C1C 7FD8                   data vec.53           ; | i  p1 = Vector with target address
-0317 7C1E 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0318                       ;------------------------------------------------------
-0319                       ; Exit
-0320                       ;------------------------------------------------------
-0321 7C20 C2F9  30         mov   *stack+,r11           ; Pop r11
-0322 7C22 045B  20         b     *r11                  ; Return to caller
+0301                       ; Call routine in bank 6
+0302                       ;------------------------------------------------------
+0303 7C20 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C22 30D8     
+0304 7C24 600C                   data bank6.rom        ; | i  p0 = bank address
+0305 7C26 FFFF                   data >ffff            ; | i  p1 = Vector with target address
+0306                                                   ; |         (deref @trmpvector)
+0307 7C28 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0308                       ;------------------------------------------------------
+0309                       ; Exit
+0310                       ;------------------------------------------------------
+0311 7C2A C2F9  30         mov   *stack+,r11           ; Pop r11
+0312 7C2C 045B  20         b     *r11                  ; Return to caller
+0313               
+0314               ***************************************************************
+0315               * Stub for "vdp.dump.patterns"
+0316               * bank6 vec.1
+0317               ********|*****|*********************|**************************
+0318               vdp.dump.patterns:
+0319 7C2E C820  54         mov   @vdp.dump.patterns.vector,@trmpvector
+     7C30 7C36     
+     7C32 A034     
+0320 7C34 10F3  14         jmp   _trampoline.bank6.ret ; Longjump
+0321               vdp.dump.patterns.vector:
+0322 7C36 7F70             data  vec.1
 0323               
 0324               ***************************************************************
-0325               * Stub for "edb.clear.sams"
-0326               * bank5 vec.1
+0325               * Stub for "vdp.colors.line"
+0326               * bank6 vec.3
 0327               ********|*****|*********************|**************************
-0328               edb.clear.sams:
-0329 7C24 0649  14         dect  stack
-0330 7C26 C64B  30         mov   r11,*stack            ; Save return address
-0331                       ;------------------------------------------------------
-0332                       ; Call function in bank 5
-0333                       ;------------------------------------------------------
-0334 7C28 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C2A 30D8     
-0335 7C2C 600A                   data bank5.rom        ; | i  p0 = bank address
-0336 7C2E 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0337 7C30 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0338                       ;------------------------------------------------------
-0339                       ; Exit
-0340                       ;------------------------------------------------------
-0341 7C32 C2F9  30         mov   *stack+,r11           ; Pop r11
-0342 7C34 045B  20         b     *r11                  ; Return to caller
-0343               
-0344               ***************************************************************
-0345               * Stub for "fb.refresh"
-0346               * bank4 vec.8
-0347               ********|*****|*********************|**************************
-0348               fb.refresh:
-0349 7C36 0649  14         dect  stack
-0350 7C38 C64B  30         mov   r11,*stack            ; Save return address
-0351                       ;------------------------------------------------------
-0352                       ; Call function in bank 4
-0353                       ;------------------------------------------------------
-0354 7C3A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C3C 30D8     
-0355 7C3E 6008                   data bank4.rom        ; | i  p0 = bank address
-0356 7C40 7F7E                   data vec.8            ; | i  p1 = Vector with target address
-0357 7C42 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0358                       ;------------------------------------------------------
-0359                       ; Exit
-0360                       ;------------------------------------------------------
-0361 7C44 C2F9  30         mov   *stack+,r11           ; Pop r11
-0362 7C46 045B  20         b     *r11                  ; Return to caller
-0363               
-0364               ***************************************************************
-0365               * Stub for "edb.find.init"
-0366               * bank5 vec.15
-0367               ********|*****|*********************|**************************
-0368               edb.find.init:
-0369 7C48 0649  14         dect  stack
-0370 7C4A C64B  30         mov   r11,*stack            ; Save return address
+0328               vdp.colors.line:
+0329 7C38 C820  54         mov   @vdp.colors.line.vector,@trmpvector
+     7C3A 7C40     
+     7C3C A034     
+0330 7C3E 10EE  14         jmp   _trampoline.bank6.ret ; Longjump
+0331               vdp.colors.line.vector:
+0332 7C40 7F74             data  vec.3
+0333               
+0334               ***************************************************************
+0335               * Stub for "vdp.cursor.tat.cmdb.hide"
+0336               * bank6 vec.6
+0337               ********|*****|*********************|**************************
+0338               vdp.cursor.tat.cmdb.hide:
+0339 7C42 0649  14         dect  stack
+0340 7C44 C64B  30         mov   r11,*stack            ; Save return address
+0341                       ;------------------------------------------------------
+0342                       ; Call function in bank 6
+0343                       ;------------------------------------------------------
+0344 7C46 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C48 30D8     
+0345 7C4A 600C                   data bank6.rom        ; | i  p0 = bank address
+0346 7C4C 7F7A                   data vec.6            ; | i  p1 = Vector with target address
+0347 7C4E 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0348                       ;------------------------------------------------------
+0349                       ; Exit
+0350                       ;------------------------------------------------------
+0351               vdp.cursor.tat.cmdb.hide.exit:
+0352 7C50 C2F9  30         mov   *stack+,r11           ; Pop r11
+0353 7C52 045B  20         b     *r11                  ; Return to caller
+0354               
+0355               ***************************************************************
+0356               * Stub for "tv.set.font"
+0357               * bank6 vec.32
+0358               ********|*****|*********************|**************************
+0359               tv.set.font:
+0360 7C54 0649  14         dect  stack
+0361 7C56 C64B  30         mov   r11,*stack            ; Save return address
+0362                       ;------------------------------------------------------
+0363                       ; Call function in bank 6
+0364                       ;------------------------------------------------------
+0365 7C58 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C5A 30D8     
+0366 7C5C 600C                   data bank6.rom        ; | i  p0 = bank address
+0367 7C5E 7FAE                   data vec.32           ; | i  p1 = Vector with target address
+0368 7C60 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0369                       ;------------------------------------------------------
+0370                       ; Exit
 0371                       ;------------------------------------------------------
-0372                       ; Call function in bank 5
-0373                       ;------------------------------------------------------
-0374 7C4C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C4E 30D8     
-0375 7C50 600A                   data bank5.rom        ; | i  p0 = bank address
-0376 7C52 7F8C                   data vec.15           ; | i  p1 = Vector with target address
-0377 7C54 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0378                       ;------------------------------------------------------
-0379                       ; Exit
-0380                       ;------------------------------------------------------
-0381 7C56 C2F9  30         mov   *stack+,r11           ; Pop r11
-0382 7C58 045B  20         b     *r11                  ; Return to caller
-0383               
-0384               ***************************************************************
-0385               * Stub for "edb.find.search"
-0386               * bank5 vec.16
-0387               ********|*****|*********************|**************************
-0388               edb.find.search:
-0389 7C5A 0649  14         dect  stack
-0390 7C5C C64B  30         mov   r11,*stack            ; Save return address
-0391                       ;------------------------------------------------------
-0392                       ; Call function in bank 5
-0393                       ;------------------------------------------------------
-0394 7C5E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C60 30D8     
-0395 7C62 600A                   data bank5.rom        ; | i  p0 = bank address
-0396 7C64 7F8E                   data vec.16           ; | i  p1 = Vector with target address
-0397 7C66 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0398                       ;------------------------------------------------------
-0399                       ; Exit
-0400                       ;------------------------------------------------------
-0401 7C68 C2F9  30         mov   *stack+,r11           ; Pop r11
-0402 7C6A 045B  20         b     *r11                  ; Return to caller
-0403               
-0404               ***************************************************************
-0405               * Stub for "fm.clock.off"
-0406               * bank5 vec.27
-0407               ********|*****|*********************|**************************
-0408               fm.clock.off:
-0409 7C6C 0649  14         dect  stack
-0410 7C6E C64B  30         mov   r11,*stack            ; Save return address
+0372               tv.set.font.exit:
+0373 7C62 C2F9  30         mov   *stack+,r11           ; Pop r11
+0374 7C64 045B  20         b     *r11                  ; Return to caller
+0375               
+0376               ***************************************************************
+0377               * Stub for "tv.reset"
+0378               * bank7 vec.23
+0379               ********|*****|*********************|**************************
+0380               tv.reset:
+0381 7C66 0649  14         dect  stack
+0382 7C68 C64B  30         mov   r11,*stack            ; Save return address
+0383                       ;------------------------------------------------------
+0384                       ; Call routine in specified bank
+0385                       ;------------------------------------------------------
+0386 7C6A 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C6C 30D8     
+0387 7C6E 600E                   data bank7.rom        ; | i  p0 = bank address
+0388 7C70 7F9C                   data vec.23           ; | i  p1 = Vector with target address
+0389 7C72 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0390                       ;------------------------------------------------------
+0391                       ; Exit
+0392                       ;------------------------------------------------------
+0393               tv.reset.exit:
+0394 7C74 C2F9  30         mov   *stack+,r11           ; Pop r11
+0395 7C76 045B  20         b     *r11                  ; Return to caller
+0396               
+0397               ***************************************************************
+0398               * Stub for "mem.run.ea5"
+0399               * bank7 vec.12
+0400               ********|*****|*********************|**************************
+0401               mem.run.ea5:
+0402 7C78 0649  14         dect  stack
+0403 7C7A C64B  30         mov   r11,*stack            ; Save return address
+0404                       ;------------------------------------------------------
+0405                       ; Call routine in specified bank
+0406                       ;------------------------------------------------------
+0407 7C7C 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C7E 30D8     
+0408 7C80 600E                   data bank7.rom        ; | i  p0 = bank address
+0409 7C82 7F86                   data vec.12           ; | i  p1 = Vector with target address
+0410 7C84 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0411                       ;------------------------------------------------------
-0412                       ; Call function in bank 5
+0412                       ; Exit
 0413                       ;------------------------------------------------------
-0414 7C70 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C72 30D8     
-0415 7C74 600A                   data bank5.rom        ; | i  p0 = bank address
-0416 7C76 7FA4                   data vec.27           ; | i  p1 = Vector with target address
-0417 7C78 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0418                       ;------------------------------------------------------
-0419                       ; Exit
-0420                       ;------------------------------------------------------
-0421 7C7A C2F9  30         mov   *stack+,r11           ; Pop r11
-0422 7C7C 045B  20         b     *r11                  ; Return to caller
-0423               
-0424               ***************************************************************
-0425               * Stub for "vdp.dump.patterns"
-0426               * bank6 vec.1
-0427               ********|*****|*********************|**************************
-0428               vdp.dump.patterns:
-0429 7C7E 0649  14         dect  stack
-0430 7C80 C64B  30         mov   r11,*stack            ; Save return address
-0431                       ;------------------------------------------------------
-0432                       ; Call function in bank 6
-0433                       ;------------------------------------------------------
-0434 7C82 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C84 30D8     
-0435 7C86 600C                   data bank6.rom        ; | i  p0 = bank address
-0436 7C88 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0437 7C8A 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0438                       ;------------------------------------------------------
-0439                       ; Exit
-0440                       ;------------------------------------------------------
-0441 7C8C C2F9  30         mov   *stack+,r11           ; Pop r11
-0442 7C8E 045B  20         b     *r11                  ; Return to caller
-0443               
-0444               ***************************************************************
-0445               * Stub for "vdp.colors.line"
-0446               * bank6 vec.3
-0447               ********|*****|*********************|**************************
-0448               vdp.colors.line:
-0449 7C90 0649  14         dect  stack
-0450 7C92 C64B  30         mov   r11,*stack            ; Save return address
-0451                       ;------------------------------------------------------
-0452                       ; Call function in bank 6
-0453                       ;------------------------------------------------------
-0454 7C94 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7C96 30D8     
-0455 7C98 600C                   data bank6.rom        ; | i  p0 = bank address
-0456 7C9A 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0457 7C9C 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0458                       ;------------------------------------------------------
-0459                       ; Exit
-0460                       ;------------------------------------------------------
-0461 7C9E C2F9  30         mov   *stack+,r11           ; Pop r11
-0462 7CA0 045B  20         b     *r11                  ; Return to caller
-0463               
-0464               ***************************************************************
-0465               * Stub for "vdp.cursor.tat.cmdb.hide"
-0466               * bank6 vec.6
-0467               ********|*****|*********************|**************************
-0468               vdp.cursor.tat.cmdb.hide:
-0469 7CA2 0649  14         dect  stack
-0470 7CA4 C64B  30         mov   r11,*stack            ; Save return address
-0471                       ;------------------------------------------------------
-0472                       ; Call function in bank 6
-0473                       ;------------------------------------------------------
-0474 7CA6 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CA8 30D8     
-0475 7CAA 600C                   data bank6.rom        ; | i  p0 = bank address
-0476 7CAC 7F7A                   data vec.6            ; | i  p1 = Vector with target address
-0477 7CAE 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0478                       ;------------------------------------------------------
-0479                       ; Exit
-0480                       ;------------------------------------------------------
-0481               vdp.cursor.tat.cmdb.hide.exit:
-0482 7CB0 C2F9  30         mov   *stack+,r11           ; Pop r11
-0483 7CB2 045B  20         b     *r11                  ; Return to caller
-0484               
-0485               ***************************************************************
-0486               * Stub for "tv.set.font"
-0487               * bank6 vec.32
-0488               ********|*****|*********************|**************************
-0489               tv.set.font:
-0490 7CB4 0649  14         dect  stack
-0491 7CB6 C64B  30         mov   r11,*stack            ; Save return address
-0492                       ;------------------------------------------------------
-0493                       ; Call function in bank 6
-0494                       ;------------------------------------------------------
-0495 7CB8 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CBA 30D8     
-0496 7CBC 600C                   data bank6.rom        ; | i  p0 = bank address
-0497 7CBE 7FAE                   data vec.32           ; | i  p1 = Vector with target address
-0498 7CC0 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0499                       ;------------------------------------------------------
-0500                       ; Exit
-0501                       ;------------------------------------------------------
-0502               tv.set.font.exit:
-0503 7CC2 C2F9  30         mov   *stack+,r11           ; Pop r11
-0504 7CC4 045B  20         b     *r11                  ; Return to caller
-0505               
-0506               ***************************************************************
-0507               * Stub for "tv.reset"
-0508               * bank7 vec.23
-0509               ********|*****|*********************|**************************
-0510               tv.reset:
-0511 7CC6 0649  14         dect  stack
-0512 7CC8 C64B  30         mov   r11,*stack            ; Save return address
-0513                       ;------------------------------------------------------
-0514                       ; Call routine in specified bank
-0515                       ;------------------------------------------------------
-0516 7CCA 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CCC 30D8     
-0517 7CCE 600E                   data bank7.rom        ; | i  p0 = bank address
-0518 7CD0 7F9C                   data vec.23           ; | i  p1 = Vector with target address
-0519 7CD2 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0520                       ;------------------------------------------------------
-0521                       ; Exit
-0522                       ;------------------------------------------------------
-0523               tv.reset.exit:
-0524 7CD4 C2F9  30         mov   *stack+,r11           ; Pop r11
-0525 7CD6 045B  20         b     *r11                  ; Return to caller
-0526               
-0527               ***************************************************************
-0528               * Stub for "mem.run.ea5"
-0529               * bank7 vec.12
-0530               ********|*****|*********************|**************************
-0531               mem.run.ea5:
-0532 7CD8 0649  14         dect  stack
-0533 7CDA C64B  30         mov   r11,*stack            ; Save return address
-0534                       ;------------------------------------------------------
-0535                       ; Call routine in specified bank
-0536                       ;------------------------------------------------------
-0537 7CDC 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CDE 30D8     
-0538 7CE0 600E                   data bank7.rom        ; | i  p0 = bank address
-0539 7CE2 7F86                   data vec.12           ; | i  p1 = Vector with target address
-0540 7CE4 6004                   data bankid           ; / i  p2 = Source ROM bank for return
-0541                       ;------------------------------------------------------
-0542                       ; Exit
-0543                       ;------------------------------------------------------
-0544               mem.run.ea5.exit:
-0545 7CE6 C2F9  30         mov   *stack+,r11           ; Pop r11
-0546 7CE8 045B  20         b     *r11                  ; Return to caller
+0414               mem.run.ea5.exit:
+0415 7C86 C2F9  30         mov   *stack+,r11           ; Pop r11
+0416 7C88 045B  20         b     *r11                  ; Return to caller
                    < stevie_b2.asm
 0101                       copy  "rom.stubs.bankx.asm" ; Stubs to include in all banks
      **** ****     > rom.stubs.bankx.asm
@@ -17097,21 +16992,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0009               * bank1 vec.1
 0010               ********|*****|*********************|**************************
 0011               mem.sams.setup.stevie:
-0012 7CEA 0649  14         dect  stack
-0013 7CEC C64B  30         mov   r11,*stack            ; Save return address
+0012 7C8A 0649  14         dect  stack
+0013 7C8C C64B  30         mov   r11,*stack            ; Save return address
 0014                       ;------------------------------------------------------
 0015                       ; Call function in bank 1
 0016                       ;------------------------------------------------------
-0017 7CEE 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7CF0 30D8     
-0018 7CF2 6002                   data bank1.rom        ; | i  p0 = bank address
-0019 7CF4 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0020 7CF6 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0017 7C8E 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7C90 30D8     
+0018 7C92 6002                   data bank1.rom        ; | i  p0 = bank address
+0019 7C94 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0020 7C96 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0021                       ;------------------------------------------------------
 0022                       ; Exit
 0023                       ;------------------------------------------------------
-0024 7CF8 C2F9  30         mov   *stack+,r11           ; Pop r11
-0025 7CFA 045B  20         b     *r11                  ; Return to caller
+0024 7C98 C2F9  30         mov   *stack+,r11           ; Pop r11
+0025 7C9A 045B  20         b     *r11                  ; Return to caller
 0027               
 0028               
 0031               
@@ -17120,21 +17015,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0034               * bank7 vec.1
 0035               ********|*****|*********************|**************************
 0036               mem.sams.set.legacy:
-0037 7CFC 0649  14         dect  stack
-0038 7CFE C64B  30         mov   r11,*stack            ; Save return address
+0037 7C9C 0649  14         dect  stack
+0038 7C9E C64B  30         mov   r11,*stack            ; Save return address
 0039                       ;------------------------------------------------------
 0040                       ; Dump VDP patterns
 0041                       ;------------------------------------------------------
-0042 7D00 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D02 30D8     
-0043 7D04 600E                   data bank7.rom        ; | i  p0 = bank address
-0044 7D06 7F70                   data vec.1            ; | i  p1 = Vector with target address
-0045 7D08 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0042 7CA0 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CA2 30D8     
+0043 7CA4 600E                   data bank7.rom        ; | i  p0 = bank address
+0044 7CA6 7F70                   data vec.1            ; | i  p1 = Vector with target address
+0045 7CA8 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0046                       ;------------------------------------------------------
 0047                       ; Exit
 0048                       ;------------------------------------------------------
-0049 7D0A C2F9  30         mov   *stack+,r11           ; Pop r11
-0050 7D0C 045B  20         b     *r11                  ; Return to caller
+0049 7CAA C2F9  30         mov   *stack+,r11           ; Pop r11
+0050 7CAC 045B  20         b     *r11                  ; Return to caller
 0051               
 0052               
 0053               ***************************************************************
@@ -17143,21 +17038,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0056               * bank7 vec.2
 0057               ********|*****|*********************|**************************
 0058               mem.sams.set.boot:
-0059 7D0E 0649  14         dect  stack
-0060 7D10 C64B  30         mov   r11,*stack            ; Save return address
+0059 7CAE 0649  14         dect  stack
+0060 7CB0 C64B  30         mov   r11,*stack            ; Save return address
 0061                       ;------------------------------------------------------
 0062                       ; Dump VDP patterns
 0063                       ;------------------------------------------------------
-0064 7D12 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D14 30D8     
-0065 7D16 600E                   data bank7.rom        ; | i  p0 = bank address
-0066 7D18 7F72                   data vec.2            ; | i  p1 = Vector with target address
-0067 7D1A 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0064 7CB2 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CB4 30D8     
+0065 7CB6 600E                   data bank7.rom        ; | i  p0 = bank address
+0066 7CB8 7F72                   data vec.2            ; | i  p1 = Vector with target address
+0067 7CBA 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0068                       ;------------------------------------------------------
 0069                       ; Exit
 0070                       ;------------------------------------------------------
-0071 7D1C C2F9  30         mov   *stack+,r11           ; Pop r11
-0072 7D1E 045B  20         b     *r11                  ; Return to caller
+0071 7CBC C2F9  30         mov   *stack+,r11           ; Pop r11
+0072 7CBE 045B  20         b     *r11                  ; Return to caller
 0073               
 0074               
 0075               ***************************************************************
@@ -17165,21 +17060,21 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0077               * bank7 vec.3
 0078               ********|*****|*********************|**************************
 0079               mem.sams.set.stevie:
-0080 7D20 0649  14         dect  stack
-0081 7D22 C64B  30         mov   r11,*stack            ; Save return address
+0080 7CC0 0649  14         dect  stack
+0081 7CC2 C64B  30         mov   r11,*stack            ; Save return address
 0082                       ;------------------------------------------------------
 0083                       ; Dump VDP patterns
 0084                       ;------------------------------------------------------
-0085 7D24 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
-     7D26 30D8     
-0086 7D28 600E                   data bank7.rom        ; | i  p0 = bank address
-0087 7D2A 7F74                   data vec.3            ; | i  p1 = Vector with target address
-0088 7D2C 6004                   data bankid           ; / i  p2 = Source ROM bank for return
+0085 7CC4 06A0  32         bl    @rom.farjump          ; \ Trampoline jump to bank
+     7CC6 30D8     
+0086 7CC8 600E                   data bank7.rom        ; | i  p0 = bank address
+0087 7CCA 7F74                   data vec.3            ; | i  p1 = Vector with target address
+0088 7CCC 6004                   data bankid           ; / i  p2 = Source ROM bank for return
 0089                       ;------------------------------------------------------
 0090                       ; Exit
 0091                       ;------------------------------------------------------
-0092 7D2E C2F9  30         mov   *stack+,r11           ; Pop r11
-0093 7D30 045B  20         b     *r11                  ; Return to caller
+0092 7CCE C2F9  30         mov   *stack+,r11           ; Pop r11
+0093 7CD0 045B  20         b     *r11                  ; Return to caller
 0094               
                    < stevie_b2.asm
 0102                       ;-----------------------------------------------------------------------
@@ -17196,13 +17091,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0007               ********|*****|*********************|**************************
 0008                       even                        ; Must always start on even address!!
 0009               fh.file.pab.header.cat:
-0010 7D32 00               byte  io.op.open            ;  0    - OPEN
-0011 7D33   0D             byte  io.rel.inp.int.fix    ;  1    - INPUT, RELATIVE, INTERNAL, FIXED
-0012 7D34 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-0013 7D36 26               byte  38                    ;  4    - Record length (unset, DSR control)
-0014 7D37   00             byte  00                    ;  5    - Character count
-0015 7D38 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
-0016 7D3A 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
+0010 7CD2 00               byte  io.op.open            ;  0    - OPEN
+0011 7CD3   0D             byte  io.rel.inp.int.fix    ;  1    - INPUT, RELATIVE, INTERNAL, FIXED
+0012 7CD4 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+0013 7CD6 26               byte  38                    ;  4    - Record length (unset, DSR control)
+0014 7CD7   00             byte  00                    ;  5    - Character count
+0015 7CD8 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
+0016 7CDA 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
 0017                       ;------------------------------------------------------
 0018                       ; Filename descriptor part (variable length)
 0019                       ;------------------------------------------------------
@@ -17215,13 +17110,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0026               ********|*****|*********************|**************************
 0027                       even                        ; Must always start on even address!!
 0028               fh.file.pab.header:
-0029 7D3C 00               byte  io.op.open            ;  0    - OPEN
-0030 7D3D   14             byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
-0031 7D3E 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-0032 7D40 50               byte  80                    ;  4    - Record length (80 chars max)
-0033 7D41   00             byte  00                    ;  5    - Character count
-0034 7D42 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
-0035 7D44 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
+0029 7CDC 00               byte  io.op.open            ;  0    - OPEN
+0030 7CDD   14             byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
+0031 7CDE 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+0032 7CE0 50               byte  80                    ;  4    - Record length (80 chars max)
+0033 7CE1   00             byte  00                    ;  5    - Character count
+0034 7CE2 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
+0035 7CE4 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
 0036                       ;------------------------------------------------------
 0037                       ; File descriptor part (variable length)
 0038                       ;------------------------------------------------------
@@ -17234,13 +17129,13 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0045               ********|*****|*********************|**************************
 0046                       even                        ; Must always start on even address!!
 0047               fh.file.pab.clock:
-0048 7D46 00               byte  io.op.open            ;  0    - OPEN
-0049 7D47   14             byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
-0050 7D48 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
-0051 7D4A 00               byte  0                     ;  4    - Record length (let it figure out)
-0052 7D4B   00             byte  00                    ;  5    - Character count
-0053 7D4C 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
-0054 7D4E 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
+0048 7CE6 00               byte  io.op.open            ;  0    - OPEN
+0049 7CE7   14             byte  io.seq.inp.dis.var    ;  1    - INPUT, VARIABLE, DISPLAY
+0050 7CE8 2620             data  fh.vrecbuf            ;  2-3  - Record buffer in VDP memory
+0051 7CEA 00               byte  0                     ;  4    - Record length (let it figure out)
+0052 7CEB   00             byte  00                    ;  5    - Character count
+0053 7CEC 0000             data  >0000                 ;  6-7  - Seek record (only for fixed recs)
+0054 7CEE 00               byte  >00                   ;  8    - Screen offset (cassette DSR only)
 0055                       ;------------------------------------------------------
 0056                       ; File descriptor part (variable length)
 0057                       ;------------------------------------------------------
@@ -17253,12 +17148,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0064               ********|*****|*********************|**************************
 0065                       even                        ; Must always start on even address!!
 0066               fh.file.pab.header.binimage:
-0067 7D50 05               byte  io.op.load            ;  0    - LOAD BINARY
-0068 7D51   00             byte  00                    ;  1    - Not used
-0069 7D52 2000             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
-0070 7D54 0000             data  >0000                 ;  4-5  - Not used in load operation
-0071 7D56 2006             data  8198                  ;  6-7  - Maximum number of bytes to load
-0072 7D58 00               byte  00                    ;  8    - Not used
+0067 7CF0 05               byte  io.op.load            ;  0    - LOAD BINARY
+0068 7CF1   00             byte  00                    ;  1    - Not used
+0069 7CF2 2000             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
+0070 7CF4 0000             data  >0000                 ;  4-5  - Not used in load operation
+0071 7CF6 2006             data  8198                  ;  6-7  - Maximum number of bytes to load
+0072 7CF8 00               byte  00                    ;  8    - Not used
 0073                       ;------------------------------------------------------
 0074                       ; File descriptor part (variable length)
 0075                       ;------------------------------------------------------
@@ -17271,12 +17166,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0082               ********|*****|*********************|**************************
 0083                       even                        ; Must always start on even address!!
 0084               fh.file.pab.header.delete:
-0085 7D5A 07               byte  io.op.delete          ;  0    - DELETE
-0086 7D5B   00             byte  00                    ;  1    - Not used
-0087 7D5C 2000             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
-0088 7D5E 0000             data  >0000                 ;  4-5  - Not used
-0089 7D60 0000             data  0                     ;  6-7  - Not used
-0090 7D62 00               byte  0                     ;  8    - Not used
+0085 7CFA 07               byte  io.op.delete          ;  0    - DELETE
+0086 7CFB   00             byte  00                    ;  1    - Not used
+0087 7CFC 2000             data  fh.filebuf            ;  2-3  - Buffer location in VDP memory
+0088 7CFE 0000             data  >0000                 ;  4-5  - Not used
+0089 7D00 0000             data  0                     ;  6-7  - Not used
+0090 7D02 00               byte  0                     ;  8    - Not used
 0091                       ;------------------------------------------------------
 0092                       ; File descriptor part (variable length)
 0093                       ;------------------------------------------------------
@@ -17293,59 +17188,59 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0005               *                     Device names
 0006               ********|*****|*********************|**************************
 0007                             even
-0008 7D64 0544     def.dsk1      stri 'DSK1.'
-     7D66 534B     
-     7D68 312E     
-0009 7D6A 0544     def.dsk2      stri 'DSK2.'
-     7D6C 534B     
-     7D6E 322E     
-0010 7D70 0544     def.dsk3      stri 'DSK3.'
-     7D72 534B     
-     7D74 332E     
-0011 7D76 0544     def.dsk4      stri 'DSK4.'
-     7D78 534B     
-     7D7A 342E     
-0012 7D7C 0544     def.dsk5      stri 'DSK5.'
-     7D7E 534B     
-     7D80 352E     
-0013 7D82 0544     def.dsk6      stri 'DSK6.'
-     7D84 534B     
-     7D86 362E     
-0014 7D88 0544     def.dsk7      stri 'DSK7.'
-     7D8A 534B     
-     7D8C 372E     
-0015 7D8E 0544     def.dsk8      stri 'DSK8.'
-     7D90 534B     
-     7D92 382E     
-0016 7D94 0544     def.dsk9      stri 'DSK9.'
-     7D96 534B     
-     7D98 392E     
-0017 7D9A 0554     def.tipi      stri 'TIPI.'
-     7D9C 4950     
-     7D9E 492E     
-0018 7DA0 0553     def.scs1      stri 'SCS1.'
-     7DA2 4353     
-     7DA4 312E     
-0019 7DA6 0553     def.scs2      stri 'SCS2.'
-     7DA8 4353     
-     7DAA 322E     
-0020 7DAC 0553     def.scs3      stri 'SCS3.'
-     7DAE 4353     
-     7DB0 332E     
-0021 7DB2 0549     def.ide1      stri 'IDE1.'
-     7DB4 4445     
-     7DB6 312E     
-0022 7DB8 0549     def.ide2      stri 'IDE2.'
-     7DBA 4445     
-     7DBC 322E     
-0023 7DBE 0549     def.ide3      stri 'IDE3.'
-     7DC0 4445     
-     7DC2 332E     
-0024 7DC4 0850     def.clock     stri 'PI.CLOCK'
-     7DC6 492E     
-     7DC8 434C     
-     7DCA 4F43     
-     7DCC 4B       
+0008 7D04 0544     def.dsk1      stri 'DSK1.'
+     7D06 534B     
+     7D08 312E     
+0009 7D0A 0544     def.dsk2      stri 'DSK2.'
+     7D0C 534B     
+     7D0E 322E     
+0010 7D10 0544     def.dsk3      stri 'DSK3.'
+     7D12 534B     
+     7D14 332E     
+0011 7D16 0544     def.dsk4      stri 'DSK4.'
+     7D18 534B     
+     7D1A 342E     
+0012 7D1C 0544     def.dsk5      stri 'DSK5.'
+     7D1E 534B     
+     7D20 352E     
+0013 7D22 0544     def.dsk6      stri 'DSK6.'
+     7D24 534B     
+     7D26 362E     
+0014 7D28 0544     def.dsk7      stri 'DSK7.'
+     7D2A 534B     
+     7D2C 372E     
+0015 7D2E 0544     def.dsk8      stri 'DSK8.'
+     7D30 534B     
+     7D32 382E     
+0016 7D34 0544     def.dsk9      stri 'DSK9.'
+     7D36 534B     
+     7D38 392E     
+0017 7D3A 0554     def.tipi      stri 'TIPI.'
+     7D3C 4950     
+     7D3E 492E     
+0018 7D40 0553     def.scs1      stri 'SCS1.'
+     7D42 4353     
+     7D44 312E     
+0019 7D46 0553     def.scs2      stri 'SCS2.'
+     7D48 4353     
+     7D4A 322E     
+0020 7D4C 0553     def.scs3      stri 'SCS3.'
+     7D4E 4353     
+     7D50 332E     
+0021 7D52 0549     def.ide1      stri 'IDE1.'
+     7D54 4445     
+     7D56 312E     
+0022 7D58 0549     def.ide2      stri 'IDE2.'
+     7D5A 4445     
+     7D5C 322E     
+0023 7D5E 0549     def.ide3      stri 'IDE3.'
+     7D60 4445     
+     7D62 332E     
+0024 7D64 0850     def.clock     stri 'PI.CLOCK'
+     7D66 492E     
+     7D68 434C     
+     7D6A 4F43     
+     7D6C 4B       
 0025               *---------------------------------------------------------------
 0026               * List with device names
 0027               *-------------|---------------------|---------------------------
@@ -17354,26 +17249,26 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
 0030                       ;-------------------------------------------------------
 0031                       ; Pointers to device strings
 0032                       ;-------------------------------------------------------
-0033 7DCE 7D64             data  def.dsk1, def.dsk2, def.dsk3, def.dsk4, def.dsk5
-     7DD0 7D6A     
-     7DD2 7D70     
-     7DD4 7D76     
-     7DD6 7D7C     
-0034 7DD8 7D82             data  def.dsk6, def.dsk7, def.dsk8, def.dsk9, def.tipi
-     7DDA 7D88     
-     7DDC 7D8E     
-     7DDE 7D94     
-     7DE0 7D9A     
-0035 7DE2 7DA0             data  def.scs1, def.scs2, def.scs3, def.ide1, def.ide2
-     7DE4 7DA6     
-     7DE6 7DAC     
-     7DE8 7DB2     
-     7DEA 7DB8     
-0036 7DEC 7DBE             data  def.ide3
+0033 7D6E 7D04             data  def.dsk1, def.dsk2, def.dsk3, def.dsk4, def.dsk5
+     7D70 7D0A     
+     7D72 7D10     
+     7D74 7D16     
+     7D76 7D1C     
+0034 7D78 7D22             data  def.dsk6, def.dsk7, def.dsk8, def.dsk9, def.tipi
+     7D7A 7D28     
+     7D7C 7D2E     
+     7D7E 7D34     
+     7D80 7D3A     
+0035 7D82 7D40             data  def.scs1, def.scs2, def.scs3, def.ide1, def.ide2
+     7D84 7D46     
+     7D86 7D4C     
+     7D88 7D52     
+     7D8A 7D58     
+0036 7D8C 7D5E             data  def.ide3
 0037                       ;-------------------------------------------------------
 0038                       ; End of list
 0039                       ;-------------------------------------------------------
-0040 7DEE FFFF             data  EOL             ; EOL
+0040 7D8E FFFF             data  EOL             ; EOL
                    < stevie_b2.asm
 0107                       ;-----------------------------------------------------------------------
 0108                       ; Bank full check
@@ -17846,30 +17741,30 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     debug............... >0000 :     
     def.clip.fname.a.... >3db3 :     
     def.clip.fname.b.... >3dbe :     
-    def.clock........... >7dc4 :     
+    def.clock........... >7d64 :     
     def.device.......... >3df8 :     
     def.devices......... >3dc8 :     
-    def.dsk1............ >7d64 :     
-    def.dsk2............ >7d6a :     
-    def.dsk3............ >7d70 :     
-    def.dsk4............ >7d76 :     
-    def.dsk5............ >7d7c :     
-    def.dsk6............ >7d82 :     
-    def.dsk7............ >7d88 :     
-    def.dsk8............ >7d8e :     
-    def.dsk9............ >7d94 :     
+    def.dsk1............ >7d04 :     
+    def.dsk2............ >7d0a :     
+    def.dsk3............ >7d10 :     
+    def.dsk4............ >7d16 :     
+    def.dsk5............ >7d1c :     
+    def.dsk6............ >7d22 :     
+    def.dsk7............ >7d28 :     
+    def.dsk8............ >7d2e :     
+    def.dsk9............ >7d34 :     
     def.fg99.fname...... >3dfe :     
-    def.ide1............ >7db2 :     
-    def.ide2............ >7db8 :     
-    def.ide3............ >7dbe :     
+    def.ide1............ >7d52 :     
+    def.ide2............ >7d58 :     
+    def.ide3............ >7d5e :     
     def.printer.fname... >3dac :     
-    def.scs1............ >7da0 :     
-    def.scs2............ >7da6 :     
-    def.scs3............ >7dac :     
-    def.tipi............ >7d9a :     
+    def.scs1............ >7d40 :     
+    def.scs2............ >7d46 :     
+    def.scs3............ >7d4c :     
+    def.tipi............ >7d3a :     
     device.f18a......... >0001 :     
     device.fg99.mode.adv >0000 :     
-    device.list......... >7dce :     
+    device.list......... >7d6e :     
     dofill.............. >2280 :     
     down................ >272c :     
     dsrlnk.............. >2c4a :     
@@ -17910,13 +17805,16 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     edb.block.m1........ >a50e :     
     edb.block.m2........ >a510 :     
     edb.block.var....... >a512 :     
-    edb.clear.sams...... >7c24 :     
+    edb.clear.sams...... >7bea :     
+    edb.clear.sams.vector >7bf2 :     
     edb.dirty........... >a506 :     
     edb.filename........ >a526 :     
     edb.filename.ptr.... >a514 :     
     edb.filetype.ptr.... >a516 :     
-    edb.find.init....... >7c48 :     
-    edb.find.search..... >7c5a :     
+    edb.find.init....... >7bfe :     
+    edb.find.init.vector >7c06 :     
+    edb.find.search..... >7c08 :     
+    edb.find.search.vector >7c10 :     
     edb.free............ >a5dc :     
     edb.hipage.alloc.... >3850 :     
     edb.hipage.alloc.check_setpage >385e :     
@@ -17935,7 +17833,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     edb.line.mappage.... >3796 :     
     edb.line.mappage.exit >37da :     
     edb.line.mappage.lookup >37b2 :     
-    edb.line.unpack..... >7b04 :     
+    edb.line.unpack..... >7b16 :     
+    edb.line.unpack.vector >7b1e :     
     edb.lines........... >a504 :     
     edb.lineterm........ >a524 :     
     edb.locked.......... >a5da :     
@@ -17990,15 +17889,18 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     fb.colsline......... >a30e :     
     fb.column........... >a30c :     
     fb.current.......... >a302 :     
-    fb.cursor.top....... >7b94 :     
+    fb.cursor.top....... >7b88 :     
+    fb.cursor.top.vector >7b90 :     
     fb.curtoggle........ >a314 :     
     fb.dirty............ >a31a :     
     fb.free............. >a3c2 :     
-    fb.goto.nextmatch... >7ba6 :     
+    fb.goto.nextmatch... >7b92 :     
+    fb.goto.nextmatch.vector >7b9a :     
     fb.init............. >3188 :     
     fb.init.exit........ >31dc :     
     fb.prevcursor....... >a316 :     
-    fb.refresh.......... >7c36 :     
+    fb.refresh.......... >7bf4 :     
+    fb.refresh.vector... >7bfc :     
     fb.row.............. >a306 :     
     fb.row.dirty........ >a30a :     
     fb.row.length....... >a308 :     
@@ -18015,7 +17917,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     fb.top.ptr.......... >a300 :     
     fb.topline.......... >a304 :     
     fb.uncrunch.area.... >d960 :     
-    fb.vdpdump.......... >7b16 :     
+    fb.vdpdump.......... >7b20 :     
+    fb.vdpdump.vector... >7b28 :     
     fb.vwco............. >a310 :     
     fb.yxsave........... >a318 :     
     fg99................ >2ed8 :     
@@ -18066,11 +17969,11 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     fh.file.load.ea5.load >6876 :     
     fh.file.load.ea5.next >68ea :     
     fh.file.load.ea5.parm >684a :     
-    fh.file.pab.clock... >7d46 :     
-    fh.file.pab.header.. >7d3c :     
-    fh.file.pab.header.binimage >7d50 :     
-    fh.file.pab.header.cat >7d32 :     
-    fh.file.pab.header.delete >7d5a :     
+    fh.file.pab.clock... >7ce6 :     
+    fh.file.pab.header.. >7cdc :     
+    fh.file.pab.header.binimage >7cf0 :     
+    fh.file.pab.header.cat >7cd2 :     
+    fh.file.pab.header.delete >7cfa :     
     fh.file.read.crash.. >6298 :     
     fh.file.read.edb.... >61ee :     
     fh.file.read.edb.assert1 >623c :     
@@ -18211,7 +18114,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     fm.browse.updir.exit >7864 :     
     fm.browse.updir.loop1 >781e :     
     fm.browse.updir.loop1.cont >782e :     
-    fm.clock.off........ >7c6c :     
+    fm.clock.off........ >7c12 :     
+    fm.clock.off.vector. >7c1a :     
     fm.clock.read....... >6e12 :     
     fm.clock.read.cb.stopflag >7624 :     
     fm.clock.read.cb.stopflag.exit >762c :     
@@ -18666,12 +18570,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     mccode.............. >2210 :     
     mcloop.............. >8320 :     
     mcsprd.............. >8322 :     
-    mem.run.ea5......... >7cd8 :     
-    mem.run.ea5.exit.... >7ce6 :     
-    mem.sams.set.boot... >7d0e :     
-    mem.sams.set.legacy. >7cfc :     
-    mem.sams.set.stevie. >7d20 :     
-    mem.sams.setup.stevie >7cea :     
+    mem.run.ea5......... >7c78 :     
+    mem.run.ea5.exit.... >7c86 :     
+    mem.sams.set.boot... >7cae :     
+    mem.sams.set.legacy. >7c9c :     
+    mem.sams.set.stevie. >7cc0 :     
+    mem.sams.setup.stevie >7c8a :     
     mkhex............... >29c8 :     
     mkhex1.............. >29e0 :     
     mkhex1.digit09...... >29f6 :     
@@ -18706,19 +18610,29 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     outparm6............ >a022 :     
     outparm7............ >a024 :     
     palon............... >201c :     
-    pane.botline.busy.off >7bca :     
-    pane.botline.busy.on >7bb8 :     
+    pane.botline.busy.off >7ba6 :     
+    pane.botline.busy.off.vector >7bae :     
+    pane.botline.busy.on >7b9c :     
+    pane.botline.busy.on.vector >7ba4 :     
     pane.botrow......... >003b :     
-    pane.cmdb.hide...... >7bdc :     
-    pane.cmdb.show...... >7b82 :     
-    pane.colorscheme.botline >7b70 :     
-    pane.colorscheme.load >7b5e :     
-    pane.cursor.blink... >7b28 :     
-    pane.cursor.hide.... >7b3a :     
-    pane.errline.show... >7b4c :     
-    pane.filebrowser.... >7bee :     
-    pane.filebrowser.colbar >7c00 :     
-    pane.filebrowser.colbar.remove >7c12 :     
+    pane.cmdb.hide...... >7bb0 :     
+    pane.cmdb.hide.vector >7bb8 :     
+    pane.cmdb.show...... >7b76 :     
+    pane.colorscheme.botline >7b64 :     
+    pane.colorscheme.load >7b5a :     
+    pane.colorscheme.load.vector >7b62 :     
+    pane.cursor.blink... >7b2a :     
+    pane.cursor.blink.vector >7b32 :     
+    pane.cursor.hide.... >7b34 :     
+    pane.cursor.hide.vector >7b3c :     
+    pane.errline.show... >7b3e :     
+    pane.errline.show.vector >7b46 :     
+    pane.filebrowser.... >7bba :     
+    pane.filebrowser.colbar >7bc4 :     
+    pane.filebrowser.colbar.remove >7bce :     
+    pane.filebrowser.colbar.remove.vector >7bd6 :     
+    pane.filebrowser.colbar.vector >7bcc :     
+    pane.filebrowser.vector >7bc2 :     
     pane.focus.cmdb..... >0001 :     
     pane.focus.fb....... >0000 :     
     pane.topline.oneshot.clearmsg >3898 :     
@@ -19028,8 +18942,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.pane.focus....... >a22a :     
     tv.printer.fname.... >f7f0 :     
     tv.quit............. >34a6 :     
-    tv.reset............ >7cc6 :     
-    tv.reset.exit....... >7cd4 :     
+    tv.reset............ >7c66 :     
+    tv.reset.exit....... >7c74 :     
     tv.ruler.visible.... >a210 :     
     tv.rulercolor....... >a222 :     
     tv.sams.2000........ >a200 :     
@@ -19041,8 +18955,8 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     tv.sams.e000........ >a20c :     
     tv.sams.f000........ >a20e :     
     tv.sams.maxpage..... >0100 :     
-    tv.set.font......... >7cb4 :     
-    tv.set.font.exit.... >7cc2 :     
+    tv.set.font......... >7c54 :     
+    tv.set.font.exit.... >7c62 :     
     tv.show.linelen..... >a23e :     
     tv.skip.browser..... >a242 :     
     tv.sp2.conf......... >a234 :     
@@ -19143,10 +19057,12 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     vchar3.............. >2886 :     
     vdp.botrow.sit...... >1270 :     
     vdp.botrow.tat...... >2530 :     
-    vdp.colors.line..... >7c90 :     
-    vdp.cursor.tat.cmdb.hide >7ca2 :     
-    vdp.cursor.tat.cmdb.hide.exit >7cb0 :     
-    vdp.dump.patterns... >7c7e :     
+    vdp.colors.line..... >7c38 :     
+    vdp.colors.line.vector >7c40 :     
+    vdp.cursor.tat.cmdb.hide >7c42 :     
+    vdp.cursor.tat.cmdb.hide.exit >7c50 :     
+    vdp.dump.patterns... >7c2e :     
+    vdp.dump.patterns.vector >7c36 :     
     vdp.fb.toprow.sit... >0050 :     
     vdp.fb.toprow.tat... >1310 :     
     vdp.pdt.base........ >2800 :     
@@ -19339,3 +19255,7 @@ XAS99 CROSS-ASSEMBLER   VERSION 3.6.5
     _idx.sams.mapcolumn.on.exit >32cc :     
     _idx.samspage.get... >3310 :     
     _idx.samspage.get.exit >3356 :     
+    _trampoline.bank1.ret >7b04 :     
+    _trampoline.bank4.ret >7b48 :     
+    _trampoline.bank5.ret >7bd8 :     
+    _trampoline.bank6.ret >7c1c :     

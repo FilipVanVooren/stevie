@@ -12,7 +12,9 @@
 # Record types (inside sections):
 #   slot N <label|TRAP> [purpose]   vector slot 1-64
 #   stub <label> bank<D> vec.<N> trmp helper=<h> form=<jmp|bindirect> comment=".."
+#   stub <label> bank<D> vec.<N> lean  form=<jmp|bindirect>
 #   stub <label> bank<D> vec.<N> inline variant=<plain|exitlabel|regs>
+#   helper bank<D>                       shared tail-jump trampoline
 #   raw  <name.blk> [bank<D> vec.<N>]   verbatim block
 
 @vectors bank1   # 16/64 slots used
@@ -1008,15 +1010,15 @@ slot 64 TRAP
 @stubs bank1
 raw  bank1-01-fm.loadfile.blk bank2 vec.1
 stub fm.insertfile bank2 vec.2 inline variant=regs
-stub fm.run.ea5 bank2 vec.3 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.savefile bank2 vec.4 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.newfile bank2 vec.5 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.directory bank2 vec.6 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.browse.fname.prev bank2 vec.10 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.browse.fname.next bank2 vec.11 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.browse.fname.set bank2 vec.12 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.browse.updir bank2 vec.13 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
-stub fm.delfile bank2 vec.15 trmp helper=_trampoline.bank2.ret form=jmp comment="Longjump"
+stub fm.run.ea5 bank2 vec.3 lean form=jmp
+stub fm.savefile bank2 vec.4 lean form=jmp
+stub fm.newfile bank2 vec.5 lean form=jmp
+stub fm.directory bank2 vec.6 lean form=jmp
+stub fm.browse.fname.prev bank2 vec.10 lean form=jmp
+stub fm.browse.fname.next bank2 vec.11 lean form=jmp
+stub fm.browse.fname.set bank2 vec.12 lean form=jmp
+stub fm.browse.updir bank2 vec.13 lean form=jmp
+stub fm.delfile bank2 vec.15 lean form=jmp
 raw  bank1-02-_trampoline.bank2.ret.blk
 raw  bank1-03-dialog.help.next.blk bank3 vec.1
 stub dialog.help bank3 vec.1 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Help"
@@ -1042,79 +1044,79 @@ stub dialog.find bank3 vec.43 trmp helper=_trampoline.bank3 form=jmp comment="Sh
 stub dialog.delete bank3 vec.44 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "Delete File"
 stub dialog.cart.fg99 bank3 vec.45 trmp helper=_trampoline.bank3 form=jmp comment="Show dialog" desc=* Stub for dialog "FinalGROM 99 Cartridge"
 raw  bank1-06-_trampoline.bank3.blk
-stub pane.show_hintx bank3 vec.19 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub pane.cmdb.show bank4 vec.59 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub pane.cmdb.draw bank3 vec.22 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub cmdb.refresh_prompt bank3 vec.24 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub cmdb.cmd.clear bank3 vec.25 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub cmdb.cmd.getlength bank3 vec.26 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump" desc=* Stub for "cmdb.cmdb.getlength"
-stub cmdb.cmd.preset bank3 vec.27 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump" desc=* Stub for "cmdb.cmdb.preset"
-stub cmdb.cmd.set bank3 vec.28 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump" desc=* Stub for "cmdb.cmdb.set"
-stub cmdb.cmd.cursor_eol bank3 vec.29 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub cmdb.cmd.insert bank3 vec.38 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub cmdb.cmd.delete bank3 vec.39 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub tibasic.am.toggle bank3 vec.31 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub cmdb.cfg.fname bank3 vec.33 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub fm.lineterm bank3 vec.34 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub tv.autoinsert.toggle bank3 vec.35 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub tv.clock.toggle bank3 vec.36 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub tv.linelen.toggle bank3 vec.37 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub dialog bank3 vec.42 trmp helper=_trampoline.bank3.ret form=jmp comment="Longjump"
-stub error.display bank4 vec.45 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
+stub pane.show_hintx bank3 vec.19 lean form=jmp
+stub pane.cmdb.show bank4 vec.59 lean form=bindirect
+stub pane.cmdb.draw bank3 vec.22 lean form=jmp
+stub cmdb.refresh_prompt bank3 vec.24 lean form=jmp
+stub cmdb.cmd.clear bank3 vec.25 lean form=jmp
+stub cmdb.cmd.getlength bank3 vec.26 lean form=jmp desc=* Stub for "cmdb.cmdb.getlength"
+stub cmdb.cmd.preset bank3 vec.27 lean form=jmp desc=* Stub for "cmdb.cmdb.preset"
+stub cmdb.cmd.set bank3 vec.28 lean form=jmp desc=* Stub for "cmdb.cmdb.set"
+stub cmdb.cmd.cursor_eol bank3 vec.29 lean form=jmp
+stub cmdb.cmd.insert bank3 vec.38 lean form=jmp
+stub cmdb.cmd.delete bank3 vec.39 lean form=jmp
+stub tibasic.am.toggle bank3 vec.31 lean form=jmp
+stub cmdb.cfg.fname bank3 vec.33 lean form=jmp
+stub fm.lineterm bank3 vec.34 lean form=jmp
+stub tv.autoinsert.toggle bank3 vec.35 lean form=jmp
+stub tv.clock.toggle bank3 vec.36 lean form=jmp
+stub tv.linelen.toggle bank3 vec.37 lean form=jmp
+stub dialog bank3 vec.42 lean form=jmp
+stub error.display bank4 vec.45 lean form=bindirect
 raw  bank1-07-_trampoline.bank3.ret.blk
-stub fb.ruler.init bank4 vec.2 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub fb.colorlines bank4 vec.3 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub fb.vdpdump bank4 vec.4 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub fb.hscroll bank4 vec.6 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub fb.restore bank4 vec.7 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub fb.refresh bank4 vec.8 trmp helper=_trampoline.bank4.ret form=bindirect comment="Longjump"
-stub fb.get.nonblank bank4 vec.9 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.tab.prev bank4 vec.10 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.tab.next bank4 vec.11 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.up bank4 vec.12 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.down bank4 vec.13 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.home bank4 vec.14 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.insert.line bank4 vec.15 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.top bank4 vec.16 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.topscr bank4 vec.17 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.bot bank4 vec.18 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.cursor.botscr bank4 vec.19 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.insert.char bank4 vec.20 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.replace.char bank4 vec.21 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.goto.prevmatch bank4 vec.22 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub fb.goto.nextmatch bank4 vec.23 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.topline bank4 vec.33 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.botline bank4 vec.34 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.errline.show bank4 vec.35 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.errline.hide bank4 vec.36 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.errline.drawcolor bank4 vec.37 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.colorscheme.cycle bank4 vec.40 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.colorscheme.load bank4 vec.41 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.botline.keycolor bank4 vec.44 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.cmdb.hide bank4 vec.49 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.filebrowser bank4 vec.50 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
-stub pane.filebrowser.hilight bank4 vec.51 trmp helper=_trampoline.bank4.ret form=jmp comment="Longjump"
+stub fb.ruler.init bank4 vec.2 lean form=bindirect
+stub fb.colorlines bank4 vec.3 lean form=bindirect
+stub fb.vdpdump bank4 vec.4 lean form=bindirect
+stub fb.hscroll bank4 vec.6 lean form=bindirect
+stub fb.restore bank4 vec.7 lean form=bindirect
+stub fb.refresh bank4 vec.8 lean form=bindirect
+stub fb.get.nonblank bank4 vec.9 lean form=jmp
+stub fb.tab.prev bank4 vec.10 lean form=jmp
+stub fb.tab.next bank4 vec.11 lean form=jmp
+stub fb.cursor.up bank4 vec.12 lean form=jmp
+stub fb.cursor.down bank4 vec.13 lean form=jmp
+stub fb.cursor.home bank4 vec.14 lean form=jmp
+stub fb.insert.line bank4 vec.15 lean form=jmp
+stub fb.cursor.top bank4 vec.16 lean form=jmp
+stub fb.cursor.topscr bank4 vec.17 lean form=jmp
+stub fb.cursor.bot bank4 vec.18 lean form=jmp
+stub fb.cursor.botscr bank4 vec.19 lean form=jmp
+stub fb.insert.char bank4 vec.20 lean form=jmp
+stub fb.replace.char bank4 vec.21 lean form=jmp
+stub fb.goto.prevmatch bank4 vec.22 lean form=jmp
+stub fb.goto.nextmatch bank4 vec.23 lean form=jmp
+stub pane.topline bank4 vec.33 lean form=jmp
+stub pane.botline bank4 vec.34 lean form=jmp
+stub pane.errline.show bank4 vec.35 lean form=jmp
+stub pane.errline.hide bank4 vec.36 lean form=jmp
+stub pane.errline.drawcolor bank4 vec.37 lean form=jmp
+stub pane.colorscheme.cycle bank4 vec.40 lean form=jmp
+stub pane.colorscheme.load bank4 vec.41 lean form=jmp
+stub pane.botline.keycolor bank4 vec.44 lean form=jmp
+stub pane.cmdb.hide bank4 vec.49 lean form=jmp
+stub pane.filebrowser bank4 vec.50 lean form=jmp
+stub pane.filebrowser.hilight bank4 vec.51 lean form=jmp
 raw  bank1-08-_trampoline.bank4.ret.blk
-stub edb.clear.sams bank5 vec.1 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.mark bank5 vec.3 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.mark.m1 bank5 vec.4 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.mark.m2 bank5 vec.5 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.clip bank5 vec.6 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.reset bank5 vec.7 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.delete bank5 vec.8 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.block.copy bank5 vec.9 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.line.del bank5 vec.10 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.lock bank5 vec.13 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.unlock bank5 vec.14 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.find.init bank5 vec.15 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub edb.find.search bank5 vec.16 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
-stub tv.flash.screen bank5 vec.28 trmp helper=_trampoline.bank5.ret form=jmp comment="Longjump"
+stub edb.clear.sams bank5 vec.1 lean form=jmp
+stub edb.block.mark bank5 vec.3 lean form=jmp
+stub edb.block.mark.m1 bank5 vec.4 lean form=jmp
+stub edb.block.mark.m2 bank5 vec.5 lean form=jmp
+stub edb.block.clip bank5 vec.6 lean form=jmp
+stub edb.block.reset bank5 vec.7 lean form=jmp
+stub edb.block.delete bank5 vec.8 lean form=jmp
+stub edb.block.copy bank5 vec.9 lean form=jmp
+stub edb.line.del bank5 vec.10 lean form=jmp
+stub edb.lock bank5 vec.13 lean form=jmp
+stub edb.unlock bank5 vec.14 lean form=jmp
+stub edb.find.init bank5 vec.15 lean form=jmp
+stub edb.find.search bank5 vec.16 lean form=jmp
+stub tv.flash.screen bank5 vec.28 lean form=jmp
 raw  bank1-09-_trampoline.bank5.ret.blk
-stub vdp.dump.patterns bank6 vec.1 trmp helper=_trampoline.bank6.ret form=jmp comment="Longjump"
-stub vdp.dump.font bank6 vec.2 trmp helper=_trampoline.bank6.ret form=jmp comment="Longjump"
-stub vdp.colors.line bank6 vec.3 trmp helper=_trampoline.bank6.ret form=jmp comment="Longjump"
-stub vdp.cursor.tat bank6 vec.5 trmp helper=_trampoline.bank6.ret form=jmp comment="Longjump"
-stub tv.set.font bank6 vec.32 trmp helper=_trampoline.bank6.ret form=jmp comment="Longjump"
+stub vdp.dump.patterns bank6 vec.1 lean form=jmp
+stub vdp.dump.font bank6 vec.2 lean form=jmp
+stub vdp.colors.line bank6 vec.3 lean form=jmp
+stub vdp.cursor.tat bank6 vec.5 lean form=jmp
+stub tv.set.font bank6 vec.32 lean form=jmp
 raw  bank1-10-_trampoline.bank6.ret.blk
 raw  bank1-11-tibasic1.blk bank7 vec.10
 raw  bank1-12-tibasic.uncrunch.blk bank7 vec.11
@@ -1123,99 +1125,121 @@ raw  bank1-14-cart.fg99.mgr.blk bank7 vec.24
 raw  bank1-15-rom.dialogs2ram.blk banke vec.1
 
 @stubs bank2
-stub edb.line.unpack bank1 vec.11 inline variant=plain
-stub fb.vdpdump bank1 vec.21 inline variant=plain
-stub pane.cursor.blink bank1 vec.28 inline variant=plain
-stub pane.cursor.hide bank1 vec.29 inline variant=plain
-stub pane.errline.show bank1 vec.30 inline variant=plain
-stub pane.colorscheme.load bank4 vec.41 inline variant=plain
+helper bank1
+stub edb.line.unpack bank1 vec.11 lean form=jmp
+stub fb.vdpdump bank1 vec.21 lean form=jmp
+stub pane.cursor.blink bank1 vec.28 lean form=jmp
+stub pane.cursor.hide bank1 vec.29 lean form=jmp
+stub pane.errline.show bank1 vec.30 lean form=jmp
+helper bank4
+stub pane.colorscheme.load bank4 vec.41 lean form=jmp
 raw  bank2-16-pane.colorscheme.botline.blk bank4 vec.42
 raw  bank2-17-pane.cmdb.show.blk bank4 vec.59
-stub fb.cursor.top bank4 vec.16 inline variant=plain
-stub fb.goto.nextmatch bank4 vec.23 inline variant=plain
-stub pane.botline.busy.on bank4 vec.38 inline variant=plain
-stub pane.botline.busy.off bank4 vec.39 inline variant=plain
-stub pane.cmdb.hide bank4 vec.49 inline variant=plain
-stub pane.filebrowser bank4 vec.50 inline variant=plain
-stub pane.filebrowser.colbar bank4 vec.52 inline variant=plain
-stub pane.filebrowser.colbar.remove bank4 vec.53 inline variant=plain
-stub edb.clear.sams bank5 vec.1 inline variant=plain
-stub fb.refresh bank4 vec.8 inline variant=plain
-stub edb.find.init bank5 vec.15 inline variant=plain
-stub edb.find.search bank5 vec.16 inline variant=plain
-stub fm.clock.off bank5 vec.27 inline variant=plain
-stub vdp.dump.patterns bank6 vec.1 inline variant=plain
-stub vdp.colors.line bank6 vec.3 inline variant=plain
+stub fb.cursor.top bank4 vec.16 lean form=jmp
+stub fb.goto.nextmatch bank4 vec.23 lean form=jmp
+stub pane.botline.busy.on bank4 vec.38 lean form=jmp
+stub pane.botline.busy.off bank4 vec.39 lean form=jmp
+stub pane.cmdb.hide bank4 vec.49 lean form=jmp
+stub pane.filebrowser bank4 vec.50 lean form=jmp
+stub pane.filebrowser.colbar bank4 vec.52 lean form=jmp
+stub pane.filebrowser.colbar.remove bank4 vec.53 lean form=jmp
+helper bank5
+stub edb.clear.sams bank5 vec.1 lean form=jmp
+stub fb.refresh bank4 vec.8 lean form=jmp
+stub edb.find.init bank5 vec.15 lean form=jmp
+stub edb.find.search bank5 vec.16 lean form=jmp
+stub fm.clock.off bank5 vec.27 lean form=jmp
+helper bank6
+stub vdp.dump.patterns bank6 vec.1 lean form=jmp
+stub vdp.colors.line bank6 vec.3 lean form=jmp
 stub vdp.cursor.tat.cmdb.hide bank6 vec.6 inline variant=exitlabel
 stub tv.set.font bank6 vec.32 inline variant=exitlabel
 raw  bank2-18-tv.reset.blk bank7 vec.23
 raw  bank2-19-mem.run.ea5.blk bank7 vec.12
 
 @stubs bank3
-stub tv.clock.start bank1 vec.3 inline variant=plain
-stub edb.line.pack bank1 vec.10 inline variant=plain
-stub edk.act.cmdb.show bank1 vec.15 inline variant=plain
-stub fb.refresh bank4 vec.8 inline variant=plain
-stub pane.errline.hide bank1 vec.27 inline variant=plain
-stub pane.cursor.blink bank1 vec.28 inline variant=plain
-stub pane.cursor.hide bank1 vec.29 inline variant=plain
-stub pane.errline.show bank1 vec.30 inline variant=plain
-stub fm.directory bank2 vec.6 inline variant=plain
-stub fm.browse.fname.set bank2 vec.12 inline variant=plain
-stub fm.clock.read bank2 vec.14 inline variant=plain
-stub fb.scan.fname bank4 vec.5 inline variant=plain
-stub pane.colorscheme.load bank4 vec.41 inline variant=plain
-stub pane.botline.keycolor bank4 vec.44 inline variant=plain
-stub error.display bank4 vec.45 inline variant=plain
-stub pane.cmdb.hide bank4 vec.49 inline variant=plain
-stub pane.filebrowser bank4 vec.50 inline variant=plain
-stub pane.filebrowser.hilight bank4 vec.51 inline variant=plain
-stub pane.filebrowser.colbar bank4 vec.52 inline variant=plain
-stub pane.filebrowser.colbar.remove bank4 vec.53 inline variant=plain
-stub pane.clock.time bank5 vec.25 inline variant=plain
-stub vdp.cursor.tat.fb bank6 vec.4 inline variant=plain
-stub mem.sams.dialogs.on banke vec.2 inline variant=plain
-stub mem.sams.dialogs.off banke vec.3 inline variant=plain
-stub dialog.help.content bankf vec.1 inline variant=plain
+helper bank1
+stub tv.clock.start bank1 vec.3 lean form=jmp
+stub edb.line.pack bank1 vec.10 lean form=jmp
+stub edk.act.cmdb.show bank1 vec.15 lean form=jmp
+helper bank4
+stub fb.refresh bank4 vec.8 lean form=jmp
+stub pane.errline.hide bank1 vec.27 lean form=jmp
+stub pane.cursor.blink bank1 vec.28 lean form=jmp
+stub pane.cursor.hide bank1 vec.29 lean form=jmp
+stub pane.errline.show bank1 vec.30 lean form=jmp
+helper bank2
+stub fm.directory bank2 vec.6 lean form=jmp
+stub fm.browse.fname.set bank2 vec.12 lean form=jmp
+stub fm.clock.read bank2 vec.14 lean form=jmp
+stub fb.scan.fname bank4 vec.5 lean form=jmp
+stub pane.colorscheme.load bank4 vec.41 lean form=jmp
+stub pane.botline.keycolor bank4 vec.44 lean form=jmp
+stub error.display bank4 vec.45 lean form=jmp
+stub pane.cmdb.hide bank4 vec.49 lean form=jmp
+stub pane.filebrowser bank4 vec.50 lean form=jmp
+stub pane.filebrowser.hilight bank4 vec.51 lean form=jmp
+stub pane.filebrowser.colbar bank4 vec.52 lean form=jmp
+stub pane.filebrowser.colbar.remove bank4 vec.53 lean form=jmp
+helper bank5
+stub pane.clock.time bank5 vec.25 lean form=jmp
+helper bank6
+stub vdp.cursor.tat.fb bank6 vec.4 lean form=jmp
+helper banke
+stub mem.sams.dialogs.on banke vec.2 lean form=jmp
+stub mem.sams.dialogs.off banke vec.3 lean form=jmp
+helper bankf
+stub dialog.help.content bankf vec.1 lean form=jmp
 
 @stubs bank4
-stub edb.line.pack.fb bank1 vec.10 inline variant=plain
-stub edb.line.unpack.fb bank1 vec.11 inline variant=plain
-stub pane.cursor.blink bank1 vec.28 inline variant=plain
-stub pane.cmdb.draw bank3 vec.22 inline variant=plain
-stub cmdb.refresh_prompt bank3 vec.24 inline variant=plain
-stub cmdb.cmd.cursor_eol bank3 vec.29 inline variant=plain
-stub vdp.colors.line bank6 vec.3 inline variant=plain
-stub vdp.cursor.tat.fb bank6 vec.4 inline variant=plain
-stub vdp.cursor.tat bank6 vec.5 inline variant=plain
-stub mem.sams.dialogs.on banke vec.2 inline variant=plain
-stub mem.sams.dialogs.off banke vec.3 inline variant=plain
+helper bank1
+stub edb.line.pack.fb bank1 vec.10 lean form=jmp
+stub edb.line.unpack.fb bank1 vec.11 lean form=jmp
+stub pane.cursor.blink bank1 vec.28 lean form=jmp
+helper bank3
+stub pane.cmdb.draw bank3 vec.22 lean form=jmp
+stub cmdb.refresh_prompt bank3 vec.24 lean form=jmp
+stub cmdb.cmd.cursor_eol bank3 vec.29 lean form=jmp
+helper bank6
+stub vdp.colors.line bank6 vec.3 lean form=jmp
+stub vdp.cursor.tat.fb bank6 vec.4 lean form=jmp
+stub vdp.cursor.tat bank6 vec.5 lean form=jmp
+helper banke
+stub mem.sams.dialogs.on banke vec.2 lean form=jmp
+stub mem.sams.dialogs.off banke vec.3 lean form=jmp
 
 @stubs bank5
-stub tv.clock.start bank1 vec.3 inline variant=plain
-stub edb.line.unpack bank1 vec.11 inline variant=plain
-stub fb.vdpdump bank1 vec.21 inline variant=plain
-stub pane.errline.show bank1 vec.30 inline variant=plain
-stub fm.savefile bank2 vec.4 inline variant=plain
-stub fb.refresh bank4 vec.8 inline variant=plain
-stub fb.goto.nextmatch bank4 vec.23 inline variant=plain
-stub pane.botline.busy.on bank4 vec.38 inline variant=plain
-stub pane.botline.busy.off bank4 vec.39 inline variant=plain
-stub pane.colorscheme.load bank4 vec.41 inline variant=plain
+helper bank1
+stub tv.clock.start bank1 vec.3 lean form=jmp
+stub edb.line.unpack bank1 vec.11 lean form=jmp
+stub fb.vdpdump bank1 vec.21 lean form=jmp
+stub pane.errline.show bank1 vec.30 lean form=jmp
+helper bank2
+stub fm.savefile bank2 vec.4 lean form=jmp
+helper bank4
+stub fb.refresh bank4 vec.8 lean form=jmp
+stub fb.goto.nextmatch bank4 vec.23 lean form=jmp
+stub pane.botline.busy.on bank4 vec.38 lean form=jmp
+stub pane.botline.busy.off bank4 vec.39 lean form=jmp
+stub pane.colorscheme.load bank4 vec.41 lean form=jmp
 raw  bank5-20-pane.colorscheme.botline.blk bank4 vec.42
-stub pane.cmdb.hide bank4 vec.49 inline variant=plain
+stub pane.cmdb.hide bank4 vec.49 lean form=jmp
 
 @stubs bank6
 raw  bank6-21-pane.colorscheme.index.blk bank4 vec.43
 raw  bank6-22-edb.block.match.blk bank5 vec.12
 
 @stubs bank7
-stub cmdb.dialog.close bank1 vec.18 inline variant=plain
-stub fm.newfile bank2 vec.5 inline variant=plain
-stub file.vmem bank2 vec.32 inline variant=plain
+helper bank1
+stub cmdb.dialog.close bank1 vec.18 lean form=jmp
+helper bank2
+stub fm.newfile bank2 vec.5 lean form=jmp
+stub file.vmem bank2 vec.32 lean form=jmp
 raw  bank7-23-edb.find.init.blk bank5 vec.15
-stub dialog.basic bank3 vec.13 inline variant=plain
-stub cmdb.cmd.getlength bank3 vec.26 inline variant=plain
-stub fb.refresh bank4 vec.8 inline variant=plain
-stub pane.colorscheme.load bank4 vec.41 inline variant=plain
+helper bank3
+stub dialog.basic bank3 vec.13 lean form=jmp
+stub cmdb.cmd.getlength bank3 vec.26 lean form=jmp
+helper bank4
+stub fb.refresh bank4 vec.8 lean form=jmp
+stub pane.colorscheme.load bank4 vec.41 lean form=jmp
 raw  bank7-24-pane.colorscheme.botline.blk bank4 vec.42
